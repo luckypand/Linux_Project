@@ -2,8 +2,8 @@
 #define BUFFER_H
 #include <cstring>   //perror
 #include <iostream>
-#include <unistd.h>  // write
-#include <sys/uio.h> //readv
+#include <unistd.h>  // writewd
+#include <sys/uio.h> //read
 #include <vector> //readv
 #include <atomic>
 #include <assert.h>
@@ -48,3 +48,7 @@ private:
 };
 
 #endif //BUFFER_H
+
+// [0, readPos_) = 已读可复用区
+// [readPos_, writePos_) = 可读区
+// [writePos_, size) = 可写区
