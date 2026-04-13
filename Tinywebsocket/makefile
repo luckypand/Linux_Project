@@ -4,9 +4,10 @@ WARN_FLAGS := -Wall -Wextra
 STD_FLAGS := -std=c++11
 HEADER_FLAGS := -I./inc
 INCLUDE_FLAGS := -include stdio.h -include unistd.h -include stdlib.h
+THREAD_FLAGS := -pthread
 
-RELEASE_FLAGS := $(WARN_FLAGS) $(STD_FLAGS) $(HEADER_FLAGS) -O2 $(INCLUDE_FLAGS)
-DEBUG_FLAGS := $(WARN_FLAGS) $(STD_FLAGS) $(HEADER_FLAGS) -O0 -g3 -ggdb $(INCLUDE_FLAGS)
+RELEASE_FLAGS := $(WARN_FLAGS) $(STD_FLAGS) $(HEADER_FLAGS) -O2 $(INCLUDE_FLAGS) $(THREAD_FLAGS)
+DEBUG_FLAGS := $(WARN_FLAGS) $(STD_FLAGS) $(HEADER_FLAGS) -O0 -g3 -ggdb $(INCLUDE_FLAGS) $(THREAD_FLAGS)
 
 TEST_SRCS := $(wildcard test/*.cpp test/*.cc)
 SRC_SRCS := $(wildcard src/*.cpp src/*.cc)

@@ -45,7 +45,7 @@ void Log::FlushLogThread() {
 // 写线程真正的执行函数
 void Log::AsyncWrite_() {
     string str = "";
-    while(deque_->pop(str)) {
+    while(deque_->pop(str)) { //使用阻塞队列的pop方法，获取日志信息
         lock_guard<mutex> locker(mtx_);
         fputs(str.c_str(), fp_);
     }
@@ -88,8 +88,8 @@ void Log::init(int level, const char* path, const char* suffix, int maxQueCapaci
             fclose(fp_);
         }
         fp_ = fopen(fileName, "a"); // 打开文件读取并附加写入
-        if(fp_ == nullptr) {
-            mkdir(fileName, 0777);//有问题mkdir是创建目录而非文件
+        if(fp_ == nullptr) {//打开失败进行兜底
+            mkdir(path_, 0777);//有问题mkdir是创建目录而非文件
             fp_ = fopen(fileName, "a"); // 生成目录文件（最大权限）
         }
         assert(fp_ != nullptr);

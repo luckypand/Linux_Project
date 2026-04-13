@@ -61,7 +61,7 @@ template<typename T>
 void Blockqueue<T>::Clear()
 {
     lock_guard<mutex> locker(mtx_);
-    deq_.Clear();
+    deq_.clear();
 }
 
 template<typename T>
