@@ -25,12 +25,26 @@
 namespace
 {
 
+void EnsureDir(const std::string& path)
+{
+	struct stat st;
+	if (stat(path.c_str(), &st) == 0)
+	{
+		assert(S_ISDIR(st.st_mode));
+		return;
+	}
+
+	int ret = mkdir(path.c_str(), 0777);
+	assert(ret == 0);
+}
+
 std::string MakeTempDir(const std::string& tag)
 {
 	std::ostringstream oss;
-	oss << "/tmp/tinywebsocket_log_" << tag << "_" << getpid();
+	EnsureDir("../log");
+	oss << "../log/tinywebsocket_log_" << tag << "_" << getpid();
 	std::string path = oss.str();
-	mkdir(path.c_str(), 0777);
+	EnsureDir(path);
 	return path;
 }
 
@@ -61,18 +75,18 @@ std::string ReadFileToString(const std::string& path)
 
 void TestSyncWriteAndTitles()
 {
-	std::string logDir = MakeTempDir("sync");
+	// std::string logDir = MakeTempDir("sync");
 	Log* log = Log::Instance();
-	log->Init(0, logDir.c_str(), 0, ".log");
+	log->Init(0, "./log", 0, ".log");
 
 	Log_Base(LOG_DEBUG, "debug message: %d", 1);
-	LOG_INFO(0, "info message: %s", "hello");
-	LOG_WARN(0, "warn message: %.1f", 3.5);
-	LOG_ERROR(0, "error message: %c", 'X');
+	LOG_INFO( "info message: %s", "hello");
+	LOG_WARN( "warn message: %.1f", 3.5);
+	LOG_ERROR( "error message: %c", 'X');
 	Log_Base(99, "fallback level message");
 	log->flush();
 
-	std::string content = ReadFileToString(MakeCurrentLogFile(logDir, ".log"));
+	std::string content = ReadFileToString(MakeCurrentLogFile("./log", ".log"));
 	assert(content.find("[debug]: ") != std::string::npos);
 	assert(content.find("[info] : ") != std::string::npos);
 	assert(content.find("[warn] : ") != std::string::npos);
@@ -86,15 +100,15 @@ void TestSyncWriteAndTitles()
 
 void TestFileRotationByLineCount()
 {
-	std::string logDir = MakeTempDir("rotate");
+	std::string logDir = "./log";
 	Log* log = Log::Instance();
 	log->Init(0, logDir.c_str(), 0, ".log");
 
-	LOG_INFO(0, "before rotation");
+	LOG_INFO( "before rotation");
 	log->flush();
 
 	log->lineCount_ = Log::MAX_LINES;
-	LOG_INFO(0, "after rotation");
+	LOG_INFO( "after rotation");
 	log->flush();
 
 	time_t timer = time(nullptr);

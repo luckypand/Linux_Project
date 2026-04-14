@@ -45,7 +45,7 @@ public:
     static Log* Instance(); 
 
     // 初始化日志实例（阻塞队列最大容量、日志保存路径、日志文件后缀）
-    void Init(int level,const char* path = "../log",
+    void Init(int level,const char* path = "/log",
         int Max_capacity = 1024,const char* suffix = ".log");
     
     static void FlushLogThread();   // 异步写日志公有方法，调用私有方法asyncWrite
@@ -92,8 +92,8 @@ private:
         }\
     }while(0)\
 
-#define LOG_DEBUG(level,format,...)  Log_Base(LOG_DEBUG,format,##__VA_ARGS__)
-#define LOG_INFO(level,format,...)   Log_Base(LOG_INFO,format,##__VA_ARGS__)
-#define LOG_WARN(level,format,...)   Log_Base(LOG_WARN,format,##__VA_ARGS__)
-#define LOG_ERROR(level,format,...)  Log_Base(LOG_ERROR,format,##__VA_ARGS__)
-#define LOG_FATAL(level,format,...)  Log_Base(LOG_FATAL,format,##__VA_ARGS__)
+#define LOG_DEBUG(format,...)  Log_Base(LOG_DEBUG,format,##__VA_ARGS__)
+#define LOG_INFO(format,...)   Log_Base(LOG_INFO,format,##__VA_ARGS__)
+#define LOG_WARN(format,...)   Log_Base(LOG_WARN,format,##__VA_ARGS__)
+#define LOG_ERROR(format,...)  Log_Base(LOG_ERROR,format,##__VA_ARGS__)
+#define LOG_FATAL(format,...)  Log_Base(LOG_FATAL,format,##__VA_ARGS__)

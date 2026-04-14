@@ -17,12 +17,18 @@
     "C_Cpp.default.includePath": [
         "${workspaceFolder}/**",
         "${workspaceFolder}/Myfile/inc",
-        "${workspaceFolder}/../inc"
+        "${workspaceFolder}/../inc",
+        "/usr/include",
+        "/usr/include/mysql",
+        "/usr/include/mariadb"
     ],
     "C_Cpp.default.browse.path": [
         "${workspaceFolder}/**",
         "${workspaceFolder}/Myfile/inc",
-        "${workspaceFolder}/../inc"
+        "${workspaceFolder}/../inc",
+        "/usr/include",
+        "/usr/include/mysql",
+        "/usr/include/mariadb"
     ],
 
     "chat.editor.fontFamily": "Cascadia Code, Sarasa Mono SC, monospace",
