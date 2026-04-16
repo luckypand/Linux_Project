@@ -1,4 +1,6 @@
 CXX := g++
+PROJECT_DIR := $(abspath $(dir $(lastword $(MAKEFILE_LIST))))
+EXE_DIR := $(PROJECT_DIR)/exe
 
 WARN_FLAGS := -Wall -Wextra
 STD_FLAGS := -std=c++11
@@ -16,59 +18,72 @@ TARGETS_CPP := $(patsubst test/%.cpp,%,$(filter %.cpp,$(TEST_SRCS)))
 TARGETS_CC := $(patsubst test/%.cc,%,$(filter %.cc,$(TEST_SRCS)))
 TARGETS := $(TARGETS_CPP) $(TARGETS_CC)
 DEBUG_TARGETS := $(addsuffix _debug,$(TARGETS))
+TARGET_EXES := $(addprefix $(EXE_DIR)/,$(TARGETS))
+DEBUG_EXES := $(addprefix $(EXE_DIR)/,$(DEBUG_TARGETS))
+LEGACY_EXES := $(TARGETS) $(DEBUG_TARGETS)
 
 BUILD ?= release
 
 ifeq ($(BUILD),debug)
-OUT := $(DEBUG_TARGETS)
+OUT := $(DEBUG_EXES)
 OUT_FLAGS := $(DEBUG_FLAGS)
 else
-OUT := $(TARGETS)
+OUT := $(TARGET_EXES)
 OUT_FLAGS := $(RELEASE_FLAGS)
 endif
 
-.PHONY: all release debug run run-release run-debug clean help
+.PHONY: all release debug run run-release run-debug flamegraph clean help
 
 all: $(OUT)
 
-release: $(TARGETS)
+release: $(TARGET_EXES)
 
-debug: $(DEBUG_TARGETS)
+debug: $(DEBUG_EXES)
 
 
-$(TARGETS_CPP): %: test/%.cpp
+$(EXE_DIR):
+	mkdir -p $@
+
+$(EXE_DIR)/%: test/%.cpp | $(EXE_DIR)
 	$(CXX) $(RELEASE_FLAGS) $< $(SRC_SRCS) -o $@
 
-$(TARGETS_CC): %: test/%.cc
+$(EXE_DIR)/%: test/%.cc | $(EXE_DIR)
 	$(CXX) $(RELEASE_FLAGS) $< $(SRC_SRCS) -o $@
 
-$(addsuffix _debug,$(TARGETS_CPP)): %_debug: test/%.cpp
+$(EXE_DIR)/%_debug: test/%.cpp | $(EXE_DIR)
 	$(CXX) $(DEBUG_FLAGS) $< $(SRC_SRCS) -o $@
 
-$(addsuffix _debug,$(TARGETS_CC)): %_debug: test/%.cc
+$(EXE_DIR)/%_debug: test/%.cc | $(EXE_DIR)
 	$(CXX) $(DEBUG_FLAGS) $< $(SRC_SRCS) -o $@
 
 run: all
-	@for bin in $(OUT); do ./$$bin; done
+	@for bin in $(OUT); do "$$bin"; done
 
 run-release: release
-	@for bin in $(TARGETS); do ./$$bin; done
+	@for bin in $(TARGET_EXES); do "$$bin"; done
 
 run-debug: debug
-	@for bin in $(DEBUG_TARGETS); do ./$$bin; done
+	@for bin in $(DEBUG_EXES); do "$$bin"; done
+
+flamegraph:
+	@[ -n "$(BIN)" ] || { echo "Usage: make flamegraph BIN=Test_log"; exit 1; }
+	@$(PROJECT_DIR)/gen_flamegraph.sh "$(EXE_DIR)/$(BIN)"
 
 help:
 	@echo "Usage:"
-	@echo "  make release      # build release binaries: $(TARGETS)"
-	@echo "  make debug        # build debug binaries: $(DEBUG_TARGETS)"
+	@echo "  make release      # build release binaries in exe/: $(TARGETS)"
+	@echo "  make debug        # build debug binaries in exe/: $(DEBUG_TARGETS)"
 	@echo "  make BUILD=release"
 	@echo "  make BUILD=debug"
-	@echo "  make run          # run by BUILD selection (default release, runs all)"
+	@echo "  make run          # run binaries from exe/ by BUILD selection"
 	@echo "  make run-release"
 	@echo "  make run-debug"
+	@echo "  make flamegraph BIN=Test_log  # output svg/Test_log.svg"
 
 clean:
-	rm -f $(TARGETS) $(DEBUG_TARGETS)
+	rm -f $(TARGET_EXES) $(DEBUG_EXES) $(LEGACY_EXES)
+	rm -f $(EXE_DIR)/*
+	-rmdir $(EXE_DIR) 2>/dev/null || true
 
 # Pid_CTR:test/main.cpp
 # 	g++ -o Pid_CTR test/main.cpp

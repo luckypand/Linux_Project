@@ -12,6 +12,7 @@ Log::Log()
 	, path_(nullptr)
 	, suffix_(nullptr)
 	, fp_(nullptr)
+    ,mtx_() //有构造函数的成员调用默认构造
 {
 }
 
@@ -22,8 +23,11 @@ Log::~Log()
     {
         flush();
     }
-    deque_->Close();//关闭deque
-    writeThread_->join();//关闭写线程
+    if(isAsync_)//debug4.15 : 异步模式才进行关闭deque和写线程
+    {
+        deque_->Close();//关闭deque
+        writeThread_->join();//关闭写线程        
+    }
     if(fp_)//文件未关闭
     {
         lock_guard<mutex> locker(mtx_);//？为什么这里要上锁，写进程不是关闭了吗?
