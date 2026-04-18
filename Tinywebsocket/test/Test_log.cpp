@@ -25,28 +25,28 @@
 namespace
 {
 
-void EnsureDir(const std::string& path)
-{
-	struct stat st;
-	if (stat(path.c_str(), &st) == 0)
-	{
-		assert(S_ISDIR(st.st_mode));
-		return;
-	}
+// void EnsureDir(const std::string& path)
+// {
+// 	struct stat st;
+// 	if (stat(path.c_str(), &st) == 0)
+// 	{
+// 		assert(S_ISDIR(st.st_mode));
+// 		return;
+// 	}
 
-	int ret = mkdir(path.c_str(), 0777);
-	assert(ret == 0);
-}
+// 	int ret = mkdir(path.c_str(), 0777);
+// 	assert(ret == 0);
+// }
 
-std::string MakeTempDir(const std::string& tag)
-{
-	std::ostringstream oss;
-	EnsureDir("../log");
-	oss << "../log/tinywebsocket_log_" << tag << "_" << getpid();
-	std::string path = oss.str();
-	EnsureDir(path);
-	return path;
-}
+// std::string MakeTempDir(const std::string& tag)
+// {
+// 	std::ostringstream oss;
+// 	EnsureDir("../log");
+// 	oss << "../log/tinywebsocket_log_" << tag << "_" << getpid();
+// 	std::string path = oss.str();
+// 	EnsureDir(path);
+// 	return path;
+// }
 
 std::string MakeCurrentLogFile(const std::string& dir, const std::string& suffix)
 {

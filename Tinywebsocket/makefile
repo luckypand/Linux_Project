@@ -23,6 +23,7 @@ DEBUG_EXES := $(addprefix $(EXE_DIR)/,$(DEBUG_TARGETS))
 LEGACY_EXES := $(TARGETS) $(DEBUG_TARGETS)
 
 BUILD ?= release
+CLEAN_PREFIXES := $(filter-out clean,$(MAKECMDGOALS))
 
 ifeq ($(BUILD),debug)
 OUT := $(DEBUG_EXES)
@@ -32,7 +33,7 @@ OUT := $(TARGET_EXES)
 OUT_FLAGS := $(RELEASE_FLAGS)
 endif
 
-.PHONY: all release debug run run-release run-debug flamegraph clean help
+.PHONY: all release debug run run-release run-debug flamegraph clean help $(CLEAN_PREFIXES)
 
 all: $(OUT)
 
@@ -78,12 +79,28 @@ help:
 	@echo "  make run          # run binaries from exe/ by BUILD selection"
 	@echo "  make run-release"
 	@echo "  make run-debug"
+	@echo "  make clean        # remove all binaries under exe/ (keep exe directory)"
+	@echo "  make clean Test_log   # remove exe/Test_log* (includes debug/asan variants)"
 	@echo "  make flamegraph BIN=Test_log  # output svg/Test_log.svg"
 
 clean:
-	rm -f $(TARGET_EXES) $(DEBUG_EXES) $(LEGACY_EXES)
-	rm -f $(EXE_DIR)/*
-	-rmdir $(EXE_DIR) 2>/dev/null || true
+	@if [ -z "$(strip $(CLEAN_PREFIXES))" ]; then \
+		echo "[clean] remove all binaries in $(EXE_DIR)/"; \
+		rm -f $(EXE_DIR)/*; \
+		rm -f $(LEGACY_EXES); \
+	else \
+		for prefix in $(CLEAN_PREFIXES); do \
+			base="$$prefix"; \
+			base="$${base%_debug}"; \
+			base="$${base%_asan}"; \
+			echo "[clean] remove binaries with family prefix '$$base'"; \
+			rm -f $(EXE_DIR)/$$base*; \
+			rm -f $$base*; \
+		done; \
+	fi
+
+$(CLEAN_PREFIXES):
+	@:
 
 # Pid_CTR:test/main.cpp
 # 	g++ -o Pid_CTR test/main.cpp

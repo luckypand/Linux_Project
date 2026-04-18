@@ -24,14 +24,14 @@ public:
                         auto task = std::move(pool_->tasks.front());    // 左值变右值,资产转移
                         pool_->tasks.pop();
                         locker.unlock();    // 因为已经把任务取出来了，所以可以提前解锁了
-                        task();
+                        task();             //执行任务
                         locker.lock();      // 马上又要取任务了，上锁
                     } else if(pool_->isClosed) {
                         break;
                     } else {
-                        pool_->cond_.wait(locker);    // 等待,如果任务来了就notify的
+                        pool_->cond_.wait(locker);    // 该函数执行两步原子操作，1.释放锁 2.等待,如果任务来了就notify的
                     }
-                    
+    
                 }
             }).detach();
         }
@@ -46,7 +46,7 @@ public:
     }
 
     template<typename T>
-    void AddTask(T&& task) {
+    void AddTask(T&& task) { //万能引用写法
         std::unique_lock<std::mutex> locker(pool_->mtx_);
         pool_->tasks.emplace(std::forward<T>(task));
         pool_->cond_.notify_one();
