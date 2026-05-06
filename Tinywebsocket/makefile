@@ -7,9 +7,11 @@ STD_FLAGS := -std=c++11
 HEADER_FLAGS := -I./inc
 INCLUDE_FLAGS := -include stdio.h -include unistd.h -include stdlib.h
 THREAD_FLAGS := -pthread
+MYSQL_CFLAGS := $(shell mysql_config --cflags)
+MYSQL_LIBS := $(shell mysql_config --libs)
 
-RELEASE_FLAGS := $(WARN_FLAGS) $(STD_FLAGS) $(HEADER_FLAGS) -O2 $(INCLUDE_FLAGS) $(THREAD_FLAGS)
-DEBUG_FLAGS := $(WARN_FLAGS) $(STD_FLAGS) $(HEADER_FLAGS) -O0 -g3 -ggdb $(INCLUDE_FLAGS) $(THREAD_FLAGS)
+RELEASE_FLAGS := $(WARN_FLAGS) $(STD_FLAGS) $(HEADER_FLAGS) -O2 $(INCLUDE_FLAGS) $(THREAD_FLAGS) $(MYSQL_CFLAGS)
+DEBUG_FLAGS := $(WARN_FLAGS) $(STD_FLAGS) $(HEADER_FLAGS) -O0 -g3 -ggdb $(INCLUDE_FLAGS) $(THREAD_FLAGS) $(MYSQL_CFLAGS)
 
 TEST_SRCS := $(wildcard test/*.cpp test/*.cc)
 SRC_SRCS := $(wildcard src/*.cpp src/*.cc)
@@ -46,16 +48,16 @@ $(EXE_DIR):
 	mkdir -p $@
 
 $(EXE_DIR)/%: test/%.cpp | $(EXE_DIR)
-	$(CXX) $(RELEASE_FLAGS) $< $(SRC_SRCS) -o $@
+	$(CXX) $(RELEASE_FLAGS) $< $(SRC_SRCS) $(MYSQL_LIBS) -o $@
 
 $(EXE_DIR)/%: test/%.cc | $(EXE_DIR)
-	$(CXX) $(RELEASE_FLAGS) $< $(SRC_SRCS) -o $@
+	$(CXX) $(RELEASE_FLAGS) $< $(SRC_SRCS) $(MYSQL_LIBS) -o $@
 
 $(EXE_DIR)/%_debug: test/%.cpp | $(EXE_DIR)
-	$(CXX) $(DEBUG_FLAGS) $< $(SRC_SRCS) -o $@
+	$(CXX) $(DEBUG_FLAGS) $< $(SRC_SRCS) $(MYSQL_LIBS) -o $@
 
 $(EXE_DIR)/%_debug: test/%.cc | $(EXE_DIR)
-	$(CXX) $(DEBUG_FLAGS) $< $(SRC_SRCS) -o $@
+	$(CXX) $(DEBUG_FLAGS) $< $(SRC_SRCS) $(MYSQL_LIBS) -o $@
 
 run: all
 	@for bin in $(OUT); do "$$bin"; done

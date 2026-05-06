@@ -42,8 +42,11 @@ private:
     sem_t semId_;
 };
 
+
+//智能指针管理的是对象的创建和释放，但是RAII类管理了资源的回收
+
 /* 资源在对象构造初始化 资源在对象析构时释放*/
-class SqlConnRAII {
+class SqlConnRAII {//连接池内部是连接线程而不是任务，因此需要归还归还数据库连接（MYSQL指针）而不是销毁
 public:
     SqlConnRAII(MYSQL** sql, SqlConnPool *connpool) {
         assert(connpool);

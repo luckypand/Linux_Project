@@ -12,7 +12,7 @@
         "-Warray-bounds",
         "-Wpedantic"
     ],
-    "C_Cpp.default.cppStandard": "c++11",
+    "C_Cpp.default.cppStandard": "c++17",
     "C_Cpp.default.intelliSenseMode": "linux-gcc-x64",
     "C_Cpp.default.includePath": [
         "${workspaceFolder}/**",
@@ -217,5 +217,6 @@
             "method.declaration": "#8FD8E6",
             "function.defaultLibrary": "#79B8E8"
         }
-    }
+    },
+    "cmake.sourceDirectory": "/root/Cplus/CoreX"
 }
