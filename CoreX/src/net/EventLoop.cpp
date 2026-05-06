@@ -169,7 +169,7 @@ void EventLoop::SengToPending(Functor fc)
 */
 void EventLoop::UpdateChannel(Channel* channel)
 {
-    poller_->UpdateChannel();
+    poller_->UpdateChannel(channel);
 }
 
 /*
@@ -178,5 +178,5 @@ void EventLoop::UpdateChannel(Channel* channel)
 */
 void EventLoop::RemoveChannel(Channel* channel)
 {
-    poller_->RemoveChannel();
+    poller_->RemoveChannel(channel);
 }

@@ -18,10 +18,10 @@ public:
     void poll(int TimeoutMS,ChannelList& activeChannels_);
 
     // 维护红黑树：增、删、改    
-    void UpdateChannel();
-    void RemoveChannel();
+    void UpdateChannel(Channel* channel);
+    void RemoveChannel(Channel* channel);
 private:
-    void update(int TimeoutMs,Channel* channel);          // 维护红黑树实际调用的函数，封装了epoll_ctl
+    void update(int operation,Channel* channel);  // 维护红黑树实际调用的函数，封装了epoll_ctl
 
     const static int events_size_ = 16;
     EventLoop* my_EventLoop_;

@@ -22,7 +22,7 @@ public:
     void enableWriting() { events_ |= kWriteEvent; update(); }
     void disableall() { events_ |= kNoneEvent; }
     void setindex(int idx_) { index_ = idx_; }
-    void setretevent(int revt) { retevent_ = revt; }
+    void setretevent(uint32_t  revt) { retevent_ = revt; }
 
     // 核心：由 EventLoop 调用，根据 revents_ 执行对应的回调    
     void Event_handle();
@@ -31,6 +31,7 @@ public:
     int Fd() const { return fd_; }
     int index() const { return index_; }
     bool IsNoneEvent() { return events_ == kNoneEvent; } //判断用户是否不再关心该fd的数据
+    uint32_t events() { return events_; }
     EventLoop* myEventLoop() const { return my_loop_; }
     
 private:
@@ -43,8 +44,8 @@ private:
 
     EventLoop* my_loop_;
     const int fd_;   //对应管理的fd
-    int events_;     //用户关心的事件
-    int retevent_;   //实际发生的事件
+    uint32_t events_;     //用户关心的事件
+    uint32_t retevent_;   //实际发生的事件
     int index_;      //表示Channel自身在epoll中的状态
 
     EventCallback_ ReadCallback_;
