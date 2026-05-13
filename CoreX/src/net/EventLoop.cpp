@@ -1,6 +1,7 @@
 #include "EventLoop.hpp"
 #include "Poller.hpp"
 #include "Channel.hpp"
+#include "HeapTimer.hpp"
 #include <sys/eventfd.h>
 #include <cstdlib>
 #include <unistd.h>
@@ -12,12 +13,12 @@ namespace
     int createEventfd()
     {
         int evtfd = ::eventfd(0, EFD_NONBLOCK | EFD_CLOEXEC);
-        if (evtfd < 0) 
+        if (evtfd < 0)
         {
             std::cerr << "Failed in eventfd" << std::endl;
             abort();
         }
-        return evtfd;        
+        return evtfd;
     }
 
 }
@@ -30,17 +31,18 @@ EventLoop::EventLoop()
     :looping_status_(false)
     ,quit_status_(false)
     ,threadID_(std::this_thread::get_id())
-    ,poller_(std::make_unique<Poller>(this)) //传入this因为poller_内部需要调用EventLoop的方法
+    ,poller_(std::make_unique<Poller>(this))
     ,activeChannels_()
     ,wakeupFd_(createEventfd())
     ,wakeupChannel_(std::make_unique<Channel>(this,wakeupFd_))
     ,mtx_()
     ,pendingFunctors_()
+    ,timer_(nullptr)
 {
     //使用lamda传入读回调参数
     wakeupChannel_->setReadCallback(
         [this](){this->handleRead();}
-    );        //唤醒队列绑定对应的读写事件 
+    );
     wakeupChannel_->enableReading();
 }
 
@@ -50,8 +52,8 @@ EventLoop::EventLoop()
 */
 EventLoop::~EventLoop()
 {
-    wakeupChannel_->disableall();//标记channel内部事件消息
-    ::close(wakeupFd_);//释放wakefd
+    wakeupChannel_->disableall();
+    ::close(wakeupFd_);
 }
 
 /*
@@ -60,31 +62,47 @@ EventLoop::~EventLoop()
 */
 void EventLoop::loop()
 {
-    assert(!looping_status_);//防止其他的线程在本loop启动后反复启动该loop
+    assert(!looping_status_);
     assert(IsInloopthread());
     looping_status_ = true;
     quit_status_ = false;
 
-    while(!quit_status_)//loop持续执行
+    while(!quit_status_)
     {
-        activeChannels_.clear(); //先清空已处理的channel
+        activeChannels_.clear();
 
-        poller_->poll(10000,activeChannels_);         //阻塞等待epoll监控的fd发生新事件
+        int timeoutMs = 10000;
+        if (timer_)
+        {
+            timeoutMs = timer_->Getclosetick();
+        }
+
+        poller_->poll(timeoutMs, activeChannels_);
 
         for(auto& channel_ptr : activeChannels_)
         {
-            channel_ptr->Event_handle(); //处理每个channel对应的事件
+            channel_ptr->Event_handle();
         }
         DoPendingFunctors();
+
+        if (timer_)
+        {
+            timer_->tick();
+        }
     }
 
-    looping_status_ = false; //执行到这说明loop已经quit了
+    looping_status_ = false;
 }
 
-/*
-* @brief:
-*     设置当外部线程触发fd时进行读操作,即解除外部新消息提示(LT模式需读取，否则不断提醒)
-*/
+void EventLoop::quit()
+{
+    quit_status_ = true;
+    if (!IsInloopthread())
+    {
+        WakeUp();
+    }
+}
+
 void EventLoop::handleRead()
 {
     uint64_t alarm = 0;
@@ -99,7 +117,7 @@ void EventLoop::DoPendingFunctors()
 {
     std::vector<Functor> swap_pending;
     {
-        std::lock_guard<std::mutex> locker(mtx_); //加锁swap
+        std::lock_guard<std::mutex> locker(mtx_);
         swap(swap_pending,pendingFunctors_);
     }
 
@@ -154,9 +172,8 @@ void EventLoop::SengToPending(Functor fc)
     {
         std::lock_guard<std::mutex> locker(mtx_);
         pendingFunctors_.push_back(std::move(fc));
-    }   
-    
-    //非本线程投递任务，需要唤醒以fd形式告知主线程loop
+    }
+
     if(!IsInloopthread())
     {
         WakeUp();

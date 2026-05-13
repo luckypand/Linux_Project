@@ -7,6 +7,21 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
-# Add subdirectories or targets as needed by the project.
-# This file only enforces the C++ standard for builds that use CMake.
+# Net library sources
+set(NET_SOURCES
+    src/net/EventLoop.cpp
+    src/net/Poller.cpp
+    src/net/Channel.cpp
+    src/net/HeapTimer.cpp
+    src/net/Buffer.cpp
+)
 
+# Test executables
+add_executable(timeout_server_test
+    tests/timeout_server_test.cpp
+    ${NET_SOURCES}
+)
+
+target_include_directories(timeout_server_test PRIVATE
+    ${CMAKE_SOURCE_DIR}/src/net
+)
