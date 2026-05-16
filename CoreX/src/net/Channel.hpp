@@ -16,6 +16,7 @@ public:
     void setReadCallback(EventCallback_ rck)   { ReadCallback_ = std::move(rck); }
     void setWriteCallback(EventCallback_ wck) { WriteCallback_ = std::move(wck); }
     void setErrorCallback(EventCallback_ eck) { ErrorCallback_ = std::move(eck); }
+    void setCloseCallback(EventCallback_ cck) { CloseCallback_ = std::move(cck); }
 
     // 状态修改：通知 EventLoop 去更新 epoll 里的监听事件
     void enableReading() { events_ |= kReadEvent; update(); }
@@ -30,7 +31,8 @@ public:
     // 状态查询    
     int Fd() const { return fd_; }
     int index() const { return index_; }
-    bool IsNoneEvent() { return events_ == kNoneEvent; } //判断用户是否不再关心该fd的数据
+    bool IsNoneEvent() const { return events_ == kNoneEvent; } //判断用户是否不再关心该fd的数据
+    bool IsWriting() const { return events_ & kWriteEvent; }   //判断用户是否已经关注写事件
     uint32_t events() { return events_; }
     EventLoop* myEventLoop() const { return my_loop_; }
     
@@ -51,4 +53,5 @@ private:
     EventCallback_ ReadCallback_;
     EventCallback_ WriteCallback_;
     EventCallback_ ErrorCallback_;
+    EventCallback_ CloseCallback_;
 }; 

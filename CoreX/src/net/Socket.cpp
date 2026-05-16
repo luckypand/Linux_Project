@@ -4,6 +4,7 @@
 #include <arpa/inet.h>   
 #include <cstring>   
 #include <iostream>
+#include <netinet/tcp.h>
 
 /*
 * @brief:
@@ -84,4 +85,28 @@ int Socket::accept(struct sockaddr_in* peeraddr)
         }
     }
     return connfd; // 无论成功与否直接返回，由上层 Acceptor 判断
+}
+
+/*
+* @brief:
+*     以下四个函数是对socket的优化调参
+*/
+void Socket::setReuseAddr(bool on) {
+    int optval = on ? 1 : 0;
+    ::setsockopt(sockfd_, SOL_SOCKET, SO_REUSEADDR, &optval, static_cast<socklen_t>(sizeof optval));
+}
+
+void Socket::setReusePort(bool on) {
+    int optval = on ? 1 : 0;
+    ::setsockopt(sockfd_, SOL_SOCKET, SO_REUSEPORT, &optval, static_cast<socklen_t>(sizeof optval));
+}
+
+void Socket::setTcpNoDelay(bool on) {
+    int optval = on ? 1 : 0;
+    ::setsockopt(sockfd_, IPPROTO_TCP, TCP_NODELAY, &optval, static_cast<socklen_t>(sizeof optval));
+}
+
+void Socket::setKeepAlive(bool on) {
+    int optval = on ? 1 : 0;
+    ::setsockopt(sockfd_, SOL_SOCKET, SO_KEEPALIVE, &optval, static_cast<socklen_t>(sizeof optval));
 }
