@@ -27,6 +27,8 @@ public:
     void WakeUp();
     void UpdateChannel(Channel* channel);
     void RemoveChannel(Channel* channel);
+    void assertInLoopThread();
+    void abortNotInLoopThread();
 
     void setTimer(HeapTimer* timer) { timer_ = timer; }
 

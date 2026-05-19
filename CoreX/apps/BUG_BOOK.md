@@ -150,3 +150,10 @@ std::copy(std::next(buffer_.begin(), static_cast<std::ptrdiff_t>(ReadIndex_)),
 ```
 
 ---
+
+# BUG_BOOK.md(待优化的部分)
+1.对于TcpServer中的线程池调用使用unique_ptr可能会造成遗留的历史任务没有完全执行完就被销毁
+
+
+# BUG_BOOK_IMPROVED.md(待优化的部分)
+1.对于TcpServerd等地方，调用回调类型时(例如WriteCompleteCallback等)应该是空间类型而不是某个类的私有类型，可以将其以namespace的形式进行包裹

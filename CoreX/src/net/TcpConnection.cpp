@@ -19,7 +19,7 @@ TcpConnection::~TcpConnection()
 
 /*
 * @brief:
-*     被 TcpServer 调用，正式确立连接
+*     被TcpServer 调用，正式确立连接
 */
 void TcpConnection::connectEstablished()
 {
@@ -28,6 +28,24 @@ void TcpConnection::connectEstablished()
     channel_->enableReading();
     connectionCallback_(shared_from_this());
 }
+
+/*
+* @brief:
+*     被TcpServer 调用，正式销毁连接
+*/
+// void TcpConnection::connectDestroyed()
+// {
+
+    // loop_->assertInLoopThread();
+    // if (state_ == kConnected)
+    // {
+    //     setState(kDisconnected);
+    //     channel_->disableAll();
+
+    //     connectionCallback_(shared_from_this());
+    // }
+    // channel_->remove();
+// }
 
 /*
 * @brief:
@@ -159,4 +177,21 @@ void TcpConnection::shutdown()
             }
         );
     }
+}
+
+/*
+* @brief:
+*     被TcpServer 调用，正式销毁连接
+*/
+void TcpConnection::connectDestroyed()
+{
+    loop_->assertInLoopThread();
+    if (state_ == kConnected)
+    {
+        setState(kDisconnected);
+        channel_->disableall();
+
+        connectionCallback_(shared_from_this());
+    }
+    loop_->RemoveChannel(channel_.get());
 }

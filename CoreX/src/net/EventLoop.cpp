@@ -7,6 +7,7 @@
 #include <unistd.h>
 #include <assert.h>
 #include <mutex>
+#include "../log/my_log.hpp"
 
 namespace
 {
@@ -196,4 +197,26 @@ void EventLoop::UpdateChannel(Channel* channel)
 void EventLoop::RemoveChannel(Channel* channel)
 {
     poller_->RemoveChannel(channel);
+}
+
+/*
+* @brief:
+*     异步日记记录Loop错位
+*/
+void EventLoop::abortNotInLoopThread() 
+{  
+  LOG_FATAL("EventLoop::abortNotInLoopThread - EventLoop %p was created in threadId_ = %x, current thread id = %x",
+            this, threadID_, std::this_thread::get_id());
+}
+
+/*
+* @brief:
+*     判断Loop是否移位
+*/
+void EventLoop::assertInLoopThread() 
+{  
+    if (!IsInloopthread())
+    {
+        abortNotInLoopThread();
+    }
 }

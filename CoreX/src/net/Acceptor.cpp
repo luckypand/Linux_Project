@@ -1,6 +1,8 @@
 #include "Acceptor.hpp"
 #include <sys/socket.h>
 #include <netinet/in.h>
+#include <arpa/inet.h>
+#include <string>
 
 /*
 * @brief:
@@ -53,7 +55,11 @@ void Acceptor::handleRead()
     {
         if(newConnectionCallback_)
         {
-            newConnectionCallback_(connfd);
+            //将对端地址转换为 "ip:port" 字符串
+            char peerIP[64] = {0};
+            ::inet_ntop(AF_INET, &acceptAddr.sin_addr, peerIP, sizeof(peerIP));
+            std::string peerAddr = std::string(peerIP) + ":" + std::to_string(::ntohs(acceptAddr.sin_port));
+            newConnectionCallback_(connfd, peerAddr);
         }
         else
         {

@@ -9,11 +9,11 @@ class Eventloop;
 class Acceptor
 {
 public:
-    using newConnectionCallback = std::function<void(int sockfd)>;
+    using newConnectionCallback = std::function<void(int sockfd, const std::string& peerAddr)>;
     explicit Acceptor(EventLoop* loop,int port);
     ~Acceptor();
 
-    void setNewConnectionCallback(newConnectionCallback& ncb) { newConnectionCallback_ = std::move(ncb); }   
+    void setNewConnectionCallback(newConnectionCallback ncb) { newConnectionCallback_ = std::move(ncb); }   
     void listen();
 private:
     void handleRead();

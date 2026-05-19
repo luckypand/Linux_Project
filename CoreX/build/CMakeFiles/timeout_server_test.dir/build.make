@@ -122,13 +122,83 @@ CMakeFiles/timeout_server_test.dir/src/net/HeapTimer.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/timeout_server_test.dir/src/net/HeapTimer.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /root/Cplus/CoreX/src/net/HeapTimer.cpp -o CMakeFiles/timeout_server_test.dir/src/net/HeapTimer.cpp.s
 
+CMakeFiles/timeout_server_test.dir/src/net/Buffer.cpp.o: CMakeFiles/timeout_server_test.dir/flags.make
+CMakeFiles/timeout_server_test.dir/src/net/Buffer.cpp.o: ../src/net/Buffer.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/root/Cplus/CoreX/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/timeout_server_test.dir/src/net/Buffer.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/timeout_server_test.dir/src/net/Buffer.cpp.o -c /root/Cplus/CoreX/src/net/Buffer.cpp
+
+CMakeFiles/timeout_server_test.dir/src/net/Buffer.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/timeout_server_test.dir/src/net/Buffer.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /root/Cplus/CoreX/src/net/Buffer.cpp > CMakeFiles/timeout_server_test.dir/src/net/Buffer.cpp.i
+
+CMakeFiles/timeout_server_test.dir/src/net/Buffer.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/timeout_server_test.dir/src/net/Buffer.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /root/Cplus/CoreX/src/net/Buffer.cpp -o CMakeFiles/timeout_server_test.dir/src/net/Buffer.cpp.s
+
+CMakeFiles/timeout_server_test.dir/src/net/Socket.cpp.o: CMakeFiles/timeout_server_test.dir/flags.make
+CMakeFiles/timeout_server_test.dir/src/net/Socket.cpp.o: ../src/net/Socket.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/root/Cplus/CoreX/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/timeout_server_test.dir/src/net/Socket.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/timeout_server_test.dir/src/net/Socket.cpp.o -c /root/Cplus/CoreX/src/net/Socket.cpp
+
+CMakeFiles/timeout_server_test.dir/src/net/Socket.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/timeout_server_test.dir/src/net/Socket.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /root/Cplus/CoreX/src/net/Socket.cpp > CMakeFiles/timeout_server_test.dir/src/net/Socket.cpp.i
+
+CMakeFiles/timeout_server_test.dir/src/net/Socket.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/timeout_server_test.dir/src/net/Socket.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /root/Cplus/CoreX/src/net/Socket.cpp -o CMakeFiles/timeout_server_test.dir/src/net/Socket.cpp.s
+
+CMakeFiles/timeout_server_test.dir/src/net/Acceptor.cpp.o: CMakeFiles/timeout_server_test.dir/flags.make
+CMakeFiles/timeout_server_test.dir/src/net/Acceptor.cpp.o: ../src/net/Acceptor.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/root/Cplus/CoreX/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/timeout_server_test.dir/src/net/Acceptor.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/timeout_server_test.dir/src/net/Acceptor.cpp.o -c /root/Cplus/CoreX/src/net/Acceptor.cpp
+
+CMakeFiles/timeout_server_test.dir/src/net/Acceptor.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/timeout_server_test.dir/src/net/Acceptor.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /root/Cplus/CoreX/src/net/Acceptor.cpp > CMakeFiles/timeout_server_test.dir/src/net/Acceptor.cpp.i
+
+CMakeFiles/timeout_server_test.dir/src/net/Acceptor.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/timeout_server_test.dir/src/net/Acceptor.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /root/Cplus/CoreX/src/net/Acceptor.cpp -o CMakeFiles/timeout_server_test.dir/src/net/Acceptor.cpp.s
+
+CMakeFiles/timeout_server_test.dir/src/log/my_log.cpp.o: CMakeFiles/timeout_server_test.dir/flags.make
+CMakeFiles/timeout_server_test.dir/src/log/my_log.cpp.o: ../src/log/my_log.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/root/Cplus/CoreX/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/timeout_server_test.dir/src/log/my_log.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/timeout_server_test.dir/src/log/my_log.cpp.o -c /root/Cplus/CoreX/src/log/my_log.cpp
+
+CMakeFiles/timeout_server_test.dir/src/log/my_log.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/timeout_server_test.dir/src/log/my_log.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /root/Cplus/CoreX/src/log/my_log.cpp > CMakeFiles/timeout_server_test.dir/src/log/my_log.cpp.i
+
+CMakeFiles/timeout_server_test.dir/src/log/my_log.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/timeout_server_test.dir/src/log/my_log.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /root/Cplus/CoreX/src/log/my_log.cpp -o CMakeFiles/timeout_server_test.dir/src/log/my_log.cpp.s
+
+CMakeFiles/timeout_server_test.dir/src/log/my_buffer.cpp.o: CMakeFiles/timeout_server_test.dir/flags.make
+CMakeFiles/timeout_server_test.dir/src/log/my_buffer.cpp.o: ../src/log/my_buffer.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/root/Cplus/CoreX/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/timeout_server_test.dir/src/log/my_buffer.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/timeout_server_test.dir/src/log/my_buffer.cpp.o -c /root/Cplus/CoreX/src/log/my_buffer.cpp
+
+CMakeFiles/timeout_server_test.dir/src/log/my_buffer.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/timeout_server_test.dir/src/log/my_buffer.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /root/Cplus/CoreX/src/log/my_buffer.cpp > CMakeFiles/timeout_server_test.dir/src/log/my_buffer.cpp.i
+
+CMakeFiles/timeout_server_test.dir/src/log/my_buffer.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/timeout_server_test.dir/src/log/my_buffer.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /root/Cplus/CoreX/src/log/my_buffer.cpp -o CMakeFiles/timeout_server_test.dir/src/log/my_buffer.cpp.s
+
 # Object files for target timeout_server_test
 timeout_server_test_OBJECTS = \
 "CMakeFiles/timeout_server_test.dir/tests/timeout_server_test.cpp.o" \
 "CMakeFiles/timeout_server_test.dir/src/net/EventLoop.cpp.o" \
 "CMakeFiles/timeout_server_test.dir/src/net/Poller.cpp.o" \
 "CMakeFiles/timeout_server_test.dir/src/net/Channel.cpp.o" \
-"CMakeFiles/timeout_server_test.dir/src/net/HeapTimer.cpp.o"
+"CMakeFiles/timeout_server_test.dir/src/net/HeapTimer.cpp.o" \
+"CMakeFiles/timeout_server_test.dir/src/net/Buffer.cpp.o" \
+"CMakeFiles/timeout_server_test.dir/src/net/Socket.cpp.o" \
+"CMakeFiles/timeout_server_test.dir/src/net/Acceptor.cpp.o" \
+"CMakeFiles/timeout_server_test.dir/src/log/my_log.cpp.o" \
+"CMakeFiles/timeout_server_test.dir/src/log/my_buffer.cpp.o"
 
 # External object files for target timeout_server_test
 timeout_server_test_EXTERNAL_OBJECTS =
@@ -138,9 +208,14 @@ timeout_server_test: CMakeFiles/timeout_server_test.dir/src/net/EventLoop.cpp.o
 timeout_server_test: CMakeFiles/timeout_server_test.dir/src/net/Poller.cpp.o
 timeout_server_test: CMakeFiles/timeout_server_test.dir/src/net/Channel.cpp.o
 timeout_server_test: CMakeFiles/timeout_server_test.dir/src/net/HeapTimer.cpp.o
+timeout_server_test: CMakeFiles/timeout_server_test.dir/src/net/Buffer.cpp.o
+timeout_server_test: CMakeFiles/timeout_server_test.dir/src/net/Socket.cpp.o
+timeout_server_test: CMakeFiles/timeout_server_test.dir/src/net/Acceptor.cpp.o
+timeout_server_test: CMakeFiles/timeout_server_test.dir/src/log/my_log.cpp.o
+timeout_server_test: CMakeFiles/timeout_server_test.dir/src/log/my_buffer.cpp.o
 timeout_server_test: CMakeFiles/timeout_server_test.dir/build.make
 timeout_server_test: CMakeFiles/timeout_server_test.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/root/Cplus/CoreX/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Linking CXX executable timeout_server_test"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/root/Cplus/CoreX/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Linking CXX executable timeout_server_test"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/timeout_server_test.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
