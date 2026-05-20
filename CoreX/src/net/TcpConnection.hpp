@@ -23,10 +23,10 @@ public:
     void send(const std::string& message);
     void shutdown();
 
-    void setConnectionCallback(connectionCallback& cb) { connectionCallback_ = std::move(cb); }
-    void setMessageCallback(messageCallback& cb) { messageCallback_ = std::move(cb); }
-    void setCloseCallback(closeCallback& cb) { closeCallback_ = std::move(cb); }
-    void setwriteCompleteCallback(writeCompleteCallback& cb) { writeCompleteCallback_ = std::move(cb); }
+    void setConnectionCallback(connectionCallback cb) { connectionCallback_ = std::move(cb); }
+    void setMessageCallback(messageCallback cb) { messageCallback_ = std::move(cb); }
+    void setCloseCallback(closeCallback cb) { closeCallback_ = std::move(cb); }
+    void setwriteCompleteCallback(writeCompleteCallback cb) { writeCompleteCallback_ = std::move(cb); }
 
     // 被 TcpServer 调用，正式确立连接
     void connectEstablished();

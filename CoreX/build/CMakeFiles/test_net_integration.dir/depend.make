@@ -31,6 +31,14 @@ CMakeFiles/test_net_integration.dir/src/net/EventLoop.cpp.o: ../src/net/EventLoo
 CMakeFiles/test_net_integration.dir/src/net/EventLoop.cpp.o: ../src/net/HeapTimer.hpp
 CMakeFiles/test_net_integration.dir/src/net/EventLoop.cpp.o: ../src/net/Poller.hpp
 
+CMakeFiles/test_net_integration.dir/src/net/EventLoopThread.cpp.o: ../src/net/EventLoop.hpp
+CMakeFiles/test_net_integration.dir/src/net/EventLoopThread.cpp.o: ../src/net/EventLoopThread.cpp
+CMakeFiles/test_net_integration.dir/src/net/EventLoopThread.cpp.o: ../src/net/EventLoopThread.hpp
+
+CMakeFiles/test_net_integration.dir/src/net/EventLoopThreadPool.cpp.o: ../src/net/EventLoopThread.hpp
+CMakeFiles/test_net_integration.dir/src/net/EventLoopThreadPool.cpp.o: ../src/net/EventLoopThreadPool.cpp
+CMakeFiles/test_net_integration.dir/src/net/EventLoopThreadPool.cpp.o: ../src/net/EventLoopThreadPool.hpp
+
 CMakeFiles/test_net_integration.dir/src/net/HeapTimer.cpp.o: ../src/net/HeapTimer.cpp
 CMakeFiles/test_net_integration.dir/src/net/HeapTimer.cpp.o: ../src/net/HeapTimer.hpp
 
@@ -40,6 +48,24 @@ CMakeFiles/test_net_integration.dir/src/net/Poller.cpp.o: ../src/net/Poller.hpp
 
 CMakeFiles/test_net_integration.dir/src/net/Socket.cpp.o: ../src/net/Socket.cpp
 CMakeFiles/test_net_integration.dir/src/net/Socket.cpp.o: ../src/net/Socket.hpp
+
+CMakeFiles/test_net_integration.dir/src/net/TcpConnection.cpp.o: ../src/net/Buffer.hpp
+CMakeFiles/test_net_integration.dir/src/net/TcpConnection.cpp.o: ../src/net/Channel.hpp
+CMakeFiles/test_net_integration.dir/src/net/TcpConnection.cpp.o: ../src/net/EventLoop.hpp
+CMakeFiles/test_net_integration.dir/src/net/TcpConnection.cpp.o: ../src/net/Socket.hpp
+CMakeFiles/test_net_integration.dir/src/net/TcpConnection.cpp.o: ../src/net/TcpConnection.cpp
+CMakeFiles/test_net_integration.dir/src/net/TcpConnection.cpp.o: ../src/net/TcpConnection.hpp
+
+CMakeFiles/test_net_integration.dir/src/net/TcpServer.cpp.o: ../src/net/Acceptor.hpp
+CMakeFiles/test_net_integration.dir/src/net/TcpServer.cpp.o: ../src/net/Buffer.hpp
+CMakeFiles/test_net_integration.dir/src/net/TcpServer.cpp.o: ../src/net/Channel.hpp
+CMakeFiles/test_net_integration.dir/src/net/TcpServer.cpp.o: ../src/net/EventLoop.hpp
+CMakeFiles/test_net_integration.dir/src/net/TcpServer.cpp.o: ../src/net/EventLoopThread.hpp
+CMakeFiles/test_net_integration.dir/src/net/TcpServer.cpp.o: ../src/net/EventLoopThreadPool.hpp
+CMakeFiles/test_net_integration.dir/src/net/TcpServer.cpp.o: ../src/net/Socket.hpp
+CMakeFiles/test_net_integration.dir/src/net/TcpServer.cpp.o: ../src/net/TcpConnection.hpp
+CMakeFiles/test_net_integration.dir/src/net/TcpServer.cpp.o: ../src/net/TcpServer.cpp
+CMakeFiles/test_net_integration.dir/src/net/TcpServer.cpp.o: ../src/net/TcpServer.hpp
 
 CMakeFiles/test_net_integration.dir/tests/test_net_integration.cpp.o: ../src/net/Acceptor.hpp
 CMakeFiles/test_net_integration.dir/tests/test_net_integration.cpp.o: ../src/net/Buffer.hpp

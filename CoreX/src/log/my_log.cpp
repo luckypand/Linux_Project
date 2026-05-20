@@ -7,19 +7,17 @@ Log::Log()
 	: isOpen_(false)
 	, isAsync_(false)
 	, level_(0)
-	, toDay_(-1)
-	, lineCount_(0)
-	, path_(nullptr)
+	, basePath_()
 	, suffix_(nullptr)
-	, fp_(nullptr)
-    ,mtx_() //有构造函数的成员调用默认构造
+	, buff_()
+    ,mtx_()
 {
 }
 
 Log::~Log()
 {
     //如果是异步先将deque剩余的任务处理干净
-    while(isAsync_ && !deque_->empty())
+    while(isAsync_ && deque_ && !deque_->empty())
     {
         flush();
     }
@@ -28,12 +26,16 @@ Log::~Log()
         deque_->Close();//关闭deque
         writeThread_->join();//关闭写线程        
     }
-    if(fp_)//文件未关闭
+    //关闭所有模块的日志文件
+    for(auto& kv : moduleFiles_)
     {
-        lock_guard<mutex> locker(mtx_);//？为什么这里要上锁，写进程不是关闭了吗?
-        flush();
-        fclose(fp_);
+        if(kv.second)
+        {
+            fflush(kv.second);
+            fclose(kv.second);
+        }
     }
+    moduleFiles_.clear();
 }
 
 /*
@@ -58,19 +60,24 @@ void Log::FlushLogThread()
 /*
 * @brief:
 *     真正的线程异步写入函数，注意pop()返回true,所以每次只会处理一条日志消息
+*     按模块名将日志写入对应的日志文件
 */
 void Log::AsyncWrite_()
 {
-    string str = "";
-    while(deque_->pop(str))//异步从阻塞队列弹出消息
+    LogEntry entry;
+    while(deque_->pop(entry))//异步从阻塞队列弹出消息
     {
-        fputs(str.c_str(),fp_);//写入文件
+        FILE* fp = GetOrCreateModuleFile_(entry.module);
+        if(fp)
+        {
+            fputs(entry.message.c_str(), fp);//写入对应模块的文件
+        }
     }
 }
 
 /*
 * @brief:
-*     刷新日志缓冲区，异步日志则唤醒消费者线程，处理掉剩下的任务；同步日志则直接清空输入缓冲区
+*     刷新日志缓冲区，异步日志则唤醒消费者线程；同步日志则刷新所有模块的文件
 */
 void Log::flush()
 {
@@ -78,21 +85,123 @@ void Log::flush()
     {
         deque_->flush();//通知消费者干活，但是不保证干完
     }
-    fflush(fp_);
+    // 刷新所有模块文件
+    for(auto& kv : moduleFiles_)
+    {
+        if(kv.second)
+        {
+            fflush(kv.second);
+        }
+    }
 }
 
 /*
 * @brief:
-*     接收并保存基础配置,判断日志模式,若为异步且资源未创建
-*     重置运行时状态, 生成当天日志文件名,在锁保护下切换文件句柄
-*     打开失败时尝试兜底并断言
+*     从 __FILE__ 中提取模块名
+*     例如 "src/net/EventLoop.cpp" → "net"
+*           "src/log/my_log.cpp"    → "log"
+*           "tests/test.cpp"        → "root"（不在 src/ 下则归入 root）
 */
-void Log::Init(int level,const char* path,
-        int Max_capacity,const char* suffix)
+std::string Log::ExtractModule_(const char* file)
+{
+    std::string path(file);
+    auto pos = path.find("src/");
+    if(pos == std::string::npos)
+        return "root"; // 不在 src/ 下的文件归入 root 模块
+
+    pos += 4; // 跳过 "src/"
+    auto end = path.find('/', pos);
+    if(end == std::string::npos)
+        return "root";
+
+    return path.substr(pos, end - pos);
+}
+
+/*
+* @brief:
+*     获取（或创建）指定模块的日志文件句柄
+*     自动处理目录创建、日期轮转、行数轮转
+*/
+FILE* Log::GetOrCreateModuleFile_(const std::string& module)
+{
+    // 检查是否已有该模块的句柄
+    auto it = moduleFiles_.find(module);
+    if(it != moduleFiles_.end() && it->second != nullptr)
+    {
+        // 检查是否需要轮转
+        time_t timer = time(nullptr);
+        struct tm* systime = localtime(&timer);
+        int today = systime->tm_mday;
+
+        int& curDay = moduleToDay_[module];
+        int& curLine = moduleLineCount_[module];
+
+        if(curDay != today || (curLine > 0 && curLine % MAX_LINES == 0))
+        {
+            // 需要轮转：关闭旧文件，重新创建
+            fflush(it->second);
+            fclose(it->second);
+            moduleFiles_.erase(module);
+            // 不直接 return，继续往下创建新文件
+        }
+        else
+        {
+            return it->second;
+        }
+    }
+
+    // 创建新文件
+    std::string modulePath = basePath_ + "/" + module;
+    mkdir(modulePath.c_str(), 0777);
+
+    char fileName[LOG_NAME_LEN] = {0};
+    time_t timer = time(nullptr);
+    struct tm* systime = localtime(&timer);
+    int today = systime->tm_mday;
+
+    if(moduleToDay_[module] != today)//日期不同则新建日期文件
+    {
+        snprintf(fileName, LOG_NAME_LEN, "%s/%04d_%02d_%02d%s",
+            modulePath.c_str(),
+            systime->tm_year + 1900, systime->tm_mon + 1, systime->tm_mday,
+            suffix_);
+        moduleToDay_[module] = today;
+        moduleLineCount_[module] = 0;
+    }
+    else//日期相同但行数超限，新建分卷文件
+    {
+        snprintf(fileName, LOG_NAME_LEN, "%s/%04d_%02d_%02d-%d%s",
+            modulePath.c_str(),
+            systime->tm_year + 1900, systime->tm_mon + 1, systime->tm_mday,
+            moduleLineCount_[module] / MAX_LINES,
+            suffix_);
+    }
+
+    FILE* fp = fopen(fileName, "a");
+    if(nullptr == fp)
+    {
+        mkdir(modulePath.c_str(), 0777);//兜底
+        fp = fopen(fileName, "a");
+        assert(fp != nullptr);
+    }
+
+    moduleFiles_[module] = fp;
+    return fp;
+}
+
+/*
+* @brief:
+*     接收并保存基础配置,判断日志模式
+*     异步模式则创建阻塞队列和后台写线程
+*     （注意：不再在 Init 时创建具体日志文件，
+*      改为在 write/AsyncWrite_ 时按模块按需创建）
+*/
+void Log::Init(int level, const char* basePath,
+        int Max_capacity, const char* suffix)
 {
     isOpen_ = true;
     level_ = level;
-    path_ = path;
+    basePath_ = basePath;
     suffix_ = suffix;
 
     if(Max_capacity)//有deque，则进行异步写入   
@@ -100,48 +209,15 @@ void Log::Init(int level,const char* path,
         isAsync_ = true;
         if(!deque_)//如果deque为空，则使用智能指针右值转移创建
         {
-            unique_ptr<Blockqueue<std::string>> newDeque
-                (new Blockqueue<std::string>(Max_capacity));
-            deque_ = move(newDeque);
+            deque_ = make_unique<Blockqueue<LogEntry>>(Max_capacity);
             
             //线程挂载异步写日志函数,开始写入
-            unique_ptr<thread> newThread(new thread(FlushLogThread));
-            writeThread_ = move(newThread);
+            writeThread_ = make_unique<thread>(FlushLogThread);
         }
     }
     else
     {
         isAsync_ = false;
-    }
-    //生成当天的日志文件名
-    char fileName[LOG_NAME_LEN] = {0};
-    time_t timer = time(nullptr);
-    struct tm* systime = localtime(&timer);
-    snprintf(fileName, LOG_NAME_LEN, "%s/%04d_%02d_%02d%s",
-    path_,    // 日志文件路径
-    systime->tm_year + 1900,    // 2024
-    systime->tm_mon + 1,        // 04（注意+1！）
-    systime->tm_mday,            // 09
-    suffix_                     // 日志文件后缀
-    );
-
-    {
-        lock_guard<mutex> locker(mtx_);
-        //清理旧文件
-        if(fp_)
-        {
-            flush();
-            fclose(fp_);
-        }
-        //追加写入新的日志文件
-        fp_ = fopen(fileName, "a");
-        if(nullptr == fp_)
-        {
-            //打开失败进行兜底
-            mkdir(path_, 0777);
-            fp_ = fopen(fileName, "a");
-            assert(fp_ != nullptr);
-        }           
     }
 }
 
@@ -173,11 +249,15 @@ void Log::AppendLogLevelTitle_(int level)
 /*
 * @brief:
 *     根据日志级别和格式化字符串生成日志内容，异步模式则将日志消息加入阻塞队列
-*   等待写线程处理；同步模式则直接写入文件
+*   等待写线程处理；同步模式则直接写入对应的模块文件
+*   参数 file 由 LOG 宏自动传入 __FILE__
 */
-void Log::write(int level, const char *format,...)
+void Log::write(const char* file, int level, const char *format,...)
 {
-    //先确定要写入日志的文件名
+    // 从 __FILE__ 提取模块名（如 "net"、"log"、"ipc" 等）
+    std::string module = ExtractModule_(file);
+
+    //先确定要写入日志的时间
     struct timeval now = {0, 0};
     gettimeofday(&now, nullptr);
     time_t tSec = now.tv_sec;
@@ -185,28 +265,25 @@ void Log::write(int level, const char *format,...)
     struct tm t = *sysTime;
     va_list vaList;//配合可变参数使用
 
-    unique_lock<mutex> locker(mtx_);//锁保护日志文件切换
-    //判断日志写入时间，日志是否超过最大行数，满足条件则切换日志文件
-    if(toDay_ != t.tm_mday || (lineCount_ && (lineCount_ % MAX_LINES == 0)))
+    unique_lock<mutex> locker(mtx_);//锁保护
+    //判断当前模块是否需要轮转日志文件
     {
-        char newFile[LOG_NAME_LEN]; //新日志文件名
-        char tail[36] = {0}; //日期后缀
-        snprintf(tail, 36, "%04d_%02d_%02d", t.tm_year + 1900, t.tm_mon + 1, t.tm_mday);
-        if(toDay_ != t.tm_mday) //日期不匹配，新建日期的log文件
+        int& curDay = moduleToDay_[module];
+        int& curLine = moduleLineCount_[module];
+
+        // 如果已有文件句柄，检查是否需要轮转
+        auto it = moduleFiles_.find(module);
+        if(it != moduleFiles_.end() && it->second != nullptr)
         {
-            snprintf(newFile,LOG_NAME_LEN - 72, "%s/%s%s", path_, tail, suffix_);
-            toDay_ = t.tm_mday;
-            lineCount_ = 0;
-        }   
-        else    //日期匹配，行数超了，新建文件
-        {
-            snprintf(newFile, LOG_NAME_LEN - 72, "%s/%s-%d%s", path_, tail, (lineCount_ / MAX_LINES), suffix_);
+            if(curDay != t.tm_mday || (curLine && (curLine % MAX_LINES == 0)))
+            {
+                fflush(it->second);
+                fclose(it->second);
+                moduleFiles_.erase(module);
+            }
         }
-        //刷新原本的文件，防止丢失日志，关闭原本的文件，打开新文件
-        flush();
-        fclose(fp_);
-        fp_ = fopen(newFile, "a");
-        assert(fp_ != nullptr);
+        // 行数递增（在写入前递增，配合 GetOrCreateModuleFile_ 中的轮转判断）
+        curLine++;
     }
     locker.unlock();//解锁
 
@@ -226,11 +303,15 @@ void Log::write(int level, const char *format,...)
        //判断同步异步
        if(isAsync_ && deque_ && !deque_->full()) //异步且未满
        {
-            deque_->push_back(buff_.RetrieveAllToStr());//写入阻塞队列
+            deque_->push_back({std::move(module), buff_.RetrieveAllToStr()});//写入阻塞队列
        }
-       else//同步方式进行写入log文件
+       else//同步方式直接写入对应模块的log文件
        {
-            fputs(buff_.BeginRead(),fp_);
+            FILE* fp = GetOrCreateModuleFile_(module);
+            if(fp)
+            {
+                fputs(buff_.BeginRead(), fp);
+            }
        }
     }
     buff_.RetrieveAllToStr();//buffer写入后清空

@@ -161,9 +161,61 @@ CMakeFiles/test_net_integration.dir/src/net/Acceptor.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/test_net_integration.dir/src/net/Acceptor.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /root/Cplus/CoreX/src/net/Acceptor.cpp -o CMakeFiles/test_net_integration.dir/src/net/Acceptor.cpp.s
 
+CMakeFiles/test_net_integration.dir/src/net/TcpServer.cpp.o: CMakeFiles/test_net_integration.dir/flags.make
+CMakeFiles/test_net_integration.dir/src/net/TcpServer.cpp.o: ../src/net/TcpServer.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/root/Cplus/CoreX/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/test_net_integration.dir/src/net/TcpServer.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/test_net_integration.dir/src/net/TcpServer.cpp.o -c /root/Cplus/CoreX/src/net/TcpServer.cpp
+
+CMakeFiles/test_net_integration.dir/src/net/TcpServer.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/test_net_integration.dir/src/net/TcpServer.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /root/Cplus/CoreX/src/net/TcpServer.cpp > CMakeFiles/test_net_integration.dir/src/net/TcpServer.cpp.i
+
+CMakeFiles/test_net_integration.dir/src/net/TcpServer.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/test_net_integration.dir/src/net/TcpServer.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /root/Cplus/CoreX/src/net/TcpServer.cpp -o CMakeFiles/test_net_integration.dir/src/net/TcpServer.cpp.s
+
+CMakeFiles/test_net_integration.dir/src/net/TcpConnection.cpp.o: CMakeFiles/test_net_integration.dir/flags.make
+CMakeFiles/test_net_integration.dir/src/net/TcpConnection.cpp.o: ../src/net/TcpConnection.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/root/Cplus/CoreX/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/test_net_integration.dir/src/net/TcpConnection.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/test_net_integration.dir/src/net/TcpConnection.cpp.o -c /root/Cplus/CoreX/src/net/TcpConnection.cpp
+
+CMakeFiles/test_net_integration.dir/src/net/TcpConnection.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/test_net_integration.dir/src/net/TcpConnection.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /root/Cplus/CoreX/src/net/TcpConnection.cpp > CMakeFiles/test_net_integration.dir/src/net/TcpConnection.cpp.i
+
+CMakeFiles/test_net_integration.dir/src/net/TcpConnection.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/test_net_integration.dir/src/net/TcpConnection.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /root/Cplus/CoreX/src/net/TcpConnection.cpp -o CMakeFiles/test_net_integration.dir/src/net/TcpConnection.cpp.s
+
+CMakeFiles/test_net_integration.dir/src/net/EventLoopThreadPool.cpp.o: CMakeFiles/test_net_integration.dir/flags.make
+CMakeFiles/test_net_integration.dir/src/net/EventLoopThreadPool.cpp.o: ../src/net/EventLoopThreadPool.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/root/Cplus/CoreX/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object CMakeFiles/test_net_integration.dir/src/net/EventLoopThreadPool.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/test_net_integration.dir/src/net/EventLoopThreadPool.cpp.o -c /root/Cplus/CoreX/src/net/EventLoopThreadPool.cpp
+
+CMakeFiles/test_net_integration.dir/src/net/EventLoopThreadPool.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/test_net_integration.dir/src/net/EventLoopThreadPool.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /root/Cplus/CoreX/src/net/EventLoopThreadPool.cpp > CMakeFiles/test_net_integration.dir/src/net/EventLoopThreadPool.cpp.i
+
+CMakeFiles/test_net_integration.dir/src/net/EventLoopThreadPool.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/test_net_integration.dir/src/net/EventLoopThreadPool.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /root/Cplus/CoreX/src/net/EventLoopThreadPool.cpp -o CMakeFiles/test_net_integration.dir/src/net/EventLoopThreadPool.cpp.s
+
+CMakeFiles/test_net_integration.dir/src/net/EventLoopThread.cpp.o: CMakeFiles/test_net_integration.dir/flags.make
+CMakeFiles/test_net_integration.dir/src/net/EventLoopThread.cpp.o: ../src/net/EventLoopThread.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/root/Cplus/CoreX/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building CXX object CMakeFiles/test_net_integration.dir/src/net/EventLoopThread.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/test_net_integration.dir/src/net/EventLoopThread.cpp.o -c /root/Cplus/CoreX/src/net/EventLoopThread.cpp
+
+CMakeFiles/test_net_integration.dir/src/net/EventLoopThread.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/test_net_integration.dir/src/net/EventLoopThread.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /root/Cplus/CoreX/src/net/EventLoopThread.cpp > CMakeFiles/test_net_integration.dir/src/net/EventLoopThread.cpp.i
+
+CMakeFiles/test_net_integration.dir/src/net/EventLoopThread.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/test_net_integration.dir/src/net/EventLoopThread.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /root/Cplus/CoreX/src/net/EventLoopThread.cpp -o CMakeFiles/test_net_integration.dir/src/net/EventLoopThread.cpp.s
+
 CMakeFiles/test_net_integration.dir/src/log/my_log.cpp.o: CMakeFiles/test_net_integration.dir/flags.make
 CMakeFiles/test_net_integration.dir/src/log/my_log.cpp.o: ../src/log/my_log.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/root/Cplus/CoreX/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/test_net_integration.dir/src/log/my_log.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/root/Cplus/CoreX/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Building CXX object CMakeFiles/test_net_integration.dir/src/log/my_log.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/test_net_integration.dir/src/log/my_log.cpp.o -c /root/Cplus/CoreX/src/log/my_log.cpp
 
 CMakeFiles/test_net_integration.dir/src/log/my_log.cpp.i: cmake_force
@@ -176,7 +228,7 @@ CMakeFiles/test_net_integration.dir/src/log/my_log.cpp.s: cmake_force
 
 CMakeFiles/test_net_integration.dir/src/log/my_buffer.cpp.o: CMakeFiles/test_net_integration.dir/flags.make
 CMakeFiles/test_net_integration.dir/src/log/my_buffer.cpp.o: ../src/log/my_buffer.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/root/Cplus/CoreX/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/test_net_integration.dir/src/log/my_buffer.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/root/Cplus/CoreX/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Building CXX object CMakeFiles/test_net_integration.dir/src/log/my_buffer.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/test_net_integration.dir/src/log/my_buffer.cpp.o -c /root/Cplus/CoreX/src/log/my_buffer.cpp
 
 CMakeFiles/test_net_integration.dir/src/log/my_buffer.cpp.i: cmake_force
@@ -197,6 +249,10 @@ test_net_integration_OBJECTS = \
 "CMakeFiles/test_net_integration.dir/src/net/Buffer.cpp.o" \
 "CMakeFiles/test_net_integration.dir/src/net/Socket.cpp.o" \
 "CMakeFiles/test_net_integration.dir/src/net/Acceptor.cpp.o" \
+"CMakeFiles/test_net_integration.dir/src/net/TcpServer.cpp.o" \
+"CMakeFiles/test_net_integration.dir/src/net/TcpConnection.cpp.o" \
+"CMakeFiles/test_net_integration.dir/src/net/EventLoopThreadPool.cpp.o" \
+"CMakeFiles/test_net_integration.dir/src/net/EventLoopThread.cpp.o" \
 "CMakeFiles/test_net_integration.dir/src/log/my_log.cpp.o" \
 "CMakeFiles/test_net_integration.dir/src/log/my_buffer.cpp.o"
 
@@ -211,11 +267,15 @@ test_net_integration: CMakeFiles/test_net_integration.dir/src/net/HeapTimer.cpp.
 test_net_integration: CMakeFiles/test_net_integration.dir/src/net/Buffer.cpp.o
 test_net_integration: CMakeFiles/test_net_integration.dir/src/net/Socket.cpp.o
 test_net_integration: CMakeFiles/test_net_integration.dir/src/net/Acceptor.cpp.o
+test_net_integration: CMakeFiles/test_net_integration.dir/src/net/TcpServer.cpp.o
+test_net_integration: CMakeFiles/test_net_integration.dir/src/net/TcpConnection.cpp.o
+test_net_integration: CMakeFiles/test_net_integration.dir/src/net/EventLoopThreadPool.cpp.o
+test_net_integration: CMakeFiles/test_net_integration.dir/src/net/EventLoopThread.cpp.o
 test_net_integration: CMakeFiles/test_net_integration.dir/src/log/my_log.cpp.o
 test_net_integration: CMakeFiles/test_net_integration.dir/src/log/my_buffer.cpp.o
 test_net_integration: CMakeFiles/test_net_integration.dir/build.make
 test_net_integration: CMakeFiles/test_net_integration.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/root/Cplus/CoreX/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Linking CXX executable test_net_integration"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/root/Cplus/CoreX/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Linking CXX executable test_net_integration"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/test_net_integration.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

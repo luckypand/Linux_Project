@@ -31,6 +31,14 @@ CMakeFiles/timeout_server_test.dir/src/net/EventLoop.cpp.o: ../src/net/EventLoop
 CMakeFiles/timeout_server_test.dir/src/net/EventLoop.cpp.o: ../src/net/HeapTimer.hpp
 CMakeFiles/timeout_server_test.dir/src/net/EventLoop.cpp.o: ../src/net/Poller.hpp
 
+CMakeFiles/timeout_server_test.dir/src/net/EventLoopThread.cpp.o: ../src/net/EventLoop.hpp
+CMakeFiles/timeout_server_test.dir/src/net/EventLoopThread.cpp.o: ../src/net/EventLoopThread.cpp
+CMakeFiles/timeout_server_test.dir/src/net/EventLoopThread.cpp.o: ../src/net/EventLoopThread.hpp
+
+CMakeFiles/timeout_server_test.dir/src/net/EventLoopThreadPool.cpp.o: ../src/net/EventLoopThread.hpp
+CMakeFiles/timeout_server_test.dir/src/net/EventLoopThreadPool.cpp.o: ../src/net/EventLoopThreadPool.cpp
+CMakeFiles/timeout_server_test.dir/src/net/EventLoopThreadPool.cpp.o: ../src/net/EventLoopThreadPool.hpp
+
 CMakeFiles/timeout_server_test.dir/src/net/HeapTimer.cpp.o: ../src/net/HeapTimer.cpp
 CMakeFiles/timeout_server_test.dir/src/net/HeapTimer.cpp.o: ../src/net/HeapTimer.hpp
 
@@ -40,6 +48,24 @@ CMakeFiles/timeout_server_test.dir/src/net/Poller.cpp.o: ../src/net/Poller.hpp
 
 CMakeFiles/timeout_server_test.dir/src/net/Socket.cpp.o: ../src/net/Socket.cpp
 CMakeFiles/timeout_server_test.dir/src/net/Socket.cpp.o: ../src/net/Socket.hpp
+
+CMakeFiles/timeout_server_test.dir/src/net/TcpConnection.cpp.o: ../src/net/Buffer.hpp
+CMakeFiles/timeout_server_test.dir/src/net/TcpConnection.cpp.o: ../src/net/Channel.hpp
+CMakeFiles/timeout_server_test.dir/src/net/TcpConnection.cpp.o: ../src/net/EventLoop.hpp
+CMakeFiles/timeout_server_test.dir/src/net/TcpConnection.cpp.o: ../src/net/Socket.hpp
+CMakeFiles/timeout_server_test.dir/src/net/TcpConnection.cpp.o: ../src/net/TcpConnection.cpp
+CMakeFiles/timeout_server_test.dir/src/net/TcpConnection.cpp.o: ../src/net/TcpConnection.hpp
+
+CMakeFiles/timeout_server_test.dir/src/net/TcpServer.cpp.o: ../src/net/Acceptor.hpp
+CMakeFiles/timeout_server_test.dir/src/net/TcpServer.cpp.o: ../src/net/Buffer.hpp
+CMakeFiles/timeout_server_test.dir/src/net/TcpServer.cpp.o: ../src/net/Channel.hpp
+CMakeFiles/timeout_server_test.dir/src/net/TcpServer.cpp.o: ../src/net/EventLoop.hpp
+CMakeFiles/timeout_server_test.dir/src/net/TcpServer.cpp.o: ../src/net/EventLoopThread.hpp
+CMakeFiles/timeout_server_test.dir/src/net/TcpServer.cpp.o: ../src/net/EventLoopThreadPool.hpp
+CMakeFiles/timeout_server_test.dir/src/net/TcpServer.cpp.o: ../src/net/Socket.hpp
+CMakeFiles/timeout_server_test.dir/src/net/TcpServer.cpp.o: ../src/net/TcpConnection.hpp
+CMakeFiles/timeout_server_test.dir/src/net/TcpServer.cpp.o: ../src/net/TcpServer.cpp
+CMakeFiles/timeout_server_test.dir/src/net/TcpServer.cpp.o: ../src/net/TcpServer.hpp
 
 CMakeFiles/timeout_server_test.dir/tests/timeout_server_test.cpp.o: ../src/net/Channel.hpp
 CMakeFiles/timeout_server_test.dir/tests/timeout_server_test.cpp.o: ../src/net/EventLoop.hpp

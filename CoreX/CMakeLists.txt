@@ -25,6 +25,10 @@ set(NET_SOURCES
     src/net/Buffer.cpp
     src/net/Socket.cpp
     src/net/Acceptor.cpp
+    src/net/TcpServer.cpp
+    src/net/TcpConnection.cpp
+    src/net/EventLoopThreadPool.cpp
+    src/net/EventLoopThread.cpp
     ${LOG_SOURCES}
 )
 
@@ -53,3 +57,16 @@ target_include_directories(test_net_integration PRIVATE
 )
 
 target_link_libraries(test_net_integration PRIVATE Threads::Threads)
+
+# Echo server test
+add_executable(test_echo_server
+    tests/Test_EchoSever.cpp
+    ${NET_SOURCES}
+)
+
+target_include_directories(test_echo_server PRIVATE
+    ${CMAKE_SOURCE_DIR}/src/net
+    ${CMAKE_SOURCE_DIR}/src/log
+)
+
+target_link_libraries(test_echo_server PRIVATE Threads::Threads)

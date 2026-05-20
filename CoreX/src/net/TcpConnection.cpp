@@ -73,6 +73,16 @@ void TcpConnection::handleRead()
 
 /*
 * @brief:
+*     处理读事件中的错误(code review)
+*/
+void TcpConnection::handleError()
+{
+    // 出错时直接关闭连接
+    handleClose();
+}
+
+/*
+* @brief:
 *     发送数据(应用层调用)
 */
 void TcpConnection::send(const std::string& message)

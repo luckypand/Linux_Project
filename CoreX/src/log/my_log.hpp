@@ -11,6 +11,7 @@
 #include <assert.h>
 #include <sys/time.h>
 #include <stdarg.h>
+#include <unordered_map>
 #include "my_blockqueue.hpp"
 #include "my_buffer.hpp"
 
@@ -39,28 +40,35 @@ enum
     LOG_FATAL
 };
 
+// 异步日志队列条目：携带模块名称，支持按模块写入不同日志文件
+struct LogEntry {
+    std::string module;
+    std::string message;
+};
+
 class Log
 {
 public:
     static Log* Instance(); 
 
-    // 初始化日志实例（阻塞队列最大容量、日志保存路径、日志文件后缀）
-    void Init(int level,const char* path = "/log",
-        int Max_capacity = 1024,const char* suffix = ".log");
+    // 初始化日志实例（阻塞队列最大容量、日志根路径(如"/root/Cplus/CoreX/log")、日志文件后缀）
+    void Init(int level, const char* basePath = "/root/Cplus/CoreX/log",
+        int Max_capacity = 1024, const char* suffix = ".log");
     
     static void FlushLogThread();   // 异步写日志公有方法，调用私有方法asyncWrite
-    void flush();                   //刷新阻塞队列消息到log文件
-    void write(int level, const char *format,...);  // 将输出内容按照标准格式整理,写入阻塞队列
+    void flush();                   //刷新所有模块的日志文件
+    void write(const char* file, int level, const char *format,...);  // 将输出内容按照标准格式整理,写入阻塞队列
     void AppendLogLevelTitle_(int level);           // 添加日志等级
     int Isopen();                                  // 判断日志是否开启
-    int GetLevel();                                  // 判断日志是否开启
+    int GetLevel();                                  // 获取日志等级
 
 private:
-    //class
     Log();  //单例模式
     ~Log();
 
     void AsyncWrite_(); // 异步写日志方法
+    std::string ExtractModule_(const char* file);           // 从__FILE__提取模块名(如"net")
+    FILE* GetOrCreateModuleFile_(const std::string& module); // 获取/创建模块对应的日志文件
 
     static const int LOG_PATH_LEN = 256;    // 日志文件最长文件名
     static const int LOG_NAME_LEN = 256;    // 日志最长名字
@@ -69,25 +77,28 @@ private:
     bool isOpen_;               //？
     bool isAsync_;              // 是否开启异步日志
     int level_;                 //日志等级
-    int toDay_;                 //按当天日期区分文件
-    int lineCount_;             //日志行数记录
-    const char* path_;          //路径名
+    std::string basePath_;      //日志根目录（如 /root/Cplus/CoreX/log）
     const char* suffix_;        //后缀名
     Buffer buff_;               //输出的内容，缓冲区
 
-    FILE* fp_;                                          //打开log的文件指针
-    std::unique_ptr<Blockqueue<std::string>> deque_;    //阻塞队列
-    std::unique_ptr<std::thread> writeThread_;          //写线程的指针
-    std::mutex mtx_;                                    //同步日志必需的互斥量
+    // 按模块管理的日志文件状态
+    std::unordered_map<std::string, FILE*> moduleFiles_;        // 模块名→文件指针
+    std::unordered_map<std::string, int> moduleToDay_;          // 模块名→当天日期
+    std::unordered_map<std::string, int> moduleLineCount_;      // 模块名→行数计数
+
+    std::unique_ptr<Blockqueue<LogEntry>> deque_;               // 阻塞队列（条目携带模块名）
+    std::unique_ptr<std::thread> writeThread_;                  // 写线程的指针
+    std::mutex mtx_;                                            // 同步日志必需的互斥量
 };
 
 //用户调用逻辑,注意调用宏时默认用户已经创建实例使用了init()
+//宏自动传入__FILE__使得日志系统可按模块名路由到对应子目录
 #define Log_Base(level,format,...)\
     do{\
         Log* log = Log::Instance();\
         if(log->Isopen() && log->GetLevel() <= level)\
         {\
-            log->write(level,format,##__VA_ARGS__);\
+            log->write(__FILE__, level, format,##__VA_ARGS__);\
             log->flush();\
         }\
     }while(0)\
