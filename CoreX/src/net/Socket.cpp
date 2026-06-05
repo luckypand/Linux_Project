@@ -37,7 +37,7 @@ void Socket::bindAddress(int port) //主机小端字节序
     memset(&addr,0,sizeof(addr));
 
     addr.sin_family = AF_INET;
-    addr.sin_port = htonl(port);
+    addr.sin_port = htons(port);
     addr.sin_addr.s_addr = htonl(INADDR_ANY); //监听本机所有可用网卡
 
     //进行bind，失败直接警告后退出

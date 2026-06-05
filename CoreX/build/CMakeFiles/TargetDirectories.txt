@@ -1,4 +1,6 @@
 /root/Cplus/CoreX/build/CMakeFiles/rebuild_cache.dir
+/root/Cplus/CoreX/build/CMakeFiles/test_rpc_benchmark.dir
+/root/Cplus/CoreX/build/CMakeFiles/rpc.dir
 /root/Cplus/CoreX/build/CMakeFiles/edit_cache.dir
 /root/Cplus/CoreX/build/CMakeFiles/test_echo_server.dir
 /root/Cplus/CoreX/build/CMakeFiles/test_net_integration.dir

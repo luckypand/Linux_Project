@@ -1,5 +1,11 @@
 #include "TcpConnection.hpp"
 
+//整体理解
+//handleFunction是本层类对于某些调用他类状态改变时的实际动作
+//而Callback是作为自己状态改变时供外部类执行其希望动作的容器
+//TcpConnection->处理channel断开时->handleClose
+//             |_>自己断开时别的类处理->CloseCallback
+
 TcpConnection::TcpConnection(EventLoop* loop,int sockfd)
     :loop_(loop)
     ,state_(kConnencting)
@@ -14,7 +20,8 @@ TcpConnection::TcpConnection(EventLoop* loop,int sockfd)
 
 TcpConnection::~TcpConnection()
 {
-    //自动调用析构
+    //test(是否正确调用析构函数)：当TcpConnection被销毁时，自动调用析构函数，输出提示
+    // printf("~TcpConnection\n");//自动调用析构
 }
 
 /*
@@ -26,7 +33,10 @@ void TcpConnection::connectEstablished()
     //状态机改变，channel开始关注读fd事件，通知业务层执行连接回调
     state_ = kConnected;
     channel_->enableReading();
-    connectionCallback_(shared_from_this());
+    if(connectionCallback_)
+    {
+        connectionCallback_(shared_from_this());        
+    }
 }
 
 /*
@@ -160,7 +170,11 @@ void TcpConnection::handleWrite()
 /*
 * @brief:
 *     TcpConnection处理连接关闭(内核调用),区分closeCallback_，
-后者是通知上层来处理TcpConnection
+可以理解为closeCallback_是单纯的壳，不同类的closeCallback_搭载的
+handleClose才是实际被执行的动作
+例：
+TcpConnection的closeCallback_实际执行的是TcpServer的removeConnection
+channel的closeCallback_执行的是TcpConnection的handleClose
 */
 void TcpConnection::handleClose()
 {
@@ -201,7 +215,10 @@ void TcpConnection::connectDestroyed()
         setState(kDisconnected);
         channel_->disableall();
 
-        connectionCallback_(shared_from_this());
+        if(connectionCallback_)
+        {
+            connectionCallback_(shared_from_this());            
+        }
     }
     loop_->RemoveChannel(channel_.get());
 }

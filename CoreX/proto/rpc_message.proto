@@ -1,0 +1,27 @@
+// proto/rpc_message.proto
+syntax = "proto3";
+
+package CoreX.rpc;
+
+enum MessageType {
+    REQUEST  = 0;
+    RESPONSE = 1;
+    ERROR    = 2;
+}
+
+enum ErrorCode {
+    NO_ERROR         = 0;
+    WRONG_PROTO      = 1;
+    NO_SERVICE       = 2;
+    NO_METHOD        = 3;
+    INVALID_REQUEST  = 4;
+}
+
+message RpcMessage {
+    MessageType type     = 1;
+    fixed64     id       = 2;   // 请求/响应对应 ID
+    string      service  = 3;   // "MathService"
+    string      method   = 4;   // "Add"
+    bytes       payload  = 5;   // Request 或 Response 的序列化数据
+    ErrorCode   error    = 6;   // 仅 RESPONSE/ERROR 类型使用
+}

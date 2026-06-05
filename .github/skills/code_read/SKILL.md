@@ -57,20 +57,20 @@ Always follow this order unless user asks otherwise.
 
 ## Output Rules
 - Respond in Chinese; keep APIs and symbols in original code spelling.
-- Be evidence-based; if uncertain, mark as `[ĞèÈ·ÈÏ]`.
+- Be evidence-based; if uncertain, mark as `[éœ€ç¡®è®¤]`.
 - Keep structure stable and repeatable so the user can review quickly.
 - Prefer concise but complete sections over long prose.
 
 ## Required Output Template
 Use this exact skeleton.
 
-1. Èë¿ÚÓëÖ÷µ÷ÓÃÁ´
+1. å…¥å£ä¸ä¸»è°ƒç”¨é“¾
 - Main chain: A -> B -> C -> D
 - Branch conditions:
   - condition 1: ...
   - condition 2: ...
 
-2. ¹Ø¼üº¯ÊıÆõÔ¼¿¨Æ¬
+2. å…³é”®å‡½æ•°å¥‘çº¦å¡ç‰‡
 - Function: X
   - Responsibility:
   - Inputs:
@@ -78,18 +78,18 @@ Use this exact skeleton.
   - Failure points:
   - Upstream/Downstream:
 
-3. ±äÁ¿½ÇÉ«·­Òë±í
-- original_name -> role_name (Ö°Ôğ´Ê)
-- original_name -> role_name (Ö°Ôğ´Ê)
+3. å˜é‡è§’è‰²ç¿»è¯‘è¡¨
+- original_name -> role_name (èŒè´£è¯)
+- original_name -> role_name (èŒè´£è¯)
 
-4. ·ÀÒÅÍüÎåĞĞ±Ê¼Ç£¨°´º¯Êı£©
+4. é˜²é—å¿˜äº”è¡Œç¬”è®°ï¼ˆæŒ‰å‡½æ•°ï¼‰
 - Responsibility:
 - Inputs:
 - Outputs/Side effects:
 - Risks:
 - Upstream/Downstream:
 
-5. Ò×´íµãÓëµ÷ÊÔÇåµ¥
+5. æ˜“é”™ç‚¹ä¸è°ƒè¯•æ¸…å•
 - Most likely causes:
 - Step-by-step debug order:
 - Quick verification commands/checkpoints:

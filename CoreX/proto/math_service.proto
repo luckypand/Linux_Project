@@ -1,0 +1,22 @@
+// proto/math_service.proto
+syntax = "proto3";
+
+package CoreX.rpc;
+
+message MathRequest {
+    string method_name = 1;   // 注意：用了 Service 模式后，method_name 可以从 RpcMessage 中获取
+    int32  a          = 2;    // 这个字段也可以废弃，保留 a/b 即可
+    int32  b          = 3;
+}
+
+message MathResponse {
+    int32  result    = 1;
+    bool   success   = 2;
+    string error_msg = 3;
+}
+
+// ↓ 这是关键：定义 Service
+service MathService {
+    rpc Add(MathRequest) returns (MathResponse);
+    rpc Sub(MathRequest) returns (MathResponse);
+}

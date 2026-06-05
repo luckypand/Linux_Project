@@ -20,8 +20,8 @@ user-invocable: true
 ## Output Rules
 - Respond in Chinese, keep technical terms in English.
 - Use Markdown with clear sections, tables, and bullet lists.
-- Mark inferred content as `[ÍÆ²â]`.
-- Mark items needing verification as `[ĞèÈ·ÈÏ]`.
+- Mark inferred content as `[æ¨æµ‹]`.
+- Mark items needing verification as `[éœ€ç¡®è®¤]`.
 - Prioritize evidence from code structure, build scripts, and entry points.
 - Avoid obvious filler; each conclusion should map to observable project artifacts.
 
@@ -79,16 +79,16 @@ Use only if user asks or `focus_area` requires it.
 ## Deliverable Template
 Use this output skeleton:
 
-1. ÏîÄ¿±¾ÖÊÕªÒª (3-5¾ä)
-2. ¼¼ÊõÕ»Óë¼Ü¹¹Í¼
-3. Ä¿Â¼½á¹¹ÓëÈë¿Ú¶¨Î»
-4. Ò»ÌõµäĞÍÊı¾İÁ÷×·×Ù
-5. ºËĞÄÒµÎñÂß¼­Çåµ¥ (3-5Ïî)
-6. ¿ìËÙÉÏÊÖÖ¸ÄÏ (º¬ÃüÁî)
-7. ·çÏÕÇåµ¥ÓëÓÅÏÈ¼¶ (Á¢¼´ĞŞ¸´/¼Æ»®ĞŞ¸´/½ÓÊÜ·çÏÕ)
-8. [¿ÉÑ¡] Õë¶Ô `focus_area` µÄÉî¶È·ÖÎö
+1. é¡¹ç›®æœ¬è´¨æ‘˜è¦ (3-5å¥)
+2. æŠ€æœ¯æ ˆä¸æ¶æ„å›¾
+3. ç›®å½•ç»“æ„ä¸å…¥å£å®šä½
+4. ä¸€æ¡å…¸å‹æ•°æ®æµè¿½è¸ª
+5. æ ¸å¿ƒä¸šåŠ¡é€»è¾‘æ¸…å• (3-5é¡¹)
+6. å¿«é€Ÿä¸Šæ‰‹æŒ‡å— (å«å‘½ä»¤)
+7. é£é™©æ¸…å•ä¸ä¼˜å…ˆçº§ (ç«‹å³ä¿®å¤/è®¡åˆ’ä¿®å¤/æ¥å—é£é™©)
+8. [å¯é€‰] é’ˆå¯¹ `focus_area` çš„æ·±åº¦åˆ†æ
 
 ## Guardrails
 - Never claim certainty without evidence.
-- If data is missing, explicitly state `[ĞèÈ·ÈÏ]` and list how to verify.
+- If data is missing, explicitly state `[éœ€ç¡®è®¤]` and list how to verify.
 - Prefer minimal assumptions and keep analysis actionable.

@@ -2,13 +2,35 @@
 cmake_minimum_required(VERSION 3.8)
 project(CoreX LANGUAGES CXX)
 
+# Export compile_commands.json for editors/IntelliSense.
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
 # Use C++17 by default
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
+# ============================================================
+# AddressSanitizer + LeakSanitizer (ASan + LSan)
+# Enable with: cmake -DENABLE_ASAN=ON ..
+# ============================================================
+option(ENABLE_ASAN "Enable AddressSanitizer and LeakSanitizer" OFF)
+
+if(ENABLE_ASAN)
+    message(STATUS "ASan + LSan enabled")
+    set(ASAN_FLAGS "-fsanitize=address -fno-omit-frame-pointer -g -O1")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${ASAN_FLAGS}")
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${ASAN_FLAGS}")
+    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -fsanitize=address")
+    set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -fsanitize=address")
+    set(CMAKE_EXECUTABLE_SUFFIX "_ASAN")
+endif()
+
 # Find thread library
 find_package(Threads REQUIRED)
+
+# Find Protobuf
+find_package(Protobuf REQUIRED)
 
 # Log library sources
 set(LOG_SOURCES
@@ -70,3 +92,53 @@ target_include_directories(test_echo_server PRIVATE
 )
 
 target_link_libraries(test_echo_server PRIVATE Threads::Threads)
+
+# ============================================================
+# Proto sources (pre-generated .pb.cc files)
+# ============================================================
+set(PROTO_SOURCES
+    proto/rpc_message.pb.cc
+    proto/math_service.pb.cc
+)
+
+# ============================================================
+# RPC library
+# ============================================================
+add_library(rpc STATIC
+    src/rpc/RpcCodec.cpp
+    src/rpc/RpcServer.cpp
+    ${NET_SOURCES}
+    ${PROTO_SOURCES}
+)
+
+target_include_directories(rpc PUBLIC
+    ${CMAKE_SOURCE_DIR}/src/net
+    ${CMAKE_SOURCE_DIR}/src/log
+    ${CMAKE_SOURCE_DIR}/src/rpc
+    ${CMAKE_SOURCE_DIR}/proto
+    ${Protobuf_INCLUDE_DIRS}
+)
+
+target_link_libraries(rpc PUBLIC
+    Threads::Threads
+    ${Protobuf_LIBRARIES}
+)
+
+# ============================================================
+# RPC Benchmark Test
+# ============================================================
+add_executable(test_rpc_benchmark
+    tests/test_rpc_benchmark.cpp
+)
+
+target_include_directories(test_rpc_benchmark PRIVATE
+    ${CMAKE_SOURCE_DIR}/src/net
+    ${CMAKE_SOURCE_DIR}/src/log
+    ${CMAKE_SOURCE_DIR}/src/rpc
+    ${CMAKE_SOURCE_DIR}/proto
+    ${Protobuf_INCLUDE_DIRS}
+)
+
+target_link_libraries(test_rpc_benchmark PRIVATE
+    rpc
+)

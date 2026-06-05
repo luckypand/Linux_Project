@@ -3,6 +3,12 @@
 #include <iterator> 
 #include <sys/uio.h>
 #include <unistd.h>
+#include <cstring>
+#include <arpa/inet.h> // 提供 ntohl, htonl
+
+// /*****************/*******************/********************/
+// PretendBytes      ReadIndex_           WriteIndex_
+// |                 peek()               beginWrite()
 
 Buffer::Buffer(size_t buffer_size)
     :buffer_(kInitBytes + kCheapPretendBytes) 
@@ -233,4 +239,31 @@ ssize_t Buffer::writeFd(int fd, int* savedErrno)
         this->retrieve(n);
     }
     return n;
+}
+
+/*
+* @brief:
+*     读取4字节魔数,转换字节序后返回
+*/
+uint32_t Buffer::peekInt32() const
+{
+    //注意const函数只能调用类中const类型函数
+    assert(this->ReadBytes() >= sizeof(u_int32_t));
+    uint32_t magic_name = 0;
+    ::memcpy(&magic_name,peek(),sizeof(magic_name));
+    return ::ntohl(magic_name);
+}
+
+/*
+* @brief:
+*     从Buffer指定位置读取4字节数返回
+* @parameter:
+      len:指定Buffer读取位置字节
+*/
+uint32_t Buffer::peekInt32(size_t offset) const
+{
+    assert(this->ReadBytes() >= sizeof(u_int32_t));
+    uint32_t magic_name = 0;
+    ::memcpy(&magic_name,peek() + offset,sizeof(magic_name));
+    return ::ntohl(magic_name);
 }

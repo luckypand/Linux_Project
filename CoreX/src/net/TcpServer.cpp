@@ -62,15 +62,21 @@ void TcpServer::newConnection(int sockfd, const std::string& peerAddr)
     nextConnectId++;
     std::string connectName = name_ + buff;
     //实例化一个Tcpconnection，绑定到对应loop上，初始化其回调
-    TcpConnectionPtr conn = std::make_shared<TcpConnection>(loop_,sockfd);
+    TcpConnectionPtr conn = std::make_shared<TcpConnection>(subloop,sockfd);
     connections_[connectName] = conn;
     conn->setConnectionCallback(connectionCallback_);
     conn->setMessageCallback(messageCallback_);
     conn->setwriteCompleteCallback(writeCompleteCallback_);
     conn->setCloseCallback(
-        [this,conn,connectName](const TcpConnectionPtr&){
+
+        [this,connectName](const TcpConnectionPtr& conn){
             this->removeConnection(conn,connectName);
         }
+        
+        // [this,conn,connectName](const TcpConnectionPtr&){
+        //     this->removeConnection(conn,connectName);
+        // }
+        //**//此处使用lamda捕获conn会造成其内部永久持有一个TcpConnectionPtr conn，造成无法析构
     );
 
     //跨线程通知子loop去epoll中注册自己的新连接读事件

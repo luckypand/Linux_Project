@@ -78,7 +78,7 @@ bool HeapTimer::siftdown(size_t i,size_t n)
     assert(i < TimeHeap_.size());
     assert(n <= TimeHeap_.size());
     //已知父结点，判断左右孩子那个更小，与更小的比较，父大于子则交换，否则跳出
-    size_t child = (i - 1) / 2;
+    size_t child = i * 2 + 1;
     size_t index = i;
 
     while(child < n)

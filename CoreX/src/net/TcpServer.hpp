@@ -16,11 +16,11 @@ public:
     TcpServer(EventLoop* loop,const std::string& inport,uint16_t port,const std::string& name);
     ~TcpServer();
     
-    void setThreadNum(int numThreads);
+    void setThreadNum(int numThreads = 4);
     void newConnection(int sockfd, const std::string& peerAddr);
     void start();
 
-    //¿ª·Å¸øÓÃ»§µÄ»Øµ÷½Ó¿Ú
+    //å¼€æ”¾ç»™ç”¨æˆ·çš„å›è°ƒæ¥å£
     void setConnectionCallback(TcpConnection::connectionCallback cb) { connectionCallback_ = std::move(cb); }
     void setMessageCallback(TcpConnection::messageCallback cb) { messageCallback_ = std::move(cb); }
     void setWriteCompleteCallback(TcpConnection::writeCompleteCallback cb) { writeCompleteCallback_ = std::move(cb); }
@@ -30,23 +30,23 @@ private:
 
     EventLoop* loop_{nullptr};  //main Reactor
 
-    const std::string inport_;  //·şÎñÆ÷×ÔÉí¼àÌıip
-    const std::string name_;    //·şÎñÆ÷Ãû×Ö
+    const std::string inport_;  //æœåŠ¡å™¨è‡ªèº«ç›‘å¬ip
+    const std::string name_;    //æœåŠ¡å™¨åå­—
 
-    //TcpServerµÄ½Ó´¥×ÊÔ´(×¢Òâ£¬Ïß³Ì³ØÉúÃüÖÜÆÚ²»ÍêÈ«°ó¶¨TcpServer)
+    //TcpServerçš„æ¥è§¦èµ„æº(æ³¨æ„ï¼Œçº¿ç¨‹æ± ç”Ÿå‘½å‘¨æœŸä¸å®Œå…¨ç»‘å®šTcpServer)
     std::unique_ptr<Acceptor> acceptor_;
     std::shared_ptr<EventLoopThreadPool> threadPool_;
 
-    //ÒµÎñ»Øµ÷(Ìá¹©¸øÓÃ»§²ãÃæµÄ)
+    //ä¸šåŠ¡å›è°ƒ(æä¾›ç»™ç”¨æˆ·å±‚é¢çš„)
     TcpConnection::connectionCallback connectionCallback_;
     TcpConnection::messageCallback messageCallback_;
     TcpConnection::closeCallback closeCallback_;
     TcpConnection::writeCompleteCallback writeCompleteCallback_;
 
-    //×´Ì¬Î»¼ÇÂ¼
-    std::atomic_int started{0};//¼ÇÂ¼µÚÒ»´ÎÆô¶¯·şÎñÆ÷
-    int nextConnectId{1};      //¼ÇÂ¼ÏÂÒ»¸öÒªÂÖÑ¯µÄReactor
+    //çŠ¶æ€ä½è®°å½•
+    std::atomic_int started{0};//è®°å½•ç¬¬ä¸€æ¬¡å¯åŠ¨æœåŠ¡å™¨
+    int nextConnectId{1};      //è®°å½•ä¸‹ä¸€ä¸ªè¦è½®è¯¢çš„Reactor
 
-    //¼ÇÂ¼±í£¬¼ÇÂ¼¶ÔÓ¦µÄÏß³ÌºÍÁ¬½Ó
+    //è®°å½•è¡¨ï¼Œè®°å½•å¯¹åº”çš„çº¿ç¨‹å’Œè¿æ¥
     std::unordered_map<std::string,TcpConnectionPtr> connections_;
 };

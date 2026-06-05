@@ -2,6 +2,7 @@
 #include "Channel.hpp"
 #include <unistd.h>
 #include <string.h>
+#include <iostream>
 
 //红黑树下的fd状态机变化标记，记录的是fd本身与epoll挂载红黑树的状态
 const int kNEW = -1;    // 新的，还不在 epoll 红黑树上
@@ -19,6 +20,8 @@ Poller::Poller(EventLoop* loop)
 Poller::~Poller()
 {
     ::close(pollerfd_);
+    //test
+    // std::cout << "Poller is free" << std::endl;
 }
 
 void Poller::poll(int TimeoutMS,ChannelList& activeChannels_)

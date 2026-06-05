@@ -111,6 +111,32 @@ depend:
 .PHONY : depend
 
 #=============================================================================
+# Target rules for targets named test_rpc_benchmark
+
+# Build rule for target.
+test_rpc_benchmark: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 test_rpc_benchmark
+.PHONY : test_rpc_benchmark
+
+# fast build rule for target.
+test_rpc_benchmark/fast:
+	$(MAKE) -f CMakeFiles/test_rpc_benchmark.dir/build.make CMakeFiles/test_rpc_benchmark.dir/build
+.PHONY : test_rpc_benchmark/fast
+
+#=============================================================================
+# Target rules for targets named rpc
+
+# Build rule for target.
+rpc: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 rpc
+.PHONY : rpc
+
+# fast build rule for target.
+rpc/fast:
+	$(MAKE) -f CMakeFiles/rpc.dir/build.make CMakeFiles/rpc.dir/build
+.PHONY : rpc/fast
+
+#=============================================================================
 # Target rules for targets named test_echo_server
 
 # Build rule for target.
@@ -149,12 +175,67 @@ timeout_server_test/fast:
 	$(MAKE) -f CMakeFiles/timeout_server_test.dir/build.make CMakeFiles/timeout_server_test.dir/build
 .PHONY : timeout_server_test/fast
 
+proto/math_service.pb.o: proto/math_service.pb.cc.o
+
+.PHONY : proto/math_service.pb.o
+
+# target to build an object file
+proto/math_service.pb.cc.o:
+	$(MAKE) -f CMakeFiles/rpc.dir/build.make CMakeFiles/rpc.dir/proto/math_service.pb.cc.o
+.PHONY : proto/math_service.pb.cc.o
+
+proto/math_service.pb.i: proto/math_service.pb.cc.i
+
+.PHONY : proto/math_service.pb.i
+
+# target to preprocess a source file
+proto/math_service.pb.cc.i:
+	$(MAKE) -f CMakeFiles/rpc.dir/build.make CMakeFiles/rpc.dir/proto/math_service.pb.cc.i
+.PHONY : proto/math_service.pb.cc.i
+
+proto/math_service.pb.s: proto/math_service.pb.cc.s
+
+.PHONY : proto/math_service.pb.s
+
+# target to generate assembly for a file
+proto/math_service.pb.cc.s:
+	$(MAKE) -f CMakeFiles/rpc.dir/build.make CMakeFiles/rpc.dir/proto/math_service.pb.cc.s
+.PHONY : proto/math_service.pb.cc.s
+
+proto/rpc_message.pb.o: proto/rpc_message.pb.cc.o
+
+.PHONY : proto/rpc_message.pb.o
+
+# target to build an object file
+proto/rpc_message.pb.cc.o:
+	$(MAKE) -f CMakeFiles/rpc.dir/build.make CMakeFiles/rpc.dir/proto/rpc_message.pb.cc.o
+.PHONY : proto/rpc_message.pb.cc.o
+
+proto/rpc_message.pb.i: proto/rpc_message.pb.cc.i
+
+.PHONY : proto/rpc_message.pb.i
+
+# target to preprocess a source file
+proto/rpc_message.pb.cc.i:
+	$(MAKE) -f CMakeFiles/rpc.dir/build.make CMakeFiles/rpc.dir/proto/rpc_message.pb.cc.i
+.PHONY : proto/rpc_message.pb.cc.i
+
+proto/rpc_message.pb.s: proto/rpc_message.pb.cc.s
+
+.PHONY : proto/rpc_message.pb.s
+
+# target to generate assembly for a file
+proto/rpc_message.pb.cc.s:
+	$(MAKE) -f CMakeFiles/rpc.dir/build.make CMakeFiles/rpc.dir/proto/rpc_message.pb.cc.s
+.PHONY : proto/rpc_message.pb.cc.s
+
 src/log/my_buffer.o: src/log/my_buffer.cpp.o
 
 .PHONY : src/log/my_buffer.o
 
 # target to build an object file
 src/log/my_buffer.cpp.o:
+	$(MAKE) -f CMakeFiles/rpc.dir/build.make CMakeFiles/rpc.dir/src/log/my_buffer.cpp.o
 	$(MAKE) -f CMakeFiles/test_echo_server.dir/build.make CMakeFiles/test_echo_server.dir/src/log/my_buffer.cpp.o
 	$(MAKE) -f CMakeFiles/test_net_integration.dir/build.make CMakeFiles/test_net_integration.dir/src/log/my_buffer.cpp.o
 	$(MAKE) -f CMakeFiles/timeout_server_test.dir/build.make CMakeFiles/timeout_server_test.dir/src/log/my_buffer.cpp.o
@@ -166,6 +247,7 @@ src/log/my_buffer.i: src/log/my_buffer.cpp.i
 
 # target to preprocess a source file
 src/log/my_buffer.cpp.i:
+	$(MAKE) -f CMakeFiles/rpc.dir/build.make CMakeFiles/rpc.dir/src/log/my_buffer.cpp.i
 	$(MAKE) -f CMakeFiles/test_echo_server.dir/build.make CMakeFiles/test_echo_server.dir/src/log/my_buffer.cpp.i
 	$(MAKE) -f CMakeFiles/test_net_integration.dir/build.make CMakeFiles/test_net_integration.dir/src/log/my_buffer.cpp.i
 	$(MAKE) -f CMakeFiles/timeout_server_test.dir/build.make CMakeFiles/timeout_server_test.dir/src/log/my_buffer.cpp.i
@@ -177,6 +259,7 @@ src/log/my_buffer.s: src/log/my_buffer.cpp.s
 
 # target to generate assembly for a file
 src/log/my_buffer.cpp.s:
+	$(MAKE) -f CMakeFiles/rpc.dir/build.make CMakeFiles/rpc.dir/src/log/my_buffer.cpp.s
 	$(MAKE) -f CMakeFiles/test_echo_server.dir/build.make CMakeFiles/test_echo_server.dir/src/log/my_buffer.cpp.s
 	$(MAKE) -f CMakeFiles/test_net_integration.dir/build.make CMakeFiles/test_net_integration.dir/src/log/my_buffer.cpp.s
 	$(MAKE) -f CMakeFiles/timeout_server_test.dir/build.make CMakeFiles/timeout_server_test.dir/src/log/my_buffer.cpp.s
@@ -188,6 +271,7 @@ src/log/my_log.o: src/log/my_log.cpp.o
 
 # target to build an object file
 src/log/my_log.cpp.o:
+	$(MAKE) -f CMakeFiles/rpc.dir/build.make CMakeFiles/rpc.dir/src/log/my_log.cpp.o
 	$(MAKE) -f CMakeFiles/test_echo_server.dir/build.make CMakeFiles/test_echo_server.dir/src/log/my_log.cpp.o
 	$(MAKE) -f CMakeFiles/test_net_integration.dir/build.make CMakeFiles/test_net_integration.dir/src/log/my_log.cpp.o
 	$(MAKE) -f CMakeFiles/timeout_server_test.dir/build.make CMakeFiles/timeout_server_test.dir/src/log/my_log.cpp.o
@@ -199,6 +283,7 @@ src/log/my_log.i: src/log/my_log.cpp.i
 
 # target to preprocess a source file
 src/log/my_log.cpp.i:
+	$(MAKE) -f CMakeFiles/rpc.dir/build.make CMakeFiles/rpc.dir/src/log/my_log.cpp.i
 	$(MAKE) -f CMakeFiles/test_echo_server.dir/build.make CMakeFiles/test_echo_server.dir/src/log/my_log.cpp.i
 	$(MAKE) -f CMakeFiles/test_net_integration.dir/build.make CMakeFiles/test_net_integration.dir/src/log/my_log.cpp.i
 	$(MAKE) -f CMakeFiles/timeout_server_test.dir/build.make CMakeFiles/timeout_server_test.dir/src/log/my_log.cpp.i
@@ -210,6 +295,7 @@ src/log/my_log.s: src/log/my_log.cpp.s
 
 # target to generate assembly for a file
 src/log/my_log.cpp.s:
+	$(MAKE) -f CMakeFiles/rpc.dir/build.make CMakeFiles/rpc.dir/src/log/my_log.cpp.s
 	$(MAKE) -f CMakeFiles/test_echo_server.dir/build.make CMakeFiles/test_echo_server.dir/src/log/my_log.cpp.s
 	$(MAKE) -f CMakeFiles/test_net_integration.dir/build.make CMakeFiles/test_net_integration.dir/src/log/my_log.cpp.s
 	$(MAKE) -f CMakeFiles/timeout_server_test.dir/build.make CMakeFiles/timeout_server_test.dir/src/log/my_log.cpp.s
@@ -221,6 +307,7 @@ src/net/Acceptor.o: src/net/Acceptor.cpp.o
 
 # target to build an object file
 src/net/Acceptor.cpp.o:
+	$(MAKE) -f CMakeFiles/rpc.dir/build.make CMakeFiles/rpc.dir/src/net/Acceptor.cpp.o
 	$(MAKE) -f CMakeFiles/test_echo_server.dir/build.make CMakeFiles/test_echo_server.dir/src/net/Acceptor.cpp.o
 	$(MAKE) -f CMakeFiles/test_net_integration.dir/build.make CMakeFiles/test_net_integration.dir/src/net/Acceptor.cpp.o
 	$(MAKE) -f CMakeFiles/timeout_server_test.dir/build.make CMakeFiles/timeout_server_test.dir/src/net/Acceptor.cpp.o
@@ -232,6 +319,7 @@ src/net/Acceptor.i: src/net/Acceptor.cpp.i
 
 # target to preprocess a source file
 src/net/Acceptor.cpp.i:
+	$(MAKE) -f CMakeFiles/rpc.dir/build.make CMakeFiles/rpc.dir/src/net/Acceptor.cpp.i
 	$(MAKE) -f CMakeFiles/test_echo_server.dir/build.make CMakeFiles/test_echo_server.dir/src/net/Acceptor.cpp.i
 	$(MAKE) -f CMakeFiles/test_net_integration.dir/build.make CMakeFiles/test_net_integration.dir/src/net/Acceptor.cpp.i
 	$(MAKE) -f CMakeFiles/timeout_server_test.dir/build.make CMakeFiles/timeout_server_test.dir/src/net/Acceptor.cpp.i
@@ -243,6 +331,7 @@ src/net/Acceptor.s: src/net/Acceptor.cpp.s
 
 # target to generate assembly for a file
 src/net/Acceptor.cpp.s:
+	$(MAKE) -f CMakeFiles/rpc.dir/build.make CMakeFiles/rpc.dir/src/net/Acceptor.cpp.s
 	$(MAKE) -f CMakeFiles/test_echo_server.dir/build.make CMakeFiles/test_echo_server.dir/src/net/Acceptor.cpp.s
 	$(MAKE) -f CMakeFiles/test_net_integration.dir/build.make CMakeFiles/test_net_integration.dir/src/net/Acceptor.cpp.s
 	$(MAKE) -f CMakeFiles/timeout_server_test.dir/build.make CMakeFiles/timeout_server_test.dir/src/net/Acceptor.cpp.s
@@ -254,6 +343,7 @@ src/net/Buffer.o: src/net/Buffer.cpp.o
 
 # target to build an object file
 src/net/Buffer.cpp.o:
+	$(MAKE) -f CMakeFiles/rpc.dir/build.make CMakeFiles/rpc.dir/src/net/Buffer.cpp.o
 	$(MAKE) -f CMakeFiles/test_echo_server.dir/build.make CMakeFiles/test_echo_server.dir/src/net/Buffer.cpp.o
 	$(MAKE) -f CMakeFiles/test_net_integration.dir/build.make CMakeFiles/test_net_integration.dir/src/net/Buffer.cpp.o
 	$(MAKE) -f CMakeFiles/timeout_server_test.dir/build.make CMakeFiles/timeout_server_test.dir/src/net/Buffer.cpp.o
@@ -265,6 +355,7 @@ src/net/Buffer.i: src/net/Buffer.cpp.i
 
 # target to preprocess a source file
 src/net/Buffer.cpp.i:
+	$(MAKE) -f CMakeFiles/rpc.dir/build.make CMakeFiles/rpc.dir/src/net/Buffer.cpp.i
 	$(MAKE) -f CMakeFiles/test_echo_server.dir/build.make CMakeFiles/test_echo_server.dir/src/net/Buffer.cpp.i
 	$(MAKE) -f CMakeFiles/test_net_integration.dir/build.make CMakeFiles/test_net_integration.dir/src/net/Buffer.cpp.i
 	$(MAKE) -f CMakeFiles/timeout_server_test.dir/build.make CMakeFiles/timeout_server_test.dir/src/net/Buffer.cpp.i
@@ -276,6 +367,7 @@ src/net/Buffer.s: src/net/Buffer.cpp.s
 
 # target to generate assembly for a file
 src/net/Buffer.cpp.s:
+	$(MAKE) -f CMakeFiles/rpc.dir/build.make CMakeFiles/rpc.dir/src/net/Buffer.cpp.s
 	$(MAKE) -f CMakeFiles/test_echo_server.dir/build.make CMakeFiles/test_echo_server.dir/src/net/Buffer.cpp.s
 	$(MAKE) -f CMakeFiles/test_net_integration.dir/build.make CMakeFiles/test_net_integration.dir/src/net/Buffer.cpp.s
 	$(MAKE) -f CMakeFiles/timeout_server_test.dir/build.make CMakeFiles/timeout_server_test.dir/src/net/Buffer.cpp.s
@@ -287,6 +379,7 @@ src/net/Channel.o: src/net/Channel.cpp.o
 
 # target to build an object file
 src/net/Channel.cpp.o:
+	$(MAKE) -f CMakeFiles/rpc.dir/build.make CMakeFiles/rpc.dir/src/net/Channel.cpp.o
 	$(MAKE) -f CMakeFiles/test_echo_server.dir/build.make CMakeFiles/test_echo_server.dir/src/net/Channel.cpp.o
 	$(MAKE) -f CMakeFiles/test_net_integration.dir/build.make CMakeFiles/test_net_integration.dir/src/net/Channel.cpp.o
 	$(MAKE) -f CMakeFiles/timeout_server_test.dir/build.make CMakeFiles/timeout_server_test.dir/src/net/Channel.cpp.o
@@ -298,6 +391,7 @@ src/net/Channel.i: src/net/Channel.cpp.i
 
 # target to preprocess a source file
 src/net/Channel.cpp.i:
+	$(MAKE) -f CMakeFiles/rpc.dir/build.make CMakeFiles/rpc.dir/src/net/Channel.cpp.i
 	$(MAKE) -f CMakeFiles/test_echo_server.dir/build.make CMakeFiles/test_echo_server.dir/src/net/Channel.cpp.i
 	$(MAKE) -f CMakeFiles/test_net_integration.dir/build.make CMakeFiles/test_net_integration.dir/src/net/Channel.cpp.i
 	$(MAKE) -f CMakeFiles/timeout_server_test.dir/build.make CMakeFiles/timeout_server_test.dir/src/net/Channel.cpp.i
@@ -309,6 +403,7 @@ src/net/Channel.s: src/net/Channel.cpp.s
 
 # target to generate assembly for a file
 src/net/Channel.cpp.s:
+	$(MAKE) -f CMakeFiles/rpc.dir/build.make CMakeFiles/rpc.dir/src/net/Channel.cpp.s
 	$(MAKE) -f CMakeFiles/test_echo_server.dir/build.make CMakeFiles/test_echo_server.dir/src/net/Channel.cpp.s
 	$(MAKE) -f CMakeFiles/test_net_integration.dir/build.make CMakeFiles/test_net_integration.dir/src/net/Channel.cpp.s
 	$(MAKE) -f CMakeFiles/timeout_server_test.dir/build.make CMakeFiles/timeout_server_test.dir/src/net/Channel.cpp.s
@@ -320,6 +415,7 @@ src/net/EventLoop.o: src/net/EventLoop.cpp.o
 
 # target to build an object file
 src/net/EventLoop.cpp.o:
+	$(MAKE) -f CMakeFiles/rpc.dir/build.make CMakeFiles/rpc.dir/src/net/EventLoop.cpp.o
 	$(MAKE) -f CMakeFiles/test_echo_server.dir/build.make CMakeFiles/test_echo_server.dir/src/net/EventLoop.cpp.o
 	$(MAKE) -f CMakeFiles/test_net_integration.dir/build.make CMakeFiles/test_net_integration.dir/src/net/EventLoop.cpp.o
 	$(MAKE) -f CMakeFiles/timeout_server_test.dir/build.make CMakeFiles/timeout_server_test.dir/src/net/EventLoop.cpp.o
@@ -331,6 +427,7 @@ src/net/EventLoop.i: src/net/EventLoop.cpp.i
 
 # target to preprocess a source file
 src/net/EventLoop.cpp.i:
+	$(MAKE) -f CMakeFiles/rpc.dir/build.make CMakeFiles/rpc.dir/src/net/EventLoop.cpp.i
 	$(MAKE) -f CMakeFiles/test_echo_server.dir/build.make CMakeFiles/test_echo_server.dir/src/net/EventLoop.cpp.i
 	$(MAKE) -f CMakeFiles/test_net_integration.dir/build.make CMakeFiles/test_net_integration.dir/src/net/EventLoop.cpp.i
 	$(MAKE) -f CMakeFiles/timeout_server_test.dir/build.make CMakeFiles/timeout_server_test.dir/src/net/EventLoop.cpp.i
@@ -342,6 +439,7 @@ src/net/EventLoop.s: src/net/EventLoop.cpp.s
 
 # target to generate assembly for a file
 src/net/EventLoop.cpp.s:
+	$(MAKE) -f CMakeFiles/rpc.dir/build.make CMakeFiles/rpc.dir/src/net/EventLoop.cpp.s
 	$(MAKE) -f CMakeFiles/test_echo_server.dir/build.make CMakeFiles/test_echo_server.dir/src/net/EventLoop.cpp.s
 	$(MAKE) -f CMakeFiles/test_net_integration.dir/build.make CMakeFiles/test_net_integration.dir/src/net/EventLoop.cpp.s
 	$(MAKE) -f CMakeFiles/timeout_server_test.dir/build.make CMakeFiles/timeout_server_test.dir/src/net/EventLoop.cpp.s
@@ -353,6 +451,7 @@ src/net/EventLoopThread.o: src/net/EventLoopThread.cpp.o
 
 # target to build an object file
 src/net/EventLoopThread.cpp.o:
+	$(MAKE) -f CMakeFiles/rpc.dir/build.make CMakeFiles/rpc.dir/src/net/EventLoopThread.cpp.o
 	$(MAKE) -f CMakeFiles/test_echo_server.dir/build.make CMakeFiles/test_echo_server.dir/src/net/EventLoopThread.cpp.o
 	$(MAKE) -f CMakeFiles/test_net_integration.dir/build.make CMakeFiles/test_net_integration.dir/src/net/EventLoopThread.cpp.o
 	$(MAKE) -f CMakeFiles/timeout_server_test.dir/build.make CMakeFiles/timeout_server_test.dir/src/net/EventLoopThread.cpp.o
@@ -364,6 +463,7 @@ src/net/EventLoopThread.i: src/net/EventLoopThread.cpp.i
 
 # target to preprocess a source file
 src/net/EventLoopThread.cpp.i:
+	$(MAKE) -f CMakeFiles/rpc.dir/build.make CMakeFiles/rpc.dir/src/net/EventLoopThread.cpp.i
 	$(MAKE) -f CMakeFiles/test_echo_server.dir/build.make CMakeFiles/test_echo_server.dir/src/net/EventLoopThread.cpp.i
 	$(MAKE) -f CMakeFiles/test_net_integration.dir/build.make CMakeFiles/test_net_integration.dir/src/net/EventLoopThread.cpp.i
 	$(MAKE) -f CMakeFiles/timeout_server_test.dir/build.make CMakeFiles/timeout_server_test.dir/src/net/EventLoopThread.cpp.i
@@ -375,6 +475,7 @@ src/net/EventLoopThread.s: src/net/EventLoopThread.cpp.s
 
 # target to generate assembly for a file
 src/net/EventLoopThread.cpp.s:
+	$(MAKE) -f CMakeFiles/rpc.dir/build.make CMakeFiles/rpc.dir/src/net/EventLoopThread.cpp.s
 	$(MAKE) -f CMakeFiles/test_echo_server.dir/build.make CMakeFiles/test_echo_server.dir/src/net/EventLoopThread.cpp.s
 	$(MAKE) -f CMakeFiles/test_net_integration.dir/build.make CMakeFiles/test_net_integration.dir/src/net/EventLoopThread.cpp.s
 	$(MAKE) -f CMakeFiles/timeout_server_test.dir/build.make CMakeFiles/timeout_server_test.dir/src/net/EventLoopThread.cpp.s
@@ -386,6 +487,7 @@ src/net/EventLoopThreadPool.o: src/net/EventLoopThreadPool.cpp.o
 
 # target to build an object file
 src/net/EventLoopThreadPool.cpp.o:
+	$(MAKE) -f CMakeFiles/rpc.dir/build.make CMakeFiles/rpc.dir/src/net/EventLoopThreadPool.cpp.o
 	$(MAKE) -f CMakeFiles/test_echo_server.dir/build.make CMakeFiles/test_echo_server.dir/src/net/EventLoopThreadPool.cpp.o
 	$(MAKE) -f CMakeFiles/test_net_integration.dir/build.make CMakeFiles/test_net_integration.dir/src/net/EventLoopThreadPool.cpp.o
 	$(MAKE) -f CMakeFiles/timeout_server_test.dir/build.make CMakeFiles/timeout_server_test.dir/src/net/EventLoopThreadPool.cpp.o
@@ -397,6 +499,7 @@ src/net/EventLoopThreadPool.i: src/net/EventLoopThreadPool.cpp.i
 
 # target to preprocess a source file
 src/net/EventLoopThreadPool.cpp.i:
+	$(MAKE) -f CMakeFiles/rpc.dir/build.make CMakeFiles/rpc.dir/src/net/EventLoopThreadPool.cpp.i
 	$(MAKE) -f CMakeFiles/test_echo_server.dir/build.make CMakeFiles/test_echo_server.dir/src/net/EventLoopThreadPool.cpp.i
 	$(MAKE) -f CMakeFiles/test_net_integration.dir/build.make CMakeFiles/test_net_integration.dir/src/net/EventLoopThreadPool.cpp.i
 	$(MAKE) -f CMakeFiles/timeout_server_test.dir/build.make CMakeFiles/timeout_server_test.dir/src/net/EventLoopThreadPool.cpp.i
@@ -408,6 +511,7 @@ src/net/EventLoopThreadPool.s: src/net/EventLoopThreadPool.cpp.s
 
 # target to generate assembly for a file
 src/net/EventLoopThreadPool.cpp.s:
+	$(MAKE) -f CMakeFiles/rpc.dir/build.make CMakeFiles/rpc.dir/src/net/EventLoopThreadPool.cpp.s
 	$(MAKE) -f CMakeFiles/test_echo_server.dir/build.make CMakeFiles/test_echo_server.dir/src/net/EventLoopThreadPool.cpp.s
 	$(MAKE) -f CMakeFiles/test_net_integration.dir/build.make CMakeFiles/test_net_integration.dir/src/net/EventLoopThreadPool.cpp.s
 	$(MAKE) -f CMakeFiles/timeout_server_test.dir/build.make CMakeFiles/timeout_server_test.dir/src/net/EventLoopThreadPool.cpp.s
@@ -419,6 +523,7 @@ src/net/HeapTimer.o: src/net/HeapTimer.cpp.o
 
 # target to build an object file
 src/net/HeapTimer.cpp.o:
+	$(MAKE) -f CMakeFiles/rpc.dir/build.make CMakeFiles/rpc.dir/src/net/HeapTimer.cpp.o
 	$(MAKE) -f CMakeFiles/test_echo_server.dir/build.make CMakeFiles/test_echo_server.dir/src/net/HeapTimer.cpp.o
 	$(MAKE) -f CMakeFiles/test_net_integration.dir/build.make CMakeFiles/test_net_integration.dir/src/net/HeapTimer.cpp.o
 	$(MAKE) -f CMakeFiles/timeout_server_test.dir/build.make CMakeFiles/timeout_server_test.dir/src/net/HeapTimer.cpp.o
@@ -430,6 +535,7 @@ src/net/HeapTimer.i: src/net/HeapTimer.cpp.i
 
 # target to preprocess a source file
 src/net/HeapTimer.cpp.i:
+	$(MAKE) -f CMakeFiles/rpc.dir/build.make CMakeFiles/rpc.dir/src/net/HeapTimer.cpp.i
 	$(MAKE) -f CMakeFiles/test_echo_server.dir/build.make CMakeFiles/test_echo_server.dir/src/net/HeapTimer.cpp.i
 	$(MAKE) -f CMakeFiles/test_net_integration.dir/build.make CMakeFiles/test_net_integration.dir/src/net/HeapTimer.cpp.i
 	$(MAKE) -f CMakeFiles/timeout_server_test.dir/build.make CMakeFiles/timeout_server_test.dir/src/net/HeapTimer.cpp.i
@@ -441,6 +547,7 @@ src/net/HeapTimer.s: src/net/HeapTimer.cpp.s
 
 # target to generate assembly for a file
 src/net/HeapTimer.cpp.s:
+	$(MAKE) -f CMakeFiles/rpc.dir/build.make CMakeFiles/rpc.dir/src/net/HeapTimer.cpp.s
 	$(MAKE) -f CMakeFiles/test_echo_server.dir/build.make CMakeFiles/test_echo_server.dir/src/net/HeapTimer.cpp.s
 	$(MAKE) -f CMakeFiles/test_net_integration.dir/build.make CMakeFiles/test_net_integration.dir/src/net/HeapTimer.cpp.s
 	$(MAKE) -f CMakeFiles/timeout_server_test.dir/build.make CMakeFiles/timeout_server_test.dir/src/net/HeapTimer.cpp.s
@@ -452,6 +559,7 @@ src/net/Poller.o: src/net/Poller.cpp.o
 
 # target to build an object file
 src/net/Poller.cpp.o:
+	$(MAKE) -f CMakeFiles/rpc.dir/build.make CMakeFiles/rpc.dir/src/net/Poller.cpp.o
 	$(MAKE) -f CMakeFiles/test_echo_server.dir/build.make CMakeFiles/test_echo_server.dir/src/net/Poller.cpp.o
 	$(MAKE) -f CMakeFiles/test_net_integration.dir/build.make CMakeFiles/test_net_integration.dir/src/net/Poller.cpp.o
 	$(MAKE) -f CMakeFiles/timeout_server_test.dir/build.make CMakeFiles/timeout_server_test.dir/src/net/Poller.cpp.o
@@ -463,6 +571,7 @@ src/net/Poller.i: src/net/Poller.cpp.i
 
 # target to preprocess a source file
 src/net/Poller.cpp.i:
+	$(MAKE) -f CMakeFiles/rpc.dir/build.make CMakeFiles/rpc.dir/src/net/Poller.cpp.i
 	$(MAKE) -f CMakeFiles/test_echo_server.dir/build.make CMakeFiles/test_echo_server.dir/src/net/Poller.cpp.i
 	$(MAKE) -f CMakeFiles/test_net_integration.dir/build.make CMakeFiles/test_net_integration.dir/src/net/Poller.cpp.i
 	$(MAKE) -f CMakeFiles/timeout_server_test.dir/build.make CMakeFiles/timeout_server_test.dir/src/net/Poller.cpp.i
@@ -474,6 +583,7 @@ src/net/Poller.s: src/net/Poller.cpp.s
 
 # target to generate assembly for a file
 src/net/Poller.cpp.s:
+	$(MAKE) -f CMakeFiles/rpc.dir/build.make CMakeFiles/rpc.dir/src/net/Poller.cpp.s
 	$(MAKE) -f CMakeFiles/test_echo_server.dir/build.make CMakeFiles/test_echo_server.dir/src/net/Poller.cpp.s
 	$(MAKE) -f CMakeFiles/test_net_integration.dir/build.make CMakeFiles/test_net_integration.dir/src/net/Poller.cpp.s
 	$(MAKE) -f CMakeFiles/timeout_server_test.dir/build.make CMakeFiles/timeout_server_test.dir/src/net/Poller.cpp.s
@@ -485,6 +595,7 @@ src/net/Socket.o: src/net/Socket.cpp.o
 
 # target to build an object file
 src/net/Socket.cpp.o:
+	$(MAKE) -f CMakeFiles/rpc.dir/build.make CMakeFiles/rpc.dir/src/net/Socket.cpp.o
 	$(MAKE) -f CMakeFiles/test_echo_server.dir/build.make CMakeFiles/test_echo_server.dir/src/net/Socket.cpp.o
 	$(MAKE) -f CMakeFiles/test_net_integration.dir/build.make CMakeFiles/test_net_integration.dir/src/net/Socket.cpp.o
 	$(MAKE) -f CMakeFiles/timeout_server_test.dir/build.make CMakeFiles/timeout_server_test.dir/src/net/Socket.cpp.o
@@ -496,6 +607,7 @@ src/net/Socket.i: src/net/Socket.cpp.i
 
 # target to preprocess a source file
 src/net/Socket.cpp.i:
+	$(MAKE) -f CMakeFiles/rpc.dir/build.make CMakeFiles/rpc.dir/src/net/Socket.cpp.i
 	$(MAKE) -f CMakeFiles/test_echo_server.dir/build.make CMakeFiles/test_echo_server.dir/src/net/Socket.cpp.i
 	$(MAKE) -f CMakeFiles/test_net_integration.dir/build.make CMakeFiles/test_net_integration.dir/src/net/Socket.cpp.i
 	$(MAKE) -f CMakeFiles/timeout_server_test.dir/build.make CMakeFiles/timeout_server_test.dir/src/net/Socket.cpp.i
@@ -507,6 +619,7 @@ src/net/Socket.s: src/net/Socket.cpp.s
 
 # target to generate assembly for a file
 src/net/Socket.cpp.s:
+	$(MAKE) -f CMakeFiles/rpc.dir/build.make CMakeFiles/rpc.dir/src/net/Socket.cpp.s
 	$(MAKE) -f CMakeFiles/test_echo_server.dir/build.make CMakeFiles/test_echo_server.dir/src/net/Socket.cpp.s
 	$(MAKE) -f CMakeFiles/test_net_integration.dir/build.make CMakeFiles/test_net_integration.dir/src/net/Socket.cpp.s
 	$(MAKE) -f CMakeFiles/timeout_server_test.dir/build.make CMakeFiles/timeout_server_test.dir/src/net/Socket.cpp.s
@@ -518,6 +631,7 @@ src/net/TcpConnection.o: src/net/TcpConnection.cpp.o
 
 # target to build an object file
 src/net/TcpConnection.cpp.o:
+	$(MAKE) -f CMakeFiles/rpc.dir/build.make CMakeFiles/rpc.dir/src/net/TcpConnection.cpp.o
 	$(MAKE) -f CMakeFiles/test_echo_server.dir/build.make CMakeFiles/test_echo_server.dir/src/net/TcpConnection.cpp.o
 	$(MAKE) -f CMakeFiles/test_net_integration.dir/build.make CMakeFiles/test_net_integration.dir/src/net/TcpConnection.cpp.o
 	$(MAKE) -f CMakeFiles/timeout_server_test.dir/build.make CMakeFiles/timeout_server_test.dir/src/net/TcpConnection.cpp.o
@@ -529,6 +643,7 @@ src/net/TcpConnection.i: src/net/TcpConnection.cpp.i
 
 # target to preprocess a source file
 src/net/TcpConnection.cpp.i:
+	$(MAKE) -f CMakeFiles/rpc.dir/build.make CMakeFiles/rpc.dir/src/net/TcpConnection.cpp.i
 	$(MAKE) -f CMakeFiles/test_echo_server.dir/build.make CMakeFiles/test_echo_server.dir/src/net/TcpConnection.cpp.i
 	$(MAKE) -f CMakeFiles/test_net_integration.dir/build.make CMakeFiles/test_net_integration.dir/src/net/TcpConnection.cpp.i
 	$(MAKE) -f CMakeFiles/timeout_server_test.dir/build.make CMakeFiles/timeout_server_test.dir/src/net/TcpConnection.cpp.i
@@ -540,6 +655,7 @@ src/net/TcpConnection.s: src/net/TcpConnection.cpp.s
 
 # target to generate assembly for a file
 src/net/TcpConnection.cpp.s:
+	$(MAKE) -f CMakeFiles/rpc.dir/build.make CMakeFiles/rpc.dir/src/net/TcpConnection.cpp.s
 	$(MAKE) -f CMakeFiles/test_echo_server.dir/build.make CMakeFiles/test_echo_server.dir/src/net/TcpConnection.cpp.s
 	$(MAKE) -f CMakeFiles/test_net_integration.dir/build.make CMakeFiles/test_net_integration.dir/src/net/TcpConnection.cpp.s
 	$(MAKE) -f CMakeFiles/timeout_server_test.dir/build.make CMakeFiles/timeout_server_test.dir/src/net/TcpConnection.cpp.s
@@ -551,6 +667,7 @@ src/net/TcpServer.o: src/net/TcpServer.cpp.o
 
 # target to build an object file
 src/net/TcpServer.cpp.o:
+	$(MAKE) -f CMakeFiles/rpc.dir/build.make CMakeFiles/rpc.dir/src/net/TcpServer.cpp.o
 	$(MAKE) -f CMakeFiles/test_echo_server.dir/build.make CMakeFiles/test_echo_server.dir/src/net/TcpServer.cpp.o
 	$(MAKE) -f CMakeFiles/test_net_integration.dir/build.make CMakeFiles/test_net_integration.dir/src/net/TcpServer.cpp.o
 	$(MAKE) -f CMakeFiles/timeout_server_test.dir/build.make CMakeFiles/timeout_server_test.dir/src/net/TcpServer.cpp.o
@@ -562,6 +679,7 @@ src/net/TcpServer.i: src/net/TcpServer.cpp.i
 
 # target to preprocess a source file
 src/net/TcpServer.cpp.i:
+	$(MAKE) -f CMakeFiles/rpc.dir/build.make CMakeFiles/rpc.dir/src/net/TcpServer.cpp.i
 	$(MAKE) -f CMakeFiles/test_echo_server.dir/build.make CMakeFiles/test_echo_server.dir/src/net/TcpServer.cpp.i
 	$(MAKE) -f CMakeFiles/test_net_integration.dir/build.make CMakeFiles/test_net_integration.dir/src/net/TcpServer.cpp.i
 	$(MAKE) -f CMakeFiles/timeout_server_test.dir/build.make CMakeFiles/timeout_server_test.dir/src/net/TcpServer.cpp.i
@@ -573,10 +691,65 @@ src/net/TcpServer.s: src/net/TcpServer.cpp.s
 
 # target to generate assembly for a file
 src/net/TcpServer.cpp.s:
+	$(MAKE) -f CMakeFiles/rpc.dir/build.make CMakeFiles/rpc.dir/src/net/TcpServer.cpp.s
 	$(MAKE) -f CMakeFiles/test_echo_server.dir/build.make CMakeFiles/test_echo_server.dir/src/net/TcpServer.cpp.s
 	$(MAKE) -f CMakeFiles/test_net_integration.dir/build.make CMakeFiles/test_net_integration.dir/src/net/TcpServer.cpp.s
 	$(MAKE) -f CMakeFiles/timeout_server_test.dir/build.make CMakeFiles/timeout_server_test.dir/src/net/TcpServer.cpp.s
 .PHONY : src/net/TcpServer.cpp.s
+
+src/rpc/RpcCodec.o: src/rpc/RpcCodec.cpp.o
+
+.PHONY : src/rpc/RpcCodec.o
+
+# target to build an object file
+src/rpc/RpcCodec.cpp.o:
+	$(MAKE) -f CMakeFiles/rpc.dir/build.make CMakeFiles/rpc.dir/src/rpc/RpcCodec.cpp.o
+.PHONY : src/rpc/RpcCodec.cpp.o
+
+src/rpc/RpcCodec.i: src/rpc/RpcCodec.cpp.i
+
+.PHONY : src/rpc/RpcCodec.i
+
+# target to preprocess a source file
+src/rpc/RpcCodec.cpp.i:
+	$(MAKE) -f CMakeFiles/rpc.dir/build.make CMakeFiles/rpc.dir/src/rpc/RpcCodec.cpp.i
+.PHONY : src/rpc/RpcCodec.cpp.i
+
+src/rpc/RpcCodec.s: src/rpc/RpcCodec.cpp.s
+
+.PHONY : src/rpc/RpcCodec.s
+
+# target to generate assembly for a file
+src/rpc/RpcCodec.cpp.s:
+	$(MAKE) -f CMakeFiles/rpc.dir/build.make CMakeFiles/rpc.dir/src/rpc/RpcCodec.cpp.s
+.PHONY : src/rpc/RpcCodec.cpp.s
+
+src/rpc/RpcServer.o: src/rpc/RpcServer.cpp.o
+
+.PHONY : src/rpc/RpcServer.o
+
+# target to build an object file
+src/rpc/RpcServer.cpp.o:
+	$(MAKE) -f CMakeFiles/rpc.dir/build.make CMakeFiles/rpc.dir/src/rpc/RpcServer.cpp.o
+.PHONY : src/rpc/RpcServer.cpp.o
+
+src/rpc/RpcServer.i: src/rpc/RpcServer.cpp.i
+
+.PHONY : src/rpc/RpcServer.i
+
+# target to preprocess a source file
+src/rpc/RpcServer.cpp.i:
+	$(MAKE) -f CMakeFiles/rpc.dir/build.make CMakeFiles/rpc.dir/src/rpc/RpcServer.cpp.i
+.PHONY : src/rpc/RpcServer.cpp.i
+
+src/rpc/RpcServer.s: src/rpc/RpcServer.cpp.s
+
+.PHONY : src/rpc/RpcServer.s
+
+# target to generate assembly for a file
+src/rpc/RpcServer.cpp.s:
+	$(MAKE) -f CMakeFiles/rpc.dir/build.make CMakeFiles/rpc.dir/src/rpc/RpcServer.cpp.s
+.PHONY : src/rpc/RpcServer.cpp.s
 
 tests/Test_EchoSever.o: tests/Test_EchoSever.cpp.o
 
@@ -632,6 +805,33 @@ tests/test_net_integration.cpp.s:
 	$(MAKE) -f CMakeFiles/test_net_integration.dir/build.make CMakeFiles/test_net_integration.dir/tests/test_net_integration.cpp.s
 .PHONY : tests/test_net_integration.cpp.s
 
+tests/test_rpc_benchmark.o: tests/test_rpc_benchmark.cpp.o
+
+.PHONY : tests/test_rpc_benchmark.o
+
+# target to build an object file
+tests/test_rpc_benchmark.cpp.o:
+	$(MAKE) -f CMakeFiles/test_rpc_benchmark.dir/build.make CMakeFiles/test_rpc_benchmark.dir/tests/test_rpc_benchmark.cpp.o
+.PHONY : tests/test_rpc_benchmark.cpp.o
+
+tests/test_rpc_benchmark.i: tests/test_rpc_benchmark.cpp.i
+
+.PHONY : tests/test_rpc_benchmark.i
+
+# target to preprocess a source file
+tests/test_rpc_benchmark.cpp.i:
+	$(MAKE) -f CMakeFiles/test_rpc_benchmark.dir/build.make CMakeFiles/test_rpc_benchmark.dir/tests/test_rpc_benchmark.cpp.i
+.PHONY : tests/test_rpc_benchmark.cpp.i
+
+tests/test_rpc_benchmark.s: tests/test_rpc_benchmark.cpp.s
+
+.PHONY : tests/test_rpc_benchmark.s
+
+# target to generate assembly for a file
+tests/test_rpc_benchmark.cpp.s:
+	$(MAKE) -f CMakeFiles/test_rpc_benchmark.dir/build.make CMakeFiles/test_rpc_benchmark.dir/tests/test_rpc_benchmark.cpp.s
+.PHONY : tests/test_rpc_benchmark.cpp.s
+
 tests/timeout_server_test.o: tests/timeout_server_test.cpp.o
 
 .PHONY : tests/timeout_server_test.o
@@ -666,10 +866,18 @@ help:
 	@echo "... clean"
 	@echo "... depend"
 	@echo "... rebuild_cache"
+	@echo "... test_rpc_benchmark"
+	@echo "... rpc"
 	@echo "... edit_cache"
 	@echo "... test_echo_server"
 	@echo "... test_net_integration"
 	@echo "... timeout_server_test"
+	@echo "... proto/math_service.pb.o"
+	@echo "... proto/math_service.pb.i"
+	@echo "... proto/math_service.pb.s"
+	@echo "... proto/rpc_message.pb.o"
+	@echo "... proto/rpc_message.pb.i"
+	@echo "... proto/rpc_message.pb.s"
 	@echo "... src/log/my_buffer.o"
 	@echo "... src/log/my_buffer.i"
 	@echo "... src/log/my_buffer.s"
@@ -709,12 +917,21 @@ help:
 	@echo "... src/net/TcpServer.o"
 	@echo "... src/net/TcpServer.i"
 	@echo "... src/net/TcpServer.s"
+	@echo "... src/rpc/RpcCodec.o"
+	@echo "... src/rpc/RpcCodec.i"
+	@echo "... src/rpc/RpcCodec.s"
+	@echo "... src/rpc/RpcServer.o"
+	@echo "... src/rpc/RpcServer.i"
+	@echo "... src/rpc/RpcServer.s"
 	@echo "... tests/Test_EchoSever.o"
 	@echo "... tests/Test_EchoSever.i"
 	@echo "... tests/Test_EchoSever.s"
 	@echo "... tests/test_net_integration.o"
 	@echo "... tests/test_net_integration.i"
 	@echo "... tests/test_net_integration.s"
+	@echo "... tests/test_rpc_benchmark.o"
+	@echo "... tests/test_rpc_benchmark.i"
+	@echo "... tests/test_rpc_benchmark.s"
 	@echo "... tests/timeout_server_test.o"
 	@echo "... tests/timeout_server_test.i"
 	@echo "... tests/timeout_server_test.s"

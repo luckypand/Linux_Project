@@ -37,14 +37,17 @@ public:
     ssize_t writeFd(int fd, int* savedErrno);  //将 Buffer 中的可读数据写入 fd
 
     //返回内部数据
-    size_t ReadBytes() { return WriteIndex_ - ReadIndex_ ; }
-    size_t WriteBytes() { return buffer_.size() - WriteIndex_; }
-    size_t PretendBytes() { return ReadIndex_; }
+    size_t ReadBytes() const { return WriteIndex_ - ReadIndex_ ; }
+    size_t WriteBytes() const { return buffer_.size() - WriteIndex_; }
+    size_t PretendBytes() const { return ReadIndex_; }
 
     //工具
     void swap(Buffer& rhs) { buffer_.swap(rhs.buffer_); std::swap(ReadIndex_, rhs.ReadIndex_); std::swap(WriteIndex_, rhs.WriteIndex_); }
     void clear() { ReadIndex_ = WriteIndex_ = kCheapPretendBytes; }
 
+    //Rpc协议读取魔数
+    uint32_t peekInt32() const;
+    uint32_t peekInt32(size_t offset) const;
 private:
     //返回地址值
     char* begin() { return &*buffer_.begin(); }
