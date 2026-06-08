@@ -71,8 +71,8 @@ void EventLoop::loop()
     while(!quit_status_)
     {
         activeChannels_.clear();
-
         int timeoutMs = 10000;
+        // int timeoutMs = 100;
         if (timer_)
         {
             timeoutMs = timer_->Getclosetick();
@@ -159,7 +159,7 @@ void EventLoop::RunInloop(Functor fc)
 */
 void EventLoop::WakeUp()
 {
-    uint64_t alarm = 0;
+    uint64_t alarm = 1;
     ::write(wakeupFd_,&alarm,sizeof(alarm));
 }
 
