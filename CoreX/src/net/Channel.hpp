@@ -12,43 +12,43 @@ public:
     Channel(EventLoop* loop,int fd_);  
     ~Channel();
 
-    // ÉèÖÃ»Øµ÷º¯Êı (Ê¹ÓÃ std::move ±ÜÃâ¿½±´)   
+    // è®¾ç½®å›è°ƒå‡½æ•° (ä½¿ç”¨ std::move é¿å…æ‹·è´)   
     void setReadCallback(EventCallback_ rck)   { ReadCallback_ = std::move(rck); }
     void setWriteCallback(EventCallback_ wck) { WriteCallback_ = std::move(wck); }
     void setErrorCallback(EventCallback_ eck) { ErrorCallback_ = std::move(eck); }
     void setCloseCallback(EventCallback_ cck) { CloseCallback_ = std::move(cck); }
 
-    // ×´Ì¬ĞŞ¸Ä£ºÍ¨Öª EventLoop È¥¸üĞÂ epoll ÀïµÄ¼àÌıÊÂ¼ş
+    // çŠ¶æ€ä¿®æ”¹ï¼šé€šçŸ¥ EventLoop å»æ›´æ–° epoll é‡Œçš„ç›‘å¬äº‹ä»¶
     void enableReading() { events_ |= kReadEvent; update(); }
     void enableWriting() { events_ |= kWriteEvent; update(); }
     void disableall() { events_ |= kNoneEvent; }
     void setindex(int idx_) { index_ = idx_; }
     void setretevent(uint32_t  revt) { retevent_ = revt; }
 
-    // ºËĞÄ£ºÓÉ EventLoop µ÷ÓÃ£¬¸ù¾İ revents_ Ö´ĞĞ¶ÔÓ¦µÄ»Øµ÷    
+    // æ ¸å¿ƒï¼šç”± EventLoop è°ƒç”¨ï¼Œæ ¹æ® revents_ æ‰§è¡Œå¯¹åº”çš„å›è°ƒ    
     void Event_handle();
 
-    // ×´Ì¬²éÑ¯    
+    // çŠ¶æ€æŸ¥è¯¢    
     int Fd() const { return fd_; }
     int index() const { return index_; }
-    bool IsNoneEvent() const { return events_ == kNoneEvent; } //ÅĞ¶ÏÓÃ»§ÊÇ·ñ²»ÔÙ¹ØĞÄ¸ÃfdµÄÊı¾İ
-    bool IsWriting() const { return events_ & kWriteEvent; }   //ÅĞ¶ÏÓÃ»§ÊÇ·ñÒÑ¾­¹Ø×¢Ğ´ÊÂ¼ş
+    bool IsNoneEvent() const { return events_ == kNoneEvent; } //åˆ¤æ–­ç”¨æˆ·æ˜¯å¦ä¸å†å…³å¿ƒè¯¥fdçš„æ•°æ®
+    bool IsWriting() const { return events_ & kWriteEvent; }   //åˆ¤æ–­ç”¨æˆ·æ˜¯å¦å·²ç»å…³æ³¨å†™äº‹ä»¶
     uint32_t events() { return events_; }
     EventLoop* myEventLoop() const { return my_loop_; }
     
 private:
-    void update();  //µ÷ÓÃ¸üĞÂchannelµÄ×´Ì¬
+    void update();  //è°ƒç”¨æ›´æ–°channelçš„çŠ¶æ€
 
-    //ÓÃÓÚÉèÖÃChannelÖĞ¶Ôµ×²ã fd ¹ØĞÄÄÄĞ© IO ÊÂ¼şµÄ±êÖ¾Î»
+    //ç”¨äºè®¾ç½®Channelä¸­å¯¹åº•å±‚ fd å…³å¿ƒå“ªäº› IO äº‹ä»¶çš„æ ‡å¿—ä½
     static const int kNoneEvent;
     static const int kReadEvent;
     static const int kWriteEvent;
 
     EventLoop* my_loop_;
-    const int fd_;   //¶ÔÓ¦¹ÜÀíµÄfd
-    uint32_t events_;     //ÓÃ»§¹ØĞÄµÄÊÂ¼ş
-    uint32_t retevent_;   //Êµ¼Ê·¢ÉúµÄÊÂ¼ş
-    int index_;      //±íÊ¾Channel×ÔÉíÔÚepollÖĞµÄ×´Ì¬
+    const int fd_;   //å¯¹åº”ç®¡ç†çš„fd
+    uint32_t events_;     //ç”¨æˆ·å…³å¿ƒçš„äº‹ä»¶
+    uint32_t retevent_;   //å®é™…å‘ç”Ÿçš„äº‹ä»¶
+    int index_;      //è¡¨ç¤ºChannelè‡ªèº«åœ¨epollä¸­çš„çŠ¶æ€
 
     EventCallback_ ReadCallback_;
     EventCallback_ WriteCallback_;

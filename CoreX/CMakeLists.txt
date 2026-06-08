@@ -26,6 +26,21 @@ if(ENABLE_ASAN)
     set(CMAKE_EXECUTABLE_SUFFIX "_ASAN")
 endif()
 
+# ============================================================
+# Compile-time feature toggles
+# Enable with: cmake -DENABLE_TIMESTAMP=OFF -DENABLE_LOG=OFF ..
+# ============================================================
+option(ENABLE_TIMESTAMP "Enable RPC latency timing instrumentation" OFF)
+option(ENABLE_LOG "Enable log printing" OFF)
+
+message(STATUS "ENABLE_TIMESTAMP = ${ENABLE_TIMESTAMP}")
+message(STATUS "ENABLE_LOG = ${ENABLE_LOG}")
+
+add_compile_definitions(
+    ENABLE_TIMESTAMP=$<BOOL:${ENABLE_TIMESTAMP}>
+    ENABLE_LOG=$<BOOL:${ENABLE_LOG}>
+)
+
 # Find thread library
 find_package(Threads REQUIRED)
 

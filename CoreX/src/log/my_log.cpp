@@ -1,6 +1,8 @@
 #include "my_log.hpp"
 #include "my_blockqueue.hpp"
 #include "my_buffer.hpp"
+#include <dirent.h>
+#include <cstring>
 
 using namespace std;
 Log::Log()
@@ -16,17 +18,17 @@ Log::Log()
 
 Log::~Log()
 {
-    //Èç¹ûÊÇÒì²½ÏÈ½«dequeÊ£ÓàµÄÈÎÎñ´¦Àí¸É¾»
+    //å¦‚æœæ˜¯å¼‚æ­¥å…ˆå°†dequeå‰©ä½™çš„ä»»åŠ¡å¤„ç†å¹²å‡€
     while(isAsync_ && deque_ && !deque_->empty())
     {
         flush();
     }
-    if(isAsync_)//debug4.15 : Òì²½Ä£Ê½²Å½øĞĞ¹Ø±ÕdequeºÍĞ´Ïß³Ì
+    if(isAsync_)//debug4.15 : å¼‚æ­¥æ¨¡å¼æ‰è¿›è¡Œå…³é—­dequeå’Œå†™çº¿ç¨‹
     {
-        deque_->Close();//¹Ø±Õdeque
-        writeThread_->join();//¹Ø±ÕĞ´Ïß³Ì        
+        deque_->Close();//å…³é—­deque
+        writeThread_->join();//å…³é—­å†™çº¿ç¨‹        
     }
-    //¹Ø±ÕËùÓĞÄ£¿éµÄÈÕÖ¾ÎÄ¼ş
+    //å…³é—­æ‰€æœ‰æ¨¡å—çš„æ—¥å¿—æ–‡ä»¶
     for(auto& kv : moduleFiles_)
     {
         if(kv.second)
@@ -40,9 +42,9 @@ Log::~Log()
 
 /*
 * @brief:
-*     µ¥ÀıµÄÀÁººÄ£Ê½£¬Í¨¹ıMeyers¹¹Ôì·½Ê½
+*     å•ä¾‹çš„æ‡’æ±‰æ¨¡å¼ï¼Œé€šè¿‡Meyersæ„é€ æ–¹å¼
 */
-Log* Log::Instance() //static Log*Ö»ÄÜÔÚÀàÄÚ½øĞĞÉùÃ÷
+Log* Log::Instance() //static Log*åªèƒ½åœ¨ç±»å†…è¿›è¡Œå£°æ˜
 {   
     static Log Instance;
     return &Instance;
@@ -50,7 +52,7 @@ Log* Log::Instance() //static Log*Ö»ÄÜÔÚÀàÄÚ½øĞĞÉùÃ÷
 
 /*
 * @brief:
-*     Í¨¹ıÍâ²¿º¯Êıµ÷ÓÃÒì²½Ğ´Èëº¯Êı
+*     é€šè¿‡å¤–éƒ¨å‡½æ•°è°ƒç”¨å¼‚æ­¥å†™å…¥å‡½æ•°
 */
 void Log::FlushLogThread()
 {
@@ -59,33 +61,37 @@ void Log::FlushLogThread()
 
 /*
 * @brief:
-*     ÕæÕıµÄÏß³ÌÒì²½Ğ´Èëº¯Êı£¬×¢Òâpop()·µ»Øtrue,ËùÒÔÃ¿´ÎÖ»»á´¦ÀíÒ»ÌõÈÕÖ¾ÏûÏ¢
-*     °´Ä£¿éÃû½«ÈÕÖ¾Ğ´Èë¶ÔÓ¦µÄÈÕÖ¾ÎÄ¼ş
+*     çœŸæ­£çš„çº¿ç¨‹å¼‚æ­¥å†™å…¥å‡½æ•°ï¼Œæ³¨æ„pop()è¿”å›true,æ‰€ä»¥æ¯æ¬¡åªä¼šå¤„ç†ä¸€æ¡æ—¥å¿—æ¶ˆæ¯
+*     æŒ‰æ¨¡å—åå°†æ—¥å¿—å†™å…¥å¯¹åº”çš„æ—¥å¿—æ–‡ä»¶
+*     å…³é”®è®¾è®¡ï¼špop() é‡Šæ”¾ Blockqueue::mtx_ åï¼Œå†è·å– Log::mtx_ æ¥å®‰å…¨è®¿é—® moduleFiles_
+*     é”é¡ºåºï¼šBlockqueue::mtx_ â†’ Log::mtx_ï¼ˆä¸ write() çš„ mtx_ â†’ push ç›¸åä½†æ°¸ä¸é‡å ï¼Œé¿å… ABBAï¼‰
 */
 void Log::AsyncWrite_()
 {
     LogEntry entry;
-    while(deque_->pop(entry))//Òì²½´Ó×èÈû¶ÓÁĞµ¯³öÏûÏ¢
+    while(deque_->pop(entry))//å¼‚æ­¥ä»é˜»å¡é˜Ÿåˆ—å¼¹å‡ºæ¶ˆæ¯ï¼ˆå†…éƒ¨æŒæœ‰ Blockqueue::mtx_ï¼Œè¿”å›åé‡Šæ”¾ï¼‰
     {
+        unique_lock<mutex> locker(mtx_);      // ä¿æŠ¤ moduleFiles_ ç­‰å…±äº«çŠ¶æ€
         FILE* fp = GetOrCreateModuleFile_(entry.module);
         if(fp)
         {
-            fputs(entry.message.c_str(), fp);//Ğ´Èë¶ÔÓ¦Ä£¿éµÄÎÄ¼ş
+            fputs(entry.message.c_str(), fp);//å†™å…¥å¯¹åº”æ¨¡å—çš„æ–‡ä»¶
         }
     }
 }
 
 /*
 * @brief:
-*     Ë¢ĞÂÈÕÖ¾»º³åÇø£¬Òì²½ÈÕÖ¾Ôò»½ĞÑÏû·ÑÕßÏß³Ì£»Í¬²½ÈÕÖ¾ÔòË¢ĞÂËùÓĞÄ£¿éµÄÎÄ¼ş
+*     åˆ·æ–°æ—¥å¿—ç¼“å†²åŒºï¼Œå¼‚æ­¥æ—¥å¿—åˆ™å”¤é†’æ¶ˆè´¹è€…çº¿ç¨‹ï¼›åŒæ­¥æ—¥å¿—åˆ™åˆ·æ–°æ‰€æœ‰æ¨¡å—çš„æ–‡ä»¶
 */
 void Log::flush()
 {
-    if(isAsync_)//Òì²½Ä£Ê½
+    if(isAsync_)//å¼‚æ­¥æ¨¡å¼
     {
-        deque_->flush();//Í¨ÖªÏû·ÑÕß¸É»î£¬µ«ÊÇ²»±£Ö¤¸ÉÍê
+        deque_->flush();//é€šçŸ¥æ¶ˆè´¹è€…å¹²æ´»ï¼Œä½†æ˜¯ä¸ä¿è¯å¹²å®Œ
     }
-    // Ë¢ĞÂËùÓĞÄ£¿éÎÄ¼ş
+    // åˆ·æ–°æ‰€æœ‰æ¨¡å—æ–‡ä»¶ï¼ˆéœ€åŠ é”ï¼Œä¸ AsyncWrite_/write ä¸­çš„ moduleFiles_ è®¿é—®äº’æ–¥ï¼‰
+    unique_lock<mutex> locker(mtx_);
     for(auto& kv : moduleFiles_)
     {
         if(kv.second)
@@ -97,19 +103,19 @@ void Log::flush()
 
 /*
 * @brief:
-*     ´Ó __FILE__ ÖĞÌáÈ¡Ä£¿éÃû
-*     ÀıÈç "src/net/EventLoop.cpp" ¡ú "net"
-*           "src/log/my_log.cpp"    ¡ú "log"
-*           "tests/test.cpp"        ¡ú "root"£¨²»ÔÚ src/ ÏÂÔò¹éÈë root£©
+*     ä» __FILE__ ä¸­æå–æ¨¡å—å
+*     ä¾‹å¦‚ "src/net/EventLoop.cpp" â†’ "net"
+*           "src/log/my_log.cpp"    â†’ "log"
+*           "tests/test.cpp"        â†’ "root"ï¼ˆä¸åœ¨ src/ ä¸‹åˆ™å½’å…¥ rootï¼‰
 */
 std::string Log::ExtractModule_(const char* file)
 {
     std::string path(file);
     auto pos = path.find("src/");
     if(pos == std::string::npos)
-        return "root"; // ²»ÔÚ src/ ÏÂµÄÎÄ¼ş¹éÈë root Ä£¿é
+        return "root"; // ä¸åœ¨ src/ ä¸‹çš„æ–‡ä»¶å½’å…¥ root æ¨¡å—
 
-    pos += 4; // Ìø¹ı "src/"
+    pos += 4; // è·³è¿‡ "src/"
     auto end = path.find('/', pos);
     if(end == std::string::npos)
         return "root";
@@ -119,16 +125,51 @@ std::string Log::ExtractModule_(const char* file)
 
 /*
 * @brief:
-*     »ñÈ¡£¨»ò´´½¨£©Ö¸¶¨Ä£¿éµÄÈÕÖ¾ÎÄ¼ş¾ä±ú
-*     ×Ô¶¯´¦ÀíÄ¿Â¼´´½¨¡¢ÈÕÆÚÂÖ×ª¡¢ĞĞÊıÂÖ×ª
+*     æ‰«ææ¨¡å—æ—¥å¿—ç›®å½•ï¼Œæ‰¾åˆ°å½“å¤©å·²æœ‰æ—¥å¿—æ–‡ä»¶çš„æœ€å¤§åºå·
+*     ç”¨äºè·¨è¿è¡Œçš„æ–‡ä»¶åºå·é€’å¢ï¼Œä½¿æ¯æ¬¡ç¨‹åºå¯åŠ¨éƒ½åˆ›å»ºæ–°çš„æ—¥å¿—æ–‡ä»¶
+*     æ–‡ä»¶åæ ¼å¼: YYYY_MM_DD-N.logï¼Œæå–æœ€å¤§çš„ N
+* @return: å½“å¤©å·²æœ‰æ–‡ä»¶çš„æœ€å¤§åºå·ï¼ˆ0 è¡¨ç¤ºå°šæ— æ–‡ä»¶ï¼‰
+*/
+int Log::ScanInitSeq_(const std::string& modulePath)
+{
+    int maxSeq = 0;
+    DIR* dir = opendir(modulePath.c_str());
+    if (!dir) return 0;
+
+    // æ„é€ å½“å¤©æ—¥æœŸå‰ç¼€ "YYYY_MM_DD-"
+    time_t timer = time(nullptr);
+    struct tm* systime = localtime(&timer);
+    char todayPrefix[32];
+    snprintf(todayPrefix, sizeof(todayPrefix), "%04d_%02d_%02d-",
+             systime->tm_year + 1900, systime->tm_mon + 1, systime->tm_mday);
+
+    struct dirent* entry;
+    while ((entry = readdir(dir)) != nullptr)
+    {
+        // åŒ¹é… "YYYY_MM_DD-N.log" æˆ– "YYYY_MM_DD-N" æ ¼å¼
+        int prefixLen = strlen(todayPrefix);
+        if (strncmp(entry->d_name, todayPrefix, prefixLen) == 0)
+        {
+            int seq = atoi(entry->d_name + prefixLen);
+            if (seq > maxSeq) maxSeq = seq;
+        }
+    }
+    closedir(dir);
+    return maxSeq;
+}
+
+/*
+* @brief:
+*     è·å–ï¼ˆæˆ–åˆ›å»ºï¼‰æŒ‡å®šæ¨¡å—çš„æ—¥å¿—æ–‡ä»¶å¥æŸ„
+*     è‡ªåŠ¨å¤„ç†ç›®å½•åˆ›å»ºã€æ—¥æœŸè½®è½¬ã€è¡Œæ•°è½®è½¬
 */
 FILE* Log::GetOrCreateModuleFile_(const std::string& module)
 {
-    // ¼ì²éÊÇ·ñÒÑÓĞ¸ÃÄ£¿éµÄ¾ä±ú
+    // æ£€æŸ¥æ˜¯å¦å·²æœ‰è¯¥æ¨¡å—çš„å¥æŸ„
     auto it = moduleFiles_.find(module);
     if(it != moduleFiles_.end() && it->second != nullptr)
     {
-        // ¼ì²éÊÇ·ñĞèÒªÂÖ×ª
+        // æ£€æŸ¥æ˜¯å¦éœ€è¦è½®è½¬
         time_t timer = time(nullptr);
         struct tm* systime = localtime(&timer);
         int today = systime->tm_mday;
@@ -138,11 +179,21 @@ FILE* Log::GetOrCreateModuleFile_(const std::string& module)
 
         if(curDay != today || (curLine > 0 && curLine % MAX_LINES == 0))
         {
-            // ĞèÒªÂÖ×ª£º¹Ø±Õ¾ÉÎÄ¼ş£¬ÖØĞÂ´´½¨
+            // éœ€è¦è½®è½¬ï¼šå…³é—­æ—§æ–‡ä»¶ï¼Œé‡æ–°åˆ›å»º
+            if(curDay != today)
+            {
+                // æ—¥æœŸå˜æ›´ â†’ é‡ç½®åºå·ï¼ˆä¸‹æ¬¡åˆ›å»ºæ–‡ä»¶æ—¶ ScanInitSeq_ é‡æ–°æ‰«æï¼‰
+                moduleFileSeq_.erase(module);
+            }
+            else
+            {
+                // åŒæ—¥è¡Œæ•°è¶…é™ â†’ åºå·é€’å¢
+                moduleFileSeq_[module]++;
+            }
             fflush(it->second);
             fclose(it->second);
             moduleFiles_.erase(module);
-            // ²»Ö±½Ó return£¬¼ÌĞøÍùÏÂ´´½¨ĞÂÎÄ¼ş
+            // ä¸ç›´æ¥ returnï¼Œç»§ç»­å¾€ä¸‹åˆ›å»ºæ–°æ–‡ä»¶
         }
         else
         {
@@ -150,7 +201,7 @@ FILE* Log::GetOrCreateModuleFile_(const std::string& module)
         }
     }
 
-    // ´´½¨ĞÂÎÄ¼ş
+    // åˆ›å»ºæ–°æ–‡ä»¶
     std::string modulePath = basePath_ + "/" + module;
     mkdir(modulePath.c_str(), 0777);
 
@@ -159,28 +210,26 @@ FILE* Log::GetOrCreateModuleFile_(const std::string& module)
     struct tm* systime = localtime(&timer);
     int today = systime->tm_mday;
 
-    if(moduleToDay_[module] != today)//ÈÕÆÚ²»Í¬ÔòĞÂ½¨ÈÕÆÚÎÄ¼ş
+    // é¦–æ¬¡ä¸ºè¯¥æ¨¡å—åˆ›å»ºæ–‡ä»¶ï¼Œæˆ–æ—¥æœŸå˜æ›´å â†’ æ‰«æç›®å½•ç¡®å®šèµ·å§‹åºå·
+    if(moduleFileSeq_.find(module) == moduleFileSeq_.end())
     {
-        snprintf(fileName, LOG_NAME_LEN, "%s/%04d_%02d_%02d%s",
-            modulePath.c_str(),
-            systime->tm_year + 1900, systime->tm_mon + 1, systime->tm_mday,
-            suffix_);
-        moduleToDay_[module] = today;
+        moduleFileSeq_[module] = ScanInitSeq_(modulePath) + 1;
         moduleLineCount_[module] = 0;
     }
-    else//ÈÕÆÚÏàÍ¬µ«ĞĞÊı³¬ÏŞ£¬ĞÂ½¨·Ö¾íÎÄ¼ş
-    {
-        snprintf(fileName, LOG_NAME_LEN, "%s/%04d_%02d_%02d-%d%s",
-            modulePath.c_str(),
-            systime->tm_year + 1900, systime->tm_mon + 1, systime->tm_mday,
-            moduleLineCount_[module] / MAX_LINES,
-            suffix_);
-    }
+
+    // ç»Ÿä¸€æŒ‰ YYYY_MM_DD-N.log æ ¼å¼å‘½åï¼ˆä¸å†æœ‰æ— åç¼€çš„åŸºç¡€æ–‡ä»¶ï¼‰
+    snprintf(fileName, LOG_NAME_LEN, "%s/%04d_%02d_%02d-%d%s",
+        modulePath.c_str(),
+        systime->tm_year + 1900, systime->tm_mon + 1, systime->tm_mday,
+        moduleFileSeq_[module],
+        suffix_);
+
+    moduleToDay_[module] = today;
 
     FILE* fp = fopen(fileName, "a");
     if(nullptr == fp)
     {
-        mkdir(modulePath.c_str(), 0777);//¶µµ×
+        mkdir(modulePath.c_str(), 0777);//å…œåº•
         fp = fopen(fileName, "a");
         assert(fp != nullptr);
     }
@@ -191,10 +240,10 @@ FILE* Log::GetOrCreateModuleFile_(const std::string& module)
 
 /*
 * @brief:
-*     ½ÓÊÕ²¢±£´æ»ù´¡ÅäÖÃ,ÅĞ¶ÏÈÕÖ¾Ä£Ê½
-*     Òì²½Ä£Ê½Ôò´´½¨×èÈû¶ÓÁĞºÍºóÌ¨Ğ´Ïß³Ì
-*     £¨×¢Òâ£º²»ÔÙÔÚ Init Ê±´´½¨¾ßÌåÈÕÖ¾ÎÄ¼ş£¬
-*      ¸ÄÎªÔÚ write/AsyncWrite_ Ê±°´Ä£¿é°´Ğè´´½¨£©
+*     æ¥æ”¶å¹¶ä¿å­˜åŸºç¡€é…ç½®,åˆ¤æ–­æ—¥å¿—æ¨¡å¼
+*     å¼‚æ­¥æ¨¡å¼åˆ™åˆ›å»ºé˜»å¡é˜Ÿåˆ—å’Œåå°å†™çº¿ç¨‹
+*     ï¼ˆæ³¨æ„ï¼šä¸å†åœ¨ Init æ—¶åˆ›å»ºå…·ä½“æ—¥å¿—æ–‡ä»¶ï¼Œ
+*      æ”¹ä¸ºåœ¨ write/AsyncWrite_ æ—¶æŒ‰æ¨¡å—æŒ‰éœ€åˆ›å»ºï¼‰
 */
 void Log::Init(int level, const char* basePath,
         int Max_capacity, const char* suffix)
@@ -204,14 +253,14 @@ void Log::Init(int level, const char* basePath,
     basePath_ = basePath;
     suffix_ = suffix;
 
-    if(Max_capacity)//ÓĞdeque£¬Ôò½øĞĞÒì²½Ğ´Èë   
+    if(Max_capacity)//æœ‰dequeï¼Œåˆ™è¿›è¡Œå¼‚æ­¥å†™å…¥   
     {
         isAsync_ = true;
-        if(!deque_)//Èç¹ûdequeÎª¿Õ£¬ÔòÊ¹ÓÃÖÇÄÜÖ¸ÕëÓÒÖµ×ªÒÆ´´½¨
+        if(!deque_)//å¦‚æœdequeä¸ºç©ºï¼Œåˆ™ä½¿ç”¨æ™ºèƒ½æŒ‡é’ˆå³å€¼è½¬ç§»åˆ›å»º
         {
             deque_ = make_unique<Blockqueue<LogEntry>>(Max_capacity);
             
-            //Ïß³Ì¹ÒÔØÒì²½Ğ´ÈÕÖ¾º¯Êı,¿ªÊ¼Ğ´Èë
+            //çº¿ç¨‹æŒ‚è½½å¼‚æ­¥å†™æ—¥å¿—å‡½æ•°,å¼€å§‹å†™å…¥
             writeThread_ = make_unique<thread>(FlushLogThread);
         }
     }
@@ -223,7 +272,7 @@ void Log::Init(int level, const char* basePath,
 
 /*
 * @brief:
-*     Ğ´ÈëÈÕÖ¾¼¶±ğ
+*     å†™å…¥æ—¥å¿—çº§åˆ«
 */                    
 void Log::AppendLogLevelTitle_(int level)
 {
@@ -248,30 +297,39 @@ void Log::AppendLogLevelTitle_(int level)
 
 /*
 * @brief:
-*     ¸ù¾İÈÕÖ¾¼¶±ğºÍ¸ñÊ½»¯×Ö·û´®Éú³ÉÈÕÖ¾ÄÚÈİ£¬Òì²½Ä£Ê½Ôò½«ÈÕÖ¾ÏûÏ¢¼ÓÈë×èÈû¶ÓÁĞ
-*   µÈ´ıĞ´Ïß³Ì´¦Àí£»Í¬²½Ä£Ê½ÔòÖ±½ÓĞ´Èë¶ÔÓ¦µÄÄ£¿éÎÄ¼ş
-*   ²ÎÊı file ÓÉ LOG ºê×Ô¶¯´«Èë __FILE__
+*     æ ¹æ®æ—¥å¿—çº§åˆ«å’Œæ ¼å¼åŒ–å­—ç¬¦ä¸²ç”Ÿæˆæ—¥å¿—å†…å®¹
+*     å¼‚æ­¥æ¨¡å¼ï¼šæ ¼å¼åŒ–åé‡Šæ”¾ mtx_ï¼Œå† push åˆ°é˜»å¡é˜Ÿåˆ—ï¼ˆé¿å…ä¸ AsyncWrite_ å½¢æˆ ABBAï¼‰
+*     åŒæ­¥æ¨¡å¼ï¼šæŒ mtx_ ç›´æ¥å†™å…¥å¯¹åº”çš„æ¨¡å—æ–‡ä»¶
+*   å‚æ•° file ç”± LOG å®è‡ªåŠ¨ä¼ å…¥ __FILE__
+*
+*   é”é¡ºåºè®¾è®¡ï¼ˆå¼‚æ­¥è·¯å¾„ï¼‰ï¼š
+*     write():       lock(mtx_) â†’ format â†’ unlock â†’ push_back(Blockqueue::mtx_)
+*     AsyncWrite_(): pop(Blockqueue::mtx_) â†’ lock(mtx_) â†’ fputs â†’ unlock
+*     ä¸¤æŠŠé”æ°¸è¿œä¸ä¼šè¢«åŒä¸€ä¸ªçº¿ç¨‹åŒæ—¶æŒæœ‰ â†’ é›¶æ­»é”é£é™©
 */
 void Log::write(const char* file, int level, const char *format,...)
 {
-    // ´Ó __FILE__ ÌáÈ¡Ä£¿éÃû£¨Èç "net"¡¢"log"¡¢"ipc" µÈ£©
+    // ä» __FILE__ æå–æ¨¡å—åï¼ˆå¦‚ "net"ã€"log"ã€"ipc" ç­‰ï¼‰
     std::string module = ExtractModule_(file);
 
-    //ÏÈÈ·¶¨ÒªĞ´ÈëÈÕÖ¾µÄÊ±¼ä
+    //å…ˆç¡®å®šè¦å†™å…¥æ—¥å¿—çš„æ—¶é—´
     struct timeval now = {0, 0};
     gettimeofday(&now, nullptr);
     time_t tSec = now.tv_sec;
     struct tm *sysTime = localtime(&tSec);
     struct tm t = *sysTime;
-    va_list vaList;//ÅäºÏ¿É±ä²ÎÊıÊ¹ÓÃ
+    va_list vaList;
 
-    unique_lock<mutex> locker(mtx_);//Ëø±£»¤
-    //ÅĞ¶Ïµ±Ç°Ä£¿éÊÇ·ñĞèÒªÂÖ×ªÈÕÖ¾ÎÄ¼ş
+    // å¼‚æ­¥æ¨¡å¼ä¸‹ï¼Œæ ¼å¼åŒ–å®Œæˆåå°†æ¶ˆæ¯æš‚å­˜äºæ­¤ï¼Œé‡Šæ”¾ mtx_ åå† push
+    std::string asyncMessage;
+    bool shouldPushAsync = false;
+
     {
+        unique_lock<mutex> locker(mtx_);
+
+        // ---- Phase 1: æ–‡ä»¶è½®è½¬æ£€æŸ¥ ----
         int& curDay = moduleToDay_[module];
         int& curLine = moduleLineCount_[module];
-
-        // Èç¹ûÒÑÓĞÎÄ¼ş¾ä±ú£¬¼ì²éÊÇ·ñĞèÒªÂÖ×ª
         auto it = moduleFiles_.find(module);
         if(it != moduleFiles_.end() && it->second != nullptr)
         {
@@ -282,39 +340,47 @@ void Log::write(const char* file, int level, const char *format,...)
                 moduleFiles_.erase(module);
             }
         }
-        // ĞĞÊıµİÔö£¨ÔÚĞ´ÈëÇ°µİÔö£¬ÅäºÏ GetOrCreateModuleFile_ ÖĞµÄÂÖ×ªÅĞ¶Ï£©
         curLine++;
-    }
-    locker.unlock();//½âËø
 
-    //¸ñÊ½»¯ÈÕÖ¾ÄÚÈİ
-    {
-       unique_lock<mutex> locker(mtx_);//³ö×÷ÓÃÓòÄ¬ÈÏ½âËø
-       //Ïòbuff_Ğ´Èë
-       snprintf(buff_.BeginWrite(),buff_.WritableBytes(),"%d-%02d-%02d %02d:%02d:%02d.%06ld ",
-                    t.tm_year + 1900, t.tm_mon + 1, t.tm_mday,
-                    t.tm_hour, t.tm_min, t.tm_sec, now.tv_usec);
-       AppendLogLevelTitle_(level);//Ğ´ÈëÈÕÖ¾¼¶±ğ,Ä¬ÈÏ»º³åÇøÏÂ±êÒÑĞ´
-       va_start(vaList, format);//ÆäËûÒªĞ´ÈëµÄ±äÁ¿À´×Ô...¿É±ä²ÎÊı
-       int n = vsnprintf(buff_.BeginWrite(),buff_.WritableBytes(),format,vaList);        
-       va_end(vaList);
-       buff_.HasWritten(n);//¸üĞÂ»º³åÇøÏÂ±ê
-       buff_.Append("\n\0", 2);//Ğ´Èë»»ĞĞ·ûºÍ×Ö·û´®,\0ÊÇÎªÁË±£Ö¤×Ö·û´®ÕıÈ·½áÊø
-       //ÅĞ¶ÏÍ¬²½Òì²½
-       if(isAsync_ && deque_ && !deque_->full()) //Òì²½ÇÒÎ´Âú
-       {
-            deque_->push_back({std::move(module), buff_.RetrieveAllToStr()});//Ğ´Èë×èÈû¶ÓÁĞ
-       }
-       else//Í¬²½·½Ê½Ö±½ÓĞ´Èë¶ÔÓ¦Ä£¿éµÄlogÎÄ¼ş
-       {
+        // ---- Phase 2: æ ¼å¼åŒ–æ—¥å¿—æ¶ˆæ¯åˆ° buff_ ----
+        buff_.RetrieveAllToStr();  // å…ˆæ¸…ç©ºç¼“å†²åŒº
+        int nTime = snprintf(buff_.BeginWrite(), buff_.WritableBytes(),
+                 "%d-%02d-%02d %02d:%02d:%02d.%06ld ",
+                 t.tm_year + 1900, t.tm_mon + 1, t.tm_mday,
+                 t.tm_hour, t.tm_min, t.tm_sec, now.tv_usec);
+        buff_.HasWritten(nTime);   // æ¨è¿›å†™æŒ‡é’ˆï¼Œé¿å…è¢«åç»­ Append è¦†ç›–
+        AppendLogLevelTitle_(level);
+        va_start(vaList, format);
+        int nMsg = vsnprintf(buff_.BeginWrite(), buff_.WritableBytes(), format, vaList);
+        va_end(vaList);
+        buff_.HasWritten(nMsg);
+        buff_.Append("\n\0", 2);
+
+        // ---- Phase 3: åˆ†å‘ ----
+        if(isAsync_ && deque_)
+        {
+            // å¼‚æ­¥è·¯å¾„ï¼šæå–æ¶ˆæ¯åˆ°æ ˆå˜é‡ï¼Œæ ‡è®°å¾… pushï¼ˆä¸åœ¨æ­¤å¤„ pushï¼Œé¿å…æŒ mtx_ ç­‰ Blockqueueï¼‰
+            asyncMessage = buff_.RetrieveAllToStr();
+            shouldPushAsync = true;
+        }
+        else
+        {
+            // åŒæ­¥è·¯å¾„ï¼šç›´æ¥æŒé”å†™å…¥æ–‡ä»¶
             FILE* fp = GetOrCreateModuleFile_(module);
             if(fp)
             {
                 fputs(buff_.BeginRead(), fp);
             }
-       }
+            buff_.RetrieveAllToStr();  // æ¸…ç©ºç¼“å†²åŒº
+        }
     }
-    buff_.RetrieveAllToStr();//bufferĞ´ÈëºóÇå¿Õ
+    // mtx_ åœ¨æ­¤é‡Šæ”¾ â€”â€” åç»­å¼‚æ­¥ push ä¸æŒ Log::mtx_
+
+    // å¼‚æ­¥å†™å…¥é˜»å¡é˜Ÿåˆ— â€”â€” æ­¤æ—¶ä¸æŒæœ‰ mtx_ï¼Œä¸ AsyncWrite_ ä¸å½¢æˆ ABBA
+    if(shouldPushAsync)
+    {
+        deque_->push_back({std::move(module), std::move(asyncMessage)});
+    }
 }
 
 int Log::Isopen()

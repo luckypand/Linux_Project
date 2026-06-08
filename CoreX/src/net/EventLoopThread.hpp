@@ -12,8 +12,8 @@ public:
     EventLoopThread(std::string name);
     ~EventLoopThread();
 
-    EventLoop* startLoop();     //¿ªÆôloopÊÂ¼ş
-    void threadFunc();          //×ÓÏß³Ì°ó¶¨º¯Êı
+    EventLoop* startLoop();     //å¼€å¯loopäº‹ä»¶
+    void threadFunc();          //å­çº¿ç¨‹ç»‘å®šå‡½æ•°
 private:
 
     EventLoop* loop_{nullptr};

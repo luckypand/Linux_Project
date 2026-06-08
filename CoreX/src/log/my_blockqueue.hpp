@@ -11,8 +11,8 @@ template <typename T>
 class Blockqueue
 {
 public:
-    //class 
-    explicit Blockqueue(size_t max_size = 1024); //ÏÔÊ¾¶¨Òå
+    //class
+    explicit Blockqueue(size_t max_size = 1024);
     ~Blockqueue();
 
     //resocure access
@@ -25,21 +25,21 @@ public:
 
     //modify
     void push_back(const T& item);
-    void push_front(const T& item); 
-    bool pop(T& item);  // µ¯³öµÄÈÎÎñ·ÅÈëitem
-    bool pop(T& item, int timeout);  // µÈ´ıÊ±¼ä
+    void push_front(const T& item);
+    bool pop(T& item);
+    bool pop(T& item, int timeout);
 
     //log operation
     void Clear();
     void Close();
     void flush();
 private:
-    deque<T> deq_;                       //µ×²ã½á¹¹
-    size_t capacity_;                    //ÈİÁ¿
-    bool isClose_;                       //ÊÇ·ñ¹Ø±Õ
-    mutex mtx_;                          //»¥³âËø
-    condition_variable condConsumer_;    //Ïû·ÑÕßÌõ¼ş±äÁ¿
-    condition_variable condProducer_;    //Éú²úÕßÌõ¼ş±äÁ¿
+    deque<T> deq_;
+    size_t capacity_;
+    bool isClose_;
+    mutex mtx_;
+    condition_variable condConsumer_;
+    condition_variable condProducer_;
 
 };
 
@@ -54,7 +54,7 @@ Blockqueue<T>::Blockqueue(size_t max_size)
 template<typename T>
 void Blockqueue<T>::flush()
 {
-    condConsumer_.notify_one();         //»½ĞÑÏû·ÑÕß
+    condConsumer_.notify_one();
 }
 
 template<typename T>
@@ -69,9 +69,9 @@ void Blockqueue<T>::Close()
 {
     Clear();
     isClose_ = true;
-    condConsumer_.notify_all();//»½ĞÑÏû·ÑÕß
-    condProducer_.notify_all();//»½ĞÑÉú²úÕß
-}   
+    condConsumer_.notify_all();
+    condProducer_.notify_all();
+}
 
 template<typename T>
 Blockqueue<T>::~Blockqueue()
@@ -82,89 +82,89 @@ Blockqueue<T>::~Blockqueue()
 template<typename T>
 size_t Blockqueue<T>::capacity()
 {
-    lock_guard<mutex> locker(mtx_);//ÉÏËø
+    lock_guard<mutex> locker(mtx_);
     return capacity_;
 }
 
 template<typename T>
 size_t Blockqueue<T>::size()
 {
-    lock_guard<mutex> locker(mtx_);//ÉÏËø
+    lock_guard<mutex> locker(mtx_);
     return deq_.size();
 }
 
 template<typename T>
 bool Blockqueue<T>::empty()
 {
-    lock_guard<mutex> locker(mtx_);//ÉÏËø
-    return size() == 0;
+    lock_guard<mutex> locker(mtx_);
+    return deq_.size() == 0;  // direct access to avoid recursive lock from size()
 }
 
 template<typename T>
 bool Blockqueue<T>::full()
 {
-    lock_guard<mutex> locker(mtx_);//ÉÏËø
-    return capacity() == size();
+    lock_guard<mutex> locker(mtx_);
+    return capacity_ == deq_.size();  // direct access to avoid recursive lock
 }
 
 template<typename T>
 void Blockqueue<T>::push_back(const T& item)
 {
-    //Á÷³Ì£ºÉÏËø->ÅĞ¶Ï¶ÓÁĞÊÇ·ñÂú->Èç¹ûÂúÁË£¬Éú²úÕßµÈ´ı->Èç¹û²»ÂúÁË£¬¼ÓÈëÔªËØ->»½ĞÑÏû·ÑÕß
-    unique_lock<mutex> locker(mtx_);//ÉÏËø
-    while(full())
+    unique_lock<mutex> locker(mtx_);
+    while(deq_.size() >= capacity_ && !isClose_)  // é˜Ÿåˆ—æ»¡ä¸”æœªå…³é—­æ—¶æ‰ç­‰å¾…
     {
         condProducer_.wait(locker);
     }
+    if(isClose_) return;  // é˜Ÿåˆ—å·²å…³é—­ï¼Œä¸¢å¼ƒæ•°æ®ï¼ˆé¿å… shutdown æ—¶ç”Ÿäº§è€…æ­»ç­‰ï¼‰
     deq_.push_back(item);
-    condConsumer_.notify_one();//»½ĞÑÏû·ÑÕß
+    condConsumer_.notify_one();
 }
 
 template<typename T>
 void Blockqueue<T>::push_front(const T& item)
 {
-    //Á÷³Ì£ºÉÏËø->ÅĞ¶Ï¶ÓÁĞÊÇ·ñÂú->Èç¹ûÂúÁË£¬Éú²úÕßµÈ´ı->Èç¹û²»ÂúÁË£¬¼ÓÈëÔªËØ->»½ĞÑÏû·ÑÕß
-    unique_lock<mutex> locker(mtx_);//ÉÏËø
-    while(full())
+    unique_lock<mutex> locker(mtx_);
+    while(deq_.size() >= capacity_ && !isClose_)  // é˜Ÿåˆ—æ»¡ä¸”æœªå…³é—­æ—¶æ‰ç­‰å¾…
     {
         condProducer_.wait(locker);
     }
+    if(isClose_) return;  // é˜Ÿåˆ—å·²å…³é—­ï¼Œä¸¢å¼ƒæ•°æ®
     deq_.push_front(item);
-    condConsumer_.notify_one();//»½ĞÑÏû·ÑÕß
+    condConsumer_.notify_one();
 }
+
 /*
-* @brief:
-     *pop()Ä¬ÈÏÊ¹ÓÃpop_front£¬ÒòÎª¿ÉÒÔ´îÅälogÖĞµÄpush_back()
-*  ÊµÏÖpush_back + pop_front => ±ê×¼ FIFO£¬ÏÈÀ´ÏÈ´¦Àí»òÕß
-*  push_front + pop_front => ĞÂÀ´µÄÈÎÎñ²åµ½×îÇ°Ãæ£¬½á¹û¸üÏñ LIFO£¬ºóÀ´µÄÏÈ´¦Àí
-*/
+ * pop() uses pop_front to pair with push_back, implementing standard FIFO.
+ * Returns false if queue is closed while waiting.
+ */
 template<typename T>
 bool Blockqueue<T>::pop(T& item)
 {
-    //Á÷³Ì£ºÉÏËø->ÅĞ¶Ï¶ÓÁĞÊÇ·ñ¿Õ->Èç¹û¿ÕÁË£¬Ïû·ÑÕßµÈ´ı->Èç¹û²»¿ÕÁË£¬µ¯³öÔªËØ->»½ĞÑÉú²úÕß
-    unique_lock<mutex> locker(mtx_);//ÉÏËø
-    while(empty())
+    unique_lock<mutex> locker(mtx_);
+    while(deq_.empty())  // ç›´æ¥åˆ¤æ–­ï¼Œé¿å… empty() é€’å½’åŠ é”å¯¼è‡´æ­»é”
     {
+        if(isClose_)
+        {
+            return false;  // queue closed, exit to avoid deadlock on shutdown
+        }
         condConsumer_.wait(locker);
     }
-    item = deq_.front();//·µ»ØÉ¾³ıÖµ¸øµ÷ÓÃ·½
+    item = deq_.front();
     deq_.pop_front();
-    condProducer_.notify_one();//»½ĞÑÉú²úÕß
+    condProducer_.notify_one();
     return true;
 }
 
 /*
-* @brief:
-*     ÏŞÊ±µÈ´ı£¬·ÀÖ¹Ïß³Ì¿¨ËÀ£¬ËùÒÔÓë³£¹æÖ±½ÓÊ¹µÃÏû·ÑÕßµÈ´ı²»Í¬£¬ĞèÒª½øĞĞ³¬Ê±ÅĞ¶ÏºóÖ±½Ó
-*  ·µ»Ø£¬»òÕßÔÚµÈ´ıÍ¾ÖĞ·¢ÏÖlog¹Ø±Õ£¬Ò²Ö±½ÓÍË³ö
-*/
+ * pop with timeout. Also checks isClose_ to allow graceful shutdown.
+ */
 template<typename T>
 bool Blockqueue<T>::pop(T& item, int timeout)
 {
-    unique_lock<mutex> locker(mtx_);//ÉÏËø
-    while(empty())//ÅĞ¿Õ
+    unique_lock<mutex> locker(mtx_);
+    while(deq_.empty())  // ç›´æ¥åˆ¤æ–­ï¼Œé¿å… empty() é€’å½’åŠ é”å¯¼è‡´æ­»é”
     {
-        if(condConsumer_.wait_for(locker, std::chrono::seconds(timeout)) 
+        if(condConsumer_.wait_for(locker, std::chrono::seconds(timeout))
                 == std::cv_status::timeout)
             {
                 return false;
@@ -174,22 +174,22 @@ bool Blockqueue<T>::pop(T& item, int timeout)
             return false;
         }
     }
-    item = deq_.front();//·µ»ØÉ¾³ıÖµ¸øµ÷ÓÃ·½
+    item = deq_.front();
     deq_.pop_front();
-    condProducer_.notify_one();//»½ĞÑÉú²úÕß
-    return true;    
+    condProducer_.notify_one();
+    return true;
 }
 
 template<typename T>
 T Blockqueue<T>::front()
 {
-    lock_guard<mutex> locker(mtx_);//ÉÏËø
+    lock_guard<mutex> locker(mtx_);
     return deq_.front();
 }
 
 template<typename T>
 T Blockqueue<T>::back()
 {
-    lock_guard<mutex> locker(mtx_);//ÉÏËø
+    lock_guard<mutex> locker(mtx_);
     return deq_.back();
 }

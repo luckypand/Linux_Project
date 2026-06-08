@@ -2,7 +2,7 @@
 #include "EventLoop.hpp"
 #include <sys/epoll.h>
 
-//ÕâÊÇÓÃ»§¹ØĞÄµÄfd·¢ÉúÊÂ¼ş±¾ÉíµÄ±êÖ¾Î»
+//è¿™æ˜¯ç”¨æˆ·å…³å¿ƒçš„fdå‘ç”Ÿäº‹ä»¶æœ¬èº«çš„æ ‡å¿—ä½
 const int Channel::kNoneEvent = 0;
 const int Channel::kReadEvent = EPOLLIN | EPOLLPRI;
 const int Channel::kWriteEvent = EPOLLOUT;
@@ -12,7 +12,7 @@ Channel::Channel(EventLoop* loop,int fd_)
  ,fd_(fd_)
  ,events_(0)
  ,retevent_(0)
- ,index_(-1) //Ä¬ÈÏ×´Ì¬ÎªkNEW£¬¼´»¹Î´¼ÓÈëepollµÄ¼àÊÓ·¶Î§ 
+ ,index_(-1) //é»˜è®¤çŠ¶æ€ä¸ºkNEWï¼Œå³è¿˜æœªåŠ å…¥epollçš„ç›‘è§†èŒƒå›´ 
 {
 
 }

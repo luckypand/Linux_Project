@@ -5,7 +5,7 @@ HeapTimer::HeapTimer()
     :TimeHeap_()
     ,ref_()
 {
-    TimeHeap_.reserve(64);   //Ô¤ÏÈ¿ª±Ù¿Õ¼ä,¶ø²»ÊÇÖ±½Ó³õÊ¼»¯TimeHeap_(64)
+    TimeHeap_.reserve(64);   //é¢„å…ˆå¼€è¾Ÿç©ºé—´,è€Œä¸æ˜¯ç›´æ¥åˆå§‹åŒ–TimeHeap_(64)
 }
 
 HeapTimer::~HeapTimer()
@@ -15,11 +15,11 @@ HeapTimer::~HeapTimer()
 
 /*
 * @brief:
-*     ½»»»¶Ñ½áµã
+*     äº¤æ¢å †ç»“ç‚¹
 */
 void HeapTimer::swapnode(size_t i,size_t j)
 {
-    //ÏÈ½»»»ÔÚheapÏÂµÄÎ»ÖÃ£¬ÔÙ½»»»ÔÚunordered_mapÏÂ¶ÔÓ¦µÄ×ø±ê
+    //å…ˆäº¤æ¢åœ¨heapä¸‹çš„ä½ç½®ï¼Œå†äº¤æ¢åœ¨unordered_mapä¸‹å¯¹åº”çš„åæ ‡
     assert(i < TimeHeap_.size() && j < TimeHeap_.size());
     std::swap(TimeHeap_[i],TimeHeap_[j]);
     ref_[TimeHeap_[i].fd_] = i;
@@ -34,7 +34,7 @@ void HeapTimer::swapnode(size_t i,size_t j)
 
 /*
 * @brief:
-*     Çå¿Õ¶Ñ¹ÜÀíÄÚÈİ
+*     æ¸…ç©ºå †ç®¡ç†å†…å®¹
 */
 void HeapTimer::clear()
 {
@@ -44,7 +44,7 @@ void HeapTimer::clear()
 
 /*
 * @brief:
-*     Ö¸¶¨½áµãÏòÉÏµ÷Õû
+*     æŒ‡å®šç»“ç‚¹å‘ä¸Šè°ƒæ•´
 */
 void HeapTimer::siftup(size_t i)
 {
@@ -53,10 +53,10 @@ void HeapTimer::siftup(size_t i)
 
     while(i > 0)
     {
-        //¸¸´óÓÚ×Ó£¬½»»»¸¸×Ó£¬¸¸×Ó¼ÌĞøµü´ú£¬·ñÔòÍË³ö
-        if(TimeHeap_[parent] > TimeHeap_[i])//×ÓĞ¡ÓÚ¸¸
+        //çˆ¶å¤§äºå­ï¼Œäº¤æ¢çˆ¶å­ï¼Œçˆ¶å­ç»§ç»­è¿­ä»£ï¼Œå¦åˆ™é€€å‡º
+        if(TimeHeap_[parent] > TimeHeap_[i])//å­å°äºçˆ¶
         {
-            swapnode(parent,i);//½»»»
+            swapnode(parent,i);//äº¤æ¢
             i = parent;
             parent = (parent - 1) / 2;
         }
@@ -69,15 +69,15 @@ void HeapTimer::siftup(size_t i)
 
 /*
 * @brief:
-*     Ö¸¶¨½áµãÏòÏÂµ÷Õû,²¢·µ»ØÊÇ·ñµ÷Õû
+*     æŒ‡å®šç»“ç‚¹å‘ä¸‹è°ƒæ•´,å¹¶è¿”å›æ˜¯å¦è°ƒæ•´
 * @parameter:
-      n£º½áµã×Ü¸öÊı
+      nï¼šç»“ç‚¹æ€»ä¸ªæ•°
 */
 bool HeapTimer::siftdown(size_t i,size_t n)
 {
     assert(i < TimeHeap_.size());
     assert(n <= TimeHeap_.size());
-    //ÒÑÖª¸¸½áµã£¬ÅĞ¶Ï×óÓÒº¢×ÓÄÇ¸ö¸üĞ¡£¬Óë¸üĞ¡µÄ±È½Ï£¬¸¸´óÓÚ×ÓÔò½»»»£¬·ñÔòÌø³ö
+    //å·²çŸ¥çˆ¶ç»“ç‚¹ï¼Œåˆ¤æ–­å·¦å³å­©å­é‚£ä¸ªæ›´å°ï¼Œä¸æ›´å°çš„æ¯”è¾ƒï¼Œçˆ¶å¤§äºå­åˆ™äº¤æ¢ï¼Œå¦åˆ™è·³å‡º
     size_t child = i * 2 + 1;
     size_t index = i;
 
@@ -85,7 +85,7 @@ bool HeapTimer::siftdown(size_t i,size_t n)
     {
         if(child + 1 < n && TimeHeap_[child] > TimeHeap_[child + 1])
         {
-            child += 1;//ÓÒĞ¡Ñ¡ÓÒ
+            child += 1;//å³å°é€‰å³
         }
         if(TimeHeap_[i] > TimeHeap_[child])
         {
@@ -104,16 +104,16 @@ bool HeapTimer::siftdown(size_t i,size_t n)
 
 /*
 * @brief:
-*     É¾³ıÖ¸¶¨µÄ½áµã
+*     åˆ é™¤æŒ‡å®šçš„ç»“ç‚¹
 * @parameter:
-      t£ºÖ¸¶¨ÒªÉ¾³ıµÄ½áµã
+      tï¼šæŒ‡å®šè¦åˆ é™¤çš„ç»“ç‚¹
 */
 void HeapTimer::del_(size_t t)
 {
-    //½«ÒªÉ¾³ıµÄ½áµã»»µ½¶ÓÎ²£¬È»ºóµ÷Õû¶Ñ£¬Èç¹û¾ÍÊÇ¶ÓÎ²ÔòÎŞĞèµ÷Õû£¬·ñÔò»»µ½¶ÓÎ²ºóµ÷Õû£¬ÔÙµ¯³öheap²¢²Á³ıu_map
+    //å°†è¦åˆ é™¤çš„ç»“ç‚¹æ¢åˆ°é˜Ÿå°¾ï¼Œç„¶åè°ƒæ•´å †ï¼Œå¦‚æœå°±æ˜¯é˜Ÿå°¾åˆ™æ— éœ€è°ƒæ•´ï¼Œå¦åˆ™æ¢åˆ°é˜Ÿå°¾åè°ƒæ•´ï¼Œå†å¼¹å‡ºheapå¹¶æ“¦é™¤u_map
     assert(t < TimeHeap_.size());
 
-    size_t n = TimeHeap_.size() - 1;  //Î²½áµãÏÂ±ê
+    size_t n = TimeHeap_.size() - 1;  //å°¾ç»“ç‚¹ä¸‹æ ‡
     size_t tmp = t;
 
     if(tmp < n)
@@ -125,21 +125,21 @@ void HeapTimer::del_(size_t t)
         }
     } 
 
-    //µ¯³öÎ²½áµã²¢²ÁÈ¥u_map
+    //å¼¹å‡ºå°¾ç»“ç‚¹å¹¶æ“¦å»u_map
     ref_.erase(TimeHeap_.back().fd_);
     TimeHeap_.pop_back();
 }
 
 /*
 * @brief:
-*     µ÷ÕûÖ¸¶¨fdµÄ¶¨Ê±Æ÷µÄexpire_ÊôĞÔ
+*     è°ƒæ•´æŒ‡å®šfdçš„å®šæ—¶å™¨çš„expire_å±æ€§
 * @parameter:
-      fd£ºÖ¸¶¨ÎÄ¼şÃèÊö·û
-      newExpiresMs:ĞÂµÄ¹ıÆÚÊ±¼ä
+      fdï¼šæŒ‡å®šæ–‡ä»¶æè¿°ç¬¦
+      newExpiresMs:æ–°çš„è¿‡æœŸæ—¶é—´
 */
 void HeapTimer::adjust(int fd, int newExpiresMs)  
 {
-    //Ê±¼ä±äÁË£¬ÔÚ¶ÑµÄÏÂ±ê¾Í¸Ä±ä£¬ÏÂ±ê¸Ä±ä¶ÔÓ¦u_map¾Í¸Ä±ä(ÔÚÉÏÏÂµ÷Õû¾ÍÄ¬ÈÏÖ´ĞĞ)£¬ÔÚ¶ÑÖĞÖØĞÂµ÷Õû
+    //æ—¶é—´å˜äº†ï¼Œåœ¨å †çš„ä¸‹æ ‡å°±æ”¹å˜ï¼Œä¸‹æ ‡æ”¹å˜å¯¹åº”u_mapå°±æ”¹å˜(åœ¨ä¸Šä¸‹è°ƒæ•´å°±é»˜è®¤æ‰§è¡Œ)ï¼Œåœ¨å †ä¸­é‡æ–°è°ƒæ•´
     assert(!TimeHeap_.empty() && ref_.count(fd) > 0);
 
     size_t index = ref_[fd];
@@ -153,14 +153,14 @@ void HeapTimer::adjust(int fd, int newExpiresMs)
 
 /*
 * @brief:
-*     Ìí¼ÓĞÂµÄÊ±¼äµã
+*     æ·»åŠ æ–°çš„æ—¶é—´ç‚¹
 * @parameter:
-      ²ÎÊı²»Ê¹ÓÃTimeNodeÊÇÎªÁË±ÜÃâµ÷ÓÃ·½»¹Òª½øĞĞ·±ËöµÄÊ±¼äÔËËã
+      å‚æ•°ä¸ä½¿ç”¨TimeNodeæ˜¯ä¸ºäº†é¿å…è°ƒç”¨æ–¹è¿˜è¦è¿›è¡Œç¹ççš„æ—¶é—´è¿ç®—
 */
 void HeapTimer::add(int fd,int TimeoutMs,TimeoutCallback tcb)
 {
-    //Èç¹ûÊÇ¾Éfd£¬Ïàµ±ÓÚ¸üĞÂºóÖØÖÃ»Øµ÷º¯Êı
-    //Èç¹ûÊÇĞÂfd£¬Ôò²åÈëheapºó,¸üĞÂref£¬ÏòÉÏµ÷Õû
+    //å¦‚æœæ˜¯æ—§fdï¼Œç›¸å½“äºæ›´æ–°åé‡ç½®å›è°ƒå‡½æ•°
+    //å¦‚æœæ˜¯æ–°fdï¼Œåˆ™æ’å…¥heapå,æ›´æ–°refï¼Œå‘ä¸Šè°ƒæ•´
     assert(fd >= 0);
     
     if(ref_.count(fd) > 0)
@@ -180,7 +180,7 @@ void HeapTimer::add(int fd,int TimeoutMs,TimeoutCallback tcb)
 
 /*
 * @brief:
-*     µ¯³ö¶Ñ¶¥
+*     å¼¹å‡ºå †é¡¶
 */
 void HeapTimer::top_pop()                                   
 {
@@ -190,27 +190,27 @@ void HeapTimer::top_pop()
 
 /*
 * @brief:
-*     Ö÷¶¯´¥·¢²¢É¾³ı¶¨Ê±Æ÷ (ÀıÈç¿Í»§¶ËÖ÷¶¯¶Ï¿ª)
+*     ä¸»åŠ¨è§¦å‘å¹¶åˆ é™¤å®šæ—¶å™¨ (ä¾‹å¦‚å®¢æˆ·ç«¯ä¸»åŠ¨æ–­å¼€)
 */
 void HeapTimer::doWork(int fd)                        
 {
-    if(TimeHeap_.empty() || ref_.count(fd) == 0 )//¶ÑÎª¿Õ»òÕßËÑË÷±íÃ»ÓĞ¸Ã½áµã
+    if(TimeHeap_.empty() || ref_.count(fd) == 0 )//å †ä¸ºç©ºæˆ–è€…æœç´¢è¡¨æ²¡æœ‰è¯¥ç»“ç‚¹
     {
         return;
     }
 
     size_t index = ref_[fd];
-    TimeHeap_[index].tcb();    //Ö´ĞĞ»Øµ÷
-    this->del_(index);         //É¾³ı¶ÑÉÏ¶ÔÓ¦µÄ½áµã²¢²ÁÈ¥²éÑ¯±í
+    TimeHeap_[index].tcb();    //æ‰§è¡Œå›è°ƒ
+    this->del_(index);         //åˆ é™¤å †ä¸Šå¯¹åº”çš„ç»“ç‚¹å¹¶æ“¦å»æŸ¥è¯¢è¡¨
 }
 
 /*
 * @brief:
-*     ¼ì²é²¢ÇåÀíËùÓĞÒÑ³¬Ê±µÄ¶¨Ê±Æ÷ (EventLoop µÄĞÄÌøº¯Êı)
+*     æ£€æŸ¥å¹¶æ¸…ç†æ‰€æœ‰å·²è¶…æ—¶çš„å®šæ—¶å™¨ (EventLoop çš„å¿ƒè·³å‡½æ•°)
 */
 void HeapTimer::tick()                                     
 {
-    //¼ì²é¶Ñ¶¥Ê±¼äÔÚ¸ß¾«¶ÈÊ±ÖÓÏÂÊÇ·ñĞ¡ÓÚ0£¬Ğ¡ÓÚÔòÖ´ĞĞ»Øµ÷²¢µ¯³ö¸Ã½áµã
+    //æ£€æŸ¥å †é¡¶æ—¶é—´åœ¨é«˜ç²¾åº¦æ—¶é’Ÿä¸‹æ˜¯å¦å°äº0ï¼Œå°äºåˆ™æ‰§è¡Œå›è°ƒå¹¶å¼¹å‡ºè¯¥ç»“ç‚¹
     if(TimeHeap_.empty())
     {
         return;
@@ -231,11 +231,11 @@ void HeapTimer::tick()
 
 /*
 * @brief:
-*     »ñÈ¡¾àÀëÏÂÒ»¸ö¶¨Ê±Æ÷³¬Ê±µÄÊ£ÓàÊ±¼ä (ÓÃÓÚ epoll_wait)
+*     è·å–è·ç¦»ä¸‹ä¸€ä¸ªå®šæ—¶å™¨è¶…æ—¶çš„å‰©ä½™æ—¶é—´ (ç”¨äº epoll_wait)
 */
 int HeapTimer::Getclosetick()         
 {                 
-    //ÏÈÇå¿Õ¾É¶¨Ê±Æ÷£¬¼ÇÂ¼¶¥¶Ë¼ÆÊ±Æ÷Ê±¼ä²¢·µ»Ø£¬Èç¹û-1´ú±í¼ÆÊ±Æ÷Îª¿Õ£¬Îª0´ú±í³¬Ê±È´Î´»½ĞÑ
+    //å…ˆæ¸…ç©ºæ—§å®šæ—¶å™¨ï¼Œè®°å½•é¡¶ç«¯è®¡æ—¶å™¨æ—¶é—´å¹¶è¿”å›ï¼Œå¦‚æœ-1ä»£è¡¨è®¡æ—¶å™¨ä¸ºç©ºï¼Œä¸º0ä»£è¡¨è¶…æ—¶å´æœªå”¤é†’
     this->tick();
     int res = -1;
 

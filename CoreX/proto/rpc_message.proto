@@ -18,10 +18,13 @@ enum ErrorCode {
 }
 
 message RpcMessage {
-    MessageType type     = 1;
-    fixed64     id       = 2;   // ÇëÇó/ÏìÓ¦¶ÔÓ¦ ID
-    string      service  = 3;   // "MathService"
-    string      method   = 4;   // "Add"
-    bytes       payload  = 5;   // Request »ò Response µÄĞòÁĞ»¯Êı¾İ
-    ErrorCode   error    = 6;   // ½ö RESPONSE/ERROR ÀàĞÍÊ¹ÓÃ
+    MessageType type            = 1;
+    fixed64     id              = 2;   // è¯·æ±‚/å“åº”å¯¹åº” ID
+    string      service         = 3;   // "MathService"
+    string      method          = 4;   // "Add"
+    bytes       payload         = 5;   // Request æˆ– Response çš„åºåˆ—åŒ–ç»“æœ
+    ErrorCode   error           = 6;   // ä»…åœ¨ RESPONSE/ERROR æ—¶ä½¿ç”¨
+    uint64      client_send_ts  = 7;   // client send timestamp (us)
+    uint64      server_recv_ts  = 8;   // server receive timestamp (us)
+    uint64      server_send_ts  = 9;   // server send timestamp (us)
 }

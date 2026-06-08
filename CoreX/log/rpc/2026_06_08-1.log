@@ -1,0 +1,10 @@
+2026-06-08 22:29:56.926907 [info] : [RPC-TIMING] id=0 CoreX.rpc.MathService.Add | deserialize:4us route:1us business:24us send:36us | total:65us
+2026-06-08 22:29:56.927040 [info] : [RPC-TIMING] id=1 CoreX.rpc.MathService.Add | deserialize:1us route:1us business:3us send:21us | total:26us
+2026-06-08 22:29:56.927483 [info] : [RPC-TIMING] id=2 CoreX.rpc.MathService.Add | deserialize:6us route:1us business:10us send:74us | total:91us
+2026-06-08 22:29:56.927719 [info] : [RPC-TIMING] id=3 CoreX.rpc.MathService.Add | deserialize:2us route:0us business:5us send:8us | total:15us
+2026-06-08 22:29:56.927949 [info] : [RPC-TIMING] id=4 CoreX.rpc.MathService.Add | deserialize:1us route:0us business:6us send:21us | total:28us
+2026-06-08 22:29:56.928013 [info] : [RPC-TIMING] id=5 CoreX.rpc.MathService.Add | deserialize:1us route:0us business:2us send:13us | total:16us
+2026-06-08 22:29:56.928115 [info] : [RPC-TIMING] id=6 CoreX.rpc.MathService.Add | deserialize:1us route:1us business:1us send:13us | total:16us
+2026-06-08 22:29:56.928163 [info] : [RPC-TIMING] id=7 CoreX.rpc.MathService.Add | deserialize:0us route:0us business:1us send:12us | total:13us
+2026-06-08 22:29:56.928260 [info] : [RPC-TIMING] id=8 CoreX.rpc.MathService.Add | deserialize:1us route:0us business:1us send:13us | total:15us
+2026-06-08 22:29:56.928310 [info] : [RPC-TIMING] id=9 CoreX.rpc.MathService.Add | deserialize:0us route:1us business:1us send:11us | total:13us

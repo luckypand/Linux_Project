@@ -3,7 +3,7 @@
 
 /*
 * @brief:
-*     ³õÊ¼»¯Ïß³Ì
+*     åˆå§‹åŒ–çº¿ç¨‹
 */
 EventLoopThread::EventLoopThread(std::string name)
     :name_(name)
@@ -13,15 +13,15 @@ EventLoopThread::EventLoopThread(std::string name)
 
 /*
 * @brief:
-*     Îö¹¹Ïß³Ì,µÈ´ıÏß³ÌÏú»Ù(Ö÷Ïß³Ìµ÷ÓÃ)
+*     ææ„çº¿ç¨‹,ç­‰å¾…çº¿ç¨‹é”€æ¯(ä¸»çº¿ç¨‹è°ƒç”¨)
 */
 EventLoopThread::~EventLoopThread()
 {   
     exiting = true;
-    //ÊÂ¼şÑ­»·´æÔÚ
+    //äº‹ä»¶å¾ªç¯å­˜åœ¨
     if(nullptr != loop_)
     {
-        //ÍË³öÑ­»·ºóµÈ´ıÏß³ÌÍË³ö
+        //é€€å‡ºå¾ªç¯åç­‰å¾…çº¿ç¨‹é€€å‡º
         loop_->quit();
         if(thread_.joinable())
         {
@@ -32,11 +32,11 @@ EventLoopThread::~EventLoopThread()
 
 /*
 * @brief:
-*     µ÷ÓÃthreadFunc()±£Ö¤×ÓÏß³ÌEventLoop´´½¨Íê³Éºó·µ»Ø¼ÇÂ¼Æäloop
+*     è°ƒç”¨threadFunc()ä¿è¯å­çº¿ç¨‹EventLoopåˆ›å»ºå®Œæˆåè¿”å›è®°å½•å…¶loop
 */
 EventLoop* EventLoopThread::startLoop()
 {
-    //Ö÷Ïß³Ì´´½¨Ïß³Ì£¬Ìõ¼ş±äÁ¿µÈ´ıÏß³ÌEventLoop´´½¨Íê³Éºó·µ»Ø
+    //ä¸»çº¿ç¨‹åˆ›å»ºçº¿ç¨‹ï¼Œæ¡ä»¶å˜é‡ç­‰å¾…çº¿ç¨‹EventLoopåˆ›å»ºå®Œæˆåè¿”å›
     thread_ = std::thread(&EventLoopThread::threadFunc,this);
     EventLoop* loop = nullptr;
     {
@@ -49,21 +49,21 @@ EventLoop* EventLoopThread::startLoop()
 
 /*
 * @brief:
-*     ´´½¨EventLoop£¬×ÓÏß³ÌÆô¶¯loop
+*     åˆ›å»ºEventLoopï¼Œå­çº¿ç¨‹å¯åŠ¨loop
 */
 void EventLoopThread::threadFunc()
 {
-    //´´½¨EventLoop£¬»½ĞÑ×ÓÏß³Ìwait£¬×ÓÏß³Ì½øÈëloop
-    EventLoop loopInstance;//×ÓÏß³ÌloopÊ¹µÃÉú´æÖÜÆÚ°ó¶¨
+    //åˆ›å»ºEventLoopï¼Œå”¤é†’å­çº¿ç¨‹waitï¼Œå­çº¿ç¨‹è¿›å…¥loop
+    EventLoop loopInstance;//å­çº¿ç¨‹loopä½¿å¾—ç”Ÿå­˜å‘¨æœŸç»‘å®š
     {
         std::unique_lock<std::mutex> locker(mtx_);
         loop_ = &loopInstance;
     }
-    //»½ĞÑÖ÷Ïß³Ì»ñµÃ×ÓÏß³Ìloop£¬×ÓÏß³Ì¿ªÊ¼Ñ­»·
+    //å”¤é†’ä¸»çº¿ç¨‹è·å¾—å­çº¿ç¨‹loopï¼Œå­çº¿ç¨‹å¼€å§‹å¾ªç¯
     cond_.notify_one();
     loopInstance.loop();
 
-    // Ñ­»·½áÊø£¬ÇåÀíÖ¸Õë
+    // å¾ªç¯ç»“æŸï¼Œæ¸…ç†æŒ‡é’ˆ
     std::unique_lock<std::mutex> locker(mtx_);    
     loop_ = nullptr;
 }

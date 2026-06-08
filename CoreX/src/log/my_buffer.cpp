@@ -5,111 +5,111 @@
 //|<-----prependable----><-----readable----><-----writeable---->|
 //|                     r                  w                    size
 
-Buffer::Buffer(int Buffersize)
+LogBuffer::LogBuffer(int Buffersize)
     :buffer_(Buffersize)
     ,readPos_(0)
     ,writePos_(0)
 {
-    
+
 }
 
-//¿ÉĞ´×Ö½Ú¿Õ¼ä
-size_t Buffer::WritableBytes() const
+//å¯å†™å­—èŠ‚ç©ºé—´
+size_t LogBuffer::WritableBytes() const
 {
     return buffer_.size() - writePos_;
-} 
+}
 
-//¿É¶Á×Ö½Ú¿Õ¼ä
-size_t Buffer::ReadableBytes() const 
+//å¯è¯»å­—èŠ‚ç©ºé—´
+size_t LogBuffer::ReadableBytes() const
 {
     return writePos_ - readPos_;
 }
 
-//Ô¤Áô×Ö½Ú¿Õ¼ä
-size_t Buffer::PrependableBytes() const
+//é¢„ç•™å­—èŠ‚ç©ºé—´
+size_t LogBuffer::PrependableBytes() const
 {
     return readPos_;
 }
 
-//¿Õ¼ä²»¹»£¬vector¿ª±Ù¿Õ¼ä
-void Buffer::MakeSpace_(size_t len)
+//ç©ºé—´ä¸å¤Ÿï¼Œvectorå¼€è¾Ÿç©ºé—´
+void LogBuffer::MakeSpace_(size_t len)
 {
-    //Çé¿ö1.¿ÉĞ´¿Õ¼ä + Ô¤´æ¿Õ¼ä²»×ã£¬ÖØĞÂ·ÖÅä
-    //Çé¿ö2.Ğ´¿Õ¼ä²»×ã £¬Ô¤´æ¿Õ¼ä×ã¹»£¬Ôò°áÔËÔ­Êı¾İµ½Ô¤´æÊı¾İ¿ªÍ·
+    //æƒ…å†µ1.å¯å†™ç©ºé—´ + é¢„å­˜ç©ºé—´ä¸è¶³ï¼Œé‡æ–°åˆ†é…
+    //æƒ…å†µ2.å†™ç©ºé—´ä¸è¶³ ï¼Œé¢„å­˜ç©ºé—´è¶³å¤Ÿï¼Œåˆ™æ¬è¿åŸæ•°æ®åˆ°é¢„å­˜æ•°æ®å¼€å¤´
     if(len > WritableBytes() + PrependableBytes())
     {
-        buffer_.resize(writePos_ + len + 1); //resize·ÅÈëÊµ¼Ê¿ÉÄÜĞèÒªĞ´ÈëµÄÊıÁ¿
+        buffer_.resize(writePos_ + len + 1); //resizeæ”¾å…¥å®é™…å¯èƒ½éœ€è¦å†™å…¥çš„æ•°é‡
     }
     else
     {
-        std::copy(BeginPtr() + readPos_,BeginPtr() + writePos_,BeginPtr()); 
+        std::copy(BeginPtr() + readPos_,BeginPtr() + writePos_,BeginPtr());
         readPos_ = 0;
         writePos_ = ReadableBytes();
     }
 }
 
-//ÅĞ¶ÏÊÇ·ñ×ã¹»Ğ´Èë²¢´¦Àí
-void Buffer::EnsureWriteable(size_t len)
+//åˆ¤æ–­æ˜¯å¦è¶³å¤Ÿå†™å…¥å¹¶å¤„ç†
+void LogBuffer::EnsureWriteable(size_t len)
 {
     if(len > WritableBytes()) {
         MakeSpace_(len);
     }
-    assert(len <= WritableBytes());    
+    assert(len <= WritableBytes());
 }
 
-char* Buffer::BeginWrite()
+char* LogBuffer::BeginWrite()
 {
     return &buffer_[writePos_];
 }
 
-char* Buffer::BeginRead()
+char* LogBuffer::BeginRead()
 {
-    return &buffer_[readPos_];    
+    return &buffer_[readPos_];
 }
 
-char* Buffer::BeginPtr()
+char* LogBuffer::BeginPtr()
 {
     return &buffer_[0];
 }
 
-//ÒÆ¶¯Ğ´ÈëºóµÄÏÂ±ê
-void Buffer::HasWritten(size_t len)
+//ç§»åŠ¨å†™å…¥åçš„ä¸‹æ ‡
+void LogBuffer::HasWritten(size_t len)
 {
     writePos_ += len;
 }
 
-//×·¼ÓĞ´ÈëÖ¸¶¨³¤¶È×Ö·û,Ä¬ÈÏ´ÓĞ´Çø¿ªÊ¼Ğ´
-void Buffer::Append(const char* str, size_t len)
+//è¿½åŠ å†™å…¥æŒ‡å®šé•¿åº¦å­—ç¬¦,é»˜è®¤ä»å†™åŒºå¼€å§‹å†™
+void LogBuffer::Append(const char* str, size_t len)
 {
     assert(str);
-    EnsureWriteable(len);   // È·±£¿ÉĞ´µÄ³¤¶È
-    std::copy(str, str + len, BeginWrite());    // ½«str·Åµ½Ğ´ÏÂ±ê¿ªÊ¼µÄµØ·½
-    HasWritten(len);    // ÒÆ¶¯Ğ´ÏÂ±ê
+    EnsureWriteable(len);   // ç¡®ä¿å¯å†™çš„é•¿åº¦
+    std::copy(str, str + len, BeginWrite());    // å°†stræ”¾åˆ°å†™ä¸‹æ ‡å¼€å§‹çš„åœ°æ–¹
+    HasWritten(len);    // ç§»åŠ¨å†™ä¸‹æ ‡
 }
 
-//×·¼ÓĞ´Èë×Ö·û´®
-void Buffer::Append(const std::string& str)
+//è¿½åŠ å†™å…¥å­—ç¬¦ä¸²
+void LogBuffer::Append(const std::string& str)
 {
     assert(str.c_str());
     Append(str.c_str(),str.size());
 }
 
-//ÓÃ·¨ËµÃ÷?
-void Buffer::Append(const void* data, size_t len)
+//ç”¨æ³•è¯´æ˜?
+void LogBuffer::Append(const void* data, size_t len)
 {
     assert(data);
     Append(static_cast<const char *>(data),len);
 }
 
-//×·¼ÓĞ´ÈëBuffer£ºAppendÄ¬ÈÏ´ÓĞ´Çø¿ªÊ¼Ğ´£¬µ÷ÓÃÖ»ĞèÒªÌá¹©ĞèÒª±»Ğ´ÈëµÄµØÖ·ºÍ³¤¶È
-void Buffer::Append(const Buffer& buff)
+//è¿½åŠ å†™å…¥Bufferï¼šAppendé»˜è®¤ä»å†™åŒºå¼€å§‹å†™ï¼Œè°ƒç”¨åªéœ€è¦æä¾›éœ€è¦è¢«å†™å…¥çš„åœ°å€å’Œé•¿åº¦
+void LogBuffer::Append(const LogBuffer& buff)
 {
     size_t readbytes = buff.ReadableBytes();
     Append(&buff.buffer_[buff.readPos_],readbytes);
 }
 
-//½«bufferÖĞ¿É¶ÁµÄÇøÓòĞ´ÈëfdÖĞ
-ssize_t Buffer::WriteFd(int fd, int* Errno)
+//å°†bufferä¸­å¯è¯»çš„åŒºåŸŸå†™å…¥fdä¸­
+ssize_t LogBuffer::WriteFd(int fd, int* Errno)
 {
     ssize_t len = write(fd,BeginRead(),ReadableBytes());
     if(len < 0)
@@ -121,33 +121,33 @@ ssize_t Buffer::WriteFd(int fd, int* Errno)
     return len;
 }
 
-//´ÓfdÉÏ¶ÁÈ¡Êı¾İ£¬·Åµ½¿ÉĞ´ÇøÓò
-ssize_t Buffer::ReadFd(int fd, int* Errno)
+//ä»fdä¸Šè¯»å–æ•°æ®ï¼Œæ”¾åˆ°å¯å†™åŒºåŸŸ
+ssize_t LogBuffer::ReadFd(int fd, int* Errno)
 {
     char buff[65536];
-    struct iovec iov[2];//·ÖÉ¢¶Á£¬iovec½á¹¹Ìå
-    size_t writeable = WritableBytes(); //ÏÈ¼ÇÂ¼ÄÜĞ´¶àÉÙ
-    iov[0].iov_base = &buffer_[writePos_]; //µÚÒ»¸ö
+    struct iovec iov[2];//åˆ†æ•£è¯»ï¼Œiovecç»“æ„ä½“
+    size_t writeable = WritableBytes(); //å…ˆè®°å½•èƒ½å†™å¤šå°‘
+    iov[0].iov_base = &buffer_[writePos_]; //ç¬¬ä¸€ä¸ª
     iov[0].iov_len = writeable;
-    iov[1].iov_base = buff; //µÚ¶ş¸ö
+    iov[1].iov_base = buff; //ç¬¬äºŒä¸ª
     iov[1].iov_len = sizeof(buff);
     ssize_t len = readv(fd, iov, 2);
     if(len < 0) {
         *Errno = errno;
-    } else if(static_cast<size_t>(len) <= writeable) {   //ÈôlenĞ¡ÓÚwritable£¬ËµÃ÷Ğ´Çø¿ÉÒÔÈİÄÉlen
-        writePos_ += len;   //Ö±½ÓÒÆ¶¯Ğ´ÏÂ±ê
-    } else {    //Ğ´ÇøĞ´ÂúÁË,ÏÂ±êÒÆµ½×îºó,Ê£ÓàµÄ³¤¶È·Åµ½buffÖĞ
+    } else if(static_cast<size_t>(len) <= writeable) {   //è‹¥lenå°äºwritableï¼Œè¯´æ˜å†™åŒºå¯ä»¥å®¹çº³len
+        writePos_ += len;   //ç›´æ¥ç§»åŠ¨å†™ä¸‹æ ‡
+    } else {    //å†™åŒºå†™æ»¡äº†,ä¸‹æ ‡ç§»åˆ°æœ€å,å‰©ä½™çš„é•¿åº¦æ”¾åˆ°buffä¸­
         writePos_ = buffer_.size();
-        Append(buff, static_cast<size_t>(len - writeable)); //Ê£ÓàµÄ³¤¶È
+        Append(buff, static_cast<size_t>(len - writeable)); //å‰©ä½™çš„é•¿åº¦
     }
     return len;
 }
 
-//½«bufferÖĞµÄ¿É¶ÁÇøÓò×ª»»ÎªstringºóÍË³ö£¬Çå¿ÕÊı¾İÄÚÈİ£¬²¢ÖØÖÃ¶ÁĞ´ÏÂ±ê
-std::string Buffer::RetrieveAllToStr()
+//å°†bufferä¸­çš„å¯è¯»åŒºåŸŸè½¬æ¢ä¸ºstringåé€€å‡ºï¼Œæ¸…ç©ºæ•°æ®å†…å®¹ï¼Œå¹¶é‡ç½®è¯»å†™ä¸‹æ ‡
+std::string LogBuffer::RetrieveAllToStr()
 {
     std::string str(BeginRead(), ReadableBytes());
-    //Çå¿ÕÊı¾İÄÚÈİ
+    //æ¸…ç©ºæ•°æ®å†…å®¹
     memset(&buffer_[0], 0, buffer_.size());
     readPos_ = 0;
     writePos_ = 0;

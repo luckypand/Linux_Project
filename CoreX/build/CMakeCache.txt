@@ -192,6 +192,12 @@ CoreX_SOURCE_DIR:STATIC=/root/Cplus/CoreX
 //Enable AddressSanitizer and LeakSanitizer
 ENABLE_ASAN:BOOL=OFF
 
+//Enable log printing
+ENABLE_LOG:BOOL=ON
+
+//Enable RPC latency timing instrumentation
+ENABLE_TIMESTAMP:BOOL=ON
+
 //Path to a file.
 Protobuf_INCLUDE_DIR:PATH=/usr/include
 

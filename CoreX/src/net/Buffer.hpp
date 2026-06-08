@@ -12,52 +12,52 @@ public:
     explicit Buffer(size_t buffer_size = kInitBytes);
     ~Buffer() = default;
 
-    //¶Á½Ó¿Ú
-    const char* peek() const;          //·µ»Ø¿É¶ÁÇøÆğÊ¼Ö¸Õë£¨const£©£¬ÓÃÓÚÁã¿½±´¶ÁÈ¡
-    void retrieve(size_t len);         //Ïû·Ñ len ×Ö½Ú£¨½öÒÆ¶¯¶ÁÖ¸Õë£¬²»¿½±´£©
-    void retrieveAll();                //Ïû·ÑÈ«²¿¿É¶Á×Ö½Ú
-    std::string retrieveAsString();    //ÒÔ std::string ĞÎÊ½È¡³öÈ«²¿¿É¶ÁÊı¾İ£¨¿½±´£©
-    std::string retrieveAsString(size_t len); //È¡³öÇ° len ×Ö½ÚÎª string   
+    //è¯»æ¥å£
+    const char* peek() const;          //è¿”å›å¯è¯»åŒºèµ·å§‹æŒ‡é’ˆï¼ˆconstï¼‰ï¼Œç”¨äºé›¶æ‹·è´è¯»å–
+    void retrieve(size_t len);         //æ¶ˆè´¹ len å­—èŠ‚ï¼ˆä»…ç§»åŠ¨è¯»æŒ‡é’ˆï¼Œä¸æ‹·è´ï¼‰
+    void retrieveAll();                //æ¶ˆè´¹å…¨éƒ¨å¯è¯»å­—èŠ‚
+    std::string retrieveAsString();    //ä»¥ std::string å½¢å¼å–å‡ºå…¨éƒ¨å¯è¯»æ•°æ®ï¼ˆæ‹·è´ï¼‰
+    std::string retrieveAsString(size_t len); //å–å‡ºå‰ len å­—èŠ‚ä¸º string   
 
-    //Ğ´½Ó¿Ú    
-    void append(const char* data, size_t len);  // Ğ´ÈëÔ­Ê¼×Ö½Ú
-    void append(const std::string& data);       // Ğ´Èë string
-    const char* beginWrite() const;             //·µ»Ø¿ÉĞ´ÇøÆğÊ¼Ö¸Õë£¬ÓÃÓÚÁã¿½±´Ğ´Èë£¨ÅäºÏ hasWritten£©
-    void hasWritten(size_t len);                //ÊÖ¶¯ÍÆ½øĞ´Ö¸Õë£¨Óë beginWrite Åä¶Ô£© 
+    //å†™æ¥å£    
+    void append(const char* data, size_t len);  // å†™å…¥åŸå§‹å­—èŠ‚
+    void append(const std::string& data);       // å†™å…¥ string
+    const char* beginWrite() const;             //è¿”å›å¯å†™åŒºèµ·å§‹æŒ‡é’ˆï¼Œç”¨äºé›¶æ‹·è´å†™å…¥ï¼ˆé…åˆ hasWrittenï¼‰
+    void hasWritten(size_t len);                //æ‰‹åŠ¨æ¨è¿›å†™æŒ‡é’ˆï¼ˆä¸ beginWrite é…å¯¹ï¼‰ 
 
-    //Ô¤±¸½Ó¿Ú
-    void prepend(const void* data, size_t len); //ÔÚ¿É¶ÁÇøÇ°ÃæĞ´Èë£¨²»ÒÆ¶¯¿É¶ÁÇøÄÚÈİ£© 
+    //é¢„å¤‡æ¥å£
+    void prepend(const void* data, size_t len); //åœ¨å¯è¯»åŒºå‰é¢å†™å…¥ï¼ˆä¸ç§»åŠ¨å¯è¯»åŒºå†…å®¹ï¼‰ 
 
-    //²éÕÒ½Ó¿Ú ¡ª Ğ­Òé½âÎö
+    //æŸ¥æ‰¾æ¥å£ â€” åè®®è§£æ
     void findCRLF();
     void findEOL(); 
 
-    //ÎÄ¼şÃèÊö·û½Ó¿Ú
-    ssize_t readFd(int fd, int* savedErrno);   //´Ó fd ¶ÁÈ¡Êı¾İµ½ Buffer
-    ssize_t writeFd(int fd, int* savedErrno);  //½« Buffer ÖĞµÄ¿É¶ÁÊı¾İĞ´Èë fd
+    //æ–‡ä»¶æè¿°ç¬¦æ¥å£
+    ssize_t readFd(int fd, int* savedErrno);   //ä» fd è¯»å–æ•°æ®åˆ° Buffer
+    ssize_t writeFd(int fd, int* savedErrno);  //å°† Buffer ä¸­çš„å¯è¯»æ•°æ®å†™å…¥ fd
 
-    //·µ»ØÄÚ²¿Êı¾İ
+    //è¿”å›å†…éƒ¨æ•°æ®
     size_t ReadBytes() const { return WriteIndex_ - ReadIndex_ ; }
     size_t WriteBytes() const { return buffer_.size() - WriteIndex_; }
     size_t PretendBytes() const { return ReadIndex_; }
 
-    //¹¤¾ß
+    //å·¥å…·
     void swap(Buffer& rhs) { buffer_.swap(rhs.buffer_); std::swap(ReadIndex_, rhs.ReadIndex_); std::swap(WriteIndex_, rhs.WriteIndex_); }
     void clear() { ReadIndex_ = WriteIndex_ = kCheapPretendBytes; }
 
-    //RpcĞ­Òé¶ÁÈ¡Ä§Êı
+    //Rpcåè®®è¯»å–é­”æ•°
     uint32_t peekInt32() const;
     uint32_t peekInt32(size_t offset) const;
 private:
-    //·µ»ØµØÖ·Öµ
+    //è¿”å›åœ°å€å€¼
     char* begin() { return &*buffer_.begin(); }
     const char* begin() const { return &*buffer_.begin(); }
-    char* beginWrite() { return begin() + WriteIndex_; }   //¿ÉĞ´ÇøÆğÊ¼Î»ÖÃ
-    char* beginRead() { return begin() + ReadIndex_; }     //¿É¶ÁÇøÆğÊ¼Î»ÖÃ
+    char* beginWrite() { return begin() + WriteIndex_; }   //å¯å†™åŒºèµ·å§‹ä½ç½®
+    char* beginRead() { return begin() + ReadIndex_; }     //å¯è¯»åŒºèµ·å§‹ä½ç½®
 
-    //¿Õ¼äÀ©ÈİºÍÒÆ¶¯
-    void ensureWriteable(size_t len);    //È·±£¿ÉĞ´Î»ÖÃ×ã¹»,¸´ÓÃmakespace
-    void makespace(size_t len);          //ÅĞ¶Ï¿Õ¼äÊÇ·ñĞèÒªÀ©Èİ£¬·ñÔòÖ»½øĞĞ°áÒÆ
+    //ç©ºé—´æ‰©å®¹å’Œç§»åŠ¨
+    void ensureWriteable(size_t len);    //ç¡®ä¿å¯å†™ä½ç½®è¶³å¤Ÿ,å¤ç”¨makespace
+    void makespace(size_t len);          //åˆ¤æ–­ç©ºé—´æ˜¯å¦éœ€è¦æ‰©å®¹ï¼Œå¦åˆ™åªè¿›è¡Œæ¬ç§»
 
     std::vector<char> buffer_;
     size_t ReadIndex_;

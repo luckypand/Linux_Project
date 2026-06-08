@@ -6,7 +6,7 @@
 
 /*
 * @brief:
-*     ´´½¨¼àÌıSocket
+*     åˆ›å»ºç›‘å¬Socket
 */
 Acceptor::Acceptor(EventLoop* loop,int port)
     :loop_(loop)
@@ -17,10 +17,10 @@ Acceptor::Acceptor(EventLoop* loop,int port)
     )
     ,acceptChannel_(loop,this->acceptSocket_.fd())
 {
-    acceptSocket_.setReuseAddr(true); //¿ÉÒÔ¿ìËÙÖØÆô·şÎñÆ÷
-    acceptSocket_.bindAddress(port);  //°ó¶¨¶Ë¿Ú
+    acceptSocket_.setReuseAddr(true); //å¯ä»¥å¿«é€Ÿé‡å¯æœåŠ¡å™¨
+    acceptSocket_.bindAddress(port);  //ç»‘å®šç«¯å£
 
-    // µ±ÓĞĞÂÁ¬½ÓÀ´Ê±£¬epoll »áÍ¨Öª acceptChannel_£¬´Ó¶ø´¥·¢ handleRead
+    // å½“æœ‰æ–°è¿æ¥æ¥æ—¶ï¼Œepoll ä¼šé€šçŸ¥ acceptChannel_ï¼Œä»è€Œè§¦å‘ handleRead
     //acceptChannel_.setReadCallback(std::bind(&Acceptor::handleRead,this));
     acceptChannel_.setReadCallback([this](){this->handleRead();});
 }
@@ -33,7 +33,7 @@ Acceptor::~Acceptor()
 
 /*
 * @brief:
-*     ¼àÌıÁ¬½ÓµÄSocket
+*     ç›‘å¬è¿æ¥çš„Socket
 */
 void Acceptor::listen()
 {
@@ -43,11 +43,11 @@ void Acceptor::listen()
 
 /*
 * @brief:
-*     ¼àÌıµÄSocket´«ÈëµÄ¶Á»Øµ÷´¦Àí
+*     ç›‘å¬çš„Socketä¼ å…¥çš„è¯»å›è°ƒå¤„ç†
 */
 void Acceptor::handleRead()
 {
-    //´¢´æÁ¬½ÓµÄScoket¶ÔÓ¦µÄÍøÂ·ĞÅÏ¢
+    //å‚¨å­˜è¿æ¥çš„Scoketå¯¹åº”çš„ç½‘è·¯ä¿¡æ¯
     struct sockaddr_in acceptAddr;
 
     int connfd = acceptSocket_.accept(&acceptAddr);
@@ -55,7 +55,7 @@ void Acceptor::handleRead()
     {
         if(newConnectionCallback_)
         {
-            //½«¶Ô¶ËµØÖ·×ª»»Îª "ip:port" ×Ö·û´®
+            //å°†å¯¹ç«¯åœ°å€è½¬æ¢ä¸º "ip:port" å­—ç¬¦ä¸²
             char peerIP[64] = {0};
             ::inet_ntop(AF_INET, &acceptAddr.sin_addr, peerIP, sizeof(peerIP));
             std::string peerAddr = std::string(peerIP) + ":" + std::to_string(::ntohs(acceptAddr.sin_port));

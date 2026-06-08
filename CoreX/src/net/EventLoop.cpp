@@ -26,7 +26,7 @@ namespace
 
 /*
 * @brief:
-*     ¹¹Ôìº¯Êı£¬Îª»½ĞÑloopµÄ
+*     æ„é€ å‡½æ•°ï¼Œä¸ºå”¤é†’loopçš„
 */
 EventLoop::EventLoop()
     :looping_status_(false)
@@ -40,7 +40,7 @@ EventLoop::EventLoop()
     ,pendingFunctors_()
     ,timer_(nullptr)
 {
-    //Ê¹ÓÃlamda´«Èë¶Á»Øµ÷²ÎÊı
+    //ä½¿ç”¨lamdaä¼ å…¥è¯»å›è°ƒå‚æ•°
     wakeupChannel_->setReadCallback(
         [this](){this->handleRead();}
     );
@@ -49,7 +49,7 @@ EventLoop::EventLoop()
 
 /*
 * @brief:
-*      ÊÍ·ÅEventloop¹ÜÀíµÄ×ÊÔ´
+*      é‡Šæ”¾Eventloopç®¡ç†çš„èµ„æº
 */
 EventLoop::~EventLoop()
 {
@@ -59,7 +59,7 @@ EventLoop::~EventLoop()
 
 /*
 * @brief:
-*     ºËĞÄµÄÑ­»·Ö´ĞĞ»úÖÆ£¬ÔÚÕâÀï´¦ÀíÃ¿¸öchannelµÄÈÎÎñ²¢Ö´ĞĞpendingÈÎÎñ
+*     æ ¸å¿ƒçš„å¾ªç¯æ‰§è¡Œæœºåˆ¶ï¼Œåœ¨è¿™é‡Œå¤„ç†æ¯ä¸ªchannelçš„ä»»åŠ¡å¹¶æ‰§è¡Œpendingä»»åŠ¡
 */
 void EventLoop::loop()
 {
@@ -71,7 +71,7 @@ void EventLoop::loop()
     while(!quit_status_)
     {
         activeChannels_.clear();
-        int timeoutMs = 10000;
+        int timeoutMs = 100;
         // int timeoutMs = 100;
         if (timer_)
         {
@@ -112,7 +112,7 @@ void EventLoop::handleRead()
 
 /*
 * @brief:
-*     ´¦ÀípendingÏÂµÄ´ı°ìÈÎÎñ
+*     å¤„ç†pendingä¸‹çš„å¾…åŠä»»åŠ¡
 */
 void EventLoop::DoPendingFunctors()
 {
@@ -130,7 +130,7 @@ void EventLoop::DoPendingFunctors()
 
 /*
 * @brief:
-*     //ÅĞ¶Ïµ÷ÓÃÏß³ÌÊÇ·ñÎªloopÏß³Ìs
+*     //åˆ¤æ–­è°ƒç”¨çº¿ç¨‹æ˜¯å¦ä¸ºloopçº¿ç¨‹s
 */
 bool EventLoop::IsInloopthread()
 {
@@ -139,7 +139,7 @@ bool EventLoop::IsInloopthread()
 
 /*
 * @brief:
-*     //ÒÀ¾İÏß³Ì½øĞĞ¹¤×÷
+*     //ä¾æ®çº¿ç¨‹è¿›è¡Œå·¥ä½œ
 */
 void EventLoop::RunInloop(Functor fc)
 {
@@ -155,7 +155,7 @@ void EventLoop::RunInloop(Functor fc)
 
 /*
 * @brief:
-*     ÒÔeventfdµÄĞÎÊ½»½ĞÑÖ÷Ïß³Ìloop
+*     ä»¥eventfdçš„å½¢å¼å”¤é†’ä¸»çº¿ç¨‹loop
 */
 void EventLoop::WakeUp()
 {
@@ -165,11 +165,11 @@ void EventLoop::WakeUp()
 
 /*
 * @brief:
-*     //½«´ı°ìÈÎÎñ·ÅÈëpending¶ÓÁĞ,Ê¹ÓÃÓÒÖµ´«µİÄ£Ê½¼õÉÙ¿½±´
+*     //å°†å¾…åŠä»»åŠ¡æ”¾å…¥pendingé˜Ÿåˆ—,ä½¿ç”¨å³å€¼ä¼ é€’æ¨¡å¼å‡å°‘æ‹·è´
 */
 void EventLoop::SengToPending(Functor fc)
 {
-    //¼ÓËøÍ¶µİÈÎÎñ
+    //åŠ é”æŠ•é€’ä»»åŠ¡
     {
         std::lock_guard<std::mutex> locker(mtx_);
         pendingFunctors_.push_back(std::move(fc));
@@ -183,7 +183,7 @@ void EventLoop::SengToPending(Functor fc)
 
 /*
 * @brief:
-*     ¶ÔChannelµÄ¿ª·Å½Ó¿Ú£¬Ê¹µÃÆäÄÜ¸üĞÂepoll
+*     å¯¹Channelçš„å¼€æ”¾æ¥å£ï¼Œä½¿å¾—å…¶èƒ½æ›´æ–°epoll
 */
 void EventLoop::UpdateChannel(Channel* channel)
 {
@@ -192,7 +192,7 @@ void EventLoop::UpdateChannel(Channel* channel)
 
 /*
 * @brief:
-*     ¶ÔChannelµÄ¿ª·Å½Ó¿Ú£¬Ê¹µÃÆäÄÜÉ¾³ıepoll
+*     å¯¹Channelçš„å¼€æ”¾æ¥å£ï¼Œä½¿å¾—å…¶èƒ½åˆ é™¤epoll
 */
 void EventLoop::RemoveChannel(Channel* channel)
 {
@@ -201,7 +201,7 @@ void EventLoop::RemoveChannel(Channel* channel)
 
 /*
 * @brief:
-*     Òì²½ÈÕ¼Ç¼ÇÂ¼Loop´íÎ»
+*     å¼‚æ­¥æ—¥è®°è®°å½•Loopé”™ä½
 */
 void EventLoop::abortNotInLoopThread() 
 {  
@@ -211,7 +211,7 @@ void EventLoop::abortNotInLoopThread()
 
 /*
 * @brief:
-*     ÅĞ¶ÏLoopÊÇ·ñÒÆÎ»
+*     åˆ¤æ–­Loopæ˜¯å¦ç§»ä½
 */
 void EventLoop::assertInLoopThread() 
 {  

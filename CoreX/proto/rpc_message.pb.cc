@@ -62,6 +62,9 @@ const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUT
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::CoreX::rpc::RpcMessage, method_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::CoreX::rpc::RpcMessage, payload_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::CoreX::rpc::RpcMessage, error_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::CoreX::rpc::RpcMessage, client_send_ts_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::CoreX::rpc::RpcMessage, server_recv_ts_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::CoreX::rpc::RpcMessage, server_send_ts_),
 };
 static const ::google::protobuf::internal::MigrationSchema schemas[] GOOGLE_PROTOBUF_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
   { 0, -1, sizeof(::CoreX::rpc::RpcMessage)},
@@ -92,18 +95,20 @@ void protobuf_RegisterTypes(const ::std::string&) {
 void AddDescriptorsImpl() {
   InitDefaults();
   static const char descriptor[] GOOGLE_PROTOBUF_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
-      "\n\021rpc_message.proto\022\tCoreX.rpc\"\225\001\n\nRpcMe"
+      "\n\021rpc_message.proto\022\tCoreX.rpc\"\335\001\n\nRpcMe"
       "ssage\022$\n\004type\030\001 \001(\0162\026.CoreX.rpc.MessageT"
       "ype\022\n\n\002id\030\002 \001(\006\022\017\n\007service\030\003 \001(\t\022\016\n\006meth"
       "od\030\004 \001(\t\022\017\n\007payload\030\005 \001(\014\022#\n\005error\030\006 \001(\016"
-      "2\024.CoreX.rpc.ErrorCode*3\n\013MessageType\022\013\n"
-      "\007REQUEST\020\000\022\014\n\010RESPONSE\020\001\022\t\n\005ERROR\020\002*^\n\tE"
-      "rrorCode\022\014\n\010NO_ERROR\020\000\022\017\n\013WRONG_PROTO\020\001\022"
-      "\016\n\nNO_SERVICE\020\002\022\r\n\tNO_METHOD\020\003\022\023\n\017INVALI"
-      "D_REQUEST\020\004b\006proto3"
+      "2\024.CoreX.rpc.ErrorCode\022\026\n\016client_send_ts"
+      "\030\007 \001(\004\022\026\n\016server_recv_ts\030\010 \001(\004\022\026\n\016server"
+      "_send_ts\030\t \001(\004*3\n\013MessageType\022\013\n\007REQUEST"
+      "\020\000\022\014\n\010RESPONSE\020\001\022\t\n\005ERROR\020\002*^\n\tErrorCode"
+      "\022\014\n\010NO_ERROR\020\000\022\017\n\013WRONG_PROTO\020\001\022\016\n\nNO_SE"
+      "RVICE\020\002\022\r\n\tNO_METHOD\020\003\022\023\n\017INVALID_REQUES"
+      "T\020\004b\006proto3"
   };
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-      descriptor, 339);
+      descriptor, 411);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "rpc_message.proto", &protobuf_RegisterTypes);
 }
@@ -165,6 +170,9 @@ const int RpcMessage::kServiceFieldNumber;
 const int RpcMessage::kMethodFieldNumber;
 const int RpcMessage::kPayloadFieldNumber;
 const int RpcMessage::kErrorFieldNumber;
+const int RpcMessage::kClientSendTsFieldNumber;
+const int RpcMessage::kServerRecvTsFieldNumber;
+const int RpcMessage::kServerSendTsFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
 RpcMessage::RpcMessage()
@@ -191,8 +199,8 @@ RpcMessage::RpcMessage(const RpcMessage& from)
     payload_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.payload_);
   }
   ::memcpy(&id_, &from.id_,
-    static_cast<size_t>(reinterpret_cast<char*>(&error_) -
-    reinterpret_cast<char*>(&id_)) + sizeof(error_));
+    static_cast<size_t>(reinterpret_cast<char*>(&server_send_ts_) -
+    reinterpret_cast<char*>(&id_)) + sizeof(server_send_ts_));
   // @@protoc_insertion_point(copy_constructor:CoreX.rpc.RpcMessage)
 }
 
@@ -201,8 +209,8 @@ void RpcMessage::SharedCtor() {
   method_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   payload_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   ::memset(&id_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&error_) -
-      reinterpret_cast<char*>(&id_)) + sizeof(error_));
+      reinterpret_cast<char*>(&server_send_ts_) -
+      reinterpret_cast<char*>(&id_)) + sizeof(server_send_ts_));
 }
 
 RpcMessage::~RpcMessage() {
@@ -240,8 +248,8 @@ void RpcMessage::Clear() {
   method_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   payload_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   ::memset(&id_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&error_) -
-      reinterpret_cast<char*>(&id_)) + sizeof(error_));
+      reinterpret_cast<char*>(&server_send_ts_) -
+      reinterpret_cast<char*>(&id_)) + sizeof(server_send_ts_));
   _internal_metadata_.Clear();
 }
 
@@ -343,6 +351,48 @@ bool RpcMessage::MergePartialFromCodedStream(
         break;
       }
 
+      // uint64 client_send_ts = 7;
+      case 7: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(56u /* 56 & 0xFF */)) {
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
+                 input, &client_send_ts_)));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // uint64 server_recv_ts = 8;
+      case 8: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(64u /* 64 & 0xFF */)) {
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
+                 input, &server_recv_ts_)));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // uint64 server_send_ts = 9;
+      case 9: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(72u /* 72 & 0xFF */)) {
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
+                 input, &server_send_ts_)));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
       default: {
       handle_unusual:
         if (tag == 0) {
@@ -412,6 +462,21 @@ void RpcMessage::SerializeWithCachedSizes(
       6, this->error(), output);
   }
 
+  // uint64 client_send_ts = 7;
+  if (this->client_send_ts() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt64(7, this->client_send_ts(), output);
+  }
+
+  // uint64 server_recv_ts = 8;
+  if (this->server_recv_ts() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt64(8, this->server_recv_ts(), output);
+  }
+
+  // uint64 server_send_ts = 9;
+  if (this->server_send_ts() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt64(9, this->server_send_ts(), output);
+  }
+
   if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()), output);
@@ -472,6 +537,21 @@ void RpcMessage::SerializeWithCachedSizes(
       6, this->error(), target);
   }
 
+  // uint64 client_send_ts = 7;
+  if (this->client_send_ts() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt64ToArray(7, this->client_send_ts(), target);
+  }
+
+  // uint64 server_recv_ts = 8;
+  if (this->server_recv_ts() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt64ToArray(8, this->server_recv_ts(), target);
+  }
+
+  // uint64 server_send_ts = 9;
+  if (this->server_send_ts() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt64ToArray(9, this->server_send_ts(), target);
+  }
+
   if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
     target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
         (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()), target);
@@ -527,6 +607,27 @@ size_t RpcMessage::ByteSizeLong() const {
       ::google::protobuf::internal::WireFormatLite::EnumSize(this->error());
   }
 
+  // uint64 client_send_ts = 7;
+  if (this->client_send_ts() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt64Size(
+        this->client_send_ts());
+  }
+
+  // uint64 server_recv_ts = 8;
+  if (this->server_recv_ts() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt64Size(
+        this->server_recv_ts());
+  }
+
+  // uint64 server_send_ts = 9;
+  if (this->server_send_ts() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt64Size(
+        this->server_send_ts());
+  }
+
   int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
   SetCachedSize(cached_size);
   return total_size;
@@ -575,6 +676,15 @@ void RpcMessage::MergeFrom(const RpcMessage& from) {
   if (from.error() != 0) {
     set_error(from.error());
   }
+  if (from.client_send_ts() != 0) {
+    set_client_send_ts(from.client_send_ts());
+  }
+  if (from.server_recv_ts() != 0) {
+    set_server_recv_ts(from.server_recv_ts());
+  }
+  if (from.server_send_ts() != 0) {
+    set_server_send_ts(from.server_send_ts());
+  }
 }
 
 void RpcMessage::CopyFrom(const ::google::protobuf::Message& from) {
@@ -610,6 +720,9 @@ void RpcMessage::InternalSwap(RpcMessage* other) {
   swap(id_, other->id_);
   swap(type_, other->type_);
   swap(error_, other->error_);
+  swap(client_send_ts_, other->client_send_ts_);
+  swap(server_recv_ts_, other->server_recv_ts_);
+  swap(server_send_ts_, other->server_send_ts_);
   _internal_metadata_.Swap(&other->_internal_metadata_);
 }
 

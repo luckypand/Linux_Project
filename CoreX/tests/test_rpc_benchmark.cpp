@@ -22,6 +22,7 @@
 #include "MathServiceImpl.hpp"
 #include "../../proto/rpc_message.pb.h"
 #include "../../proto/math_service.pb.h"
+#include "my_log.hpp"
 
 #include <sys/socket.h>
 #include <sys/types.h>
@@ -47,6 +48,13 @@
 #include <map>
 
 using namespace std;
+
+// Get current steady_clock timestamp in microseconds
+static inline uint64_t now_us() {
+    return static_cast<uint64_t>(
+        chrono::duration_cast<chrono::microseconds>(
+            chrono::steady_clock::now().time_since_epoch()).count());
+}
 
 // ============================================================
 // 全局信号标志 (server 模式用)
@@ -177,6 +185,13 @@ struct ThreadStats {
     size_t calls   = 0;         // 成功调用次数
     size_t errors  = 0;         // 失败次数
     string  errorMsg;           // 首个错误描述
+
+    // 超时请求耗时分解 (累计值，用于汇总)
+    size_t timeoutCount      = 0;
+    double timeoutUpNetSum   = 0.0;   // 上行网络延迟累加 (client→server)
+    double timeoutSrvProcSum = 0.0;   // 服务端处理时间累加
+    double timeoutDownNetSum = 0.0;   // 下行网络延迟累加 (server→client)
+    double timeoutRttSum     = 0.0;   // 超时 RTT 累加
 };
 
 // ============================================================
@@ -255,6 +270,7 @@ static ThreadStats run_client_thread(int threadId, int numCalls,
             rpcReq.set_id(static_cast<uint64_t>(threadId) << 48 |
                           static_cast<uint64_t>(i));
             rpcReq.set_payload(innerReqPayload);
+            rpcReq.set_client_send_ts(now_us());
 
             // 4. 序列化信封
             if (!rpcReq.SerializeToString(&wireReqPayload)) {
@@ -357,10 +373,30 @@ static ThreadStats run_client_thread(int threadId, int numCalls,
                 break;
             }
 
-            // 11. 记录 RTT
+            // 11. 记录 RTT 和时间戳分解
             double rtt = chrono::duration<double, micro>(t2 - t1).count();
             stats.rttUs.push_back(rtt);
             stats.calls++;
+
+            // 当 RTT 超过阈值时，用时间戳分解耗时
+            if (rtt >= g_args.maxRttUs) {
+                uint64_t client_send = rpcResp.client_send_ts();
+                uint64_t server_recv = rpcResp.server_recv_ts();
+                uint64_t server_send = rpcResp.server_send_ts();
+
+                // 上行网络延迟: client发送 → server接收
+                double upNet = static_cast<double>(server_recv - client_send);
+                // 服务端处理: server接收 → server发送
+                double srvProc = static_cast<double>(server_send - server_recv);
+                // 下行网络延迟: server发送 → client完整接收
+                double downNet = rtt - upNet - srvProc;
+
+                stats.timeoutCount++;
+                stats.timeoutUpNetSum   += upNet;
+                stats.timeoutSrvProcSum += srvProc;
+                stats.timeoutDownNetSum += downNet;
+                stats.timeoutRttSum     += rtt;
+            }
 
         } catch (const exception& e) {
             stats.errors++;
@@ -392,6 +428,13 @@ struct BenchResult {
     double p999Us       = 0.0;
     size_t exceedCount  = 0;    // 超过 maxRttUs 的样本数
     bool   pass         = false;
+
+    // 超时请求耗时分解汇总
+    size_t timeoutTotal          = 0;
+    double timeoutAvgUpNetUs     = 0.0;
+    double timeoutAvgSrvProcUs   = 0.0;
+    double timeoutAvgDownNetUs   = 0.0;
+    double timeoutAvgRttUs       = 0.0;
 };
 
 static BenchResult compute_stats(vector<ThreadStats>& allStats,
@@ -431,6 +474,24 @@ static BenchResult compute_stats(vector<ThreadStats>& allStats,
     // 超标计数
     for (auto v : allRtt) {
         if (v >= maxRttUs) result.exceedCount++;
+    }
+
+    // 汇总超时请求的耗时分解
+    for (auto& ts : allStats) {
+        result.timeoutTotal += ts.timeoutCount;
+    }
+    if (result.timeoutTotal > 0) {
+        double upSum = 0.0, srvSum = 0.0, downSum = 0.0, rttSum = 0.0;
+        for (auto& ts : allStats) {
+            upSum   += ts.timeoutUpNetSum;
+            srvSum  += ts.timeoutSrvProcSum;
+            downSum += ts.timeoutDownNetSum;
+            rttSum  += ts.timeoutRttSum;
+        }
+        result.timeoutAvgUpNetUs   = upSum   / result.timeoutTotal;
+        result.timeoutAvgSrvProcUs = srvSum  / result.timeoutTotal;
+        result.timeoutAvgDownNetUs = downSum / result.timeoutTotal;
+        result.timeoutAvgRttUs     = rttSum  / result.timeoutTotal;
     }
 
     // 达标判定
@@ -484,6 +545,40 @@ static void print_results(const BenchResult& r) {
     }
     cout << "\n    Max observed:     " << fixed << setprecision(2)
          << r.maxUs << " μs\n";
+
+    // 超时请求耗时分解汇总
+    if (r.timeoutTotal > 0) {
+        double totalAvg = r.timeoutAvgUpNetUs + r.timeoutAvgSrvProcUs + r.timeoutAvgDownNetUs;
+        cout << "\n  超时请求耗时分解 (共 " << r.timeoutTotal << " 次, 平均值):\n";
+        cout << "    上行网络 (client→server):  "
+             << setw(8) << fixed << setprecision(1) << r.timeoutAvgUpNetUs   << " us  ("
+             << setprecision(1) << (100.0 * r.timeoutAvgUpNetUs / totalAvg) << "%)\n";
+        cout << "    服务端处理:                "
+             << setw(8) << fixed << setprecision(1) << r.timeoutAvgSrvProcUs << " us  ("
+             << setprecision(1) << (100.0 * r.timeoutAvgSrvProcUs / totalAvg) << "%)\n";
+        cout << "    下行网络 (server→client):  "
+             << setw(8) << fixed << setprecision(1) << r.timeoutAvgDownNetUs << " us  ("
+             << setprecision(1) << (100.0 * r.timeoutAvgDownNetUs / totalAvg) << "%)\n";
+        cout << "    超时平均 RTT:              "
+             << setw(8) << fixed << setprecision(1) << r.timeoutAvgRttUs     << " us\n";
+
+        // 判断主要瓶颈
+        cout << "    ⚡ 超时主因: ";
+        if (r.timeoutAvgSrvProcUs >= r.timeoutAvgUpNetUs &&
+            r.timeoutAvgSrvProcUs >= r.timeoutAvgDownNetUs) {
+            cout << "服务端处理耗时占比最高 (" << fixed << setprecision(0)
+                 << (100.0 * r.timeoutAvgSrvProcUs / totalAvg) << "%), "
+                 << "建议优化服务端逻辑或增加工作线程\n";
+        } else if (r.timeoutAvgUpNetUs >= r.timeoutAvgDownNetUs) {
+            cout << "上行网络延迟占比最高 (" << fixed << setprecision(0)
+                 << (100.0 * r.timeoutAvgUpNetUs / totalAvg) << "%), "
+                 << "建议检查客户端发送队列或网络拥塞\n";
+        } else {
+            cout << "下行网络延迟占比最高 (" << fixed << setprecision(0)
+                 << (100.0 * r.timeoutAvgDownNetUs / totalAvg) << "%), "
+                 << "建议检查服务端发送队列或客户端接收效率\n";
+        }
+    }
 
     cout << "\n  Result:             "
          << (r.pass ? "\033[1;32mPASS\033[0m" : "\033[1;31mFAIL\033[0m")
@@ -669,6 +764,9 @@ static int run_server() {
 int main(int argc, char* argv[]) {
     // 验证 protobuf 版本兼容性
     GOOGLE_PROTOBUF_VERIFY_VERSION;
+
+    // 初始化日志系统 (异步模式，capacity=1024，测试死锁修复)
+    Log::Instance()->Init(LOG_INFO, "/root/Cplus/CoreX/log", 1024, ".log");
 
     if (!parse_args(argc, argv)) {
         return 1;

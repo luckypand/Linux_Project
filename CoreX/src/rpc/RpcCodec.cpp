@@ -5,31 +5,31 @@ void RpcCodec::Onmessage(const TcpConnectionPtr& conn,Buffer& buf)
     while(buf.ReadBytes() >= HEADER_SIZE)
     {
         uint32_t magic = buf.peekInt32();
-        if(magic != RPC_MAGIC_NUMBER)//Ä§Êı²»Æ¥Åä
+        if(magic != RPC_MAGIC_NUMBER)//é­”æ•°ä¸åŒ¹é…
         {
             conn->shutdown();
             return;
         }
-        // 2. ¿´ºó 4 ×Ö½Ú£º»ñÈ¡ Payload ³¤¶È
+        // 2. çœ‹å 4 å­—èŠ‚ï¼šè·å– Payload é•¿åº¦
         uint32_t length = buf.peekInt32(HEADER_SIZE - sizeof(decltype(magic)));
-        // 3. ·À»¤£º·ÀÖ¹³¬´ó°ü¶ñÒâ¹¥»÷ (ÀıÈçÏŞÖÆ×î´óµ¥°ü 64MB)
+        // 3. é˜²æŠ¤ï¼šé˜²æ­¢è¶…å¤§åŒ…æ¶æ„æ”»å‡» (ä¾‹å¦‚é™åˆ¶æœ€å¤§å•åŒ… 64MB)
         if(length > MAX_SINGLEDATA)
         {
             conn->shutdown();
             return;
         }
-        //4.¿ªÊ¼ÅĞ¶Ï°ë°ü»¹ÊÇÈ«°ü
+        //4.å¼€å§‹åˆ¤æ–­åŠåŒ…è¿˜æ˜¯å…¨åŒ…
         if(buf.ReadBytes() >= HEADER_SIZE + length)
         {
-            //ÖÁÉÙÓĞ¸öÈ«°ü
+            //è‡³å°‘æœ‰ä¸ªå…¨åŒ…
             buf.retrieve(HEADER_SIZE);
             std::string payload = buf.retrieveAsString(length);
-            //ÅĞ¶ÏÁË°üºóRPCÂ·ÓÉÖ´ĞĞ¶ÔÓ¦ÃüÁî
+            //åˆ¤æ–­äº†åŒ…åRPCè·¯ç”±æ‰§è¡Œå¯¹åº”å‘½ä»¤
             businessCallback_(conn,payload);
         }
         else
         {
-            //°ë°ü,ÍË³öµÈ´ıÓĞÈ«°üµÄÇé¿ö
+            //åŠåŒ…,é€€å‡ºç­‰å¾…æœ‰å…¨åŒ…çš„æƒ…å†µ
             break;
         }
     }

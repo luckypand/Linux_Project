@@ -4,8 +4,8 @@ syntax = "proto3";
 package CoreX.rpc;
 
 message MathRequest {
-    string method_name = 1;   // ×¢Òâ£ºÓÃÁË Service Ä£Ê½ºó£¬method_name ¿ÉÒÔ´Ó RpcMessage ÖĞ»ñÈ¡
-    int32  a          = 2;    // Õâ¸ö×Ö¶ÎÒ²¿ÉÒÔ·ÏÆú£¬±£Áô a/b ¼´¿É
+    string method_name = 1;   // æ³¨æ„ï¼šç”¨äº† Service æ¨¡å¼åï¼Œmethod_name å¯ä»¥ä» RpcMessage ä¸­è·å–
+    int32  a          = 2;    // è¿™ä¸ªå­—æ®µä¹Ÿå¯ä»¥åºŸå¼ƒï¼Œä¿ç•™ a/b å³å¯
     int32  b          = 3;
 }
 
@@ -15,7 +15,7 @@ message MathResponse {
     string error_msg = 3;
 }
 
-// ¡ı ÕâÊÇ¹Ø¼ü£º¶¨Òå Service
+// â†“ è¿™æ˜¯å…³é”®ï¼šå®šä¹‰ Service
 service MathService {
     rpc Add(MathRequest) returns (MathResponse);
     rpc Sub(MathRequest) returns (MathResponse);

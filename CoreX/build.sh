@@ -1,36 +1,47 @@
 #!/bin/bash
 # ============================================================
-# CoreX ¹¹½¨½Å±¾
+# CoreX æ„å»ºè„šæœ¬
 # ============================================================
-# ÓÃ·¨:
-#   ./build.sh                          # Ä¬ÈÏ: Release ¹¹½¨ËùÓĞÄ¿±ê
-#   ./build.sh debug                    # Debug ¹¹½¨ËùÓĞÄ¿±ê
-#   ./build.sh asan                     # Debug + ASan ¹¹½¨ËùÓĞÄ¿±ê
-#   ./build.sh release                  # Release ¹¹½¨ËùÓĞÄ¿±ê
-#   ./build.sh clean                    # ½öÇåÀí build Ä¿Â¼
-#   ./build.sh <target>                 # Release ¹¹½¨Ö¸¶¨Ä¿±ê
-#   ./build.sh debug <target>           # Debug ¹¹½¨Ö¸¶¨Ä¿±ê
-#   ./build.sh asan <target>            # Debug + ASan ¹¹½¨Ö¸¶¨Ä¿±ê
+# ç”¨æ³•:
+#   ./build.sh [é€‰é¡¹...] [target]
 #
-# ¿ÉÓÃÄ¿±ê (target):
-#   test_echo_server        Echo ·şÎñÆ÷/¿Í»§¶ËÑ¹²â³ÌĞò
-#   timeout_server_test     ³¬Ê±·şÎñÆ÷²âÊÔ
-#   test_net_integration    ÍøÂç¿â¼¯³É²âÊÔ
-#   (²»Ö¸¶¨Ôò¹¹½¨È«²¿)
+# æ„å»ºæ¨¡å¼:
+#   ï¼ˆæ— ï¼‰                              é»˜è®¤: Release æ„å»º
+#   debug                               Debug æ„å»º
+#   asan                                Debug + AddressSanitizer æ„å»º
+#   release                             Release æ„å»ºï¼ˆæ˜¾å¼ï¼‰
+#   clean                               ä»…æ¸…ç† build ç›®å½•
 #
-# Ê¾Àı:
-#   ./build.sh asan test_echo_server    # ASan Ä£Ê½Ö»±àÒë echo ²âÊÔ
-#   ./build.sh debug                    # Debug Ä£Ê½±àÒëÈ«²¿
-#   ./build.sh clean                    # ÇåÀí¹¹½¨²úÎï
+# åŠŸèƒ½å¼€å…³ï¼ˆé»˜è®¤å‡ä¸º OFFï¼Œéœ€æ˜¾å¼å¼€å¯ï¼‰:
+#   timestamp=1                         å¼€å¯ RPC è€—æ—¶æµ‹é‡ï¼ˆnow_us / t0-t4 è®¡æ—¶ä»£ç ï¼‰
+#   timestamp=0                         å…³é—­ RPC è€—æ—¶æµ‹é‡ï¼ˆé»˜è®¤ï¼‰
+#   log=1                               å¼€å¯æ—¥å¿—æ‰“å°ï¼ˆLOG_* å®æ­£å¸¸å±•å¼€ï¼‰
+#   log=0                               å…³é—­æ—¥å¿—æ‰“å°ï¼ˆé»˜è®¤ï¼ŒLOG_* å±•å¼€ä¸ºç©ºæ“ä½œï¼‰
+#
+# å¯ç”¨ç›®æ ‡ (target):
+#   test_echo_server        Echo æœåŠ¡å™¨/å®¢æˆ·ç«¯å‹æµ‹ç¨‹åº
+#   timeout_server_test     è¶…æ—¶æœåŠ¡å™¨æµ‹è¯•
+#   test_net_integration    ç½‘ç»œåº“é›†æˆæµ‹è¯•
+#   test_rpc_benchmark      RPC åŸºå‡†æµ‹è¯•
+#   ï¼ˆä¸æŒ‡å®šåˆ™æ„å»ºå…¨éƒ¨ï¼‰
+#
+# ç¤ºä¾‹:
+#   ./build.sh                                          # é»˜è®¤æ„å»ºï¼Œä¸¤ä¸ªåŠŸèƒ½å‡å…³é—­
+#   ./build.sh timestamp=1 log=1                        # å…¨éƒ¨åŠŸèƒ½å¼€å¯
+#   ./build.sh log=1 test_rpc_benchmark                 # ä»…å¼€æ—¥å¿—ï¼Œæ„å»º RPC åŸºå‡†æµ‹è¯•
+#   ./build.sh timestamp=1 log=1 asan test_echo_server  # ASan + å…¨åŠŸèƒ½ï¼Œåªç¼–è¯‘ echo
+#   ./build.sh clean                                    # æ¸…ç†æ„å»ºäº§ç‰©
 # ============================================================
 set -e
 
 BUILD_TYPE="Release"
 ENABLE_ASAN="OFF"
+ENABLE_TIMESTAMP="OFF"
+ENABLE_LOG="OFF"
 TARGET=""
 DO_CLEAN_ONLY=false
 
-# ---------- ½âÎö²ÎÊı ----------
+# ---------- è§£æå‚æ•° ----------
 for arg in "$@"; do
     case "$arg" in
         debug)
@@ -46,13 +57,25 @@ for arg in "$@"; do
         clean)
             DO_CLEAN_ONLY=true
             ;;
+        timestamp=0)
+            ENABLE_TIMESTAMP="OFF"
+            ;;
+        timestamp=1)
+            ENABLE_TIMESTAMP="ON"
+            ;;
+        log=0)
+            ENABLE_LOG="OFF"
+            ;;
+        log=1)
+            ENABLE_LOG="ON"
+            ;;
         *)
             TARGET="$arg"
             ;;
     esac
 done
 
-# ---------- ÇåÀí ----------
+# ---------- æ¸…ç† ----------
 if $DO_CLEAN_ONLY; then
     echo "[build] Cleaning build directory..."
     rm -rf build
@@ -60,29 +83,34 @@ if $DO_CLEAN_ONLY; then
     exit 0
 fi
 
-# ---------- CMake ÅäÖÃ ----------
+# ---------- CMake é…ç½® ----------
 echo "[build] BUILD_TYPE = $BUILD_TYPE"
 echo "[build] ENABLE_ASAN = $ENABLE_ASAN"
+echo "[build] TIMESTAMP  = $ENABLE_TIMESTAMP"
+echo "[build] LOG        = $ENABLE_LOG"
 echo "[build] TARGET     = ${TARGET:-<all>}"
 
 rm -rf build
 mkdir build && cd build
 
-cmake -DCMAKE_BUILD_TYPE="$BUILD_TYPE" -DENABLE_ASAN="$ENABLE_ASAN" ..
+cmake -DCMAKE_BUILD_TYPE="$BUILD_TYPE" -DENABLE_ASAN="$ENABLE_ASAN" \
+        -DENABLE_TIMESTAMP="$ENABLE_TIMESTAMP" -DENABLE_LOG="$ENABLE_LOG" ..
 
-# ---------- ±àÒë ----------
+# ---------- ç¼–è¯‘ ----------
 if [ -n "$TARGET" ]; then
     make -j$(nproc) "$TARGET"
 else
     make -j$(nproc)
 fi
 
-# ---------- ½á¹û ----------
+# ---------- ç»“æœ ----------
 echo ""
 echo "============================================"
 echo "  Build complete!"
 echo "  BUILD_TYPE = $BUILD_TYPE"
 echo "  ENABLE_ASAN = $ENABLE_ASAN"
-echo "  Output dir = $(pwd)"
+echo "  TIMESTAMP   = $ENABLE_TIMESTAMP"
+echo "  LOG         = $ENABLE_LOG"
+echo "  Output dir  = $(pwd)"
 echo "============================================"
 ls -lh --color=auto test_*_* 2>/dev/null || true

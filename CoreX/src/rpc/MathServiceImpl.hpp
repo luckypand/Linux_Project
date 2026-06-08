@@ -7,8 +7,8 @@ class MathServiceImpl : public RpcServiceAdapter
 public:
     MathServiceImpl()
         : RpcServiceAdapter(
-              // ¡ï ´ÓÉú³ÉµÄ pb ÎÄ¼þÖÐ»ñÈ¡ ServiceDescriptor
-              //    Í¨¹ýÈÎÒâ message µÄ descriptor()->file()->service(0)
+              // â˜… ä»Žç”Ÿæˆçš„ pb æ–‡ä»¶ä¸­èŽ·å– ServiceDescriptor
+              //    é€šè¿‡ä»»æ„ message çš„ descriptor()->file()->service(0)
               CoreX::rpc::MathRequest::descriptor()
                   ->file()->FindServiceByName("MathService")
           )
@@ -26,7 +26,7 @@ public:
         // std::cout << "FindServiceByName(\"MathService\") result: " << (void*)svc2 << std::endl;
         // //test
 
-        // ×¢²á Add ·½·¨
+        // æ³¨å†Œ Add æ–¹æ³•
         registerHandler("Add",
             [](::google::protobuf::Message* reqMsg,
                ::google::protobuf::Message* respMsg)
@@ -38,7 +38,7 @@ public:
             }
         );
 
-        // ×¢²á Sub ·½·¨
+        // æ³¨å†Œ Sub æ–¹æ³•
         registerHandler("Sub",
             [](::google::protobuf::Message* reqMsg,
                ::google::protobuf::Message* respMsg)

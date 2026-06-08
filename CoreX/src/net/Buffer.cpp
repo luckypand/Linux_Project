@@ -4,7 +4,7 @@
 #include <sys/uio.h>
 #include <unistd.h>
 #include <cstring>
-#include <arpa/inet.h> // Ìá¹© ntohl, htonl
+#include <arpa/inet.h> // æä¾› ntohl, htonl
 
 // /*****************/*******************/********************/
 // PretendBytes      ReadIndex_           WriteIndex_
@@ -15,15 +15,15 @@ Buffer::Buffer(size_t buffer_size)
     ,ReadIndex_(kCheapPretendBytes)         
     ,WriteIndex_(kCheapPretendBytes)
 {
-    //´Ë´¦Ö±½Ó´«ÈëÎª¶ø²»Ê¹ÓÃreserveÊÇÎªÁË»ñµÃºÏ·¨¿Õ¼äÎ»ÖÃ
-    //ÒòÎª±¾ÖÊ¶Ô¸ÃvectorµÄÊ¹ÓÃ²»ÊÇÍ¨¹ıpush_back°¤¸ö·ÅÈë
-    //Í¨¹ı³õÊ¼»¯buffer_Ê¹µÃbufferÄÜ¹»ÔÚÒ»¿ªÊ¼»ñµÃºÏ·¨¿Õ¼ä£¬²¢Ê¹µÃ
-    //sizeÔÚºóĞøÀ©ÈİÊ±Ö±½ÓµÈÓÚcapacity£¬±ÜÃâÀË·Ñ
+    //æ­¤å¤„ç›´æ¥ä¼ å…¥ä¸ºè€Œä¸ä½¿ç”¨reserveæ˜¯ä¸ºäº†è·å¾—åˆæ³•ç©ºé—´ä½ç½®
+    //å› ä¸ºæœ¬è´¨å¯¹è¯¥vectorçš„ä½¿ç”¨ä¸æ˜¯é€šè¿‡push_backæŒ¨ä¸ªæ”¾å…¥
+    //é€šè¿‡åˆå§‹åŒ–buffer_ä½¿å¾—bufferèƒ½å¤Ÿåœ¨ä¸€å¼€å§‹è·å¾—åˆæ³•ç©ºé—´ï¼Œå¹¶ä½¿å¾—
+    //sizeåœ¨åç»­æ‰©å®¹æ—¶ç›´æ¥ç­‰äºcapacityï¼Œé¿å…æµªè´¹
 }
 
 /*
 * @brief:
-*     ·µ»Ø¿É¶ÁÇøÆğÊ¼Ö¸Õë
+*     è¿”å›å¯è¯»åŒºèµ·å§‹æŒ‡é’ˆ
 */
 const char* Buffer::peek() const
 {
@@ -32,9 +32,9 @@ const char* Buffer::peek() const
 
 /*
 * @brief:
-*     Ïû·ÑÖ¸¶¨³¤¶ÈµÄ¿É¶ÁÊı¾İ
+*     æ¶ˆè´¹æŒ‡å®šé•¿åº¦çš„å¯è¯»æ•°æ®
 * @parameter:
-      len:±¾´ÎÏû·ÑµÄÊı¾İ³¤¶È
+      len:æœ¬æ¬¡æ¶ˆè´¹çš„æ•°æ®é•¿åº¦
 */
 void Buffer::retrieve(size_t len)
 {
@@ -44,7 +44,7 @@ void Buffer::retrieve(size_t len)
 
 /*
 * @brief:
-*     Ïû·ÑÈ«²¿¿É¶ÁÊı¾İ
+*     æ¶ˆè´¹å…¨éƒ¨å¯è¯»æ•°æ®
 */
 void Buffer::retrieveAll()
 {
@@ -54,7 +54,7 @@ void Buffer::retrieveAll()
 
 /*
 * @brief:
-*     ÒÔ string ĞÎÊ½È¡³öÈ«²¿¿É¶ÁÊı¾İ
+*     ä»¥ string å½¢å¼å–å‡ºå…¨éƒ¨å¯è¯»æ•°æ®
 */
 std::string Buffer::retrieveAsString()
 {
@@ -65,9 +65,9 @@ std::string Buffer::retrieveAsString()
 
 /*
 * @brief:
-*     È¡³öÖ¸¶¨³¤¶ÈµÄ¿É¶ÁÊı¾İ²¢·µ»Ø string
+*     å–å‡ºæŒ‡å®šé•¿åº¦çš„å¯è¯»æ•°æ®å¹¶è¿”å› string
 * @parameter:
-      len:±¾´ÎÈ¡³öµÄÊı¾İ³¤¶È
+      len:æœ¬æ¬¡å–å‡ºçš„æ•°æ®é•¿åº¦
 */
 std::string Buffer::retrieveAsString(size_t len)
 {
@@ -79,10 +79,10 @@ std::string Buffer::retrieveAsString(size_t len)
 
 /*
 * @brief:
-*     ×·¼ÓÔ­Ê¼×Ö½ÚÊı¾İ
+*     è¿½åŠ åŸå§‹å­—èŠ‚æ•°æ®
 * @parameter:
-      data:´ıĞ´ÈëµÄÊı¾İ
-      len:´ıĞ´ÈëµÄÊı¾İ³¤¶È
+      data:å¾…å†™å…¥çš„æ•°æ®
+      len:å¾…å†™å…¥çš„æ•°æ®é•¿åº¦
 */
 void Buffer::append(const char* data, size_t len)
 {
@@ -93,9 +93,9 @@ void Buffer::append(const char* data, size_t len)
 
 /*
 * @brief:
-*     ×·¼Ó string Êı¾İ
+*     è¿½åŠ  string æ•°æ®
 * @parameter:
-      data:´ıĞ´ÈëµÄ×Ö·û´®
+      data:å¾…å†™å…¥çš„å­—ç¬¦ä¸²
 */
 void Buffer::append(const std::string& data)
 {
@@ -104,7 +104,7 @@ void Buffer::append(const std::string& data)
 
 /*
 * @brief:
-*     ·µ»Ø¿ÉĞ´ÇøÆğÊ¼Ö¸Õë
+*     è¿”å›å¯å†™åŒºèµ·å§‹æŒ‡é’ˆ
 */
 const char* Buffer::beginWrite() const
 {
@@ -113,14 +113,14 @@ const char* Buffer::beginWrite() const
 
 /*
 * @brief:
-*     À©Èİ»ò°áÒÆÊı¾İ
+*     æ‰©å®¹æˆ–æ¬ç§»æ•°æ®
 * @parameter:
-      len:±¾´ÎĞ´ÈëµÄÊı¾İ³¤¶È
+      len:æœ¬æ¬¡å†™å…¥çš„æ•°æ®é•¿åº¦
 */
 void Buffer::makespace(size_t len)
 {
-    //¿ÉĞ´¿Õ¼ä¼ÓÉÏÔ¤Áô¿Õ¼ä´óÓÚĞèĞ´³¤¶È£¬Ö±½Ó°áÒÆ
-    //¿ÉĞ´¼ÓÔ¤ÁôĞ¡ÓÚĞèÒª³¤¶È£¬½øĞĞresizeÀ©Èİ
+    //å¯å†™ç©ºé—´åŠ ä¸Šé¢„ç•™ç©ºé—´å¤§äºéœ€å†™é•¿åº¦ï¼Œç›´æ¥æ¬ç§»
+    //å¯å†™åŠ é¢„ç•™å°äºéœ€è¦é•¿åº¦ï¼Œè¿›è¡Œresizeæ‰©å®¹
     if(WriteBytes() + PretendBytes() < len)
     {
         buffer_.resize(WriteIndex_ + len);
@@ -129,8 +129,8 @@ void Buffer::makespace(size_t len)
     {
         size_t ReadableByte = this->ReadBytes();
 
-        //¿½±´¿É¶Áµ½kCheapPretendBytes£¬ÖØÖÃÖ¸Õë
-        //¼ì²éÊÇ·ñºÍÔ­±¾µÄ¿É¶Á·¶Î§Ò»ÖÂ
+        //æ‹·è´å¯è¯»åˆ°kCheapPretendBytesï¼Œé‡ç½®æŒ‡é’ˆ
+        //æ£€æŸ¥æ˜¯å¦å’ŒåŸæœ¬çš„å¯è¯»èŒƒå›´ä¸€è‡´
 
         std::copy(std::next(buffer_.begin(), static_cast<std::ptrdiff_t>(ReadIndex_)),
           std::next(buffer_.begin(), static_cast<std::ptrdiff_t>(WriteIndex_)),
@@ -144,7 +144,7 @@ void Buffer::makespace(size_t len)
 
 /*
 * @brief:
-*     ±£Ö¤Ğ´Çø×ã¹»
+*     ä¿è¯å†™åŒºè¶³å¤Ÿ
 */
 void Buffer::ensureWriteable(size_t len)
 {
@@ -157,7 +157,7 @@ void Buffer::ensureWriteable(size_t len)
 
 /*
 * @brief:
-*     ÔÚ¿É¶ÁÇøÇ°ÃæĞ´Èë£¨²»ÒÆ¶¯¿É¶ÁÇøÄÚÈİ£©
+*     åœ¨å¯è¯»åŒºå‰é¢å†™å…¥ï¼ˆä¸ç§»åŠ¨å¯è¯»åŒºå†…å®¹ï¼‰
 */
 void Buffer::prepend(const void* data, size_t len)
 {
@@ -169,7 +169,7 @@ void Buffer::prepend(const void* data, size_t len)
 
 /*
 * @brief:
-*     ÊÖ¶¯ÍÆ½øĞ´Ö¸Õë£¨Óë beginWrite Åä¶Ô£©
+*     æ‰‹åŠ¨æ¨è¿›å†™æŒ‡é’ˆï¼ˆä¸ beginWrite é…å¯¹ï¼‰
 */
 void Buffer::hasWritten(size_t len)
 {
@@ -179,16 +179,16 @@ void Buffer::hasWritten(size_t len)
 
 /*
 * @brief:
-*     ´Ó fd ¶ÁÈ¡Êı¾İµ½ Buffer
+*     ä» fd è¯»å–æ•°æ®åˆ° Buffer
 * @parameter:
-      fd:ÎÄ¼şÃèÊö·û
-      savedErrno:±£´æ´íÎóÂëµÄÖ¸Õë
+      fd:æ–‡ä»¶æè¿°ç¬¦
+      savedErrno:ä¿å­˜é”™è¯¯ç çš„æŒ‡é’ˆ
 */
 ssize_t Buffer::readFd(int fd, int* savedErrno)   
 {
-    //¿ª±ÙÁ½¿é·ÖÉ¢¿Õ¼ä£¬ÏÈ½øĞĞ´óÖÂÅĞ¶Ï£¬Èô¿Õ¼ä×ã¹»ÔòÊ¹ÓÃÒ»¿é£¬·ñÔò
-    //Ê¹ÓÃÁ½¿é¿Õ¼ä¼Ä´æÊı¾İ¡£ºóĞøÒÀ¾İreadvµÄ·µ»ØÖµÅĞ¶ÏĞè²»ĞèÒª½«µÚ¶ş¿é
-    //µÄÄÚÈİÀ©ÈİĞ´Èë
+    //å¼€è¾Ÿä¸¤å—åˆ†æ•£ç©ºé—´ï¼Œå…ˆè¿›è¡Œå¤§è‡´åˆ¤æ–­ï¼Œè‹¥ç©ºé—´è¶³å¤Ÿåˆ™ä½¿ç”¨ä¸€å—ï¼Œå¦åˆ™
+    //ä½¿ç”¨ä¸¤å—ç©ºé—´å¯„å­˜æ•°æ®ã€‚åç»­ä¾æ®readvçš„è¿”å›å€¼åˆ¤æ–­éœ€ä¸éœ€è¦å°†ç¬¬äºŒå—
+    //çš„å†…å®¹æ‰©å®¹å†™å…¥
     char extrabuff[65536];
     struct iovec vec[2];
     vec[0].iov_base = this->beginWrite();
@@ -196,21 +196,21 @@ ssize_t Buffer::readFd(int fd, int* savedErrno)
     vec[1].iov_base = extrabuff;
     vec[1].iov_len = sizeof(extrabuff);
     
-    const size_t writeable = this->WriteBytes(); //ÏÈ¼ÇÂ¼ÏÂµ±Ç°»¹ÓĞ¶àÉÙ¿Õ¼ä¿ÉÒÔĞ´
+    const size_t writeable = this->WriteBytes(); //å…ˆè®°å½•ä¸‹å½“å‰è¿˜æœ‰å¤šå°‘ç©ºé—´å¯ä»¥å†™
 
     const int iovcnt = (writeable < sizeof(extrabuff) ? 2 : 1);
     ssize_t n = ::readv(fd,vec,iovcnt);
 
-    if(n < 0) //×¢Òâ´Ë´¦Ê¹ÓÃifÒòÎªepoll_waitÊÇLTÄ£Ê½,¾ÍËãÓĞÊı¾İÃ»¶ÁÍêÏÂ´ÎĞÑÀ´Ò²ÄÜ¶Á
+    if(n < 0) //æ³¨æ„æ­¤å¤„ä½¿ç”¨ifå› ä¸ºepoll_waitæ˜¯LTæ¨¡å¼,å°±ç®—æœ‰æ•°æ®æ²¡è¯»å®Œä¸‹æ¬¡é†’æ¥ä¹Ÿèƒ½è¯»
     {
         *savedErrno = errno;
-        // std::cerr << *savedErrno << std::endl; //½ûÖ¹Ê¹ÓÃ´òÓ¡£¬·ñÔò½«»á
+        // std::cerr << *savedErrno << std::endl; //ç¦æ­¢ä½¿ç”¨æ‰“å°ï¼Œå¦åˆ™å°†ä¼š
     }
-    else if(static_cast<size_t>(n) <= writeable)//µÚÒ»¿é¾Í¶ÁÍêÁË
+    else if(static_cast<size_t>(n) <= writeable)//ç¬¬ä¸€å—å°±è¯»å®Œäº†
     {
-        WriteIndex_ += n;//¸üĞÂ¿ÉĞ´ÇøÓò
+        WriteIndex_ += n;//æ›´æ–°å¯å†™åŒºåŸŸ
     }
-    else//»¹ÓĞÊı¾İÔÚµÚ¶ş¿éÖĞ£¬À©Èİ
+    else//è¿˜æœ‰æ•°æ®åœ¨ç¬¬äºŒå—ä¸­ï¼Œæ‰©å®¹
     {
         WriteIndex_ = buffer_.size();
         this->append(extrabuff,n - writeable);
@@ -220,10 +220,10 @@ ssize_t Buffer::readFd(int fd, int* savedErrno)
 
 /*
 * @brief:
-*     ´ÓBufferĞ´ÈëÊı¾İµ½fd
+*     ä»Bufferå†™å…¥æ•°æ®åˆ°fd
 * @parameter:
-      fd:ÎÄ¼şÃèÊö·û
-      savedErrno:±£´æ´íÎóÂëµÄÖ¸Õë
+      fd:æ–‡ä»¶æè¿°ç¬¦
+      savedErrno:ä¿å­˜é”™è¯¯ç çš„æŒ‡é’ˆ
 */
 ssize_t Buffer::writeFd(int fd, int* savedErrno)
 {
@@ -243,11 +243,11 @@ ssize_t Buffer::writeFd(int fd, int* savedErrno)
 
 /*
 * @brief:
-*     ¶ÁÈ¡4×Ö½ÚÄ§Êı,×ª»»×Ö½ÚĞòºó·µ»Ø
+*     è¯»å–4å­—èŠ‚é­”æ•°,è½¬æ¢å­—èŠ‚åºåè¿”å›
 */
 uint32_t Buffer::peekInt32() const
 {
-    //×¢Òâconstº¯ÊıÖ»ÄÜµ÷ÓÃÀàÖĞconstÀàĞÍº¯Êı
+    //æ³¨æ„constå‡½æ•°åªèƒ½è°ƒç”¨ç±»ä¸­constç±»å‹å‡½æ•°
     assert(this->ReadBytes() >= sizeof(u_int32_t));
     uint32_t magic_name = 0;
     ::memcpy(&magic_name,peek(),sizeof(magic_name));
@@ -256,9 +256,9 @@ uint32_t Buffer::peekInt32() const
 
 /*
 * @brief:
-*     ´ÓBufferÖ¸¶¨Î»ÖÃ¶ÁÈ¡4×Ö½ÚÊı·µ»Ø
+*     ä»BufferæŒ‡å®šä½ç½®è¯»å–4å­—èŠ‚æ•°è¿”å›
 * @parameter:
-      len:Ö¸¶¨Buffer¶ÁÈ¡Î»ÖÃ×Ö½Ú
+      len:æŒ‡å®šBufferè¯»å–ä½ç½®å­—èŠ‚
 */
 uint32_t Buffer::peekInt32(size_t offset) const
 {

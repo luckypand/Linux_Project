@@ -17,17 +17,25 @@ public:
     RpcServer(EventLoop* loop,const std::string& ip,uint16_t port,const std::string& name);
     void start() { server_.start(); }
 
-    //ÒµÎñ½Ó¿Ú£¬ÓÃ»§ÔÚmainº¯ÊıÖĞ×¢²áº¯Êı
+    //ä¸šåŠ¡æ¥å£ï¼Œç”¨æˆ·åœ¨mainå‡½æ•°ä¸­æ³¨å†Œå‡½æ•°
     void registerService(RpcServiceAdapter* adapter);
 private:
-    void sendResponse(const TcpConnectionPtr& conn, uint64_t id,const std::string& rstPayload);
+#if ENABLE_TIMESTAMP
+    void sendResponse(const TcpConnectionPtr& conn, uint64_t id, const std::string& rstPayload,
+                      uint64_t client_send_ts, uint64_t server_recv_ts);
+    void sendErrorReasponse(const TcpConnectionPtr& conn,
+                           uint64_t id, CoreX::rpc::ErrorCode code, const std::string& errMsg,
+                           uint64_t server_recv_ts = 0);
+#else
+    void sendResponse(const TcpConnectionPtr& conn, uint64_t id, const std::string& rstPayload);
     void sendErrorReasponse(const TcpConnectionPtr& conn,
                            uint64_t id, CoreX::rpc::ErrorCode code, const std::string& errMsg);
+#endif
     void handleRpcCodecMessage(const TcpConnectionPtr& conn,const std::string& payload);  
     TcpServer server_;
     RpcCodec codec_;
     std::unordered_map<std::string,RpcServiceAdapter*> dispatchTable_;
 };
 
-//server_µÄOnmessage  ->  Êµ¼Êµ÷ÓÃRpcCodecÄÚ²¿µÄOnmessage
-//RpcCodecµÄbusinessCallback_ -> Êµ¼Êµ÷ÓÃRpcServerµÄhandleRpcMessage
+//server_çš„Onmessage  ->  å®é™…è°ƒç”¨RpcCodecå†…éƒ¨çš„Onmessage
+//RpcCodecçš„businessCallback_ -> å®é™…è°ƒç”¨RpcServerçš„handleRpcMessage

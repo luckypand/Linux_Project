@@ -6,8 +6,8 @@
 #include <unordered_map>
 #include <functional>
 
-// Í¨ÓÃ Service ÊÊÅäÆ÷ ¡ª¡ª Ò»¸ö Service ÊµÀı¶ÔÓ¦Ò»¸ö proto service
-// ÀûÓÃ protoc Éú³ÉµÄ ServiceDescriptor ÔªÊı¾İ×ö¶¯Ì¬·Ö·¢
+// é€šç”¨ Service é€‚é…å™¨ â€”â€” ä¸€ä¸ª Service å®ä¾‹å¯¹åº”ä¸€ä¸ª proto service
+// åˆ©ç”¨ protoc ç”Ÿæˆçš„ ServiceDescriptor å…ƒæ•°æ®åšåŠ¨æ€åˆ†å‘
 class RpcServiceAdapter
 {
 public:
@@ -17,7 +17,7 @@ public:
         ::google::protobuf::Message* response
     )>;
 
-    // ¹¹ÔìÊ±´«Èë ServiceDescriptor£¨´ÓÉú³ÉµÄ .pb.h »ñÈ¡£©
+    // æ„é€ æ—¶ä¼ å…¥ ServiceDescriptorï¼ˆä»ç”Ÿæˆçš„ .pb.h è·å–ï¼‰
     explicit RpcServiceAdapter(const ::google::protobuf::ServiceDescriptor* svcDesc)
         : svcDesc_(svcDesc)
     {}
@@ -26,47 +26,47 @@ public:
 
     const std::string& serviceName() const { return svcDesc_->full_name(); }
 
-    // ×¢²áÒ»¸ö·½·¨µÄ´¦Àíº¯Êı£¨ÓÉ×ÓÀàÔÚ¹¹Ôìº¯ÊıÖĞµ÷ÓÃ£©
+    // æ³¨å†Œä¸€ä¸ªæ–¹æ³•çš„å¤„ç†å‡½æ•°ï¼ˆç”±å­ç±»åœ¨æ„é€ å‡½æ•°ä¸­è°ƒç”¨ï¼‰
     void registerHandler(const std::string& methodName, MethodHandler handler)
     {
         handlers_[methodName] = std::move(handler);
     }
 
-    // ¡ï ºËĞÄ£º¸ù¾İ·½·¨Ãû£¬´´½¨ request¡¢½âÎö payload¡¢µ÷ÓÃ handler¡¢·µ»ØĞòÁĞ»¯ response
-    // ·µ»Ø¿Õ string ±íÊ¾³ö´í
+    // â˜… æ ¸å¿ƒï¼šæ ¹æ®æ–¹æ³•åï¼Œåˆ›å»º requestã€è§£æ payloadã€è°ƒç”¨ handlerã€è¿”å›åºåˆ—åŒ– response
+    // è¿”å›ç©º string è¡¨ç¤ºå‡ºé”™
     std::string dispatch(const std::string& methodName,
                          const std::string& payload)
     {
-        // 1. ²éÕÒ MethodDescriptor
+        // 1. æŸ¥æ‰¾ MethodDescriptor
         const ::google::protobuf::MethodDescriptor* method =
             svcDesc_->FindMethodByName(methodName);
         if (!method) return "";
 
-        // 2. ²éÕÒ handler
+        // 2. æŸ¥æ‰¾ handler
         auto it = handlers_.find(methodName);
         if (it == handlers_.end()) return "";
 
-        // 3. ¡ï ¶¯Ì¬´´½¨ request ¶ÔÏó£¨²»ĞèÒªÖªµÀ¾ßÌåÀàĞÍ£¡£©
+        // 3. â˜… åŠ¨æ€åˆ›å»º request å¯¹è±¡ï¼ˆä¸éœ€è¦çŸ¥é“å…·ä½“ç±»å‹ï¼ï¼‰
         std::unique_ptr<::google::protobuf::Message> request(
             GetRequestPrototype(method).New()
         );
 
-        // 4. ·´ĞòÁĞ»¯
+        // 4. ååºåˆ—åŒ–
         if (!request->ParseFromString(payload)) return "";
 
-        // 5. ¡ï ¶¯Ì¬´´½¨ response ¶ÔÏó
+        // 5. â˜… åŠ¨æ€åˆ›å»º response å¯¹è±¡
         std::unique_ptr<::google::protobuf::Message> response(
             GetResponsePrototype(method).New()
         );
 
-        // 6. µ÷ÓÃ handler
+        // 6. è°ƒç”¨ handler
         it->second(request.get(), response.get());
 
-        // 7. ĞòÁĞ»¯·µ»Ø
+        // 7. åºåˆ—åŒ–è¿”å›
         return response->SerializeAsString();
     }
 
-    // »ñÈ¡·½·¨µÄÄ¬ÈÏ request/response ÊµÀı£¨ÓÃÓÚ New()£©
+    // è·å–æ–¹æ³•çš„é»˜è®¤ request/response å®ä¾‹ï¼ˆç”¨äº New()ï¼‰
     const ::google::protobuf::Message& GetRequestPrototype(
         const ::google::protobuf::MethodDescriptor* method) const
     {

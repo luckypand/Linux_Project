@@ -11,21 +11,21 @@ public:
     EventLoopThreadPool(EventLoop* baseloop,const std::string& name = "");
     ~EventLoopThreadPool();
 
-    void start();                       //Ïß³Ì³Ø¿ªÊ¼³õÊ¼»¯Ïß³Ì
+    void start();                       //çº¿ç¨‹æ± å¼€å§‹åˆå§‹åŒ–çº¿ç¨‹
 
-    // ºËĞÄ¼Ü¹¹º¯Êı£ºÍ¨¹ı Round-Robin Ëã·¨·Ö·¢ÏÂÒ»¸ö×Ó Reactor
+    // æ ¸å¿ƒæ¶æ„å‡½æ•°ï¼šé€šè¿‡ Round-Robin ç®—æ³•åˆ†å‘ä¸‹ä¸€ä¸ªå­ Reactor
     EventLoop* chooseNextLoop();  
     
-    void setNumThreads(int numThreads = 0) { numThreads_ = numThreads; }     //ÉèÖÃÏß³Ì³Ø´óĞ¡,Ä¬ÈÏµ¥Ïß³Ì
+    void setNumThreads(int numThreads = 0) { numThreads_ = numThreads; }     //è®¾ç½®çº¿ç¨‹æ± å¤§å°,é»˜è®¤å•çº¿ç¨‹
     bool destroyTheadPool() { return destroy; }
 private:
-    EventLoop* baseloop_{nullptr}; //Ö÷Ïß³Ìloop
+    EventLoop* baseloop_{nullptr}; //ä¸»çº¿ç¨‹loop
     std::string name_;
-    bool destroy{false};           //Ïß³Ì³ØÊÇ·ñÏú»Ù 
-    bool started{false};           //Ïß³Ì³ØÊÇ·ñ´´½¨      
-    size_t numThreads_{0};            //Ïß³ÌÊıÁ¿
-    size_t chooseThreadIndex{0};      //½øĞĞÂÖÑ¯Ê±Ñ¡ÔñµÄÏß³Ì³ØÏÂ±ê
+    bool destroy{false};           //çº¿ç¨‹æ± æ˜¯å¦é”€æ¯ 
+    bool started{false};           //çº¿ç¨‹æ± æ˜¯å¦åˆ›å»º      
+    size_t numThreads_{0};            //çº¿ç¨‹æ•°é‡
+    size_t chooseThreadIndex{0};      //è¿›è¡Œè½®è¯¢æ—¶é€‰æ‹©çš„çº¿ç¨‹æ± ä¸‹æ ‡
 
-    std::vector<std::unique_ptr<EventLoopThread>> threads_;  //¼ÇÂ¼×ÓÏß³Ì±¾Éí
-    std::vector<EventLoop* > loops_;                         //¼ÇÂ¼×ÓÏß³ÌµÄloop       
+    std::vector<std::unique_ptr<EventLoopThread>> threads_;  //è®°å½•å­çº¿ç¨‹æœ¬èº«
+    std::vector<EventLoop* > loops_;                         //è®°å½•å­çº¿ç¨‹çš„loop       
 };

@@ -1,302 +1,302 @@
 [
 {
   "directory": "/root/Cplus/CoreX/build",
-  "command": "/usr/bin/c++   -I/root/Cplus/CoreX/src/net -I/root/Cplus/CoreX/src/log -I/root/Cplus/CoreX/src/rpc -I/root/Cplus/CoreX/proto  -O3 -DNDEBUG   -std=c++17 -o CMakeFiles/test_rpc_benchmark.dir/tests/test_rpc_benchmark.cpp.o -c /root/Cplus/CoreX/tests/test_rpc_benchmark.cpp",
+  "command": "/usr/bin/c++  -DENABLE_LOG=1 -DENABLE_TIMESTAMP=1 -I/root/Cplus/CoreX/src/net -I/root/Cplus/CoreX/src/log -I/root/Cplus/CoreX/src/rpc -I/root/Cplus/CoreX/proto  -O3 -DNDEBUG   -std=c++17 -o CMakeFiles/test_rpc_benchmark.dir/tests/test_rpc_benchmark.cpp.o -c /root/Cplus/CoreX/tests/test_rpc_benchmark.cpp",
   "file": "/root/Cplus/CoreX/tests/test_rpc_benchmark.cpp"
 },
 {
   "directory": "/root/Cplus/CoreX/build",
-  "command": "/usr/bin/c++   -I/root/Cplus/CoreX/src/net -I/root/Cplus/CoreX/src/log -I/root/Cplus/CoreX/src/rpc -I/root/Cplus/CoreX/proto  -O3 -DNDEBUG   -std=c++17 -o CMakeFiles/rpc.dir/src/rpc/RpcCodec.cpp.o -c /root/Cplus/CoreX/src/rpc/RpcCodec.cpp",
+  "command": "/usr/bin/c++  -DENABLE_LOG=1 -DENABLE_TIMESTAMP=1 -I/root/Cplus/CoreX/src/net -I/root/Cplus/CoreX/src/log -I/root/Cplus/CoreX/src/rpc -I/root/Cplus/CoreX/proto  -O3 -DNDEBUG   -std=c++17 -o CMakeFiles/rpc.dir/src/rpc/RpcCodec.cpp.o -c /root/Cplus/CoreX/src/rpc/RpcCodec.cpp",
   "file": "/root/Cplus/CoreX/src/rpc/RpcCodec.cpp"
 },
 {
   "directory": "/root/Cplus/CoreX/build",
-  "command": "/usr/bin/c++   -I/root/Cplus/CoreX/src/net -I/root/Cplus/CoreX/src/log -I/root/Cplus/CoreX/src/rpc -I/root/Cplus/CoreX/proto  -O3 -DNDEBUG   -std=c++17 -o CMakeFiles/rpc.dir/src/rpc/RpcServer.cpp.o -c /root/Cplus/CoreX/src/rpc/RpcServer.cpp",
+  "command": "/usr/bin/c++  -DENABLE_LOG=1 -DENABLE_TIMESTAMP=1 -I/root/Cplus/CoreX/src/net -I/root/Cplus/CoreX/src/log -I/root/Cplus/CoreX/src/rpc -I/root/Cplus/CoreX/proto  -O3 -DNDEBUG   -std=c++17 -o CMakeFiles/rpc.dir/src/rpc/RpcServer.cpp.o -c /root/Cplus/CoreX/src/rpc/RpcServer.cpp",
   "file": "/root/Cplus/CoreX/src/rpc/RpcServer.cpp"
 },
 {
   "directory": "/root/Cplus/CoreX/build",
-  "command": "/usr/bin/c++   -I/root/Cplus/CoreX/src/net -I/root/Cplus/CoreX/src/log -I/root/Cplus/CoreX/src/rpc -I/root/Cplus/CoreX/proto  -O3 -DNDEBUG   -std=c++17 -o CMakeFiles/rpc.dir/src/net/EventLoop.cpp.o -c /root/Cplus/CoreX/src/net/EventLoop.cpp",
+  "command": "/usr/bin/c++  -DENABLE_LOG=1 -DENABLE_TIMESTAMP=1 -I/root/Cplus/CoreX/src/net -I/root/Cplus/CoreX/src/log -I/root/Cplus/CoreX/src/rpc -I/root/Cplus/CoreX/proto  -O3 -DNDEBUG   -std=c++17 -o CMakeFiles/rpc.dir/src/net/EventLoop.cpp.o -c /root/Cplus/CoreX/src/net/EventLoop.cpp",
   "file": "/root/Cplus/CoreX/src/net/EventLoop.cpp"
 },
 {
   "directory": "/root/Cplus/CoreX/build",
-  "command": "/usr/bin/c++   -I/root/Cplus/CoreX/src/net -I/root/Cplus/CoreX/src/log -I/root/Cplus/CoreX/src/rpc -I/root/Cplus/CoreX/proto  -O3 -DNDEBUG   -std=c++17 -o CMakeFiles/rpc.dir/src/net/Poller.cpp.o -c /root/Cplus/CoreX/src/net/Poller.cpp",
+  "command": "/usr/bin/c++  -DENABLE_LOG=1 -DENABLE_TIMESTAMP=1 -I/root/Cplus/CoreX/src/net -I/root/Cplus/CoreX/src/log -I/root/Cplus/CoreX/src/rpc -I/root/Cplus/CoreX/proto  -O3 -DNDEBUG   -std=c++17 -o CMakeFiles/rpc.dir/src/net/Poller.cpp.o -c /root/Cplus/CoreX/src/net/Poller.cpp",
   "file": "/root/Cplus/CoreX/src/net/Poller.cpp"
 },
 {
   "directory": "/root/Cplus/CoreX/build",
-  "command": "/usr/bin/c++   -I/root/Cplus/CoreX/src/net -I/root/Cplus/CoreX/src/log -I/root/Cplus/CoreX/src/rpc -I/root/Cplus/CoreX/proto  -O3 -DNDEBUG   -std=c++17 -o CMakeFiles/rpc.dir/src/net/Channel.cpp.o -c /root/Cplus/CoreX/src/net/Channel.cpp",
+  "command": "/usr/bin/c++  -DENABLE_LOG=1 -DENABLE_TIMESTAMP=1 -I/root/Cplus/CoreX/src/net -I/root/Cplus/CoreX/src/log -I/root/Cplus/CoreX/src/rpc -I/root/Cplus/CoreX/proto  -O3 -DNDEBUG   -std=c++17 -o CMakeFiles/rpc.dir/src/net/Channel.cpp.o -c /root/Cplus/CoreX/src/net/Channel.cpp",
   "file": "/root/Cplus/CoreX/src/net/Channel.cpp"
 },
 {
   "directory": "/root/Cplus/CoreX/build",
-  "command": "/usr/bin/c++   -I/root/Cplus/CoreX/src/net -I/root/Cplus/CoreX/src/log -I/root/Cplus/CoreX/src/rpc -I/root/Cplus/CoreX/proto  -O3 -DNDEBUG   -std=c++17 -o CMakeFiles/rpc.dir/src/net/HeapTimer.cpp.o -c /root/Cplus/CoreX/src/net/HeapTimer.cpp",
+  "command": "/usr/bin/c++  -DENABLE_LOG=1 -DENABLE_TIMESTAMP=1 -I/root/Cplus/CoreX/src/net -I/root/Cplus/CoreX/src/log -I/root/Cplus/CoreX/src/rpc -I/root/Cplus/CoreX/proto  -O3 -DNDEBUG   -std=c++17 -o CMakeFiles/rpc.dir/src/net/HeapTimer.cpp.o -c /root/Cplus/CoreX/src/net/HeapTimer.cpp",
   "file": "/root/Cplus/CoreX/src/net/HeapTimer.cpp"
 },
 {
   "directory": "/root/Cplus/CoreX/build",
-  "command": "/usr/bin/c++   -I/root/Cplus/CoreX/src/net -I/root/Cplus/CoreX/src/log -I/root/Cplus/CoreX/src/rpc -I/root/Cplus/CoreX/proto  -O3 -DNDEBUG   -std=c++17 -o CMakeFiles/rpc.dir/src/net/Buffer.cpp.o -c /root/Cplus/CoreX/src/net/Buffer.cpp",
+  "command": "/usr/bin/c++  -DENABLE_LOG=1 -DENABLE_TIMESTAMP=1 -I/root/Cplus/CoreX/src/net -I/root/Cplus/CoreX/src/log -I/root/Cplus/CoreX/src/rpc -I/root/Cplus/CoreX/proto  -O3 -DNDEBUG   -std=c++17 -o CMakeFiles/rpc.dir/src/net/Buffer.cpp.o -c /root/Cplus/CoreX/src/net/Buffer.cpp",
   "file": "/root/Cplus/CoreX/src/net/Buffer.cpp"
 },
 {
   "directory": "/root/Cplus/CoreX/build",
-  "command": "/usr/bin/c++   -I/root/Cplus/CoreX/src/net -I/root/Cplus/CoreX/src/log -I/root/Cplus/CoreX/src/rpc -I/root/Cplus/CoreX/proto  -O3 -DNDEBUG   -std=c++17 -o CMakeFiles/rpc.dir/src/net/Socket.cpp.o -c /root/Cplus/CoreX/src/net/Socket.cpp",
+  "command": "/usr/bin/c++  -DENABLE_LOG=1 -DENABLE_TIMESTAMP=1 -I/root/Cplus/CoreX/src/net -I/root/Cplus/CoreX/src/log -I/root/Cplus/CoreX/src/rpc -I/root/Cplus/CoreX/proto  -O3 -DNDEBUG   -std=c++17 -o CMakeFiles/rpc.dir/src/net/Socket.cpp.o -c /root/Cplus/CoreX/src/net/Socket.cpp",
   "file": "/root/Cplus/CoreX/src/net/Socket.cpp"
 },
 {
   "directory": "/root/Cplus/CoreX/build",
-  "command": "/usr/bin/c++   -I/root/Cplus/CoreX/src/net -I/root/Cplus/CoreX/src/log -I/root/Cplus/CoreX/src/rpc -I/root/Cplus/CoreX/proto  -O3 -DNDEBUG   -std=c++17 -o CMakeFiles/rpc.dir/src/net/Acceptor.cpp.o -c /root/Cplus/CoreX/src/net/Acceptor.cpp",
+  "command": "/usr/bin/c++  -DENABLE_LOG=1 -DENABLE_TIMESTAMP=1 -I/root/Cplus/CoreX/src/net -I/root/Cplus/CoreX/src/log -I/root/Cplus/CoreX/src/rpc -I/root/Cplus/CoreX/proto  -O3 -DNDEBUG   -std=c++17 -o CMakeFiles/rpc.dir/src/net/Acceptor.cpp.o -c /root/Cplus/CoreX/src/net/Acceptor.cpp",
   "file": "/root/Cplus/CoreX/src/net/Acceptor.cpp"
 },
 {
   "directory": "/root/Cplus/CoreX/build",
-  "command": "/usr/bin/c++   -I/root/Cplus/CoreX/src/net -I/root/Cplus/CoreX/src/log -I/root/Cplus/CoreX/src/rpc -I/root/Cplus/CoreX/proto  -O3 -DNDEBUG   -std=c++17 -o CMakeFiles/rpc.dir/src/net/TcpServer.cpp.o -c /root/Cplus/CoreX/src/net/TcpServer.cpp",
+  "command": "/usr/bin/c++  -DENABLE_LOG=1 -DENABLE_TIMESTAMP=1 -I/root/Cplus/CoreX/src/net -I/root/Cplus/CoreX/src/log -I/root/Cplus/CoreX/src/rpc -I/root/Cplus/CoreX/proto  -O3 -DNDEBUG   -std=c++17 -o CMakeFiles/rpc.dir/src/net/TcpServer.cpp.o -c /root/Cplus/CoreX/src/net/TcpServer.cpp",
   "file": "/root/Cplus/CoreX/src/net/TcpServer.cpp"
 },
 {
   "directory": "/root/Cplus/CoreX/build",
-  "command": "/usr/bin/c++   -I/root/Cplus/CoreX/src/net -I/root/Cplus/CoreX/src/log -I/root/Cplus/CoreX/src/rpc -I/root/Cplus/CoreX/proto  -O3 -DNDEBUG   -std=c++17 -o CMakeFiles/rpc.dir/src/net/TcpConnection.cpp.o -c /root/Cplus/CoreX/src/net/TcpConnection.cpp",
+  "command": "/usr/bin/c++  -DENABLE_LOG=1 -DENABLE_TIMESTAMP=1 -I/root/Cplus/CoreX/src/net -I/root/Cplus/CoreX/src/log -I/root/Cplus/CoreX/src/rpc -I/root/Cplus/CoreX/proto  -O3 -DNDEBUG   -std=c++17 -o CMakeFiles/rpc.dir/src/net/TcpConnection.cpp.o -c /root/Cplus/CoreX/src/net/TcpConnection.cpp",
   "file": "/root/Cplus/CoreX/src/net/TcpConnection.cpp"
 },
 {
   "directory": "/root/Cplus/CoreX/build",
-  "command": "/usr/bin/c++   -I/root/Cplus/CoreX/src/net -I/root/Cplus/CoreX/src/log -I/root/Cplus/CoreX/src/rpc -I/root/Cplus/CoreX/proto  -O3 -DNDEBUG   -std=c++17 -o CMakeFiles/rpc.dir/src/net/EventLoopThreadPool.cpp.o -c /root/Cplus/CoreX/src/net/EventLoopThreadPool.cpp",
+  "command": "/usr/bin/c++  -DENABLE_LOG=1 -DENABLE_TIMESTAMP=1 -I/root/Cplus/CoreX/src/net -I/root/Cplus/CoreX/src/log -I/root/Cplus/CoreX/src/rpc -I/root/Cplus/CoreX/proto  -O3 -DNDEBUG   -std=c++17 -o CMakeFiles/rpc.dir/src/net/EventLoopThreadPool.cpp.o -c /root/Cplus/CoreX/src/net/EventLoopThreadPool.cpp",
   "file": "/root/Cplus/CoreX/src/net/EventLoopThreadPool.cpp"
 },
 {
   "directory": "/root/Cplus/CoreX/build",
-  "command": "/usr/bin/c++   -I/root/Cplus/CoreX/src/net -I/root/Cplus/CoreX/src/log -I/root/Cplus/CoreX/src/rpc -I/root/Cplus/CoreX/proto  -O3 -DNDEBUG   -std=c++17 -o CMakeFiles/rpc.dir/src/net/EventLoopThread.cpp.o -c /root/Cplus/CoreX/src/net/EventLoopThread.cpp",
+  "command": "/usr/bin/c++  -DENABLE_LOG=1 -DENABLE_TIMESTAMP=1 -I/root/Cplus/CoreX/src/net -I/root/Cplus/CoreX/src/log -I/root/Cplus/CoreX/src/rpc -I/root/Cplus/CoreX/proto  -O3 -DNDEBUG   -std=c++17 -o CMakeFiles/rpc.dir/src/net/EventLoopThread.cpp.o -c /root/Cplus/CoreX/src/net/EventLoopThread.cpp",
   "file": "/root/Cplus/CoreX/src/net/EventLoopThread.cpp"
 },
 {
   "directory": "/root/Cplus/CoreX/build",
-  "command": "/usr/bin/c++   -I/root/Cplus/CoreX/src/net -I/root/Cplus/CoreX/src/log -I/root/Cplus/CoreX/src/rpc -I/root/Cplus/CoreX/proto  -O3 -DNDEBUG   -std=c++17 -o CMakeFiles/rpc.dir/src/log/my_log.cpp.o -c /root/Cplus/CoreX/src/log/my_log.cpp",
+  "command": "/usr/bin/c++  -DENABLE_LOG=1 -DENABLE_TIMESTAMP=1 -I/root/Cplus/CoreX/src/net -I/root/Cplus/CoreX/src/log -I/root/Cplus/CoreX/src/rpc -I/root/Cplus/CoreX/proto  -O3 -DNDEBUG   -std=c++17 -o CMakeFiles/rpc.dir/src/log/my_log.cpp.o -c /root/Cplus/CoreX/src/log/my_log.cpp",
   "file": "/root/Cplus/CoreX/src/log/my_log.cpp"
 },
 {
   "directory": "/root/Cplus/CoreX/build",
-  "command": "/usr/bin/c++   -I/root/Cplus/CoreX/src/net -I/root/Cplus/CoreX/src/log -I/root/Cplus/CoreX/src/rpc -I/root/Cplus/CoreX/proto  -O3 -DNDEBUG   -std=c++17 -o CMakeFiles/rpc.dir/src/log/my_buffer.cpp.o -c /root/Cplus/CoreX/src/log/my_buffer.cpp",
+  "command": "/usr/bin/c++  -DENABLE_LOG=1 -DENABLE_TIMESTAMP=1 -I/root/Cplus/CoreX/src/net -I/root/Cplus/CoreX/src/log -I/root/Cplus/CoreX/src/rpc -I/root/Cplus/CoreX/proto  -O3 -DNDEBUG   -std=c++17 -o CMakeFiles/rpc.dir/src/log/my_buffer.cpp.o -c /root/Cplus/CoreX/src/log/my_buffer.cpp",
   "file": "/root/Cplus/CoreX/src/log/my_buffer.cpp"
 },
 {
   "directory": "/root/Cplus/CoreX/build",
-  "command": "/usr/bin/c++   -I/root/Cplus/CoreX/src/net -I/root/Cplus/CoreX/src/log -I/root/Cplus/CoreX/src/rpc -I/root/Cplus/CoreX/proto  -O3 -DNDEBUG   -std=c++17 -o CMakeFiles/rpc.dir/proto/rpc_message.pb.cc.o -c /root/Cplus/CoreX/proto/rpc_message.pb.cc",
+  "command": "/usr/bin/c++  -DENABLE_LOG=1 -DENABLE_TIMESTAMP=1 -I/root/Cplus/CoreX/src/net -I/root/Cplus/CoreX/src/log -I/root/Cplus/CoreX/src/rpc -I/root/Cplus/CoreX/proto  -O3 -DNDEBUG   -std=c++17 -o CMakeFiles/rpc.dir/proto/rpc_message.pb.cc.o -c /root/Cplus/CoreX/proto/rpc_message.pb.cc",
   "file": "/root/Cplus/CoreX/proto/rpc_message.pb.cc"
 },
 {
   "directory": "/root/Cplus/CoreX/build",
-  "command": "/usr/bin/c++   -I/root/Cplus/CoreX/src/net -I/root/Cplus/CoreX/src/log -I/root/Cplus/CoreX/src/rpc -I/root/Cplus/CoreX/proto  -O3 -DNDEBUG   -std=c++17 -o CMakeFiles/rpc.dir/proto/math_service.pb.cc.o -c /root/Cplus/CoreX/proto/math_service.pb.cc",
+  "command": "/usr/bin/c++  -DENABLE_LOG=1 -DENABLE_TIMESTAMP=1 -I/root/Cplus/CoreX/src/net -I/root/Cplus/CoreX/src/log -I/root/Cplus/CoreX/src/rpc -I/root/Cplus/CoreX/proto  -O3 -DNDEBUG   -std=c++17 -o CMakeFiles/rpc.dir/proto/math_service.pb.cc.o -c /root/Cplus/CoreX/proto/math_service.pb.cc",
   "file": "/root/Cplus/CoreX/proto/math_service.pb.cc"
 },
 {
   "directory": "/root/Cplus/CoreX/build",
-  "command": "/usr/bin/c++   -I/root/Cplus/CoreX/src/net -I/root/Cplus/CoreX/src/log  -O3 -DNDEBUG   -std=c++17 -o CMakeFiles/test_echo_server.dir/tests/Test_EchoSever.cpp.o -c /root/Cplus/CoreX/tests/Test_EchoSever.cpp",
+  "command": "/usr/bin/c++  -DENABLE_LOG=1 -DENABLE_TIMESTAMP=1 -I/root/Cplus/CoreX/src/net -I/root/Cplus/CoreX/src/log  -O3 -DNDEBUG   -std=c++17 -o CMakeFiles/test_echo_server.dir/tests/Test_EchoSever.cpp.o -c /root/Cplus/CoreX/tests/Test_EchoSever.cpp",
   "file": "/root/Cplus/CoreX/tests/Test_EchoSever.cpp"
 },
 {
   "directory": "/root/Cplus/CoreX/build",
-  "command": "/usr/bin/c++   -I/root/Cplus/CoreX/src/net -I/root/Cplus/CoreX/src/log  -O3 -DNDEBUG   -std=c++17 -o CMakeFiles/test_echo_server.dir/src/net/EventLoop.cpp.o -c /root/Cplus/CoreX/src/net/EventLoop.cpp",
+  "command": "/usr/bin/c++  -DENABLE_LOG=1 -DENABLE_TIMESTAMP=1 -I/root/Cplus/CoreX/src/net -I/root/Cplus/CoreX/src/log  -O3 -DNDEBUG   -std=c++17 -o CMakeFiles/test_echo_server.dir/src/net/EventLoop.cpp.o -c /root/Cplus/CoreX/src/net/EventLoop.cpp",
   "file": "/root/Cplus/CoreX/src/net/EventLoop.cpp"
 },
 {
   "directory": "/root/Cplus/CoreX/build",
-  "command": "/usr/bin/c++   -I/root/Cplus/CoreX/src/net -I/root/Cplus/CoreX/src/log  -O3 -DNDEBUG   -std=c++17 -o CMakeFiles/test_echo_server.dir/src/net/Poller.cpp.o -c /root/Cplus/CoreX/src/net/Poller.cpp",
+  "command": "/usr/bin/c++  -DENABLE_LOG=1 -DENABLE_TIMESTAMP=1 -I/root/Cplus/CoreX/src/net -I/root/Cplus/CoreX/src/log  -O3 -DNDEBUG   -std=c++17 -o CMakeFiles/test_echo_server.dir/src/net/Poller.cpp.o -c /root/Cplus/CoreX/src/net/Poller.cpp",
   "file": "/root/Cplus/CoreX/src/net/Poller.cpp"
 },
 {
   "directory": "/root/Cplus/CoreX/build",
-  "command": "/usr/bin/c++   -I/root/Cplus/CoreX/src/net -I/root/Cplus/CoreX/src/log  -O3 -DNDEBUG   -std=c++17 -o CMakeFiles/test_echo_server.dir/src/net/Channel.cpp.o -c /root/Cplus/CoreX/src/net/Channel.cpp",
+  "command": "/usr/bin/c++  -DENABLE_LOG=1 -DENABLE_TIMESTAMP=1 -I/root/Cplus/CoreX/src/net -I/root/Cplus/CoreX/src/log  -O3 -DNDEBUG   -std=c++17 -o CMakeFiles/test_echo_server.dir/src/net/Channel.cpp.o -c /root/Cplus/CoreX/src/net/Channel.cpp",
   "file": "/root/Cplus/CoreX/src/net/Channel.cpp"
 },
 {
   "directory": "/root/Cplus/CoreX/build",
-  "command": "/usr/bin/c++   -I/root/Cplus/CoreX/src/net -I/root/Cplus/CoreX/src/log  -O3 -DNDEBUG   -std=c++17 -o CMakeFiles/test_echo_server.dir/src/net/HeapTimer.cpp.o -c /root/Cplus/CoreX/src/net/HeapTimer.cpp",
+  "command": "/usr/bin/c++  -DENABLE_LOG=1 -DENABLE_TIMESTAMP=1 -I/root/Cplus/CoreX/src/net -I/root/Cplus/CoreX/src/log  -O3 -DNDEBUG   -std=c++17 -o CMakeFiles/test_echo_server.dir/src/net/HeapTimer.cpp.o -c /root/Cplus/CoreX/src/net/HeapTimer.cpp",
   "file": "/root/Cplus/CoreX/src/net/HeapTimer.cpp"
 },
 {
   "directory": "/root/Cplus/CoreX/build",
-  "command": "/usr/bin/c++   -I/root/Cplus/CoreX/src/net -I/root/Cplus/CoreX/src/log  -O3 -DNDEBUG   -std=c++17 -o CMakeFiles/test_echo_server.dir/src/net/Buffer.cpp.o -c /root/Cplus/CoreX/src/net/Buffer.cpp",
+  "command": "/usr/bin/c++  -DENABLE_LOG=1 -DENABLE_TIMESTAMP=1 -I/root/Cplus/CoreX/src/net -I/root/Cplus/CoreX/src/log  -O3 -DNDEBUG   -std=c++17 -o CMakeFiles/test_echo_server.dir/src/net/Buffer.cpp.o -c /root/Cplus/CoreX/src/net/Buffer.cpp",
   "file": "/root/Cplus/CoreX/src/net/Buffer.cpp"
 },
 {
   "directory": "/root/Cplus/CoreX/build",
-  "command": "/usr/bin/c++   -I/root/Cplus/CoreX/src/net -I/root/Cplus/CoreX/src/log  -O3 -DNDEBUG   -std=c++17 -o CMakeFiles/test_echo_server.dir/src/net/Socket.cpp.o -c /root/Cplus/CoreX/src/net/Socket.cpp",
+  "command": "/usr/bin/c++  -DENABLE_LOG=1 -DENABLE_TIMESTAMP=1 -I/root/Cplus/CoreX/src/net -I/root/Cplus/CoreX/src/log  -O3 -DNDEBUG   -std=c++17 -o CMakeFiles/test_echo_server.dir/src/net/Socket.cpp.o -c /root/Cplus/CoreX/src/net/Socket.cpp",
   "file": "/root/Cplus/CoreX/src/net/Socket.cpp"
 },
 {
   "directory": "/root/Cplus/CoreX/build",
-  "command": "/usr/bin/c++   -I/root/Cplus/CoreX/src/net -I/root/Cplus/CoreX/src/log  -O3 -DNDEBUG   -std=c++17 -o CMakeFiles/test_echo_server.dir/src/net/Acceptor.cpp.o -c /root/Cplus/CoreX/src/net/Acceptor.cpp",
+  "command": "/usr/bin/c++  -DENABLE_LOG=1 -DENABLE_TIMESTAMP=1 -I/root/Cplus/CoreX/src/net -I/root/Cplus/CoreX/src/log  -O3 -DNDEBUG   -std=c++17 -o CMakeFiles/test_echo_server.dir/src/net/Acceptor.cpp.o -c /root/Cplus/CoreX/src/net/Acceptor.cpp",
   "file": "/root/Cplus/CoreX/src/net/Acceptor.cpp"
 },
 {
   "directory": "/root/Cplus/CoreX/build",
-  "command": "/usr/bin/c++   -I/root/Cplus/CoreX/src/net -I/root/Cplus/CoreX/src/log  -O3 -DNDEBUG   -std=c++17 -o CMakeFiles/test_echo_server.dir/src/net/TcpServer.cpp.o -c /root/Cplus/CoreX/src/net/TcpServer.cpp",
+  "command": "/usr/bin/c++  -DENABLE_LOG=1 -DENABLE_TIMESTAMP=1 -I/root/Cplus/CoreX/src/net -I/root/Cplus/CoreX/src/log  -O3 -DNDEBUG   -std=c++17 -o CMakeFiles/test_echo_server.dir/src/net/TcpServer.cpp.o -c /root/Cplus/CoreX/src/net/TcpServer.cpp",
   "file": "/root/Cplus/CoreX/src/net/TcpServer.cpp"
 },
 {
   "directory": "/root/Cplus/CoreX/build",
-  "command": "/usr/bin/c++   -I/root/Cplus/CoreX/src/net -I/root/Cplus/CoreX/src/log  -O3 -DNDEBUG   -std=c++17 -o CMakeFiles/test_echo_server.dir/src/net/TcpConnection.cpp.o -c /root/Cplus/CoreX/src/net/TcpConnection.cpp",
+  "command": "/usr/bin/c++  -DENABLE_LOG=1 -DENABLE_TIMESTAMP=1 -I/root/Cplus/CoreX/src/net -I/root/Cplus/CoreX/src/log  -O3 -DNDEBUG   -std=c++17 -o CMakeFiles/test_echo_server.dir/src/net/TcpConnection.cpp.o -c /root/Cplus/CoreX/src/net/TcpConnection.cpp",
   "file": "/root/Cplus/CoreX/src/net/TcpConnection.cpp"
 },
 {
   "directory": "/root/Cplus/CoreX/build",
-  "command": "/usr/bin/c++   -I/root/Cplus/CoreX/src/net -I/root/Cplus/CoreX/src/log  -O3 -DNDEBUG   -std=c++17 -o CMakeFiles/test_echo_server.dir/src/net/EventLoopThreadPool.cpp.o -c /root/Cplus/CoreX/src/net/EventLoopThreadPool.cpp",
+  "command": "/usr/bin/c++  -DENABLE_LOG=1 -DENABLE_TIMESTAMP=1 -I/root/Cplus/CoreX/src/net -I/root/Cplus/CoreX/src/log  -O3 -DNDEBUG   -std=c++17 -o CMakeFiles/test_echo_server.dir/src/net/EventLoopThreadPool.cpp.o -c /root/Cplus/CoreX/src/net/EventLoopThreadPool.cpp",
   "file": "/root/Cplus/CoreX/src/net/EventLoopThreadPool.cpp"
 },
 {
   "directory": "/root/Cplus/CoreX/build",
-  "command": "/usr/bin/c++   -I/root/Cplus/CoreX/src/net -I/root/Cplus/CoreX/src/log  -O3 -DNDEBUG   -std=c++17 -o CMakeFiles/test_echo_server.dir/src/net/EventLoopThread.cpp.o -c /root/Cplus/CoreX/src/net/EventLoopThread.cpp",
+  "command": "/usr/bin/c++  -DENABLE_LOG=1 -DENABLE_TIMESTAMP=1 -I/root/Cplus/CoreX/src/net -I/root/Cplus/CoreX/src/log  -O3 -DNDEBUG   -std=c++17 -o CMakeFiles/test_echo_server.dir/src/net/EventLoopThread.cpp.o -c /root/Cplus/CoreX/src/net/EventLoopThread.cpp",
   "file": "/root/Cplus/CoreX/src/net/EventLoopThread.cpp"
 },
 {
   "directory": "/root/Cplus/CoreX/build",
-  "command": "/usr/bin/c++   -I/root/Cplus/CoreX/src/net -I/root/Cplus/CoreX/src/log  -O3 -DNDEBUG   -std=c++17 -o CMakeFiles/test_echo_server.dir/src/log/my_log.cpp.o -c /root/Cplus/CoreX/src/log/my_log.cpp",
+  "command": "/usr/bin/c++  -DENABLE_LOG=1 -DENABLE_TIMESTAMP=1 -I/root/Cplus/CoreX/src/net -I/root/Cplus/CoreX/src/log  -O3 -DNDEBUG   -std=c++17 -o CMakeFiles/test_echo_server.dir/src/log/my_log.cpp.o -c /root/Cplus/CoreX/src/log/my_log.cpp",
   "file": "/root/Cplus/CoreX/src/log/my_log.cpp"
 },
 {
   "directory": "/root/Cplus/CoreX/build",
-  "command": "/usr/bin/c++   -I/root/Cplus/CoreX/src/net -I/root/Cplus/CoreX/src/log  -O3 -DNDEBUG   -std=c++17 -o CMakeFiles/test_echo_server.dir/src/log/my_buffer.cpp.o -c /root/Cplus/CoreX/src/log/my_buffer.cpp",
+  "command": "/usr/bin/c++  -DENABLE_LOG=1 -DENABLE_TIMESTAMP=1 -I/root/Cplus/CoreX/src/net -I/root/Cplus/CoreX/src/log  -O3 -DNDEBUG   -std=c++17 -o CMakeFiles/test_echo_server.dir/src/log/my_buffer.cpp.o -c /root/Cplus/CoreX/src/log/my_buffer.cpp",
   "file": "/root/Cplus/CoreX/src/log/my_buffer.cpp"
 },
 {
   "directory": "/root/Cplus/CoreX/build",
-  "command": "/usr/bin/c++   -I/root/Cplus/CoreX/src/net -I/root/Cplus/CoreX/src/log  -O3 -DNDEBUG   -std=c++17 -o CMakeFiles/test_net_integration.dir/tests/test_net_integration.cpp.o -c /root/Cplus/CoreX/tests/test_net_integration.cpp",
+  "command": "/usr/bin/c++  -DENABLE_LOG=1 -DENABLE_TIMESTAMP=1 -I/root/Cplus/CoreX/src/net -I/root/Cplus/CoreX/src/log  -O3 -DNDEBUG   -std=c++17 -o CMakeFiles/test_net_integration.dir/tests/test_net_integration.cpp.o -c /root/Cplus/CoreX/tests/test_net_integration.cpp",
   "file": "/root/Cplus/CoreX/tests/test_net_integration.cpp"
 },
 {
   "directory": "/root/Cplus/CoreX/build",
-  "command": "/usr/bin/c++   -I/root/Cplus/CoreX/src/net -I/root/Cplus/CoreX/src/log  -O3 -DNDEBUG   -std=c++17 -o CMakeFiles/test_net_integration.dir/src/net/EventLoop.cpp.o -c /root/Cplus/CoreX/src/net/EventLoop.cpp",
+  "command": "/usr/bin/c++  -DENABLE_LOG=1 -DENABLE_TIMESTAMP=1 -I/root/Cplus/CoreX/src/net -I/root/Cplus/CoreX/src/log  -O3 -DNDEBUG   -std=c++17 -o CMakeFiles/test_net_integration.dir/src/net/EventLoop.cpp.o -c /root/Cplus/CoreX/src/net/EventLoop.cpp",
   "file": "/root/Cplus/CoreX/src/net/EventLoop.cpp"
 },
 {
   "directory": "/root/Cplus/CoreX/build",
-  "command": "/usr/bin/c++   -I/root/Cplus/CoreX/src/net -I/root/Cplus/CoreX/src/log  -O3 -DNDEBUG   -std=c++17 -o CMakeFiles/test_net_integration.dir/src/net/Poller.cpp.o -c /root/Cplus/CoreX/src/net/Poller.cpp",
+  "command": "/usr/bin/c++  -DENABLE_LOG=1 -DENABLE_TIMESTAMP=1 -I/root/Cplus/CoreX/src/net -I/root/Cplus/CoreX/src/log  -O3 -DNDEBUG   -std=c++17 -o CMakeFiles/test_net_integration.dir/src/net/Poller.cpp.o -c /root/Cplus/CoreX/src/net/Poller.cpp",
   "file": "/root/Cplus/CoreX/src/net/Poller.cpp"
 },
 {
   "directory": "/root/Cplus/CoreX/build",
-  "command": "/usr/bin/c++   -I/root/Cplus/CoreX/src/net -I/root/Cplus/CoreX/src/log  -O3 -DNDEBUG   -std=c++17 -o CMakeFiles/test_net_integration.dir/src/net/Channel.cpp.o -c /root/Cplus/CoreX/src/net/Channel.cpp",
+  "command": "/usr/bin/c++  -DENABLE_LOG=1 -DENABLE_TIMESTAMP=1 -I/root/Cplus/CoreX/src/net -I/root/Cplus/CoreX/src/log  -O3 -DNDEBUG   -std=c++17 -o CMakeFiles/test_net_integration.dir/src/net/Channel.cpp.o -c /root/Cplus/CoreX/src/net/Channel.cpp",
   "file": "/root/Cplus/CoreX/src/net/Channel.cpp"
 },
 {
   "directory": "/root/Cplus/CoreX/build",
-  "command": "/usr/bin/c++   -I/root/Cplus/CoreX/src/net -I/root/Cplus/CoreX/src/log  -O3 -DNDEBUG   -std=c++17 -o CMakeFiles/test_net_integration.dir/src/net/HeapTimer.cpp.o -c /root/Cplus/CoreX/src/net/HeapTimer.cpp",
+  "command": "/usr/bin/c++  -DENABLE_LOG=1 -DENABLE_TIMESTAMP=1 -I/root/Cplus/CoreX/src/net -I/root/Cplus/CoreX/src/log  -O3 -DNDEBUG   -std=c++17 -o CMakeFiles/test_net_integration.dir/src/net/HeapTimer.cpp.o -c /root/Cplus/CoreX/src/net/HeapTimer.cpp",
   "file": "/root/Cplus/CoreX/src/net/HeapTimer.cpp"
 },
 {
   "directory": "/root/Cplus/CoreX/build",
-  "command": "/usr/bin/c++   -I/root/Cplus/CoreX/src/net -I/root/Cplus/CoreX/src/log  -O3 -DNDEBUG   -std=c++17 -o CMakeFiles/test_net_integration.dir/src/net/Buffer.cpp.o -c /root/Cplus/CoreX/src/net/Buffer.cpp",
+  "command": "/usr/bin/c++  -DENABLE_LOG=1 -DENABLE_TIMESTAMP=1 -I/root/Cplus/CoreX/src/net -I/root/Cplus/CoreX/src/log  -O3 -DNDEBUG   -std=c++17 -o CMakeFiles/test_net_integration.dir/src/net/Buffer.cpp.o -c /root/Cplus/CoreX/src/net/Buffer.cpp",
   "file": "/root/Cplus/CoreX/src/net/Buffer.cpp"
 },
 {
   "directory": "/root/Cplus/CoreX/build",
-  "command": "/usr/bin/c++   -I/root/Cplus/CoreX/src/net -I/root/Cplus/CoreX/src/log  -O3 -DNDEBUG   -std=c++17 -o CMakeFiles/test_net_integration.dir/src/net/Socket.cpp.o -c /root/Cplus/CoreX/src/net/Socket.cpp",
+  "command": "/usr/bin/c++  -DENABLE_LOG=1 -DENABLE_TIMESTAMP=1 -I/root/Cplus/CoreX/src/net -I/root/Cplus/CoreX/src/log  -O3 -DNDEBUG   -std=c++17 -o CMakeFiles/test_net_integration.dir/src/net/Socket.cpp.o -c /root/Cplus/CoreX/src/net/Socket.cpp",
   "file": "/root/Cplus/CoreX/src/net/Socket.cpp"
 },
 {
   "directory": "/root/Cplus/CoreX/build",
-  "command": "/usr/bin/c++   -I/root/Cplus/CoreX/src/net -I/root/Cplus/CoreX/src/log  -O3 -DNDEBUG   -std=c++17 -o CMakeFiles/test_net_integration.dir/src/net/Acceptor.cpp.o -c /root/Cplus/CoreX/src/net/Acceptor.cpp",
+  "command": "/usr/bin/c++  -DENABLE_LOG=1 -DENABLE_TIMESTAMP=1 -I/root/Cplus/CoreX/src/net -I/root/Cplus/CoreX/src/log  -O3 -DNDEBUG   -std=c++17 -o CMakeFiles/test_net_integration.dir/src/net/Acceptor.cpp.o -c /root/Cplus/CoreX/src/net/Acceptor.cpp",
   "file": "/root/Cplus/CoreX/src/net/Acceptor.cpp"
 },
 {
   "directory": "/root/Cplus/CoreX/build",
-  "command": "/usr/bin/c++   -I/root/Cplus/CoreX/src/net -I/root/Cplus/CoreX/src/log  -O3 -DNDEBUG   -std=c++17 -o CMakeFiles/test_net_integration.dir/src/net/TcpServer.cpp.o -c /root/Cplus/CoreX/src/net/TcpServer.cpp",
+  "command": "/usr/bin/c++  -DENABLE_LOG=1 -DENABLE_TIMESTAMP=1 -I/root/Cplus/CoreX/src/net -I/root/Cplus/CoreX/src/log  -O3 -DNDEBUG   -std=c++17 -o CMakeFiles/test_net_integration.dir/src/net/TcpServer.cpp.o -c /root/Cplus/CoreX/src/net/TcpServer.cpp",
   "file": "/root/Cplus/CoreX/src/net/TcpServer.cpp"
 },
 {
   "directory": "/root/Cplus/CoreX/build",
-  "command": "/usr/bin/c++   -I/root/Cplus/CoreX/src/net -I/root/Cplus/CoreX/src/log  -O3 -DNDEBUG   -std=c++17 -o CMakeFiles/test_net_integration.dir/src/net/TcpConnection.cpp.o -c /root/Cplus/CoreX/src/net/TcpConnection.cpp",
+  "command": "/usr/bin/c++  -DENABLE_LOG=1 -DENABLE_TIMESTAMP=1 -I/root/Cplus/CoreX/src/net -I/root/Cplus/CoreX/src/log  -O3 -DNDEBUG   -std=c++17 -o CMakeFiles/test_net_integration.dir/src/net/TcpConnection.cpp.o -c /root/Cplus/CoreX/src/net/TcpConnection.cpp",
   "file": "/root/Cplus/CoreX/src/net/TcpConnection.cpp"
 },
 {
   "directory": "/root/Cplus/CoreX/build",
-  "command": "/usr/bin/c++   -I/root/Cplus/CoreX/src/net -I/root/Cplus/CoreX/src/log  -O3 -DNDEBUG   -std=c++17 -o CMakeFiles/test_net_integration.dir/src/net/EventLoopThreadPool.cpp.o -c /root/Cplus/CoreX/src/net/EventLoopThreadPool.cpp",
+  "command": "/usr/bin/c++  -DENABLE_LOG=1 -DENABLE_TIMESTAMP=1 -I/root/Cplus/CoreX/src/net -I/root/Cplus/CoreX/src/log  -O3 -DNDEBUG   -std=c++17 -o CMakeFiles/test_net_integration.dir/src/net/EventLoopThreadPool.cpp.o -c /root/Cplus/CoreX/src/net/EventLoopThreadPool.cpp",
   "file": "/root/Cplus/CoreX/src/net/EventLoopThreadPool.cpp"
 },
 {
   "directory": "/root/Cplus/CoreX/build",
-  "command": "/usr/bin/c++   -I/root/Cplus/CoreX/src/net -I/root/Cplus/CoreX/src/log  -O3 -DNDEBUG   -std=c++17 -o CMakeFiles/test_net_integration.dir/src/net/EventLoopThread.cpp.o -c /root/Cplus/CoreX/src/net/EventLoopThread.cpp",
+  "command": "/usr/bin/c++  -DENABLE_LOG=1 -DENABLE_TIMESTAMP=1 -I/root/Cplus/CoreX/src/net -I/root/Cplus/CoreX/src/log  -O3 -DNDEBUG   -std=c++17 -o CMakeFiles/test_net_integration.dir/src/net/EventLoopThread.cpp.o -c /root/Cplus/CoreX/src/net/EventLoopThread.cpp",
   "file": "/root/Cplus/CoreX/src/net/EventLoopThread.cpp"
 },
 {
   "directory": "/root/Cplus/CoreX/build",
-  "command": "/usr/bin/c++   -I/root/Cplus/CoreX/src/net -I/root/Cplus/CoreX/src/log  -O3 -DNDEBUG   -std=c++17 -o CMakeFiles/test_net_integration.dir/src/log/my_log.cpp.o -c /root/Cplus/CoreX/src/log/my_log.cpp",
+  "command": "/usr/bin/c++  -DENABLE_LOG=1 -DENABLE_TIMESTAMP=1 -I/root/Cplus/CoreX/src/net -I/root/Cplus/CoreX/src/log  -O3 -DNDEBUG   -std=c++17 -o CMakeFiles/test_net_integration.dir/src/log/my_log.cpp.o -c /root/Cplus/CoreX/src/log/my_log.cpp",
   "file": "/root/Cplus/CoreX/src/log/my_log.cpp"
 },
 {
   "directory": "/root/Cplus/CoreX/build",
-  "command": "/usr/bin/c++   -I/root/Cplus/CoreX/src/net -I/root/Cplus/CoreX/src/log  -O3 -DNDEBUG   -std=c++17 -o CMakeFiles/test_net_integration.dir/src/log/my_buffer.cpp.o -c /root/Cplus/CoreX/src/log/my_buffer.cpp",
+  "command": "/usr/bin/c++  -DENABLE_LOG=1 -DENABLE_TIMESTAMP=1 -I/root/Cplus/CoreX/src/net -I/root/Cplus/CoreX/src/log  -O3 -DNDEBUG   -std=c++17 -o CMakeFiles/test_net_integration.dir/src/log/my_buffer.cpp.o -c /root/Cplus/CoreX/src/log/my_buffer.cpp",
   "file": "/root/Cplus/CoreX/src/log/my_buffer.cpp"
 },
 {
   "directory": "/root/Cplus/CoreX/build",
-  "command": "/usr/bin/c++   -I/root/Cplus/CoreX/src/net -I/root/Cplus/CoreX/src/log  -O3 -DNDEBUG   -std=c++17 -o CMakeFiles/timeout_server_test.dir/tests/timeout_server_test.cpp.o -c /root/Cplus/CoreX/tests/timeout_server_test.cpp",
+  "command": "/usr/bin/c++  -DENABLE_LOG=1 -DENABLE_TIMESTAMP=1 -I/root/Cplus/CoreX/src/net -I/root/Cplus/CoreX/src/log  -O3 -DNDEBUG   -std=c++17 -o CMakeFiles/timeout_server_test.dir/tests/timeout_server_test.cpp.o -c /root/Cplus/CoreX/tests/timeout_server_test.cpp",
   "file": "/root/Cplus/CoreX/tests/timeout_server_test.cpp"
 },
 {
   "directory": "/root/Cplus/CoreX/build",
-  "command": "/usr/bin/c++   -I/root/Cplus/CoreX/src/net -I/root/Cplus/CoreX/src/log  -O3 -DNDEBUG   -std=c++17 -o CMakeFiles/timeout_server_test.dir/src/net/EventLoop.cpp.o -c /root/Cplus/CoreX/src/net/EventLoop.cpp",
+  "command": "/usr/bin/c++  -DENABLE_LOG=1 -DENABLE_TIMESTAMP=1 -I/root/Cplus/CoreX/src/net -I/root/Cplus/CoreX/src/log  -O3 -DNDEBUG   -std=c++17 -o CMakeFiles/timeout_server_test.dir/src/net/EventLoop.cpp.o -c /root/Cplus/CoreX/src/net/EventLoop.cpp",
   "file": "/root/Cplus/CoreX/src/net/EventLoop.cpp"
 },
 {
   "directory": "/root/Cplus/CoreX/build",
-  "command": "/usr/bin/c++   -I/root/Cplus/CoreX/src/net -I/root/Cplus/CoreX/src/log  -O3 -DNDEBUG   -std=c++17 -o CMakeFiles/timeout_server_test.dir/src/net/Poller.cpp.o -c /root/Cplus/CoreX/src/net/Poller.cpp",
+  "command": "/usr/bin/c++  -DENABLE_LOG=1 -DENABLE_TIMESTAMP=1 -I/root/Cplus/CoreX/src/net -I/root/Cplus/CoreX/src/log  -O3 -DNDEBUG   -std=c++17 -o CMakeFiles/timeout_server_test.dir/src/net/Poller.cpp.o -c /root/Cplus/CoreX/src/net/Poller.cpp",
   "file": "/root/Cplus/CoreX/src/net/Poller.cpp"
 },
 {
   "directory": "/root/Cplus/CoreX/build",
-  "command": "/usr/bin/c++   -I/root/Cplus/CoreX/src/net -I/root/Cplus/CoreX/src/log  -O3 -DNDEBUG   -std=c++17 -o CMakeFiles/timeout_server_test.dir/src/net/Channel.cpp.o -c /root/Cplus/CoreX/src/net/Channel.cpp",
+  "command": "/usr/bin/c++  -DENABLE_LOG=1 -DENABLE_TIMESTAMP=1 -I/root/Cplus/CoreX/src/net -I/root/Cplus/CoreX/src/log  -O3 -DNDEBUG   -std=c++17 -o CMakeFiles/timeout_server_test.dir/src/net/Channel.cpp.o -c /root/Cplus/CoreX/src/net/Channel.cpp",
   "file": "/root/Cplus/CoreX/src/net/Channel.cpp"
 },
 {
   "directory": "/root/Cplus/CoreX/build",
-  "command": "/usr/bin/c++   -I/root/Cplus/CoreX/src/net -I/root/Cplus/CoreX/src/log  -O3 -DNDEBUG   -std=c++17 -o CMakeFiles/timeout_server_test.dir/src/net/HeapTimer.cpp.o -c /root/Cplus/CoreX/src/net/HeapTimer.cpp",
+  "command": "/usr/bin/c++  -DENABLE_LOG=1 -DENABLE_TIMESTAMP=1 -I/root/Cplus/CoreX/src/net -I/root/Cplus/CoreX/src/log  -O3 -DNDEBUG   -std=c++17 -o CMakeFiles/timeout_server_test.dir/src/net/HeapTimer.cpp.o -c /root/Cplus/CoreX/src/net/HeapTimer.cpp",
   "file": "/root/Cplus/CoreX/src/net/HeapTimer.cpp"
 },
 {
   "directory": "/root/Cplus/CoreX/build",
-  "command": "/usr/bin/c++   -I/root/Cplus/CoreX/src/net -I/root/Cplus/CoreX/src/log  -O3 -DNDEBUG   -std=c++17 -o CMakeFiles/timeout_server_test.dir/src/net/Buffer.cpp.o -c /root/Cplus/CoreX/src/net/Buffer.cpp",
+  "command": "/usr/bin/c++  -DENABLE_LOG=1 -DENABLE_TIMESTAMP=1 -I/root/Cplus/CoreX/src/net -I/root/Cplus/CoreX/src/log  -O3 -DNDEBUG   -std=c++17 -o CMakeFiles/timeout_server_test.dir/src/net/Buffer.cpp.o -c /root/Cplus/CoreX/src/net/Buffer.cpp",
   "file": "/root/Cplus/CoreX/src/net/Buffer.cpp"
 },
 {
   "directory": "/root/Cplus/CoreX/build",
-  "command": "/usr/bin/c++   -I/root/Cplus/CoreX/src/net -I/root/Cplus/CoreX/src/log  -O3 -DNDEBUG   -std=c++17 -o CMakeFiles/timeout_server_test.dir/src/net/Socket.cpp.o -c /root/Cplus/CoreX/src/net/Socket.cpp",
+  "command": "/usr/bin/c++  -DENABLE_LOG=1 -DENABLE_TIMESTAMP=1 -I/root/Cplus/CoreX/src/net -I/root/Cplus/CoreX/src/log  -O3 -DNDEBUG   -std=c++17 -o CMakeFiles/timeout_server_test.dir/src/net/Socket.cpp.o -c /root/Cplus/CoreX/src/net/Socket.cpp",
   "file": "/root/Cplus/CoreX/src/net/Socket.cpp"
 },
 {
   "directory": "/root/Cplus/CoreX/build",
-  "command": "/usr/bin/c++   -I/root/Cplus/CoreX/src/net -I/root/Cplus/CoreX/src/log  -O3 -DNDEBUG   -std=c++17 -o CMakeFiles/timeout_server_test.dir/src/net/Acceptor.cpp.o -c /root/Cplus/CoreX/src/net/Acceptor.cpp",
+  "command": "/usr/bin/c++  -DENABLE_LOG=1 -DENABLE_TIMESTAMP=1 -I/root/Cplus/CoreX/src/net -I/root/Cplus/CoreX/src/log  -O3 -DNDEBUG   -std=c++17 -o CMakeFiles/timeout_server_test.dir/src/net/Acceptor.cpp.o -c /root/Cplus/CoreX/src/net/Acceptor.cpp",
   "file": "/root/Cplus/CoreX/src/net/Acceptor.cpp"
 },
 {
   "directory": "/root/Cplus/CoreX/build",
-  "command": "/usr/bin/c++   -I/root/Cplus/CoreX/src/net -I/root/Cplus/CoreX/src/log  -O3 -DNDEBUG   -std=c++17 -o CMakeFiles/timeout_server_test.dir/src/net/TcpServer.cpp.o -c /root/Cplus/CoreX/src/net/TcpServer.cpp",
+  "command": "/usr/bin/c++  -DENABLE_LOG=1 -DENABLE_TIMESTAMP=1 -I/root/Cplus/CoreX/src/net -I/root/Cplus/CoreX/src/log  -O3 -DNDEBUG   -std=c++17 -o CMakeFiles/timeout_server_test.dir/src/net/TcpServer.cpp.o -c /root/Cplus/CoreX/src/net/TcpServer.cpp",
   "file": "/root/Cplus/CoreX/src/net/TcpServer.cpp"
 },
 {
   "directory": "/root/Cplus/CoreX/build",
-  "command": "/usr/bin/c++   -I/root/Cplus/CoreX/src/net -I/root/Cplus/CoreX/src/log  -O3 -DNDEBUG   -std=c++17 -o CMakeFiles/timeout_server_test.dir/src/net/TcpConnection.cpp.o -c /root/Cplus/CoreX/src/net/TcpConnection.cpp",
+  "command": "/usr/bin/c++  -DENABLE_LOG=1 -DENABLE_TIMESTAMP=1 -I/root/Cplus/CoreX/src/net -I/root/Cplus/CoreX/src/log  -O3 -DNDEBUG   -std=c++17 -o CMakeFiles/timeout_server_test.dir/src/net/TcpConnection.cpp.o -c /root/Cplus/CoreX/src/net/TcpConnection.cpp",
   "file": "/root/Cplus/CoreX/src/net/TcpConnection.cpp"
 },
 {
   "directory": "/root/Cplus/CoreX/build",
-  "command": "/usr/bin/c++   -I/root/Cplus/CoreX/src/net -I/root/Cplus/CoreX/src/log  -O3 -DNDEBUG   -std=c++17 -o CMakeFiles/timeout_server_test.dir/src/net/EventLoopThreadPool.cpp.o -c /root/Cplus/CoreX/src/net/EventLoopThreadPool.cpp",
+  "command": "/usr/bin/c++  -DENABLE_LOG=1 -DENABLE_TIMESTAMP=1 -I/root/Cplus/CoreX/src/net -I/root/Cplus/CoreX/src/log  -O3 -DNDEBUG   -std=c++17 -o CMakeFiles/timeout_server_test.dir/src/net/EventLoopThreadPool.cpp.o -c /root/Cplus/CoreX/src/net/EventLoopThreadPool.cpp",
   "file": "/root/Cplus/CoreX/src/net/EventLoopThreadPool.cpp"
 },
 {
   "directory": "/root/Cplus/CoreX/build",
-  "command": "/usr/bin/c++   -I/root/Cplus/CoreX/src/net -I/root/Cplus/CoreX/src/log  -O3 -DNDEBUG   -std=c++17 -o CMakeFiles/timeout_server_test.dir/src/net/EventLoopThread.cpp.o -c /root/Cplus/CoreX/src/net/EventLoopThread.cpp",
+  "command": "/usr/bin/c++  -DENABLE_LOG=1 -DENABLE_TIMESTAMP=1 -I/root/Cplus/CoreX/src/net -I/root/Cplus/CoreX/src/log  -O3 -DNDEBUG   -std=c++17 -o CMakeFiles/timeout_server_test.dir/src/net/EventLoopThread.cpp.o -c /root/Cplus/CoreX/src/net/EventLoopThread.cpp",
   "file": "/root/Cplus/CoreX/src/net/EventLoopThread.cpp"
 },
 {
   "directory": "/root/Cplus/CoreX/build",
-  "command": "/usr/bin/c++   -I/root/Cplus/CoreX/src/net -I/root/Cplus/CoreX/src/log  -O3 -DNDEBUG   -std=c++17 -o CMakeFiles/timeout_server_test.dir/src/log/my_log.cpp.o -c /root/Cplus/CoreX/src/log/my_log.cpp",
+  "command": "/usr/bin/c++  -DENABLE_LOG=1 -DENABLE_TIMESTAMP=1 -I/root/Cplus/CoreX/src/net -I/root/Cplus/CoreX/src/log  -O3 -DNDEBUG   -std=c++17 -o CMakeFiles/timeout_server_test.dir/src/log/my_log.cpp.o -c /root/Cplus/CoreX/src/log/my_log.cpp",
   "file": "/root/Cplus/CoreX/src/log/my_log.cpp"
 },
 {
   "directory": "/root/Cplus/CoreX/build",
-  "command": "/usr/bin/c++   -I/root/Cplus/CoreX/src/net -I/root/Cplus/CoreX/src/log  -O3 -DNDEBUG   -std=c++17 -o CMakeFiles/timeout_server_test.dir/src/log/my_buffer.cpp.o -c /root/Cplus/CoreX/src/log/my_buffer.cpp",
+  "command": "/usr/bin/c++  -DENABLE_LOG=1 -DENABLE_TIMESTAMP=1 -I/root/Cplus/CoreX/src/net -I/root/Cplus/CoreX/src/log  -O3 -DNDEBUG   -std=c++17 -o CMakeFiles/timeout_server_test.dir/src/log/my_buffer.cpp.o -c /root/Cplus/CoreX/src/log/my_buffer.cpp",
   "file": "/root/Cplus/CoreX/src/log/my_buffer.cpp"
 }
 ]

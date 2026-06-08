@@ -2,12 +2,12 @@
 
 /*
 * @brief:
-*     ¹¹ÔìTcpServer£¬ÉèÖÃacceptor_µÄÁ¬½Óº¯Êı
+*     æ„é€ TcpServerï¼Œè®¾ç½®acceptor_çš„è¿æ¥å‡½æ•°
   @param:
-        loop	IOÊÂ¼şÑ­»·ºËĞÄ
-        inport	¼àÌıIPµØÖ·
-        port	¼àÌı¶Ë¿Ú
-        name	·şÎñÆ÷Ãû³Æ       
+        loop	IOäº‹ä»¶å¾ªç¯æ ¸å¿ƒ
+        inport	ç›‘å¬IPåœ°å€
+        port	ç›‘å¬ç«¯å£
+        name	æœåŠ¡å™¨åç§°       
 */
 TcpServer::TcpServer(EventLoop* loop,const std::string& inport,uint16_t port,const std::string& name)
     :loop_(loop)
@@ -16,7 +16,7 @@ TcpServer::TcpServer(EventLoop* loop,const std::string& inport,uint16_t port,con
     ,acceptor_(std::make_unique<Acceptor>(loop,port))
     ,threadPool_(std::make_shared<EventLoopThreadPool>(loop,name))
 {
-    //¿ªÆôacceptor,µ«ÏÈ²»Æô¶¯Ïß³Ì³Ø
+    //å¼€å¯acceptor,ä½†å…ˆä¸å¯åŠ¨çº¿ç¨‹æ± 
     acceptor_->setNewConnectionCallback(
         [this](int sockfd, const std::string& peerAddr){
             this->newConnection(sockfd,peerAddr);
@@ -26,19 +26,19 @@ TcpServer::TcpServer(EventLoop* loop,const std::string& inport,uint16_t port,con
 
 /*
 * @brief:
-*     Îö¹¹TcpServer
+*     ææ„TcpServer
 */
 TcpServer::~TcpServer()
 {
-    //ÅĞ¶ÏÖ÷ReactorÊÇ·ñÔÚ±¾Ïß³Ì£¬µ÷ÓÃÏß³Ì¶ÔÓ¦loop°¤¸öÊÍ·ÅÏß³Ì³ØµÄÁ¬½Ó
+    //åˆ¤æ–­ä¸»Reactoræ˜¯å¦åœ¨æœ¬çº¿ç¨‹ï¼Œè°ƒç”¨çº¿ç¨‹å¯¹åº”loopæŒ¨ä¸ªé‡Šæ”¾çº¿ç¨‹æ± çš„è¿æ¥
     loop_->assertInLoopThread();
     for(auto& conn : connections_)
     {
-        //conn.secondÊÇshared_ptr,resetÉ¾³ıÒ»¸ösecondÊÇshared_ptrµÄÒıÓÃ¼ÆÊı
+        //conn.secondæ˜¯shared_ptr,resetåˆ é™¤ä¸€ä¸ªsecondæ˜¯shared_ptrçš„å¼•ç”¨è®¡æ•°
         auto it = conn.second;
         conn.second.reset();
-        //µ÷ÓÃTcpconnectionÖĞµÄÏú»ÙÁ¬½Ó
-        //itÊÇTcpConnectionµÄshared_ptr
+        //è°ƒç”¨Tcpconnectionä¸­çš„é”€æ¯è¿æ¥
+        //itæ˜¯TcpConnectionçš„shared_ptr
         it->getLoop()->RunInloop(
             [it](){
                 it->connectDestroyed();
@@ -49,19 +49,19 @@ TcpServer::~TcpServer()
 
 /*
 * @brief:
-*     »Øµ÷Á¬½ÓÊµ¼Êµ÷ÓÃµÄº¯Êı
+*     å›è°ƒè¿æ¥å®é™…è°ƒç”¨çš„å‡½æ•°
 */
 void TcpServer::newConnection(int sockfd, const std::string& peerAddr)
 {
     loop_->assertInLoopThread();
-    //È¡Ïß³Ì³ØÂÖÑ¯µÄÒ»¸ö×ÓReactor
+    //å–çº¿ç¨‹æ± è½®è¯¢çš„ä¸€ä¸ªå­Reactor
     EventLoop * subloop = threadPool_->chooseNextLoop();
-    //Éú³ÉÎ¨Ò»µÄÁ¬½ÓÃû
+    //ç”Ÿæˆå”¯ä¸€çš„è¿æ¥å
     char buff[64] = {0};
     snprintf(buff,sizeof(buff),"%s-%d",inport_.c_str(),nextConnectId - 1);
     nextConnectId++;
     std::string connectName = name_ + buff;
-    //ÊµÀı»¯Ò»¸öTcpconnection£¬°ó¶¨µ½¶ÔÓ¦loopÉÏ£¬³õÊ¼»¯Æä»Øµ÷
+    //å®ä¾‹åŒ–ä¸€ä¸ªTcpconnectionï¼Œç»‘å®šåˆ°å¯¹åº”loopä¸Šï¼Œåˆå§‹åŒ–å…¶å›è°ƒ
     TcpConnectionPtr conn = std::make_shared<TcpConnection>(subloop,sockfd);
     connections_[connectName] = conn;
     conn->setConnectionCallback(connectionCallback_);
@@ -76,10 +76,10 @@ void TcpServer::newConnection(int sockfd, const std::string& peerAddr)
         // [this,conn,connectName](const TcpConnectionPtr&){
         //     this->removeConnection(conn,connectName);
         // }
-        //**//´Ë´¦Ê¹ÓÃlamda²¶»ñconn»áÔì³ÉÆäÄÚ²¿ÓÀ¾Ã³ÖÓĞÒ»¸öTcpConnectionPtr conn£¬Ôì³ÉÎŞ·¨Îö¹¹
+        //**//æ­¤å¤„ä½¿ç”¨lamdaæ•è·connä¼šé€ æˆå…¶å†…éƒ¨æ°¸ä¹…æŒæœ‰ä¸€ä¸ªTcpConnectionPtr connï¼Œé€ æˆæ— æ³•ææ„
     );
 
-    //¿çÏß³ÌÍ¨Öª×ÓloopÈ¥epollÖĞ×¢²á×Ô¼ºµÄĞÂÁ¬½Ó¶ÁÊÂ¼ş
+    //è·¨çº¿ç¨‹é€šçŸ¥å­loopå»epollä¸­æ³¨å†Œè‡ªå·±çš„æ–°è¿æ¥è¯»äº‹ä»¶
     subloop->RunInloop(
         [conn](){
             conn->connectEstablished();
@@ -89,11 +89,11 @@ void TcpServer::newConnection(int sockfd, const std::string& peerAddr)
 
 /*
 * @brief:
-*     Ìá¹©¸øTcpServerÄÚ²¿CloseCallback»Øµ÷Êµ¼Êµ÷ÓÃµÄº¯Êı
+*     æä¾›ç»™TcpServerå†…éƒ¨CloseCallbackå›è°ƒå®é™…è°ƒç”¨çš„å‡½æ•°
 */
 void TcpServer::removeConnection(const TcpConnectionPtr& conn,const std::string& connectName)
 {
-    //Ö÷ReactorÈÃÄ¿±êReactorÔÚ×Ô¼ºµÄloopÖĞÖ´ĞĞÒÆ³ıconnection
+    //ä¸»Reactorè®©ç›®æ ‡Reactoråœ¨è‡ªå·±çš„loopä¸­æ‰§è¡Œç§»é™¤connection
     loop_->RunInloop(
         [this,conn,connectName](){
             this->removeConnectionInLoop(conn,connectName);
@@ -103,14 +103,14 @@ void TcpServer::removeConnection(const TcpConnectionPtr& conn,const std::string&
 
 /*
 * @brief:
-*     Ìá¹©¸øremoveConnectionµ÷ÓÃ£¬Ê¹µÃReactorÄÜÔÚ×Ô¼ºµÄLoopÄÚÒÆ³ıÁ¬½Ó
+*     æä¾›ç»™removeConnectionè°ƒç”¨ï¼Œä½¿å¾—Reactorèƒ½åœ¨è‡ªå·±çš„Loopå†…ç§»é™¤è¿æ¥
 */
 void TcpServer::removeConnectionInLoop(const TcpConnectionPtr& conn,const std::string& connectName)
 {
-    //ÅĞ¶ÏLoopÊÇ·ñÎª±¾Ïß³Ì£¬ÒÆ³ıTcpServerÖĞµÄ¹şÏ£±í£¬Í¨Öª¶ÔÓ¦µÄ
-    //Reactor½«Ïú»ÙÈÎÎñ·ÅÈë¶ÓÁĞÅÅ¶Ó
+    //åˆ¤æ–­Loopæ˜¯å¦ä¸ºæœ¬çº¿ç¨‹ï¼Œç§»é™¤TcpServerä¸­çš„å“ˆå¸Œè¡¨ï¼Œé€šçŸ¥å¯¹åº”çš„
+    //Reactorå°†é”€æ¯ä»»åŠ¡æ”¾å…¥é˜Ÿåˆ—æ’é˜Ÿ
     loop_->assertInLoopThread();
-    size_t n = connections_.erase(connectName); //¼ÇÂ¼Ê£ÓàÒıÓÃ¼ÆÊı
+    size_t n = connections_.erase(connectName); //è®°å½•å‰©ä½™å¼•ç”¨è®¡æ•°
 
     EventLoop* subloop = conn->getLoop();
     subloop->SengToPending(
@@ -122,7 +122,7 @@ void TcpServer::removeConnectionInLoop(const TcpConnectionPtr& conn,const std::s
 
 /*
 * @brief:
-*     ÉèÖÃ×ÓÏß³ÌµÄÊıÁ¿
+*     è®¾ç½®å­çº¿ç¨‹çš„æ•°é‡
 */
 void TcpServer::setThreadNum(int numThreads)
 {
@@ -131,14 +131,14 @@ void TcpServer::setThreadNum(int numThreads)
 
 /*
 * @brief:
-*     ³õ´ÎÆô¶¯
+*     åˆæ¬¡å¯åŠ¨
 */
 void TcpServer::start()
 {
-    if(started++ == 0)//µÚÒ»´ÎÆô¶¯
+    if(started++ == 0)//ç¬¬ä¸€æ¬¡å¯åŠ¨
     {
-        threadPool_->start();//Æô¶¯Ïß³Ì³Ø
-        //acceptor_->listen(); //¿ªÊ¼¼àÌı
+        threadPool_->start();//å¯åŠ¨çº¿ç¨‹æ± 
+        //acceptor_->listen(); //å¼€å§‹ç›‘å¬
         loop_->RunInloop(
             [this]()
             {

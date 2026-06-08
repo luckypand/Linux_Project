@@ -14,18 +14,18 @@ public:
     Poller(EventLoop* loop);
     ~Poller();
 
-    // ºËĞÄ£º×èÈûµÈ´ıÄÚºËÊÂ¼ş£¬½«»îÔ¾µÄ Channel ÌîÈë activeChannels
+    // æ ¸å¿ƒï¼šé˜»å¡ç­‰å¾…å†…æ ¸äº‹ä»¶ï¼Œå°†æ´»è·ƒçš„ Channel å¡«å…¥ activeChannels
     void poll(int TimeoutMS,ChannelList& activeChannels_);
 
-    // Î¬»¤ºìºÚÊ÷£ºÔö¡¢É¾¡¢¸Ä    
+    // ç»´æŠ¤çº¢é»‘æ ‘ï¼šå¢ã€åˆ ã€æ”¹    
     void UpdateChannel(Channel* channel);
     void RemoveChannel(Channel* channel);
 private:
-    void update(int operation,Channel* channel);  // Î¬»¤ºìºÚÊ÷Êµ¼Êµ÷ÓÃµÄº¯Êı£¬·â×°ÁËepoll_ctl
+    void update(int operation,Channel* channel);  // ç»´æŠ¤çº¢é»‘æ ‘å®é™…è°ƒç”¨çš„å‡½æ•°ï¼Œå°è£…äº†epoll_ctl
 
     const static int events_size_ = 16;
     EventLoop* my_EventLoop_;
     int pollerfd_;
-    std::vector<struct epoll_event> events_;     // ´æ·Å epoll_wait ·µ»ØµÄÊÂ¼ş×é
-    std::unordered_map<int, Channel*> channels_; // fd µ½ Channel* µÄÓ³Éä (¹şÏ£±íÌáËÙ)
+    std::vector<struct epoll_event> events_;     // å­˜æ”¾ epoll_wait è¿”å›çš„äº‹ä»¶ç»„
+    std::unordered_map<int, Channel*> channels_; // fd åˆ° Channel* çš„æ˜ å°„ (å“ˆå¸Œè¡¨æé€Ÿ)
 };

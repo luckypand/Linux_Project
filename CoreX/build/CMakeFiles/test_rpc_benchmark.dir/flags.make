@@ -4,7 +4,7 @@
 # compile CXX with /usr/bin/c++
 CXX_FLAGS = -O3 -DNDEBUG   -std=c++17
 
-CXX_DEFINES = 
+CXX_DEFINES = -DENABLE_LOG=1 -DENABLE_TIMESTAMP=1
 
 CXX_INCLUDES = -I/root/Cplus/CoreX/src/net -I/root/Cplus/CoreX/src/log -I/root/Cplus/CoreX/src/rpc -I/root/Cplus/CoreX/proto 
 

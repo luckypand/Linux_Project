@@ -8,15 +8,15 @@
 
 /*
 * @brief:
-*     ÒÆ¶¯¸³Öµ
+*     ç§»åŠ¨èµ‹å€¼
 */
 Socket& Socket::operator=(Socket&& rhs) noexcept
 {
-    //ÓÒÖµÒıÓÃ¸³ÖµÏÈÅÅ³ı×ÔÉí¸³Öµ
+    //å³å€¼å¼•ç”¨èµ‹å€¼å…ˆæ’é™¤è‡ªèº«èµ‹å€¼
     if(this != &rhs)
     {
-        //ÏÈ¹Ø±Õ¿ÉÄÜÒÑ¾­´ò¿ªµÄsocket
-        //socket¸²¸Çºó½«ÓÒÖµsocket½øĞĞÖµÏú»Ù
+        //å…ˆå…³é—­å¯èƒ½å·²ç»æ‰“å¼€çš„socket
+        //socketè¦†ç›–åå°†å³å€¼socketè¿›è¡Œå€¼é”€æ¯
         if(sockfd_ >= 0)
         {
             ::close(sockfd_);
@@ -29,18 +29,18 @@ Socket& Socket::operator=(Socket&& rhs) noexcept
 
 /*
 * @brief:
-*     ·â×°bind£¬°ó¶¨Socketµ½¶ÔÓ¦¶Ë¿Ú
+*     å°è£…bindï¼Œç»‘å®šSocketåˆ°å¯¹åº”ç«¯å£
 */
-void Socket::bindAddress(int port) //Ö÷»úĞ¡¶Ë×Ö½ÚĞò
+void Socket::bindAddress(int port) //ä¸»æœºå°ç«¯å­—èŠ‚åº
 {
     struct sockaddr_in addr;
     memset(&addr,0,sizeof(addr));
 
     addr.sin_family = AF_INET;
     addr.sin_port = htons(port);
-    addr.sin_addr.s_addr = htonl(INADDR_ANY); //¼àÌı±¾»úËùÓĞ¿ÉÓÃÍø¿¨
+    addr.sin_addr.s_addr = htonl(INADDR_ANY); //ç›‘å¬æœ¬æœºæ‰€æœ‰å¯ç”¨ç½‘å¡
 
-    //½øĞĞbind£¬Ê§°ÜÖ±½Ó¾¯¸æºóÍË³ö
+    //è¿›è¡Œbindï¼Œå¤±è´¥ç›´æ¥è­¦å‘Šåé€€å‡º
     int ret = ::bind(sockfd_,(struct sockaddr*)&addr,sizeof(addr));
     if(ret < 0)
     {
@@ -51,7 +51,7 @@ void Socket::bindAddress(int port) //Ö÷»úĞ¡¶Ë×Ö½ÚĞò
 
 /*
 * @brief:
-*     ·â×°listen£¬¼àÌıSocketÖĞµÄÈ«Á¬½ÓÇëÇó
+*     å°è£…listenï¼Œç›‘å¬Socketä¸­çš„å…¨è¿æ¥è¯·æ±‚
 */
 void Socket::listen()
 {
@@ -66,9 +66,9 @@ void Socket::listen()
 
 /*
 * @brief:
-*     ·â×°accept£¬½ÓÊÜSocketÖĞµÄÈ«Á¬½ÓÇëÇó
+*     å°è£…acceptï¼Œæ¥å—Socketä¸­çš„å…¨è¿æ¥è¯·æ±‚
 * @parameter:
-      peeraddr:´«³ö²ÎÊı£¬´æ´¢¿Í»§¶ËµÄÕæÊµIPºÍ¶Ë¿Ú
+      peeraddr:ä¼ å‡ºå‚æ•°ï¼Œå­˜å‚¨å®¢æˆ·ç«¯çš„çœŸå®IPå’Œç«¯å£
 */
 int Socket::accept(struct sockaddr_in* peeraddr)
 {
@@ -84,12 +84,12 @@ int Socket::accept(struct sockaddr_in* peeraddr)
             std::cerr << "Socket::accept failed, errno: " << savedErrno << "\n";
         }
     }
-    return connfd; // ÎŞÂÛ³É¹¦Óë·ñÖ±½Ó·µ»Ø£¬ÓÉÉÏ²ã Acceptor ÅĞ¶Ï
+    return connfd; // æ— è®ºæˆåŠŸä¸å¦ç›´æ¥è¿”å›ï¼Œç”±ä¸Šå±‚ Acceptor åˆ¤æ–­
 }
 
 /*
 * @brief:
-*     ÒÔÏÂËÄ¸öº¯ÊıÊÇ¶ÔsocketµÄÓÅ»¯µ÷²Î
+*     ä»¥ä¸‹å››ä¸ªå‡½æ•°æ˜¯å¯¹socketçš„ä¼˜åŒ–è°ƒå‚
 */
 void Socket::setReuseAddr(bool on) {
     int optval = on ? 1 : 0;

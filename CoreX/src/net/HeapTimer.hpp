@@ -5,18 +5,18 @@
 #include <vector>
 #include <unordered_map>
 
-// Ê¹ÓÃÏÖ´ú C++ µÄ¸ß¾«¶ÈÊ±ÖÓ
+// ä½¿ç”¨ç°ä»£ C++ çš„é«˜ç²¾åº¦æ—¶é’Ÿ
 using TimeoutCallback = std::function<void()>;
 using Clock = std::chrono::high_resolution_clock;
 using Ms = std::chrono::milliseconds;
 using TimeStamp = Clock::time_point;
 
-//´æÈëÊ±¼ä¶ÑµÄÊ±¼ä½Úµã
+//å­˜å…¥æ—¶é—´å †çš„æ—¶é—´èŠ‚ç‚¹
 struct TimeNode
 {
-    int fd_;                //¶ÔÓ¦µÄfd
-    TimeStamp expire_;      //Ê§Ğ§Ê±¼ä£¬ÓÃÀ´×÷Îª¶ÑÅÅ
-    TimeoutCallback tcb;    //¶ÔÓ¦µ½µãÖ´ĞĞÃüÁî
+    int fd_;                //å¯¹åº”çš„fd
+    TimeStamp expire_;      //å¤±æ•ˆæ—¶é—´ï¼Œç”¨æ¥ä½œä¸ºå †æ’
+    TimeoutCallback tcb;    //å¯¹åº”åˆ°ç‚¹æ‰§è¡Œå‘½ä»¤
 
     bool operator<(const TimeNode& t) const
     {
@@ -35,19 +35,19 @@ public:
     HeapTimer();
     ~HeapTimer();
 
-    void adjust(int fd, int newExpiresMs);            //µ÷ÕûÖ¸¶¨fdµÄ¶¨Ê±Æ÷µÄexpire_ÊôĞÔ
-    void add(int fd,int TimeoutMs,TimeoutCallback tcb);   //Ìí¼ÓĞÂµÄÊ±¼äµã
-    void top_pop();                                       //µ¯³ö¶Ñ¶¥
-    void clear();                                     //µ÷ÓÃTimeHeap_ºÍref_µÄÇåÀíÁ÷³Ì
-    void doWork(int fd);                              //Ö÷¶¯´¥·¢²¢É¾³ı¶¨Ê±Æ÷ (ÀıÈç¿Í»§¶ËÖ÷¶¯¶Ï¿ª)
-    void tick();                                      // ¼ì²é²¢ÇåÀíËùÓĞÒÑ³¬Ê±µÄ¶¨Ê±Æ÷ (EventLoop µÄĞÄÌøº¯Êı)
-    int  Getclosetick();                              // »ñÈ¡¾àÀëÏÂÒ»¸ö¶¨Ê±Æ÷³¬Ê±µÄÊ£ÓàÊ±¼ä (ÓÃÓÚ epoll_wait)
+    void adjust(int fd, int newExpiresMs);            //è°ƒæ•´æŒ‡å®šfdçš„å®šæ—¶å™¨çš„expire_å±æ€§
+    void add(int fd,int TimeoutMs,TimeoutCallback tcb);   //æ·»åŠ æ–°çš„æ—¶é—´ç‚¹
+    void top_pop();                                       //å¼¹å‡ºå †é¡¶
+    void clear();                                     //è°ƒç”¨TimeHeap_å’Œref_çš„æ¸…ç†æµç¨‹
+    void doWork(int fd);                              //ä¸»åŠ¨è§¦å‘å¹¶åˆ é™¤å®šæ—¶å™¨ (ä¾‹å¦‚å®¢æˆ·ç«¯ä¸»åŠ¨æ–­å¼€)
+    void tick();                                      // æ£€æŸ¥å¹¶æ¸…ç†æ‰€æœ‰å·²è¶…æ—¶çš„å®šæ—¶å™¨ (EventLoop çš„å¿ƒè·³å‡½æ•°)
+    int  Getclosetick();                              // è·å–è·ç¦»ä¸‹ä¸€ä¸ªå®šæ—¶å™¨è¶…æ—¶çš„å‰©ä½™æ—¶é—´ (ç”¨äº epoll_wait)
 private:
-    void swapnode(size_t i,size_t j);                 //½»»»½áµã 
-    void del_(size_t t);                              //Ö¸¶¨Ê±¼äµã½øĞĞÉ¾³ı
-    void siftup(size_t i);                            //ÏòÉÏµ÷ÕûÄ¬ÈÏµ½¶Ñ¶¥£¬¹ÊÖ»ĞèÒª´«ÈëĞèµ÷ÕûµÄ½áµã
-    bool siftdown(size_t i,size_t n);                 //ÏòÏÂµ÷ÕûĞèÒªµ÷Õûµ½Î²£¬¹Ê³ıÁËµ÷Õû½áµã»¹ĞèÒª´«Èë¶Ñ´óĞ¡
+    void swapnode(size_t i,size_t j);                 //äº¤æ¢ç»“ç‚¹ 
+    void del_(size_t t);                              //æŒ‡å®šæ—¶é—´ç‚¹è¿›è¡Œåˆ é™¤
+    void siftup(size_t i);                            //å‘ä¸Šè°ƒæ•´é»˜è®¤åˆ°å †é¡¶ï¼Œæ•…åªéœ€è¦ä¼ å…¥éœ€è°ƒæ•´çš„ç»“ç‚¹
+    bool siftdown(size_t i,size_t n);                 //å‘ä¸‹è°ƒæ•´éœ€è¦è°ƒæ•´åˆ°å°¾ï¼Œæ•…é™¤äº†è°ƒæ•´ç»“ç‚¹è¿˜éœ€è¦ä¼ å…¥å †å¤§å°
 
-    std::vector<TimeNode> TimeHeap_;                  //Ê±¼ä¶Ñ
-    std::unordered_map<int,size_t> ref_ ;             //ËÑË÷±í [fd,ÏÂ±ê]
+    std::vector<TimeNode> TimeHeap_;                  //æ—¶é—´å †
+    std::unordered_map<int,size_t> ref_ ;             //æœç´¢è¡¨ [fd,ä¸‹æ ‡]
 };

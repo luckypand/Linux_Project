@@ -1,5 +1,18 @@
 #include "RpcServer.hpp"
 #include <arpa/inet.h>
+#if ENABLE_TIMESTAMP
+#include <chrono>
+#endif
+#include "my_log.hpp"
+
+#if ENABLE_TIMESTAMP
+// Get current steady_clock timestamp in microseconds
+static inline uint64_t now_us() {
+    return static_cast<uint64_t>(
+        std::chrono::duration_cast<std::chrono::microseconds>(
+            std::chrono::steady_clock::now().time_since_epoch()).count());
+}
+#endif
 
 RpcServer::RpcServer(EventLoop* loop,const std::string& ip,uint16_t port,const std::string& name)
     :server_(loop,ip,port,name)
@@ -7,10 +20,10 @@ RpcServer::RpcServer(EventLoop* loop,const std::string& ip,uint16_t port,const s
     codec_.setbusinessCallback_(
         [this](const TcpConnectionPtr& conn,const std::string& payload){
             this->handleRpcCodecMessage(conn,payload);
-        }//´«µİÊµ¼ÊÂ·ÓÉÏ£Íû×öµÄ
+        }//å®é™…çš„è·¯ç”±è½¬å‘é€»è¾‘
     );
     server_.setThreadNum(4);
-    server_.setMessageCallback(  //·şÎñ¶ËÊÕµ½¿Í»§¶ËÇëÇó(ÕâÊ±Ó¦¸ÃÊÇĞòÁĞ»¯ºóµÄrpcÇëÇó)£¬ĞèÒª·´ĞòÁĞ»¯ºóÂ·ÓÉ´¦Àí
+    server_.setMessageCallback(  //å½“serveræ¥æ”¶åˆ°å®¢æˆ·ç«¯æ•°æ®(æ­¤æ—¶åº”è¯¥æ˜¯åºåˆ—åŒ–åçš„rpcè¯·æ±‚),éœ€è¦ååºåˆ—åŒ–å¹¶è·¯ç”±å¤„ç†
         [this](const TcpConnectionPtr& conn,Buffer& buf){
             codec_.Onmessage(conn,buf);
         }
@@ -19,66 +32,147 @@ RpcServer::RpcServer(EventLoop* loop,const std::string& ip,uint16_t port,const s
 
 /*
 * @brief:
-*     ´Ë´¦ÎªRpcCodec½øĞĞ½âÂëºóbusinessCallback_Êµ¼ÊÖ´ĞĞµÄÂß¼­,¼´½øĞĞ
-½â°ü»ñµÃÔªÊı¾İrpcMsg£¬dispatch½øĞĞ¾ßÌåµÄÂß¼­´¦Àí£¬×îÖÕ·µ»ØĞòÁĞ»¯´¦ÀíºóµÄ½á¹û
+*     æ­¤å¤„ä¸ºRpcCodecä¸­æ³¨å†Œçš„businessCallback_å®é™…æ‰§è¡Œçš„é€»è¾‘,å¤„ç†
+  å•ä¸ªå…ƒæ•°æ®åŒ…rpcMsgå’Œdispatchè¿›è¡Œå…·ä½“ä¸šåŠ¡é€»è¾‘,å¹¶è°ƒç”¨sendresponseè¿”å›åºåˆ—åŒ–åçš„ç»“æœ
   @param:
-        conn    ±¾´Î½ÓÊÕÁ¬½ÓµÄTcpconnection
-        payload	½ÓÊÕµ½µÄĞòÁĞ»¯ºóµÄÍêÕûProtobuf×Ö½ÚÁ÷
+        conn    æœ¬æ¬¡è¿æ¥çš„Tcpconnection
+        payload	ååºåˆ—åŒ–å®Œæˆçš„Protobufå­—èŠ‚æµ
 */
 void RpcServer::handleRpcCodecMessage(const TcpConnectionPtr& conn,const std::string& payload)
 {
+#if ENABLE_TIMESTAMP
+    auto t0 = now_us();
+#endif
+
     CoreX::rpc::RpcMessage rpcMsg;
     if(!rpcMsg.ParseFromString(payload))
     {
-        sendErrorReasponse(conn,0,
-                            CoreX::rpc::WRONG_PROTO
-                            ,"Fail to parse payload");
-        return; //½âÎöÊ§°Ü
+#if ENABLE_TIMESTAMP
+        sendErrorReasponse(conn, 0,
+                            CoreX::rpc::WRONG_PROTO,
+                            "Fail to parse payload", t0);
+#else
+        sendErrorReasponse(conn, 0,
+                            CoreX::rpc::WRONG_PROTO,
+                            "Fail to parse payload");
+#endif
+        return; //è§£æå¤±è´¥
     }
+
+#if ENABLE_TIMESTAMP
+    auto t1 = now_us();
+#endif
 
     if(rpcMsg.type() != CoreX::rpc::REQUEST)
     {
         return;
     }
 
+#if ENABLE_TIMESTAMP
+    // è®°å½•æœåŠ¡ç«¯æ¥æ”¶æ—¶é—´æˆ³ï¼ˆååºåˆ—åŒ–å®Œæˆæ—¶åˆ»ï¼Œæ›´ç²¾ç¡®åæ˜ ç½‘ç»œåˆ°è¾¾æ—¶é—´ï¼‰
+    uint64_t server_recv_ts = t1;
+    uint64_t client_send_ts = rpcMsg.client_send_ts();
+#endif
+
     auto it = dispatchTable_.find(rpcMsg.service());
+
+#if ENABLE_TIMESTAMP
+    auto t2 = now_us();
+#endif
+
     if(it != dispatchTable_.end())
     {
         std::string result = it->second->dispatch(rpcMsg.method(),rpcMsg.payload());
+
+#if ENABLE_TIMESTAMP
+        auto t3 = now_us();
+#endif
+
         if(!result.empty())
         {
-            sendResponse(conn,rpcMsg.id(),result);
+#if ENABLE_TIMESTAMP
+            sendResponse(conn, rpcMsg.id(), result, client_send_ts, server_recv_ts);
+#else
+            sendResponse(conn, rpcMsg.id(), result);
+#endif
         }
+
+#if ENABLE_TIMESTAMP
+        auto t4 = now_us();
+
+        // å¼‚æ­¥æ—¥å¿—è®°å½•å„é˜¶æ®µè€—æ—¶ï¼Œä¸é˜»å¡å½“å‰è¯·æ±‚å¤„ç†
+        LOG_INFO("[RPC-TIMING] id=%lu %s.%s | "
+                 "deserialize:%luus route:%luus business:%luus send:%luus | total:%luus",
+                 rpcMsg.id(),
+                 rpcMsg.service().c_str(),
+                 rpcMsg.method().c_str(),
+                 t1 - t0,
+                 t2 - t1,
+                 t3 - t2,
+                 t4 - t3,
+                 t4 - t0);
+#endif
     }
 }
 
-// 8 ×Ö½Ú TLV ·â°üÓë·¢ËÍ»úÖÆ
-void RpcServer::sendResponse(const TcpConnectionPtr& conn, uint64_t id,const std::string& rstPayload) 
+// 8 å­—èŠ‚ TLV å¤´éƒ¨ä¸å‘é€ç¼“å†²åŒº
+#if ENABLE_TIMESTAMP
+void RpcServer::sendResponse(const TcpConnectionPtr& conn, uint64_t id,
+                             const std::string& rstPayload,
+                             uint64_t client_send_ts, uint64_t server_recv_ts)
 {
-    //½«½á¹û½øĞĞ·â×°
+    //æ„å»ºå“åº”å°è£…
+    CoreX::rpc::RpcMessage rpcMsg;
+    rpcMsg.set_type(CoreX::rpc::RESPONSE);
+    rpcMsg.set_id(id);
+    rpcMsg.set_payload(rstPayload);
+    rpcMsg.set_client_send_ts(client_send_ts);
+    rpcMsg.set_server_recv_ts(server_recv_ts);
+    rpcMsg.set_server_send_ts(now_us());
+
+    std::string serialized = rpcMsg.SerializeAsString();
+
+    uint32_t length = serialized.size();
+    uint32_t magic = 0x42414E41; // é­”æ•° "BANA"
+
+    // è½¬æ¢ä¸ºç½‘ç»œå­—èŠ‚åº
+    uint32_t be32_magic = htonl(magic);
+    uint32_t be32_length = htonl(length);
+
+    // ç»„è£…å¤´éƒ¨ä¸è´Ÿè½½
+    std::string packet;
+    packet.append(reinterpret_cast<char*>(&be32_magic), 4);
+    packet.append(reinterpret_cast<char*>(&be32_length), 4);
+    packet.append(serialized);
+
+    // å¼‚æ­¥å‘é€è‡³å®¢æˆ·ç«¯
+    conn->send(packet);
+}
+#else
+void RpcServer::sendResponse(const TcpConnectionPtr& conn, uint64_t id,
+                             const std::string& rstPayload)
+{
     CoreX::rpc::RpcMessage rpcMsg;
     rpcMsg.set_type(CoreX::rpc::RESPONSE);
     rpcMsg.set_id(id);
     rpcMsg.set_payload(rstPayload);
 
-    std::string serialized = rpcMsg.SerializeAsString(); //?
-    
-    uint32_t length = serialized.size();
-    uint32_t magic = 0x42414E41; // Ä§Êı "BANA"
+    std::string serialized = rpcMsg.SerializeAsString();
 
-    // ×ª»»ÎªÍøÂç×Ö½ÚĞò
+    uint32_t length = serialized.size();
+    uint32_t magic = 0x42414E41;
+
     uint32_t be32_magic = htonl(magic);
     uint32_t be32_length = htonl(length);
 
-    // ×é×°°üÍ·Óë°üÌå
     std::string packet;
     packet.append(reinterpret_cast<char*>(&be32_magic), 4);
     packet.append(reinterpret_cast<char*>(&be32_length), 4);
-    packet.append(serialized); 
+    packet.append(serialized);
 
-    // Òì²½·Ç×èÈû·¢ËÍ
     conn->send(packet);
 }
+#endif
 
 void RpcServer::registerService(RpcServiceAdapter* adapter)
 {
@@ -86,6 +180,35 @@ void RpcServer::registerService(RpcServiceAdapter* adapter)
     dispatchTable_[adapter->serviceName()] = adapter;
 }
 
+#if ENABLE_TIMESTAMP
+void RpcServer::sendErrorReasponse(const TcpConnectionPtr& conn,
+                        uint64_t id, CoreX::rpc::ErrorCode code, const std::string& errMsg,
+                        uint64_t server_recv_ts)
+{
+    CoreX::rpc::RpcMessage rpcMsg;
+    rpcMsg.set_type(CoreX::rpc::ERROR);
+    rpcMsg.set_id(id);
+    rpcMsg.set_error(code);
+    rpcMsg.set_payload(errMsg);
+    rpcMsg.set_server_recv_ts(server_recv_ts);
+    rpcMsg.set_server_send_ts(now_us());
+
+    std::string serialized = rpcMsg.SerializeAsString();
+
+    uint32_t length = serialized.size();
+    uint32_t magic = 0x42414E41;
+
+    uint32_t be32_length = htonl(length);
+    uint32_t be32_magic = htonl(magic);
+
+    std::string packet;
+    packet.append(reinterpret_cast<char*>(&be32_magic),4);
+    packet.append(reinterpret_cast<char*>(&be32_length),4);
+    packet.append(serialized);
+
+    conn->send(packet);
+}
+#else
 void RpcServer::sendErrorReasponse(const TcpConnectionPtr& conn,
                         uint64_t id, CoreX::rpc::ErrorCode code, const std::string& errMsg)
 {
@@ -110,3 +233,4 @@ void RpcServer::sendErrorReasponse(const TcpConnectionPtr& conn,
 
     conn->send(packet);
 }
+#endif

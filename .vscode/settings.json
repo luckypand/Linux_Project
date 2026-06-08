@@ -5,6 +5,7 @@
     "C_Cpp.codeAnalysis.clangTidy.args": [
         "--checks=-*,clang-analyzer-*,bugprone-*,cppcoreguidelines-pro-bounds-constant-array-index"
     ],
+    "C_Cpp.default.compileCommands": "${workspaceFolder}/CoreX/build/compile_commands.json",
     "C_Cpp.default.compilerPath": "/usr/bin/g++",
     "C_Cpp.default.compilerArgs": [
         "-Wall",
@@ -15,7 +16,12 @@
     "C_Cpp.default.cppStandard": "c++17",
     "C_Cpp.default.intelliSenseMode": "linux-gcc-x64",
     "C_Cpp.default.includePath": [
-        "${workspaceFolder}/**",
+        "${workspaceFolder}/CoreX/src/net",
+        "${workspaceFolder}/CoreX/src/log",
+        "${workspaceFolder}/CoreX/src/rpc",
+        "${workspaceFolder}/CoreX/proto",
+        "${workspaceFolder}/CoreX/src",
+        "${workspaceFolder}/CoreX/third_party/protobuf/include",
         "${workspaceFolder}/Myfile/inc",
         "${workspaceFolder}/../inc",
         "/usr/include",
@@ -23,7 +29,7 @@
         "/usr/include/mariadb"
     ],
     "C_Cpp.default.browse.path": [
-        "${workspaceFolder}/**",
+        "${workspaceFolder}/CoreX/src",
         "${workspaceFolder}/Myfile/inc",
         "${workspaceFolder}/../inc",
         "/usr/include",

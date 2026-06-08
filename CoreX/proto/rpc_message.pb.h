@@ -256,6 +256,24 @@ class RpcMessage : public ::google::protobuf::Message /* @@protoc_insertion_poin
   ::CoreX::rpc::ErrorCode error() const;
   void set_error(::CoreX::rpc::ErrorCode value);
 
+  // uint64 client_send_ts = 7;
+  void clear_client_send_ts();
+  static const int kClientSendTsFieldNumber = 7;
+  ::google::protobuf::uint64 client_send_ts() const;
+  void set_client_send_ts(::google::protobuf::uint64 value);
+
+  // uint64 server_recv_ts = 8;
+  void clear_server_recv_ts();
+  static const int kServerRecvTsFieldNumber = 8;
+  ::google::protobuf::uint64 server_recv_ts() const;
+  void set_server_recv_ts(::google::protobuf::uint64 value);
+
+  // uint64 server_send_ts = 9;
+  void clear_server_send_ts();
+  static const int kServerSendTsFieldNumber = 9;
+  ::google::protobuf::uint64 server_send_ts() const;
+  void set_server_send_ts(::google::protobuf::uint64 value);
+
   // @@protoc_insertion_point(class_scope:CoreX.rpc.RpcMessage)
  private:
 
@@ -266,6 +284,9 @@ class RpcMessage : public ::google::protobuf::Message /* @@protoc_insertion_poin
   ::google::protobuf::uint64 id_;
   int type_;
   int error_;
+  ::google::protobuf::uint64 client_send_ts_;
+  ::google::protobuf::uint64 server_recv_ts_;
+  ::google::protobuf::uint64 server_send_ts_;
   mutable ::google::protobuf::internal::CachedSize _cached_size_;
   friend struct ::protobuf_rpc_5fmessage_2eproto::TableStruct;
 };
@@ -479,6 +500,48 @@ inline void RpcMessage::set_error(::CoreX::rpc::ErrorCode value) {
   
   error_ = value;
   // @@protoc_insertion_point(field_set:CoreX.rpc.RpcMessage.error)
+}
+
+// uint64 client_send_ts = 7;
+inline void RpcMessage::clear_client_send_ts() {
+  client_send_ts_ = GOOGLE_ULONGLONG(0);
+}
+inline ::google::protobuf::uint64 RpcMessage::client_send_ts() const {
+  // @@protoc_insertion_point(field_get:CoreX.rpc.RpcMessage.client_send_ts)
+  return client_send_ts_;
+}
+inline void RpcMessage::set_client_send_ts(::google::protobuf::uint64 value) {
+  
+  client_send_ts_ = value;
+  // @@protoc_insertion_point(field_set:CoreX.rpc.RpcMessage.client_send_ts)
+}
+
+// uint64 server_recv_ts = 8;
+inline void RpcMessage::clear_server_recv_ts() {
+  server_recv_ts_ = GOOGLE_ULONGLONG(0);
+}
+inline ::google::protobuf::uint64 RpcMessage::server_recv_ts() const {
+  // @@protoc_insertion_point(field_get:CoreX.rpc.RpcMessage.server_recv_ts)
+  return server_recv_ts_;
+}
+inline void RpcMessage::set_server_recv_ts(::google::protobuf::uint64 value) {
+  
+  server_recv_ts_ = value;
+  // @@protoc_insertion_point(field_set:CoreX.rpc.RpcMessage.server_recv_ts)
+}
+
+// uint64 server_send_ts = 9;
+inline void RpcMessage::clear_server_send_ts() {
+  server_send_ts_ = GOOGLE_ULONGLONG(0);
+}
+inline ::google::protobuf::uint64 RpcMessage::server_send_ts() const {
+  // @@protoc_insertion_point(field_get:CoreX.rpc.RpcMessage.server_send_ts)
+  return server_send_ts_;
+}
+inline void RpcMessage::set_server_send_ts(::google::protobuf::uint64 value) {
+  
+  server_send_ts_ = value;
+  // @@protoc_insertion_point(field_set:CoreX.rpc.RpcMessage.server_send_ts)
 }
 
 #ifdef __GNUC__

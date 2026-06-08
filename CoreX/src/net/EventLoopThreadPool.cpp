@@ -4,7 +4,7 @@
 
 /*
 * @brief:
-*     ³õÊ¼»¯Ïß³Ì³ØÀà(Ö÷Ïß³Ì)
+*     åˆå§‹åŒ–çº¿ç¨‹æ± ç±»(ä¸»çº¿ç¨‹)
 */
 EventLoopThreadPool::EventLoopThreadPool(EventLoop* baseloop,const std::string& name)
     :baseloop_(baseloop)
@@ -15,17 +15,17 @@ EventLoopThreadPool::EventLoopThreadPool(EventLoop* baseloop,const std::string& 
 
 /*
 * @brief:
-*     »ØÊÕÏß³Ì³Ø
+*     å›æ”¶çº¿ç¨‹æ± 
 */
 EventLoopThreadPool::~EventLoopThreadPool()
 {
-    //EventLoopThreadÎö¹¹Ê±×Ô¶¯µ÷ÓÃjoin
+    //EventLoopThreadææ„æ—¶è‡ªåŠ¨è°ƒç”¨join
     destroy = true;
 }
 
 /*
 * @brief:
-*     ³õÊ¼»¯Ïß³Ì
+*     åˆå§‹åŒ–çº¿ç¨‹
 */
 void EventLoopThreadPool::start()
 {
@@ -48,12 +48,12 @@ void EventLoopThreadPool::start()
 
 /*
 * @brief:
-*     ºËĞÄ¼Ü¹¹º¯Êı£ºÍ¨¹ı Round-Robin Ëã·¨·Ö·¢ÏÂÒ»¸ö×Ó Reactor
+*     æ ¸å¿ƒæ¶æ„å‡½æ•°ï¼šé€šè¿‡ Round-Robin ç®—æ³•åˆ†å‘ä¸‹ä¸€ä¸ªå­ Reactor
 */
 EventLoop* EventLoopThreadPool::chooseNextLoop()
 {
     EventLoop* loop = baseloop_;
-    //loop³Ø·Ç¿ÕÇé¿öÏÂ£¬·µ»Ø±¾´ÎÑ¡Ôñ×÷ÎªRecatorµÄloop
+    //loopæ± éç©ºæƒ…å†µä¸‹ï¼Œè¿”å›æœ¬æ¬¡é€‰æ‹©ä½œä¸ºRecatorçš„loop
     if(!loops_.empty())
     {
         loop = loops_[chooseThreadIndex];

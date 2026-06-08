@@ -81,6 +81,9 @@ CMakeFiles/rpc.dir/src/rpc/RpcCodec.cpp.o: ../src/net/TcpConnection.hpp
 CMakeFiles/rpc.dir/src/rpc/RpcCodec.cpp.o: ../src/rpc/RpcCodec.cpp
 CMakeFiles/rpc.dir/src/rpc/RpcCodec.cpp.o: ../src/rpc/RpcCodec.hpp
 
+CMakeFiles/rpc.dir/src/rpc/RpcServer.cpp.o: ../src/log/my_blockqueue.hpp
+CMakeFiles/rpc.dir/src/rpc/RpcServer.cpp.o: ../src/log/my_buffer.hpp
+CMakeFiles/rpc.dir/src/rpc/RpcServer.cpp.o: ../src/log/my_log.hpp
 CMakeFiles/rpc.dir/src/rpc/RpcServer.cpp.o: ../proto/math_service.pb.h
 CMakeFiles/rpc.dir/src/rpc/RpcServer.cpp.o: ../proto/rpc_message.pb.h
 CMakeFiles/rpc.dir/src/rpc/RpcServer.cpp.o: ../src/net/Acceptor.hpp

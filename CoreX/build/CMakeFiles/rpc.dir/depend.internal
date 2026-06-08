@@ -82,6 +82,9 @@ CMakeFiles/rpc.dir/src/rpc/RpcCodec.cpp.o
  /root/Cplus/CoreX/src/rpc/RpcCodec.cpp
  /root/Cplus/CoreX/src/rpc/RpcCodec.hpp
 CMakeFiles/rpc.dir/src/rpc/RpcServer.cpp.o
+ ../src/log/my_blockqueue.hpp
+ ../src/log/my_buffer.hpp
+ ../src/log/my_log.hpp
  /root/Cplus/CoreX/proto/math_service.pb.h
  /root/Cplus/CoreX/proto/rpc_message.pb.h
  /root/Cplus/CoreX/src/net/Acceptor.hpp

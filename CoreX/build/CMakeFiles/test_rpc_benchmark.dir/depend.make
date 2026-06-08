@@ -3,6 +3,9 @@
 
 CMakeFiles/test_rpc_benchmark.dir/tests/test_rpc_benchmark.cpp.o: ../proto/math_service.pb.h
 CMakeFiles/test_rpc_benchmark.dir/tests/test_rpc_benchmark.cpp.o: ../proto/rpc_message.pb.h
+CMakeFiles/test_rpc_benchmark.dir/tests/test_rpc_benchmark.cpp.o: ../src/log/my_blockqueue.hpp
+CMakeFiles/test_rpc_benchmark.dir/tests/test_rpc_benchmark.cpp.o: ../src/log/my_buffer.hpp
+CMakeFiles/test_rpc_benchmark.dir/tests/test_rpc_benchmark.cpp.o: ../src/log/my_log.hpp
 CMakeFiles/test_rpc_benchmark.dir/tests/test_rpc_benchmark.cpp.o: ../src/net/Acceptor.hpp
 CMakeFiles/test_rpc_benchmark.dir/tests/test_rpc_benchmark.cpp.o: ../src/net/Buffer.hpp
 CMakeFiles/test_rpc_benchmark.dir/tests/test_rpc_benchmark.cpp.o: ../src/net/Channel.hpp

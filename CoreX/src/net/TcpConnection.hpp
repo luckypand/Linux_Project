@@ -28,9 +28,9 @@ public:
     void setCloseCallback(closeCallback cb) { closeCallback_ = std::move(cb); }
     void setwriteCompleteCallback(writeCompleteCallback cb) { writeCompleteCallback_ = std::move(cb); }
 
-    // ±» TcpServer µ÷ÓÃ£¬ÕıÊ½È·Á¢Á¬½Ó
+    // è¢« TcpServer è°ƒç”¨ï¼Œæ­£å¼ç¡®ç«‹è¿æ¥
     void connectEstablished();
-    // ±» TcpServer µ÷ÓÃ£¬ÕıÊ½Ïú»ÙÁ¬½Ó
+    // è¢« TcpServer è°ƒç”¨ï¼Œæ­£å¼é”€æ¯è¿æ¥
     void connectDestroyed();
 
     private:

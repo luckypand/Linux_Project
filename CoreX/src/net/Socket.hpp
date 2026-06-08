@@ -6,12 +6,12 @@
 class Socket {
 public:
     explicit Socket(int sockfd) : sockfd_(sockfd) {}
-    ~Socket() { ::close(sockfd_); } // RAII ºËĞÄ
+    ~Socket() { ::close(sockfd_); } // RAII æ ¸å¿ƒ
 
-    // ½ûÓÃ¿½±´£¬ÔÊĞíÒÆ¶¯ (ÎÄ¼şÃèÊö·ûµÄ¶ÀÕ¼ĞÔ)
+    // ç¦ç”¨æ‹·è´ï¼Œå…è®¸ç§»åŠ¨ (æ–‡ä»¶æè¿°ç¬¦çš„ç‹¬å æ€§)
     Socket(const Socket&) = delete;
     Socket& operator=(const Socket&) = delete;
-    //ÔÊĞíÒÆ¶¯¹¹Ôì£¬µ«ÊÇsockfd_±¾ÖÊÊÇÒ»¸öÄÚÖÃ±äÁ¿£¬Òò´ËÖ»ÊÇÒ»¸öÆÕÍ¨¸³Öµ£¬ĞèÒª·ÀÖ¹fd±»¹Ø±ÕÁ½´Î
+    //å…è®¸ç§»åŠ¨æ„é€ ï¼Œä½†æ˜¯sockfd_æœ¬è´¨æ˜¯ä¸€ä¸ªå†…ç½®å˜é‡ï¼Œå› æ­¤åªæ˜¯ä¸€ä¸ªæ™®é€šèµ‹å€¼ï¼Œéœ€è¦é˜²æ­¢fdè¢«å…³é—­ä¸¤æ¬¡
     Socket(Socket&& rhs) noexcept:sockfd_(std::exchange(rhs.sockfd_,-1)) {}
     Socket& operator=(Socket&& rhs) noexcept;
 
@@ -19,18 +19,18 @@ public:
     void bindAddress(int port);
     void listen();
     
-    // ½ÓÊÕĞÂÁ¬½Ó£¬²¢Í¨¹ı peeraddr ´«³ö¿Í»§¶ËµÄÕæÊµ IP ºÍ¶Ë¿Ú
-    // ·µ»ØµÄÊÇÒÑ¾­ÉèÖÃÎª ·Ç×èÈû(NONBLOCK) ºÍ ÍË³öÊ±¹Ø±Õ(CLOEXEC) µÄĞÂ fd
+    // æ¥æ”¶æ–°è¿æ¥ï¼Œå¹¶é€šè¿‡ peeraddr ä¼ å‡ºå®¢æˆ·ç«¯çš„çœŸå® IP å’Œç«¯å£
+    // è¿”å›çš„æ˜¯å·²ç»è®¾ç½®ä¸º éé˜»å¡(NONBLOCK) å’Œ é€€å‡ºæ—¶å…³é—­(CLOEXEC) çš„æ–° fd
     int accept(struct sockaddr_in* peeraddr);
 
-    // --- ºËĞÄ Socket µ÷ÓÅÑ¡Ïî ---
-    void setReuseAddr(bool on);   // ½â¾ö TIME_WAIT ¶Ë¿ÚÕ¼ÓÃÎÊÌâ
-    void setReusePort(bool on);   // Ö§³ÖÄÚºË¼¶¸ºÔØ¾ùºâ (¶àÏß³Ì°ó¶¨Í¬¶Ë¿Ú)
-    void setTcpNoDelay(bool on);  // ½ûÓÃ Nagle Ëã·¨£¬½µµÍ RPC ÑÓ³Ù
-    void setKeepAlive(bool on);   // ¿ªÆô TCP ²ãÃæµÄĞÄÌø±£»î»úÖÆ
+    // --- æ ¸å¿ƒ Socket è°ƒä¼˜é€‰é¡¹ ---
+    void setReuseAddr(bool on);   // è§£å†³ TIME_WAIT ç«¯å£å ç”¨é—®é¢˜
+    void setReusePort(bool on);   // æ”¯æŒå†…æ ¸çº§è´Ÿè½½å‡è¡¡ (å¤šçº¿ç¨‹ç»‘å®šåŒç«¯å£)
+    void setTcpNoDelay(bool on);  // ç¦ç”¨ Nagle ç®—æ³•ï¼Œé™ä½ RPC å»¶è¿Ÿ
+    void setKeepAlive(bool on);   // å¼€å¯ TCP å±‚é¢çš„å¿ƒè·³ä¿æ´»æœºåˆ¶
 
-    //ÍØÕ¹£ºsetKeepAlive±¾ÖÊÉÏÊÇÀûÓÃÏµÍ³×Ô´øµÄ2Ğ¡Ê±ĞÄÌø°ü£¬¶ÔÓÚ¸ßĞÔÄÜ·şÎñÆ÷
-    //Ó¦¸Ã×Ô¼ºÊµÏÖĞÄÌø¼ì²â»úÖÆ£¬±£Ö¤·şÎñÆ÷µÄ¸ßĞÔÄÜ
+    //æ‹“å±•ï¼šsetKeepAliveæœ¬è´¨ä¸Šæ˜¯åˆ©ç”¨ç³»ç»Ÿè‡ªå¸¦çš„2å°æ—¶å¿ƒè·³åŒ…ï¼Œå¯¹äºé«˜æ€§èƒ½æœåŠ¡å™¨
+    //åº”è¯¥è‡ªå·±å®ç°å¿ƒè·³æ£€æµ‹æœºåˆ¶ï¼Œä¿è¯æœåŠ¡å™¨çš„é«˜æ€§èƒ½
 
 private:
     int sockfd_;

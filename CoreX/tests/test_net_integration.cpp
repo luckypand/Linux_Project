@@ -1,5 +1,5 @@
-// ÍøÂç¿âÕûÌå¼¯³É²âÊÔ
-// ²âÊÔÄÚÈİ£ºBuffer¡¢Socket¡¢Channel¡¢EventLoop¡¢TcpConnection¡¢Acceptor µÄĞ­×÷
+// ç½‘ç»œåº“æ•´ä½“é›†æˆæµ‹è¯•
+// æµ‹è¯•å†…å®¹ï¼šBufferã€Socketã€Channelã€EventLoopã€TcpConnectionã€Acceptor çš„åä½œ
 
 #include <cassert>
 #include <chrono>
@@ -57,10 +57,10 @@ void verifySocketOption(int fd, const SocketOptionCheck& option)
 }
 }
 
-// ============ ²âÊÔ 1: Buffer »ù±¾¹¦ÄÜ ============
+// ============ æµ‹è¯• 1: Buffer åŸºæœ¬åŠŸèƒ½ ============
 void testBuffer()
 {
-    std::cout << "\n=== Test 1: Buffer »ù±¾¹¦ÄÜ ===" << std::endl;
+    std::cout << "\n=== Test 1: Buffer åŸºæœ¬åŠŸèƒ½ ===" << std::endl;
 
     Buffer buffer(64);
 
@@ -68,12 +68,12 @@ void testBuffer()
     buffer.append(std::string(", World!"));
     assert(buffer.ReadBytes() == 13);
     assert(std::string(buffer.peek(), buffer.ReadBytes()) == "Hello, World!");
-    std::cout << "[PASS] append ºÍ peek" << std::endl;
+    std::cout << "[PASS] append å’Œ peek" << std::endl;
 
     buffer.retrieve(7);
     assert(buffer.ReadBytes() == 6);
     assert(std::string(buffer.peek(), buffer.ReadBytes()) == "World!");
-    std::cout << "[PASS] retrieve Ïû·Ñ×Ö½Ú" << std::endl;
+    std::cout << "[PASS] retrieve æ¶ˆè´¹å­—èŠ‚" << std::endl;
 
     assert(buffer.retrieveAsString(5) == "World");
     assert(buffer.ReadBytes() == 1);
@@ -91,20 +91,20 @@ void testBuffer()
     assert(buffer.ReadBytes() == 0);
     std::cout << "[PASS] clear" << std::endl;
 
-    std::cout << "[PASS] Buffer ²âÊÔÍ¨¹ı\n" << std::endl;
+    std::cout << "[PASS] Buffer æµ‹è¯•é€šè¿‡\n" << std::endl;
 }
 
-// ============ ²âÊÔ 2: Socket ´´½¨ºÍÅäÖÃ ============
+// ============ æµ‹è¯• 2: Socket åˆ›å»ºå’Œé…ç½® ============
 void testSocket()
 {
-    std::cout << "=== Test 2: Socket ´´½¨ºÍÅäÖÃ ===" << std::endl;
+    std::cout << "=== Test 2: Socket åˆ›å»ºå’Œé…ç½® ===" << std::endl;
 
     int sockfd = ::socket(AF_INET, SOCK_STREAM | SOCK_NONBLOCK | SOCK_CLOEXEC, 0);
     assert(sockfd >= 0);
 
     Socket socket(sockfd);
     assert(socket.fd() == sockfd);
-    std::cout << "[PASS] Socket ´´½¨" << std::endl;
+    std::cout << "[PASS] Socket åˆ›å»º" << std::endl;
 
     socket.setReuseAddr(true);
     socket.setReusePort(true);
@@ -115,15 +115,15 @@ void testSocket()
     verifySocketOption(sockfd, {SOL_SOCKET, SO_REUSEPORT, 1});
     verifySocketOption(sockfd, {IPPROTO_TCP, TCP_NODELAY, 1});
     verifySocketOption(sockfd, {SOL_SOCKET, SO_KEEPALIVE, 1});
-    std::cout << "[PASS] Socket Ñ¡ÏîÅäÖÃ" << std::endl;
+    std::cout << "[PASS] Socket é€‰é¡¹é…ç½®" << std::endl;
 
-    std::cout << "[PASS] Socket ²âÊÔÍ¨¹ı\n" << std::endl;
+    std::cout << "[PASS] Socket æµ‹è¯•é€šè¿‡\n" << std::endl;
 }
 
-// ============ ²âÊÔ 3: Acceptor ÑÌÎí²âÊÔ ============
+// ============ æµ‹è¯• 3: Acceptor çƒŸé›¾æµ‹è¯• ============
 void testAcceptorSmoke()
 {
-    std::cout << "=== Test 3: Acceptor ÑÌÎí²âÊÔ ===" << std::endl;
+    std::cout << "=== Test 3: Acceptor çƒŸé›¾æµ‹è¯• ===" << std::endl;
 
     std::promise<void> readyPromise;
     auto readyFuture = readyPromise.get_future();
@@ -141,14 +141,14 @@ void testAcceptorSmoke()
     readyFuture.wait();
     serverThread.join();
 
-    std::cout << "[PASS] Acceptor ¹¹ÔìºÍ listen ¿ÉÕı³£Ö´ĞĞ" << std::endl;
-    std::cout << "[PASS] Acceptor ²âÊÔÍ¨¹ı\n" << std::endl;
+    std::cout << "[PASS] Acceptor æ„é€ å’Œ listen å¯æ­£å¸¸æ‰§è¡Œ" << std::endl;
+    std::cout << "[PASS] Acceptor æµ‹è¯•é€šè¿‡\n" << std::endl;
 }
 
-// ============ ²âÊÔ 4: Channel ÊÂ¼ş»Øµ÷ ============
+// ============ æµ‹è¯• 4: Channel äº‹ä»¶å›è°ƒ ============
 void testChannel()
 {
-    std::cout << "=== Test 4: Channel ÊÂ¼ş»Øµ÷ ===" << std::endl;
+    std::cout << "=== Test 4: Channel äº‹ä»¶å›è°ƒ ===" << std::endl;
 
     int fds[2] = {-1, -1};
     assert(createSocketPair(fds) == 0);
@@ -188,14 +188,14 @@ void testChannel()
     ::close(fds[0]);
     ::close(fds[1]);
 
-    std::cout << "[PASS] Channel ¶ÁÊÂ¼ş»Øµ÷" << std::endl;
-    std::cout << "[PASS] Channel ²âÊÔÍ¨¹ı\n" << std::endl;
+    std::cout << "[PASS] Channel è¯»äº‹ä»¶å›è°ƒ" << std::endl;
+    std::cout << "[PASS] Channel æµ‹è¯•é€šè¿‡\n" << std::endl;
 }
 
-// ============ ²âÊÔ 5: EventLoop ´ı´¦ÀíÈÎÎñÖ´ĞĞ ============
+// ============ æµ‹è¯• 5: EventLoop å¾…å¤„ç†ä»»åŠ¡æ‰§è¡Œ ============
 void testEventLoop()
 {
-    std::cout << "=== Test 5: EventLoop ´ı´¦ÀíÈÎÎñ ===" << std::endl;
+    std::cout << "=== Test 5: EventLoop å¾…å¤„ç†ä»»åŠ¡ ===" << std::endl;
 
     std::promise<EventLoop*> loopPromise;
     auto loopFuture = loopPromise.get_future();
@@ -215,15 +215,15 @@ void testEventLoop()
     loopThread.join();
 
     assert(executed.load());
-    std::cout << "[PASS] IsInloopthread ¼ì²é" << std::endl;
-    std::cout << "[PASS] ´ı´¦ÀíÈÎÎñÖ´ĞĞ" << std::endl;
-    std::cout << "[PASS] EventLoop ²âÊÔÍ¨¹ı\n" << std::endl;
+    std::cout << "[PASS] IsInloopthread æ£€æŸ¥" << std::endl;
+    std::cout << "[PASS] å¾…å¤„ç†ä»»åŠ¡æ‰§è¡Œ" << std::endl;
+    std::cout << "[PASS] EventLoop æµ‹è¯•é€šè¿‡\n" << std::endl;
 }
 
-// ============ ²âÊÔ 6: ÊÖĞ´»ØÏÔ·şÎñÆ÷¼¯³É ============
+// ============ æµ‹è¯• 6: æ‰‹å†™å›æ˜¾æœåŠ¡å™¨é›†æˆ ============
 void testEchoServer()
 {
-    std::cout << "=== Test 6: ÊÖĞ´»ØÏÔ·şÎñÆ÷¼¯³É ===" << std::endl;
+    std::cout << "=== Test 6: æ‰‹å†™å›æ˜¾æœåŠ¡å™¨é›†æˆ ===" << std::endl;
 
     std::promise<int> portPromise;
     auto portFuture = portPromise.get_future();
@@ -325,18 +325,18 @@ void testEchoServer()
     ::close(clientFd);
     serverThread.join();
 
-    std::cout << "[PASS] Socket °ó¶¨" << std::endl;
-    std::cout << "[PASS] Socket ¼àÌı" << std::endl;
-    std::cout << "[PASS] ¿Í»§¶ËÁ¬½Ó" << std::endl;
-    std::cout << "[PASS] Êı¾İÕıÈ·»ØÏÔ" << std::endl;
-    std::cout << "[PASS] »ØÏÔ·şÎñÆ÷²âÊÔÍ¨¹ı\n" << std::endl;
+    std::cout << "[PASS] Socket ç»‘å®š" << std::endl;
+    std::cout << "[PASS] Socket ç›‘å¬" << std::endl;
+    std::cout << "[PASS] å®¢æˆ·ç«¯è¿æ¥" << std::endl;
+    std::cout << "[PASS] æ•°æ®æ­£ç¡®å›æ˜¾" << std::endl;
+    std::cout << "[PASS] å›æ˜¾æœåŠ¡å™¨æµ‹è¯•é€šè¿‡\n" << std::endl;
 }
 
 int main()
 {
-    std::cout << "\n¨X¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨[" << std::endl;
-    std::cout << "¨U       ÍøÂç¿âÕûÌå¼¯³É²âÊÔ (Test Suite)         ¨U" << std::endl;
-    std::cout << "¨^¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨a" << std::endl;
+    std::cout << "\nâ•”â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•—" << std::endl;
+    std::cout << "â•‘       ç½‘ç»œåº“æ•´ä½“é›†æˆæµ‹è¯• (Test Suite)         â•‘" << std::endl;
+    std::cout << "â•šâ•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•" << std::endl;
 
     try
     {
@@ -347,14 +347,14 @@ int main()
         testEventLoop();
         testEchoServer();
 
-        std::cout << "¨X¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨[" << std::endl;
-        std::cout << "¨U              È«²¿²âÊÔÍ¨¹ı£¡                   ¨U" << std::endl;
-        std::cout << "¨^¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨a\n" << std::endl;
+        std::cout << "â•”â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•—" << std::endl;
+        std::cout << "â•‘              å…¨éƒ¨æµ‹è¯•é€šè¿‡ï¼                   â•‘" << std::endl;
+        std::cout << "â•šâ•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•\n" << std::endl;
         return 0;
     }
     catch (const std::exception& e)
     {
-        std::cerr << "[FAIL] ²âÊÔÊ§°Ü: " << e.what() << std::endl;
+        std::cerr << "[FAIL] æµ‹è¯•å¤±è´¥: " << e.what() << std::endl;
         return 1;
     }
 }

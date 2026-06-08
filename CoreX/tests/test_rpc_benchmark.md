@@ -225,12 +225,14 @@ sudo ./tests/perf_flamegraph_rpc.sh
 ```
 
 脚本执行流程：
-1. 以 `perf record` 启动服务器（99 Hz 采样，DWARF 调用栈展开）
-2. 启动客户端压测（10 万次调用）
-3. 客户端完成后，SIGINT 停止服务器，触发 `perf.data` 写入
+1. 构建 `test_rpc_benchmark`（Release + 调试符号）
+2. 直接在 benchmark 模式上运行 `perf record`（99 Hz 采样，DWARF 调用栈展开），内嵌服务器 + 多线程客户端在同一进程内采样
+3. benchmark 结束后 `perf.data` 自动写入
 4. 调用 `perf script` → `stackcollapse-perf.pl` → `flamegraph.pl` 生成 SVG
 
-输出文件：`rpc_benchmark_flamegraph.svg`
+输出文件：
+- `perf_data/perf_rpc_YY-MM-DD-HHMM.data` — perf 采样原始数据
+- `svg/rpc_benchmark_flamegraph_YY-MM-DD-HHMM.svg` — 火焰图 SVG
 
 ### 手动火焰图分析
 
@@ -238,20 +240,20 @@ sudo ./tests/perf_flamegraph_rpc.sh
 
 ```bash
 # 终端 1: 以 perf 启动服务器
-sudo perf record -F 99 -g --call-graph dwarf -o /tmp/perf_rpc.data \
+sudo perf record -F 99 -g --call-graph dwarf -o perf_data/perf_rpc_$(date +%y-%m-%d-%H%M).data \
     ./build/test_rpc_benchmark --mode server --port 8080
 
 # 终端 2: 运行客户端
 ./build/test_rpc_benchmark --mode benchmark --port 8080 --calls 100000
 
 # 终端 1: Ctrl+C 停止服务器，然后生成火焰图
-sudo perf script -i /tmp/perf_rpc.data | \
+sudo perf script -i perf_data/perf_rpc_XX.data | \
     /root/Cplus/FlameGraph/stackcollapse-perf.pl | \
     /root/Cplus/FlameGraph/flamegraph.pl \
         --title "CoreX RPC Benchmark - CPU Hotspots" \
         --width 1200 \
         --colors java \
-    > rpc_benchmark_flamegraph.svg
+    > svg/rpc_benchmark_flamegraph_$(date +%y-%m-%d-%H%M).svg
 ```
 
 ### 火焰图解读要点

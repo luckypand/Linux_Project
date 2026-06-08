@@ -4,10 +4,10 @@
 #include <string.h>
 #include <iostream>
 
-//ºìºÚÊ÷ÏÂµÄfd×´Ì¬»ú±ä»¯±ê¼Ç£¬¼ÇÂ¼µÄÊÇfd±¾ÉíÓëepoll¹ÒÔØºìºÚÊ÷µÄ×´Ì¬
-const int kNEW = -1;    // ĞÂµÄ£¬»¹²»ÔÚ epoll ºìºÚÊ÷ÉÏ
-const int KADDED = 1;   // ÒÑ¾­ÔÚÊ÷ÉÏ
-const int KDELETED = 2; // ÒÑ¾­´ÓÊ÷ÉÏÕª³ı£¬µ«¶ÔÏó»¹ÔÚ
+//çº¢é»‘æ ‘ä¸‹çš„fdçŠ¶æ€æœºå˜åŒ–æ ‡è®°ï¼Œè®°å½•çš„æ˜¯fdæœ¬èº«ä¸epollæŒ‚è½½çº¢é»‘æ ‘çš„çŠ¶æ€
+const int kNEW = -1;    // æ–°çš„ï¼Œè¿˜ä¸åœ¨ epoll çº¢é»‘æ ‘ä¸Š
+const int KADDED = 1;   // å·²ç»åœ¨æ ‘ä¸Š
+const int KDELETED = 2; // å·²ç»ä»æ ‘ä¸Šæ‘˜é™¤ï¼Œä½†å¯¹è±¡è¿˜åœ¨
 
 Poller::Poller(EventLoop* loop)
     :my_EventLoop_(loop)
@@ -26,18 +26,18 @@ Poller::~Poller()
 
 void Poller::poll(int TimeoutMS,ChannelList& activeChannels_)
 {
-    //Í³¼Æ·¢ÉúÊÂ¼şµÄfd  
+    //ç»Ÿè®¡å‘ç”Ÿäº‹ä»¶çš„fd  
     int EventNum = ::epoll_wait(pollerfd_,&*events_.begin(),static_cast<int>(events_.size()),TimeoutMS);
 
-    if(EventNum > 0)//ÊÂ¼ş·¢ÉúÊı´óÓÚ0£¬ĞèÒªÍ¬²½´¦Àíchannel
+    if(EventNum > 0)//äº‹ä»¶å‘ç”Ÿæ•°å¤§äº0ï¼Œéœ€è¦åŒæ­¥å¤„ç†channel
     {
         for(int i = 0;i < EventNum;i++)
         {
-            Channel* channel = static_cast<Channel*>(events_[i].data.ptr); //½«¶ÔÓ¦channelÈ¡³ö
-            channel->setretevent(events_[i].events);  //½«Êµ¼Ê·¢ÉúµÄÊÂÇé·ÅÈëchannel
-            activeChannels_.push_back(channel);      //½«»îÔ¾µÄchannel·ÅÈëactivechannel
+            Channel* channel = static_cast<Channel*>(events_[i].data.ptr); //å°†å¯¹åº”channelå–å‡º
+            channel->setretevent(events_[i].events);  //å°†å®é™…å‘ç”Ÿçš„äº‹æƒ…æ”¾å…¥channel
+            activeChannels_.push_back(channel);      //å°†æ´»è·ƒçš„channelæ”¾å…¥activechannel
         } 
-        //ÓÅ»¯²ßÂÔ£º¶¯Ì¬À©Èİ(¼àÊÓµ½µÄÊÂ¼ş·¢ÉúÊıµ½´ïÔÊĞíµÄ×î´óÖµ£¬À©Èİ)
+        //ä¼˜åŒ–ç­–ç•¥ï¼šåŠ¨æ€æ‰©å®¹(ç›‘è§†åˆ°çš„äº‹ä»¶å‘ç”Ÿæ•°åˆ°è¾¾å…è®¸çš„æœ€å¤§å€¼ï¼Œæ‰©å®¹)
         if(EventNum == events_.size())
         {
             events_.resize(events_.size() * 2);
@@ -48,11 +48,11 @@ void Poller::poll(int TimeoutMS,ChannelList& activeChannels_)
 
 /*
 * @brief:
-*     µ×²ã¶ş²æÊ÷½øĞĞĞŞ¸Ä£¬±¾ÖÊÊÇepoll_ctlµÄ·â×° 
+*     åº•å±‚äºŒå‰æ ‘è¿›è¡Œä¿®æ”¹ï¼Œæœ¬è´¨æ˜¯epoll_ctlçš„å°è£… 
 */
 void Poller::update(int operation,Channel* channel)
 {
-    struct epoll_event event;//ÉèÖÃ½«Òª±»·ÅÈëµÄÊÂ¼ş
+    struct epoll_event event;//è®¾ç½®å°†è¦è¢«æ”¾å…¥çš„äº‹ä»¶
     memset(&event,0,sizeof(event));
     event.data.ptr = channel;
     event.events = channel->events();
@@ -62,30 +62,30 @@ void Poller::update(int operation,Channel* channel)
 
 /*
 * @brief:
-*     ÀûÓÃ×´Ì¬»ú¸üĞÂchannelµÄ×´Ì¬,¼´fdÓëºìºÚÊ÷µÄ×´Ì¬
+*     åˆ©ç”¨çŠ¶æ€æœºæ›´æ–°channelçš„çŠ¶æ€,å³fdä¸çº¢é»‘æ ‘çš„çŠ¶æ€
 */
 void Poller::UpdateChannel(Channel* channel)
 {
-    const int index = channel->index();//¼ÇÂ¼´ËÊ±µÄ×´Ì¬
+    const int index = channel->index();//è®°å½•æ­¤æ—¶çš„çŠ¶æ€
 
-    if(index == kNEW || index == KDELETED)//µ±¸Ãchannel»¹Ã»ÓĞ¼ÓÈë»òÕß±»ÒÆ³ö¼àÊÓ
+    if(index == kNEW || index == KDELETED)//å½“è¯¥channelè¿˜æ²¡æœ‰åŠ å…¥æˆ–è€…è¢«ç§»å‡ºç›‘è§†
     {
-        if(index == kNEW)//fdĞÂ¼ÓÈë,´ËÊ±map»¹Ã»ÓĞÓ³Éä£¬Ìí¼ÓÓ³Éä[fd,channel*]
+        if(index == kNEW)//fdæ–°åŠ å…¥,æ­¤æ—¶mapè¿˜æ²¡æœ‰æ˜ å°„ï¼Œæ·»åŠ æ˜ å°„[fd,channel*]
         {
             channels_[channel->Fd()] = channel;
         }
-        //ÈôÊÇÉ¾³ıÖØ¼ÓÈëµÄfd£¬±¾ÉíÒÑ¾­×¢²á¹ı£¬Ö»Ğè´Ó¸üĞÂ×´Ì¬ºÍĞŞ¸ÄºìºÚÊ÷¿ªÊ¼
-        channel->setindex(KADDED);      //¸üĞÂ×´Ì¬»ú
-        update(EPOLL_CTL_ADD,channel);  //ĞŞ¸ÄºìºÚÊ÷
+        //è‹¥æ˜¯åˆ é™¤é‡åŠ å…¥çš„fdï¼Œæœ¬èº«å·²ç»æ³¨å†Œè¿‡ï¼Œåªéœ€ä»æ›´æ–°çŠ¶æ€å’Œä¿®æ”¹çº¢é»‘æ ‘å¼€å§‹
+        channel->setindex(KADDED);      //æ›´æ–°çŠ¶æ€æœº
+        update(EPOLL_CTL_ADD,channel);  //ä¿®æ”¹çº¢é»‘æ ‘
     }
-    else//±¾Éí×´Ì¬ÒÑ¾­±»¼àÊÓ
+    else//æœ¬èº«çŠ¶æ€å·²ç»è¢«ç›‘è§†
     {
-        if(channel->IsNoneEvent())//¹ÒÔØºó²»¹ØĞÄ¸Ãfd£¬É¾³ı
+        if(channel->IsNoneEvent())//æŒ‚è½½åä¸å…³å¿ƒè¯¥fdï¼Œåˆ é™¤
         {
             update(EPOLL_CTL_DEL,channel); 
             channel->setindex(KDELETED);
         }
-        else//±»¼àÊÓÁË£¬²¢ÇÒ»¹¹Ø×¢¸Ãfd
+        else//è¢«ç›‘è§†äº†ï¼Œå¹¶ä¸”è¿˜å…³æ³¨è¯¥fd
         {
             update(EPOLL_CTL_MOD,channel); 
         }
@@ -94,8 +94,8 @@ void Poller::UpdateChannel(Channel* channel)
 
 /*
 * @brief:
-*     ÒÆ³ıchannel£¬¼´É¾³ıÆäÔÚ¹şÏ£±íÖĞµÄ×¢²á£¬Èç¹û±¾ÉíÔÚÊ÷ÉÏ£¬Ôò
-    ´ÓepollÊ÷ÉÏÕª³ı£¬ÖØĞÂ½«×´Ì¬ÖÃÎªkNEW
+*     ç§»é™¤channelï¼Œå³åˆ é™¤å…¶åœ¨å“ˆå¸Œè¡¨ä¸­çš„æ³¨å†Œï¼Œå¦‚æœæœ¬èº«åœ¨æ ‘ä¸Šï¼Œåˆ™
+    ä»epollæ ‘ä¸Šæ‘˜é™¤ï¼Œé‡æ–°å°†çŠ¶æ€ç½®ä¸ºkNEW
 */
 
 void Poller::RemoveChannel(Channel* channel)

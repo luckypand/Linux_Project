@@ -4,6 +4,9 @@
 CMakeFiles/test_rpc_benchmark.dir/tests/test_rpc_benchmark.cpp.o
  ../proto/math_service.pb.h
  ../proto/rpc_message.pb.h
+ ../src/log/my_blockqueue.hpp
+ ../src/log/my_buffer.hpp
+ ../src/log/my_log.hpp
  ../src/net/Acceptor.hpp
  ../src/net/Buffer.hpp
  ../src/net/Channel.hpp

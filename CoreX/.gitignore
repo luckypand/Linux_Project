@@ -1,0 +1,12 @@
+# 火焰图输出（perf 数据和 SVG）
+perf_data/
+svg/
+
+# 构建产物
+build/
+*.o
+*.a
+
+# IDE
+.vscode/
+.idea/

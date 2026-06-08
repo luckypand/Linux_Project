@@ -13,11 +13,11 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ./build.sh clean            # Remove build directory
 ```
 
-Targets: `test_echo_server`, `timeout_server_test`, `test_net_integration`.
+Targets: `test_echo_server`, `timeout_server_test`, `test_net_integration`, `test_rpc_benchmark`.
 
 Build outputs go to `build/`. ASan builds append `_ASAN` to the binary name.
 
-C++17 required. Dependencies: pthreads. Protobuf is used by the RPC module (`src/rpc/`) but is **not yet wired into CMakeLists.txt** — the RPC sources and generated `.pb.cc` files are not part of any build target.
+C++17 required. Dependencies: pthreads, Protobuf 3.6+. The RPC module (`src/rpc/`) and generated `.pb.cc` files build into a static library `librpc.a` included by `test_rpc_benchmark`.
 
 ## Architecture
 
@@ -69,10 +69,13 @@ TCP bytes → Buffer → RpcCodec::Onmessage (framing/validation)
 
 ### Proto Definitions (`proto/`)
 
-- `rpc_message.proto` — RPC envelope: `RpcMessage` with type (REQUEST/RESPONSE/ERROR), correlation id, service/method names, payload bytes, and error codes.
+- `rpc_message.proto` — RPC envelope: `RpcMessage` with type (REQUEST/RESPONSE/ERROR), correlation id, service/method names, payload bytes, error codes, and latency-tracking timestamps (`client_send_ts`, `server_recv_ts`, `server_send_ts` in microseconds from `steady_clock`).
 - `math_service.proto` — Example service definition: `MathService` with `Add`/`Sub` RPCs, plus `MathRequest`/`MathResponse` messages.
 
-Generated `.pb.h`/`.pb.cc` files are checked in alongside the `.proto` sources.
+Generated `.pb.h`/`.pb.cc` files are checked in alongside the `.proto` sources. Regenerate with:
+```bash
+cd CoreX && protoc --cpp_out=proto -Iproto proto/rpc_message.proto
+```
 
 ### Log Module (`src/log/`)
 
@@ -84,9 +87,6 @@ Singleton async logger. Macros: `LOG_DEBUG/INFO/WARN/ERROR/FATAL`. Routes to per
 
 ## Known Issues
 
-### Critical
-- **Magic number mismatch between RpcCodec and RpcServer**: [RpcCodec.hpp:5](src/rpc/RpcCodec.hpp#L5) defines `RPC_MAGIC_NUMBER = 0x4241E41` but [RpcServer.cpp:67](src/rpc/RpcServer.cpp#L67) sends `0x42414E41` ("BANA"). The codec that validates incoming frames expects a different magic than what the server sends out. Any RPC response will be rejected by a peer running the same codec.
-
 ### Moderate
 - **writeCompleteCallback never invoked**: `writeCompleteCallback_` is stored (settable via `TcpConnection::setwriteCompleteCallback` and `TcpServer::setWriteCompleteCallback`) but never called in `TcpConnection::handleWrite()`. After the output buffer is fully drained, the user is not notified.
 - **TcpServer::closeCallback_ and writeCompleteCallback_ unused**: Both stored in [TcpServer.hpp:43-44](src/net/TcpServer.hpp#L43-L44) with setters, but never forwarded to connections via `newConnection()` and never invoked.
@@ -96,8 +96,6 @@ Singleton async logger. Macros: `LOG_DEBUG/INFO/WARN/ERROR/FATAL`. Routes to per
 
 ### Minor
 - **Unused `RpcMethodCallback` typedef**: `using RpcMethodCallback = std::function<void()>;` in [RpcServer.hpp:11](src/rpc/RpcServer.hpp#L11) is unused — the old per-method callback approach was replaced by `RpcServiceAdapter`.
-- **RPC module not in build**: `src/rpc/` sources and `proto/*.pb.cc` are not listed in `CMakeLists.txt` — the RPC module doesn't compile as part of any target.
-- **`rpcMsg.set_payload(rstPayload)` in sendResponse**: [RpcServer.cpp:62](src/rpc/RpcServer.cpp#L62) — the `//?` comment suggests uncertainty about whether the serialized inner response should be set as the envelope payload (it is correct per the framing protocol).
 
 ## Tests
 
@@ -107,6 +105,7 @@ Tests are bare `assert()`-based, not GTest. They all double as integration tests
 |------|---------------|
 | `test_net_integration` | Buffer, Socket options, Acceptor smoke, Channel callbacks, EventLoop cross-thread dispatch, echo server end-to-end |
 | `test_echo_server` | TcpServer stress test: server mode (echo with stats) and client mode (epoll-based concurrent connector with heartbeat) |
+| `test_rpc_benchmark` | RPC end-to-end: multi-threaded client → server → MathService dispatch → response, with latency stats. Supports `--mode server` and `--mode benchmark` |
 | `timeout_server_test` | HeapTimer idle-timeout: single-thread server that kicks clients after 5s of silence |
 
 Run a test after building:
@@ -115,6 +114,7 @@ Run a test after building:
 ./build/test_echo_server --mode server --port 8080 &
 ./build/test_echo_server --mode client --connections 1000 --duration 10
 ./build/timeout_server_test
+./build/test_rpc_benchmark --calls 1000 --threads 2
 ```
 
 ## Code Style
@@ -128,4 +128,4 @@ Run a test after building:
 - 除了专门的技术名词外，优先使用中文回答用户问题
 
 ## 代码编码
-- 代码中有UTF-8与GB 2312两种风格，请先检查具体风格再进行代码和注释的修改，避免乱码
+- 代码与注释的风格为UTF-8，请记住并且在修改时避免乱码

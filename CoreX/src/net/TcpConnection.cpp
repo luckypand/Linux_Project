@@ -1,10 +1,10 @@
 #include "TcpConnection.hpp"
 
-//ÕûÌåÀí½â
-//handleFunctionÊÇ±¾²ãÀà¶ÔÓÚÄ³Ğ©µ÷ÓÃËûÀà×´Ì¬¸Ä±äÊ±µÄÊµ¼Ê¶¯×÷
-//¶øCallbackÊÇ×÷Îª×Ô¼º×´Ì¬¸Ä±äÊ±¹©Íâ²¿ÀàÖ´ĞĞÆäÏ£Íû¶¯×÷µÄÈİÆ÷
-//TcpConnection->´¦Àíchannel¶Ï¿ªÊ±->handleClose
-//             |_>×Ô¼º¶Ï¿ªÊ±±ğµÄÀà´¦Àí->CloseCallback
+//æ•´ä½“ç†è§£
+//handleFunctionæ˜¯æœ¬å±‚ç±»å¯¹äºæŸäº›è°ƒç”¨ä»–ç±»çŠ¶æ€æ”¹å˜æ—¶çš„å®é™…åŠ¨ä½œ
+//è€ŒCallbackæ˜¯ä½œä¸ºè‡ªå·±çŠ¶æ€æ”¹å˜æ—¶ä¾›å¤–éƒ¨ç±»æ‰§è¡Œå…¶å¸Œæœ›åŠ¨ä½œçš„å®¹å™¨
+//TcpConnection->å¤„ç†channelæ–­å¼€æ—¶->handleClose
+//             |_>è‡ªå·±æ–­å¼€æ—¶åˆ«çš„ç±»å¤„ç†->CloseCallback
 
 TcpConnection::TcpConnection(EventLoop* loop,int sockfd)
     :loop_(loop)
@@ -20,17 +20,17 @@ TcpConnection::TcpConnection(EventLoop* loop,int sockfd)
 
 TcpConnection::~TcpConnection()
 {
-    //test(ÊÇ·ñÕıÈ·µ÷ÓÃÎö¹¹º¯Êı)£ºµ±TcpConnection±»Ïú»ÙÊ±£¬×Ô¶¯µ÷ÓÃÎö¹¹º¯Êı£¬Êä³öÌáÊ¾
-    // printf("~TcpConnection\n");//×Ô¶¯µ÷ÓÃÎö¹¹
+    //test(æ˜¯å¦æ­£ç¡®è°ƒç”¨ææ„å‡½æ•°)ï¼šå½“TcpConnectionè¢«é”€æ¯æ—¶ï¼Œè‡ªåŠ¨è°ƒç”¨ææ„å‡½æ•°ï¼Œè¾“å‡ºæç¤º
+    // printf("~TcpConnection\n");//è‡ªåŠ¨è°ƒç”¨ææ„
 }
 
 /*
 * @brief:
-*     ±»TcpServer µ÷ÓÃ£¬ÕıÊ½È·Á¢Á¬½Ó
+*     è¢«TcpServer è°ƒç”¨ï¼Œæ­£å¼ç¡®ç«‹è¿æ¥
 */
 void TcpConnection::connectEstablished()
 {
-    //×´Ì¬»ú¸Ä±ä£¬channel¿ªÊ¼¹Ø×¢¶ÁfdÊÂ¼ş£¬Í¨ÖªÒµÎñ²ãÖ´ĞĞÁ¬½Ó»Øµ÷
+    //çŠ¶æ€æœºæ”¹å˜ï¼Œchannelå¼€å§‹å…³æ³¨è¯»fdäº‹ä»¶ï¼Œé€šçŸ¥ä¸šåŠ¡å±‚æ‰§è¡Œè¿æ¥å›è°ƒ
     state_ = kConnected;
     channel_->enableReading();
     if(connectionCallback_)
@@ -41,7 +41,7 @@ void TcpConnection::connectEstablished()
 
 /*
 * @brief:
-*     ±»TcpServer µ÷ÓÃ£¬ÕıÊ½Ïú»ÙÁ¬½Ó
+*     è¢«TcpServer è°ƒç”¨ï¼Œæ­£å¼é”€æ¯è¿æ¥
 */
 // void TcpConnection::connectDestroyed()
 // {
@@ -59,23 +59,23 @@ void TcpConnection::connectEstablished()
 
 /*
 * @brief:
-*     ´¦ÀíÓÃ»§»º³å²ãÃæµÄ¶ÁÊÂ¼ş
+*     å¤„ç†ç”¨æˆ·ç¼“å†²å±‚é¢çš„è¯»äº‹ä»¶
 */
 void TcpConnection::handleRead()
 {
-    //½«ÎÄ¼şÄÚÈİ¶ÁÖÁinBufferÖĞ£¬ÒÀ¾İ½á¹û½øĞĞ·ÖÀà
+    //å°†æ–‡ä»¶å†…å®¹è¯»è‡³inBufferä¸­ï¼Œä¾æ®ç»“æœè¿›è¡Œåˆ†ç±»
     int savedErrno = 0;
 
     ssize_t n = inBuffer.readFd(socket_->fd(),&savedErrno);
-    if(n > 0)//¶Á³É¹¦(ÒµÎñ´¦Àí)
+    if(n > 0)//è¯»æˆåŠŸ(ä¸šåŠ¡å¤„ç†)
     {
         messageCallback_(shared_from_this(),inBuffer);
     }
-    else if(n == 0)//Á¬½Ó¹Ø±Õ(ÍøÂç¿â´¦Àí)   
+    else if(n == 0)//è¿æ¥å…³é—­(ç½‘ç»œåº“å¤„ç†)   
     {
         handleClose();
     }
-    else//Á¬½Ó³ö´í(ÍøÂç¿â´¦Àí)   
+    else//è¿æ¥å‡ºé”™(ç½‘ç»œåº“å¤„ç†)   
     {
         handleError();
     }
@@ -83,23 +83,23 @@ void TcpConnection::handleRead()
 
 /*
 * @brief:
-*     ´¦Àí¶ÁÊÂ¼şÖĞµÄ´íÎó(code review)
+*     å¤„ç†è¯»äº‹ä»¶ä¸­çš„é”™è¯¯(code review)
 */
 void TcpConnection::handleError()
 {
-    // ³ö´íÊ±Ö±½Ó¹Ø±ÕÁ¬½Ó
+    // å‡ºé”™æ—¶ç›´æ¥å…³é—­è¿æ¥
     handleClose();
 }
 
 /*
 * @brief:
-*     ·¢ËÍÊı¾İ(Ó¦ÓÃ²ãµ÷ÓÃ)
+*     å‘é€æ•°æ®(åº”ç”¨å±‚è°ƒç”¨)
 */
 void TcpConnection::send(const std::string& message)
 {
     if(kConnected == state_)
     {
-        if(loop_->IsInloopthread())//¼õÉÙlamda¹¹ÔìºÍÖ¸Õë´«µİ
+        if(loop_->IsInloopthread())//å‡å°‘lamdaæ„é€ å’ŒæŒ‡é’ˆä¼ é€’
         {
             sendInLoop(message);
         }
@@ -114,13 +114,13 @@ void TcpConnection::send(const std::string& message)
 
 /*
 * @brief:
-*     ·¢ËÍÊı¾İ(ÄÚºËµ÷ÓÃ)
+*     å‘é€æ•°æ®(å†…æ ¸è°ƒç”¨)
 */
 void TcpConnection::sendInLoop(const std::string& message)
 {
     ssize_t nwrote = 0;
 
-    //Ö®Ç°Ã»¹Ø×¢¹ıĞ´ÊÂ¼şÇÒÒª·¢ËÍµÄÄÚÈİÎª¿Õ
+    //ä¹‹å‰æ²¡å…³æ³¨è¿‡å†™äº‹ä»¶ä¸”è¦å‘é€çš„å†…å®¹ä¸ºç©º
     if(!channel_->IsWriting() && outBuffer.ReadBytes() == 0)
     {
         nwrote = ::write(socket_->fd(),message.data(),message.size());
@@ -129,12 +129,12 @@ void TcpConnection::sendInLoop(const std::string& message)
             nwrote = 0;
         }
     }
-    //·¢ÏÖÃ»Ğ´Íê
+    //å‘ç°æ²¡å†™å®Œ
     if(static_cast<size_t>(nwrote) < message.size())
     {
-        //ÏÈ´æÔÚoutBufferÖĞµÈ´ıÄÚºË¿ÕÔÙ½Ó×ÅĞ´
+        //å…ˆå­˜åœ¨outBufferä¸­ç­‰å¾…å†…æ ¸ç©ºå†æ¥ç€å†™
         outBuffer.append(message.data() + nwrote,message.size() - nwrote);
-        //ÈÃÓÃ»§¿ªÊ¼¹Ø×¢¿ÉĞ´(´ËÊ±²»»á³öÏÖ·è¿ñÂÖÑ¯£¬ÒòÎª¸Õ²ÅÄÚºËÊä³ö»º´æ±»Ğ´Èë£¬Ö»ÓĞ¿Õ³öÀ´²Å»áÌáĞÑ)
+        //è®©ç”¨æˆ·å¼€å§‹å…³æ³¨å¯å†™(æ­¤æ—¶ä¸ä¼šå‡ºç°ç–¯ç‹‚è½®è¯¢ï¼Œå› ä¸ºåˆšæ‰å†…æ ¸è¾“å‡ºç¼“å­˜è¢«å†™å…¥ï¼Œåªæœ‰ç©ºå‡ºæ¥æ‰ä¼šæé†’)
         if(!channel_->IsWriting())
         {
             channel_->enableWriting();
@@ -144,17 +144,17 @@ void TcpConnection::sendInLoop(const std::string& message)
 
 /*
 * @brief:
-*     ´¦ÀíĞ´ÊÂ¼ş(ÄÚºËµ÷ÓÃ)
+*     å¤„ç†å†™äº‹ä»¶(å†…æ ¸è°ƒç”¨)
 */
 void TcpConnection::handleWrite()
 {
-    //ÅĞ¶ÏÈç¹û´ËÊ±ÓÃ»§¹Ø×¢Ğ´ÊÂ¼ş£¬¿ªÊ¼Ğ´Ê£Óà
+    //åˆ¤æ–­å¦‚æœæ­¤æ—¶ç”¨æˆ·å…³æ³¨å†™äº‹ä»¶ï¼Œå¼€å§‹å†™å‰©ä½™
     if(channel_->IsWriting())
     {
         ssize_t n = ::write(socket_->fd(),outBuffer.peek(),outBuffer.ReadBytes());
         if(n > 0)
         {
-            //ÅĞ¶ÏÊÇ·ñĞ´Íê£¬Èç¹ûĞ´ÍêÁË£¬²»ÔÙ¹Ø×¢Ğ´ÊÂ¼ş£¬Í¬Ê±¸ù¾İÁ¬½Ó×´Ì¬ÅĞ¶ÏÒª²»Òª¹Ø±Õ
+            //åˆ¤æ–­æ˜¯å¦å†™å®Œï¼Œå¦‚æœå†™å®Œäº†ï¼Œä¸å†å…³æ³¨å†™äº‹ä»¶ï¼ŒåŒæ—¶æ ¹æ®è¿æ¥çŠ¶æ€åˆ¤æ–­è¦ä¸è¦å…³é—­
             if(outBuffer.ReadBytes() == 0)
             {
                 channel_->disableall();
@@ -169,12 +169,12 @@ void TcpConnection::handleWrite()
 
 /*
 * @brief:
-*     TcpConnection´¦ÀíÁ¬½Ó¹Ø±Õ(ÄÚºËµ÷ÓÃ),Çø·ÖcloseCallback_£¬
-¿ÉÒÔÀí½âÎªcloseCallback_ÊÇµ¥´¿µÄ¿Ç£¬²»Í¬ÀàµÄcloseCallback_´îÔØµÄ
-handleClose²ÅÊÇÊµ¼Ê±»Ö´ĞĞµÄ¶¯×÷
-Àı£º
-TcpConnectionµÄcloseCallback_Êµ¼ÊÖ´ĞĞµÄÊÇTcpServerµÄremoveConnection
-channelµÄcloseCallback_Ö´ĞĞµÄÊÇTcpConnectionµÄhandleClose
+*     TcpConnectionå¤„ç†è¿æ¥å…³é—­(å†…æ ¸è°ƒç”¨),åŒºåˆ†closeCallback_ï¼Œ
+å¯ä»¥ç†è§£ä¸ºcloseCallback_æ˜¯å•çº¯çš„å£³ï¼Œä¸åŒç±»çš„closeCallback_æ­è½½çš„
+handleCloseæ‰æ˜¯å®é™…è¢«æ‰§è¡Œçš„åŠ¨ä½œ
+ä¾‹ï¼š
+TcpConnectionçš„closeCallback_å®é™…æ‰§è¡Œçš„æ˜¯TcpServerçš„removeConnection
+channelçš„closeCallback_æ‰§è¡Œçš„æ˜¯TcpConnectionçš„handleClose
 */
 void TcpConnection::handleClose()
 {
@@ -185,7 +185,7 @@ void TcpConnection::handleClose()
 
 /*
 * @brief:
-*     TcpConnection´¦Àí¹Ø±Õ
+*     TcpConnectionå¤„ç†å…³é—­
 */
 void TcpConnection::shutdown()
 {
@@ -205,7 +205,7 @@ void TcpConnection::shutdown()
 
 /*
 * @brief:
-*     ±»TcpServer µ÷ÓÃ£¬ÕıÊ½Ïú»ÙÁ¬½Ó
+*     è¢«TcpServer è°ƒç”¨ï¼Œæ­£å¼é”€æ¯è¿æ¥
 */
 void TcpConnection::connectDestroyed()
 {
