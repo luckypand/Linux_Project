@@ -83,18 +83,29 @@ if $DO_CLEAN_ONLY; then
     exit 0
 fi
 
+# ---------- 计算功能后缀（用于可执行文件名）----------
+FEATURE_SUFFIX=""
+if [ "$ENABLE_LOG" = "ON" ]; then
+    FEATURE_SUFFIX="${FEATURE_SUFFIX}-log"
+fi
+if [ "$ENABLE_TIMESTAMP" = "ON" ]; then
+    FEATURE_SUFFIX="${FEATURE_SUFFIX}-timestamp"
+fi
+
 # ---------- CMake 配置 ----------
-echo "[build] BUILD_TYPE = $BUILD_TYPE"
-echo "[build] ENABLE_ASAN = $ENABLE_ASAN"
-echo "[build] TIMESTAMP  = $ENABLE_TIMESTAMP"
-echo "[build] LOG        = $ENABLE_LOG"
-echo "[build] TARGET     = ${TARGET:-<all>}"
+echo "[build] BUILD_TYPE     = $BUILD_TYPE"
+echo "[build] ENABLE_ASAN     = $ENABLE_ASAN"
+echo "[build] TIMESTAMP       = $ENABLE_TIMESTAMP"
+echo "[build] LOG             = $ENABLE_LOG"
+echo "[build] FEATURE_SUFFIX  = ${FEATURE_SUFFIX:-<none>}"
+echo "[build] TARGET          = ${TARGET:-<all>}"
 
 rm -rf build
 mkdir build && cd build
 
 cmake -DCMAKE_BUILD_TYPE="$BUILD_TYPE" -DENABLE_ASAN="$ENABLE_ASAN" \
-        -DENABLE_TIMESTAMP="$ENABLE_TIMESTAMP" -DENABLE_LOG="$ENABLE_LOG" ..
+        -DENABLE_TIMESTAMP="$ENABLE_TIMESTAMP" -DENABLE_LOG="$ENABLE_LOG" \
+        -DFEATURE_SUFFIX="$FEATURE_SUFFIX" ..
 
 # ---------- 编译 ----------
 if [ -n "$TARGET" ]; then
@@ -107,10 +118,11 @@ fi
 echo ""
 echo "============================================"
 echo "  Build complete!"
-echo "  BUILD_TYPE = $BUILD_TYPE"
-echo "  ENABLE_ASAN = $ENABLE_ASAN"
-echo "  TIMESTAMP   = $ENABLE_TIMESTAMP"
-echo "  LOG         = $ENABLE_LOG"
-echo "  Output dir  = $(pwd)"
+echo "  BUILD_TYPE     = $BUILD_TYPE"
+echo "  ENABLE_ASAN     = $ENABLE_ASAN"
+echo "  TIMESTAMP       = $ENABLE_TIMESTAMP"
+echo "  LOG             = $ENABLE_LOG"
+echo "  FEATURE_SUFFIX  = ${FEATURE_SUFFIX:-<none>}"
+echo "  Output dir      = $(pwd)"
 echo "============================================"
-ls -lh --color=auto test_*_* 2>/dev/null || true
+ls -lh --color=auto test_* timeout_* 2>/dev/null || true

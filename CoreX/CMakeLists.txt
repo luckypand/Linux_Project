@@ -11,6 +11,11 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
 # ============================================================
+# Feature suffix (passed from build.sh, reflects log/timestamp flags)
+# ============================================================
+set(FEATURE_SUFFIX "" CACHE STRING "Suffix appended to executable names based on feature flags (-log, -timestamp, etc.)")
+
+# ============================================================
 # AddressSanitizer + LeakSanitizer (ASan + LSan)
 # Enable with: cmake -DENABLE_ASAN=ON ..
 # ============================================================
@@ -23,7 +28,9 @@ if(ENABLE_ASAN)
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${ASAN_FLAGS}")
     set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -fsanitize=address")
     set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -fsanitize=address")
-    set(CMAKE_EXECUTABLE_SUFFIX "_ASAN")
+    set(CMAKE_EXECUTABLE_SUFFIX "${FEATURE_SUFFIX}_ASAN")
+else()
+    set(CMAKE_EXECUTABLE_SUFFIX "${FEATURE_SUFFIX}")
 endif()
 
 # ============================================================

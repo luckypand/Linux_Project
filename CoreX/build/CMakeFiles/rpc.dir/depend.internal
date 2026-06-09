@@ -97,6 +97,7 @@ CMakeFiles/rpc.dir/src/rpc/RpcServer.cpp.o
  /root/Cplus/CoreX/src/net/TcpConnection.hpp
  /root/Cplus/CoreX/src/net/TcpServer.hpp
  /root/Cplus/CoreX/src/rpc/RpcCodec.hpp
+ /root/Cplus/CoreX/src/rpc/RpcLatencyStats.hpp
  /root/Cplus/CoreX/src/rpc/RpcServer.cpp
  /root/Cplus/CoreX/src/rpc/RpcServer.hpp
  /root/Cplus/CoreX/src/rpc/RpcServiceAdapter.hpp

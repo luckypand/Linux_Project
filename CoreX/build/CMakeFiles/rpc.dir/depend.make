@@ -96,6 +96,7 @@ CMakeFiles/rpc.dir/src/rpc/RpcServer.cpp.o: ../src/net/Socket.hpp
 CMakeFiles/rpc.dir/src/rpc/RpcServer.cpp.o: ../src/net/TcpConnection.hpp
 CMakeFiles/rpc.dir/src/rpc/RpcServer.cpp.o: ../src/net/TcpServer.hpp
 CMakeFiles/rpc.dir/src/rpc/RpcServer.cpp.o: ../src/rpc/RpcCodec.hpp
+CMakeFiles/rpc.dir/src/rpc/RpcServer.cpp.o: ../src/rpc/RpcLatencyStats.hpp
 CMakeFiles/rpc.dir/src/rpc/RpcServer.cpp.o: ../src/rpc/RpcServer.cpp
 CMakeFiles/rpc.dir/src/rpc/RpcServer.cpp.o: ../src/rpc/RpcServer.hpp
 CMakeFiles/rpc.dir/src/rpc/RpcServer.cpp.o: ../src/rpc/RpcServiceAdapter.hpp

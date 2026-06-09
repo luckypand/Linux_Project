@@ -23,8 +23,8 @@ set(CMAKE_CXX_COMPILER_ID "GNU")
 
 # Preprocessor definitions for this target.
 set(CMAKE_TARGET_DEFINITIONS_CXX
-  "ENABLE_LOG=1"
-  "ENABLE_TIMESTAMP=1"
+  "ENABLE_LOG=0"
+  "ENABLE_TIMESTAMP=0"
   )
 
 # The include file search paths:

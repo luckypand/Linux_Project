@@ -12,6 +12,8 @@ TcpConnection::TcpConnection(EventLoop* loop,int sockfd)
     ,socket_(std::make_unique<Socket>(sockfd))
     ,channel_(std::make_unique<Channel>(loop,sockfd))
 {
+    //test(将回包创建的socket关闭nagle等包优化)
+    // socket_->setTcpNoDelay(true);
     channel_->setErrorCallback([this](){this->handleError();});
     channel_->setReadCallback([this](){this->handleRead();});
     channel_->setWriteCallback([this](){this->handleWrite();});

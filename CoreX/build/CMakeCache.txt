@@ -193,10 +193,14 @@ CoreX_SOURCE_DIR:STATIC=/root/Cplus/CoreX
 ENABLE_ASAN:BOOL=OFF
 
 //Enable log printing
-ENABLE_LOG:BOOL=ON
+ENABLE_LOG:BOOL=OFF
 
 //Enable RPC latency timing instrumentation
-ENABLE_TIMESTAMP:BOOL=ON
+ENABLE_TIMESTAMP:BOOL=OFF
+
+//Suffix appended to executable names based on feature flags (-log,
+// -timestamp, etc.)
+FEATURE_SUFFIX:STRING=
 
 //Path to a file.
 Protobuf_INCLUDE_DIR:PATH=/usr/include

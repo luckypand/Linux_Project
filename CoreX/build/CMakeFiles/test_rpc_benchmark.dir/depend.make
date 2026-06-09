@@ -17,6 +17,7 @@ CMakeFiles/test_rpc_benchmark.dir/tests/test_rpc_benchmark.cpp.o: ../src/net/Tcp
 CMakeFiles/test_rpc_benchmark.dir/tests/test_rpc_benchmark.cpp.o: ../src/net/TcpServer.hpp
 CMakeFiles/test_rpc_benchmark.dir/tests/test_rpc_benchmark.cpp.o: ../src/rpc/MathServiceImpl.hpp
 CMakeFiles/test_rpc_benchmark.dir/tests/test_rpc_benchmark.cpp.o: ../src/rpc/RpcCodec.hpp
+CMakeFiles/test_rpc_benchmark.dir/tests/test_rpc_benchmark.cpp.o: ../src/rpc/RpcLatencyStats.hpp
 CMakeFiles/test_rpc_benchmark.dir/tests/test_rpc_benchmark.cpp.o: ../src/rpc/RpcServer.hpp
 CMakeFiles/test_rpc_benchmark.dir/tests/test_rpc_benchmark.cpp.o: ../src/rpc/RpcServiceAdapter.hpp
 CMakeFiles/test_rpc_benchmark.dir/tests/test_rpc_benchmark.cpp.o: ../tests/test_rpc_benchmark.cpp

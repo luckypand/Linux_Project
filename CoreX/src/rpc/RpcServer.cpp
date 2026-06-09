@@ -1,5 +1,6 @@
 #include "RpcServer.hpp"
 #include <arpa/inet.h>
+#include <vector>
 #if ENABLE_TIMESTAMP
 #include <chrono>
 #endif
@@ -99,6 +100,16 @@ void RpcServer::handleRpcCodecMessage(const TcpConnectionPtr& conn,const std::st
 
 #if ENABLE_TIMESTAMP
         auto t4 = now_us();
+
+        // ★ 尾延迟统计：将各阶段耗时记录到统计器（如果设置了的话）
+        if (latencyStats_) {
+            std::vector<LatencyBreakdown> breakdown;
+            breakdown.push_back({"deserialize", static_cast<double>(t1 - t0)});
+            breakdown.push_back({"route",       static_cast<double>(t2 - t1)});
+            breakdown.push_back({"business",    static_cast<double>(t3 - t2)});
+            breakdown.push_back({"send",        static_cast<double>(t4 - t3)});
+            latencyStats_->record(static_cast<double>(t4 - t0), breakdown);
+        }
 
         // 异步日志记录各阶段耗时，不阻塞当前请求处理
         LOG_INFO("[RPC-TIMING] id=%lu %s.%s | "

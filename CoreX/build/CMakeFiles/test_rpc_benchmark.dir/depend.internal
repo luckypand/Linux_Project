@@ -18,6 +18,7 @@ CMakeFiles/test_rpc_benchmark.dir/tests/test_rpc_benchmark.cpp.o
  ../src/net/TcpServer.hpp
  ../src/rpc/MathServiceImpl.hpp
  ../src/rpc/RpcCodec.hpp
+ ../src/rpc/RpcLatencyStats.hpp
  ../src/rpc/RpcServer.hpp
  ../src/rpc/RpcServiceAdapter.hpp
  /root/Cplus/CoreX/tests/test_rpc_benchmark.cpp

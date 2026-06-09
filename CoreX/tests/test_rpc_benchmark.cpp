@@ -20,6 +20,7 @@
 #include "RpcServer.hpp"
 #include "RpcServiceAdapter.hpp"
 #include "MathServiceImpl.hpp"
+#include "RpcLatencyStats.hpp"
 #include "../../proto/rpc_message.pb.h"
 #include "../../proto/math_service.pb.h"
 #include "my_log.hpp"
@@ -182,6 +183,15 @@ static string build_packet(const string& payload) {
 // ============================================================
 struct ThreadStats {
     vector<double> rttUs;       // 每次调用的 RTT (微秒)
+
+    // ★ 阶段分解：与 rttUs 一一对应的并行数组，用于 P99 尾部分析
+    vector<double> upNetUs;     // 上行网络延迟 (client→server)
+    vector<double> srvProcUs;   // 服务端处理时间
+    vector<double> downNetUs;   // 下行网络延迟 (server→client)
+
+    // ★ 时序采样：每 100 次请求记录一个 (elapsedSec, rttUs) 点
+    vector<pair<double, double>> timeSeries;
+
     size_t calls   = 0;         // 成功调用次数
     size_t errors  = 0;         // 失败次数
     string  errorMsg;           // 首个错误描述
@@ -198,9 +208,13 @@ struct ThreadStats {
 // 客户端线程主函数
 // ============================================================
 static ThreadStats run_client_thread(int threadId, int numCalls,
-                                     shared_future<void> startSignal) {
+                                     shared_future<void> startSignal,
+                                     chrono::steady_clock::time_point benchStart) {
     ThreadStats stats;
     stats.rttUs.reserve(static_cast<size_t>(numCalls));
+    stats.upNetUs.reserve(static_cast<size_t>(numCalls));
+    stats.srvProcUs.reserve(static_cast<size_t>(numCalls));
+    stats.downNetUs.reserve(static_cast<size_t>(numCalls));
 
     // ---- 重用 protobuf 对象，避免每轮分配 ----
     CoreX::rpc::MathRequest  mathReq;
@@ -378,6 +392,28 @@ static ThreadStats run_client_thread(int threadId, int numCalls,
             stats.rttUs.push_back(rtt);
             stats.calls++;
 
+            // ★ 阶段分解：每个请求都记录，用于 P99 尾部分析
+            {
+                uint64_t client_send = rpcResp.client_send_ts();
+                uint64_t server_recv = rpcResp.server_recv_ts();
+                uint64_t server_send = rpcResp.server_send_ts();
+
+                double upNet   = static_cast<double>(server_recv - client_send);
+                double srvProc = static_cast<double>(server_send - server_recv);
+                double downNet = rtt - upNet - srvProc;
+
+                stats.upNetUs.push_back(upNet);
+                stats.srvProcUs.push_back(srvProc);
+                stats.downNetUs.push_back(downNet);
+
+                // 当时序采样：每 100 次记录一个点
+                if (stats.calls % 100 == 1) {
+                    double elapsed = chrono::duration<double>(
+                        chrono::steady_clock::now() - benchStart).count();
+                    stats.timeSeries.push_back({elapsed, rtt});
+                }
+            }
+
             // 当 RTT 超过阈值时，用时间戳分解耗时
             if (rtt >= g_args.maxRttUs) {
                 uint64_t client_send = rpcResp.client_send_ts();
@@ -429,6 +465,17 @@ struct BenchResult {
     size_t exceedCount  = 0;    // 超过 maxRttUs 的样本数
     bool   pass         = false;
 
+    // ★ P99 尾部延迟分解
+    size_t tailCount        = 0;     // 进入 P99 尾部的样本数
+    double tailAvgUpNetUs   = 0.0;   // 尾部上行网络平均
+    double tailAvgSrvProcUs = 0.0;   // 尾部服务端处理平均
+    double tailAvgDownNetUs = 0.0;   // 尾部下行网络平均
+    double tailAvgRttUs     = 0.0;   // 尾部 RTT 平均
+
+    // ★ 延迟分布形态指标
+    double p50Us_p99Us_ratio  = 0.0;  // P99 / P50 放大比
+    double p50Us_p999Us_ratio = 0.0;  // P999 / P50 放大比
+
     // 超时请求耗时分解汇总
     size_t timeoutTotal          = 0;
     double timeoutAvgUpNetUs     = 0.0;
@@ -442,19 +489,28 @@ static BenchResult compute_stats(vector<ThreadStats>& allStats,
     BenchResult result;
     result.wallSec = wallSec;
 
-    // 合并所有线程的 RTT 数据
+    // 合并所有线程的 RTT 数据和阶段分解
     vector<double> allRtt;
+    vector<double> allUpNet;
+    vector<double> allSrvProc;
+    vector<double> allDownNet;
     for (auto& ts : allStats) {
         result.totalCalls  += ts.calls;
         result.totalErrors += ts.errors;
         allRtt.insert(allRtt.end(), ts.rttUs.begin(), ts.rttUs.end());
+        allUpNet.insert(allUpNet.end(), ts.upNetUs.begin(), ts.upNetUs.end());
+        allSrvProc.insert(allSrvProc.end(), ts.srvProcUs.begin(), ts.srvProcUs.end());
+        allDownNet.insert(allDownNet.end(), ts.downNetUs.begin(), ts.downNetUs.end());
     }
 
     if (allRtt.empty()) {
         return result;
     }
 
-    // 排序
+    // ★ 保留未排序副本用于阶段分解（排序会打乱下标对应关系）
+    vector<double> unsortedRtt = allRtt;
+
+    // 排序（用于分位数计算）
     sort(allRtt.begin(), allRtt.end());
 
     size_t n = allRtt.size();
@@ -466,6 +522,33 @@ static BenchResult compute_stats(vector<ThreadStats>& allStats,
     result.p95Us  = allRtt[n * 95  / 100];
     result.p99Us  = allRtt[n * 99  / 100];
     result.p999Us = allRtt[n * 999 / 1000];
+
+    // ★ P99 尾部阶段分解：用未排序数组扫描 ≥ P99 的样本
+    {
+        double tailUpSum = 0.0, tailSrvSum = 0.0, tailDownSum = 0.0, tailRttSum = 0.0;
+        result.tailCount = 0;
+        double p99threshold = result.p99Us;
+        for (size_t i = 0; i < unsortedRtt.size(); ++i) {
+            if (unsortedRtt[i] >= p99threshold) {
+                result.tailCount++;
+                if (i < allUpNet.size())   tailUpSum   += allUpNet[i];
+                if (i < allSrvProc.size()) tailSrvSum  += allSrvProc[i];
+                if (i < allDownNet.size()) tailDownSum += allDownNet[i];
+                tailRttSum += unsortedRtt[i];
+            }
+        }
+        if (result.tailCount > 0) {
+            result.tailAvgUpNetUs   = tailUpSum   / result.tailCount;
+            result.tailAvgSrvProcUs = tailSrvSum  / result.tailCount;
+            result.tailAvgDownNetUs = tailDownSum / result.tailCount;
+            result.tailAvgRttUs     = tailRttSum  / result.tailCount;
+        }
+        // 尾延迟放大比
+        if (result.p50Us > 0.0) {
+            result.p50Us_p99Us_ratio  = result.p99Us  / result.p50Us;
+            result.p50Us_p999Us_ratio = result.p999Us / result.p50Us;
+        }
+    }
 
     result.throughput = (wallSec > 0.0)
                         ? (static_cast<double>(result.totalCalls) / wallSec)
@@ -505,7 +588,8 @@ static BenchResult compute_stats(vector<ThreadStats>& allStats,
 // ============================================================
 // 打印统计结果
 // ============================================================
-static void print_results(const BenchResult& r) {
+static void print_results(const BenchResult& r,
+                          RpcLatencyStats* serverStats = nullptr) {
     cout << "\n";
     cout << "======================== RPC Benchmark Results ========================\n";
     cout << "  Server:             " << g_args.serverIp << ":" << g_args.port << "\n";
@@ -534,6 +618,65 @@ static void print_results(const BenchResult& r) {
     cout << "    P95:              " << fixed << setprecision(2) << r.p95Us  << "\n";
     cout << "    P99:              " << fixed << setprecision(2) << r.p99Us  << "\n";
     cout << "    P99.9:            " << fixed << setprecision(2) << r.p999Us << "\n";
+
+    // ★ 尾延迟放大比
+    if (r.p50Us > 0.0) {
+        cout << "\n  Tail latency amplification:\n";
+        cout << "    P99  / P50:       " << fixed << setprecision(1)
+             << r.p50Us_p99Us_ratio << "x";
+        if (r.p50Us_p99Us_ratio > 10.0) {
+            cout << "  ⚠ 严重长尾 (>10x)";
+        } else if (r.p50Us_p99Us_ratio > 3.0) {
+            cout << "  ⚠ 明显长尾 (>3x)";
+        } else {
+            cout << "  ✓ 正常";
+        }
+        cout << "\n";
+        cout << "    P999 / P50:       " << fixed << setprecision(1)
+             << r.p50Us_p999Us_ratio << "x";
+        if (r.p50Us_p999Us_ratio > 50.0) {
+            cout << "  ⚠ P999 严重长尾 (>50x)";
+        } else if (r.p50Us_p999Us_ratio > 10.0) {
+            cout << "  ⚠ P999 明显长尾 (>10x)";
+        } else {
+            cout << "  ✓ 正常";
+        }
+        cout << "\n";
+    }
+
+    // ★ P99 尾部延迟分解（找出尾延迟瓶颈）
+    if (r.tailCount > 0) {
+        double tailTotal = r.tailAvgUpNetUs + r.tailAvgSrvProcUs + r.tailAvgDownNetUs;
+        if (tailTotal <= 0.0) tailTotal = 1.0;
+        cout << "\n  ╔══ P99 尾部延迟分解 (≥ " << fixed << setprecision(1) << r.p99Us
+             << " us, 共 " << r.tailCount << " 样本) ══╗\n";
+        cout << "  ║ 上行网络 (client→server):  "
+             << setw(8) << fixed << setprecision(1) << r.tailAvgUpNetUs   << " us  ("
+             << setw(5) << setprecision(1) << (100.0 * r.tailAvgUpNetUs / tailTotal) << "%)"
+             << "         ║\n";
+        cout << "  ║ 服务端处理:                "
+             << setw(8) << fixed << setprecision(1) << r.tailAvgSrvProcUs << " us  ("
+             << setw(5) << setprecision(1) << (100.0 * r.tailAvgSrvProcUs / tailTotal) << "%)"
+             << "         ║\n";
+        cout << "  ║ 下行网络 (server→client):  "
+             << setw(8) << fixed << setprecision(1) << r.tailAvgDownNetUs << " us  ("
+             << setw(5) << setprecision(1) << (100.0 * r.tailAvgDownNetUs / tailTotal) << "%)"
+             << "         ║\n";
+        cout << "  ╠══════════════════════════════════════════════════════════════╣\n";
+        cout << "  ║ ⚡ P99 尾延迟主因: ";
+        if (r.tailAvgSrvProcUs >= r.tailAvgUpNetUs &&
+            r.tailAvgSrvProcUs >= r.tailAvgDownNetUs) {
+            cout << "服务端处理                              ║\n";
+            cout << "  ║    → 建议: 增加工作线程 / 优化 dispatch / 减少锁竞争     ║\n";
+        } else if (r.tailAvgUpNetUs >= r.tailAvgDownNetUs) {
+            cout << "上行网络延迟                            ║\n";
+            cout << "  ║    → 建议: 检查客户端发送队列 / TCP 拥塞窗口             ║\n";
+        } else {
+            cout << "下行网络延迟                            ║\n";
+            cout << "  ║    → 建议: 检查服务端 send 缓冲 / 客户端 recv 效率      ║\n";
+        }
+        cout << "  ╚══════════════════════════════════════════════════════════════╝\n";
+    }
 
     cout << "\n  Threshold check (" << fixed << setprecision(1)
          << g_args.maxRttUs << " μs):\n";
@@ -580,6 +723,13 @@ static void print_results(const BenchResult& r) {
         }
     }
 
+    // ★ 服务端延迟统计（如果已启用）
+    if (serverStats && serverStats->totalCount() > 0) {
+        cout << "\n";
+        serverStats->printSummary(cout);
+        serverStats->printBreakdown(cout);
+    }
+
     cout << "\n  Result:             "
          << (r.pass ? "\033[1;32mPASS\033[0m" : "\033[1;31mFAIL\033[0m")
          << "\n";
@@ -599,9 +749,70 @@ static void print_results(const BenchResult& r) {
 }
 
 // ============================================================
+// ★ 预热函数：发送若干次 RPC 调用，消除冷启动效应
+//    JIT 编译、CPU 缓存预热、TCP slow-start 等
+// ============================================================
+static void warmup_client(int numWarmup) {
+    int sock = ::socket(AF_INET, SOCK_STREAM | SOCK_CLOEXEC, 0);
+    if (sock < 0) return;
+
+    int one = 1;
+    ::setsockopt(sock, IPPROTO_TCP, TCP_NODELAY, &one, sizeof(one));
+
+    struct sockaddr_in addr {};
+    addr.sin_family = AF_INET;
+    addr.sin_port   = htons(g_args.port);
+    if (::inet_pton(AF_INET, g_args.serverIp.c_str(), &addr.sin_addr) != 1) {
+        ::close(sock);
+        return;
+    }
+    if (::connect(sock, reinterpret_cast<struct sockaddr*>(&addr), sizeof(addr)) < 0) {
+        ::close(sock);
+        return;
+    }
+
+    CoreX::rpc::MathRequest  mathReq;
+    CoreX::rpc::RpcMessage   rpcReq;
+    rpcReq.set_type(CoreX::rpc::REQUEST);
+    rpcReq.set_service("CoreX.rpc.MathService");
+    rpcReq.set_method("Add");
+
+    string innerReqPayload, wireReqPayload, wirePacket, respPayload;
+    uint8_t header[8];
+
+    for (int i = 0; i < numWarmup; ++i) {
+        try {
+            mathReq.set_a(i);
+            mathReq.set_b(i + 1);
+            mathReq.SerializeToString(&innerReqPayload);
+            rpcReq.set_id(static_cast<uint64_t>(i));
+            rpcReq.set_payload(innerReqPayload);
+            rpcReq.set_client_send_ts(now_us());
+            rpcReq.SerializeToString(&wireReqPayload);
+            wirePacket = build_packet(wireReqPayload);
+
+            send_n(sock, wirePacket.data(), wirePacket.size());
+            recv_n(sock, header, 8);
+
+            uint32_t respLen;
+            memcpy(&respLen, header + 4, 4);
+            respLen = ntohl(respLen);
+            if (respLen > 0 && respLen <= 64 * 1024 * 1024) {
+                respPayload.resize(respLen);
+                recv_n(sock, &respPayload[0], respLen);
+            }
+        } catch (...) {
+            break;  // 预热中出现任何错误都直接退出
+        }
+    }
+
+    ::close(sock);
+}
+
+// ============================================================
 // Benchmark 模式: 内嵌服务器 + 多线程客户端
 // ============================================================
-static int run_benchmark() {
+static int run_benchmark(RpcLatencyStats* outServerStats = nullptr) {
     if (g_args.threads <= 0) {
         g_args.threads = static_cast<int>(thread::hardware_concurrency());
         if (g_args.threads <= 0) g_args.threads = 2;
@@ -622,6 +833,9 @@ static int run_benchmark() {
     cout << "\n[benchmark] 启动内嵌 RPC 服务器...\n";
     MathServiceImpl mathService;
 
+    // ★ 创建服务端延迟统计器
+    RpcLatencyStats serverStats("RpcServer-Internal", 1'000'000, 0.1, 10'000.0, 50);
+
     auto readyPromise = make_shared<promise<void>>();
     future<void> readyFuture = readyPromise->get_future();
 
@@ -632,6 +846,7 @@ static int run_benchmark() {
         serverLoop.store(&loop);
         RpcServer server(&loop, g_args.serverIp, g_args.port, "BenchServer");
         server.registerService(&mathService);
+        server.setLatencyStats(&serverStats);  // ★ 启用服务端统计收集
         server.start();
 
         cout << "[server] RPC 服务器已启动: " << g_args.serverIp
@@ -647,6 +862,13 @@ static int run_benchmark() {
 
     // 给服务器一点额外时间完成 accept 绑定
     this_thread::sleep_for(chrono::milliseconds(100));
+
+    // ★ 预热阶段：消除 JIT/Cache/TCP slow-start 冷启动效应
+    if (g_args.calls > 10000) {
+        cout << "[benchmark] 预热中 (1000 次调用)...\n";
+        warmup_client(1000);
+        cout << "[benchmark] 预热完成，开始正式测量\n\n";
+    }
 
     // ---- 2. 启动客户端线程 ----
     cout << "[benchmark] 启动 " << g_args.threads << " 个客户端线程...\n";
@@ -664,13 +886,16 @@ static int run_benchmark() {
     promise<void> startPromise;
     shared_future<void> startSignal = startPromise.get_future().share();
 
+    // 记录基准时间（用于时序采样）
+    auto benchStartTime = chrono::steady_clock::now();
+
     // 启动线程
     vector<future<ThreadStats>> futures;
     for (int i = 0; i < g_args.threads; ++i) {
         if (threadCalls[static_cast<size_t>(i)] <= 0) continue;
         futures.push_back(async(launch::async,
-            [i, calls = threadCalls[static_cast<size_t>(i)], startSignal]() {
-                return run_client_thread(i, calls, startSignal);
+            [i, calls = threadCalls[static_cast<size_t>(i)], startSignal, benchStartTime]() {
+                return run_client_thread(i, calls, startSignal, benchStartTime);
             }));
     }
 
@@ -714,7 +939,12 @@ static int run_benchmark() {
 
     // ---- 4. 计算并打印统计 ----
     BenchResult result = compute_stats(allStats, wallSec, g_args.maxRttUs);
-    print_results(result);
+    print_results(result, &serverStats);  // ★ 传入服务端统计
+
+    // ★ 将服务端统计传出给调用者（用 merge 代替赋值，因为 mutex 不可拷贝）
+    if (outServerStats) {
+        outServerStats->merge(serverStats);
+    }
 
     return result.pass ? 0 : 1;
 }
