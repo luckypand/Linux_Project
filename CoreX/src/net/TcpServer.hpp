@@ -20,6 +20,8 @@ public:
     void newConnection(int sockfd, const std::string& peerAddr);
     void start();
 
+    EventLoop* getLoop() const { return loop_; }
+
     //开放给用户的回调接口
     void setConnectionCallback(TcpConnection::connectionCallback cb) { connectionCallback_ = std::move(cb); }
     void setMessageCallback(TcpConnection::messageCallback cb) { messageCallback_ = std::move(cb); }

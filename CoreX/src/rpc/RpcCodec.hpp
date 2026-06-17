@@ -13,7 +13,7 @@ public:
     using ProtobuffMessageCallback = std::function<void(const TcpConnectionPtr&,const std::string&)>;
     RpcCodec() {}
     void setbusinessCallback_(ProtobuffMessageCallback cb) { businessCallback_ = std::move(cb); }
-    void Onmessage(const TcpConnectionPtr& conn,Buffer& buf);
+    void Onmessage(const TcpConnectionPtr& conn,Buffer& buf);//解包后执行业务逻辑businessCallback_
 private:
     ProtobuffMessageCallback businessCallback_;
 };

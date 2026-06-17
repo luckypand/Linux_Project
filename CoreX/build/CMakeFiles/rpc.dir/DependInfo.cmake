@@ -6,6 +6,9 @@ set(CMAKE_DEPENDS_LANGUAGES
 set(CMAKE_DEPENDS_CHECK_CXX
   "/root/Cplus/CoreX/proto/math_service.pb.cc" "/root/Cplus/CoreX/build/CMakeFiles/rpc.dir/proto/math_service.pb.cc.o"
   "/root/Cplus/CoreX/proto/rpc_message.pb.cc" "/root/Cplus/CoreX/build/CMakeFiles/rpc.dir/proto/rpc_message.pb.cc.o"
+  "/root/Cplus/CoreX/src/ipc/IpcEndpoint.cpp" "/root/Cplus/CoreX/build/CMakeFiles/rpc.dir/src/ipc/IpcEndpoint.cpp.o"
+  "/root/Cplus/CoreX/src/ipc/RingBuffer.cpp" "/root/Cplus/CoreX/build/CMakeFiles/rpc.dir/src/ipc/RingBuffer.cpp.o"
+  "/root/Cplus/CoreX/src/ipc/ShmSegment.cpp" "/root/Cplus/CoreX/build/CMakeFiles/rpc.dir/src/ipc/ShmSegment.cpp.o"
   "/root/Cplus/CoreX/src/log/my_buffer.cpp" "/root/Cplus/CoreX/build/CMakeFiles/rpc.dir/src/log/my_buffer.cpp.o"
   "/root/Cplus/CoreX/src/log/my_log.cpp" "/root/Cplus/CoreX/build/CMakeFiles/rpc.dir/src/log/my_log.cpp.o"
   "/root/Cplus/CoreX/src/net/Acceptor.cpp" "/root/Cplus/CoreX/build/CMakeFiles/rpc.dir/src/net/Acceptor.cpp.o"
@@ -19,6 +22,7 @@ set(CMAKE_DEPENDS_CHECK_CXX
   "/root/Cplus/CoreX/src/net/Socket.cpp" "/root/Cplus/CoreX/build/CMakeFiles/rpc.dir/src/net/Socket.cpp.o"
   "/root/Cplus/CoreX/src/net/TcpConnection.cpp" "/root/Cplus/CoreX/build/CMakeFiles/rpc.dir/src/net/TcpConnection.cpp.o"
   "/root/Cplus/CoreX/src/net/TcpServer.cpp" "/root/Cplus/CoreX/build/CMakeFiles/rpc.dir/src/net/TcpServer.cpp.o"
+  "/root/Cplus/CoreX/src/rpc/IpcRpcBridge.cpp" "/root/Cplus/CoreX/build/CMakeFiles/rpc.dir/src/rpc/IpcRpcBridge.cpp.o"
   "/root/Cplus/CoreX/src/rpc/RpcCodec.cpp" "/root/Cplus/CoreX/build/CMakeFiles/rpc.dir/src/rpc/RpcCodec.cpp.o"
   "/root/Cplus/CoreX/src/rpc/RpcServer.cpp" "/root/Cplus/CoreX/build/CMakeFiles/rpc.dir/src/rpc/RpcServer.cpp.o"
   )
@@ -35,6 +39,7 @@ set(CMAKE_CXX_TARGET_INCLUDE_PATH
   "../src/net"
   "../src/log"
   "../src/rpc"
+  "../src/ipc"
   "../proto"
   )
 

@@ -24,6 +24,7 @@
 #include "../../proto/rpc_message.pb.h"
 #include "../../proto/math_service.pb.h"
 #include "my_log.hpp"
+#include "../src/ipc/IpcEndpoint.hpp"
 
 #include <sys/socket.h>
 #include <sys/types.h>
@@ -209,7 +210,8 @@ struct ThreadStats {
 // ============================================================
 static ThreadStats run_client_thread(int threadId, int numCalls,
                                      shared_future<void> startSignal,
-                                     chrono::steady_clock::time_point benchStart) {
+                                     chrono::steady_clock::time_point benchStart,
+                                     bool useIpc = false) {
     ThreadStats stats;
     stats.rttUs.reserve(static_cast<size_t>(numCalls));
     stats.upNetUs.reserve(static_cast<size_t>(numCalls));
@@ -263,6 +265,190 @@ static ThreadStats run_client_thread(int threadId, int numCalls,
 
     // ---- 等待发令枪 ----
     startSignal.wait();
+
+    // ============================================================
+    // IPC fast-path: 127.0.0.1 时使用共享内存 RingBuffer 替代 socket
+    // ============================================================
+    if (useIpc) {
+        // 建立 IPC 端点（ATTACH 模式：连接到服务端已创建的共享内存）
+        IpcEndpoint ipcEp("/corex_rpc_ipc", false);
+
+        for (int i = 0; i < numCalls; ++i) {
+            try {
+                // 1-5. 构建请求（与 TCP 路径完全一致）
+                mathReq.set_a(i + threadId * 1000000);
+                mathReq.set_b(i + threadId * 1000000 + 1);
+                int expectedResult = mathReq.a() + mathReq.b();
+
+                if (!mathReq.SerializeToString(&innerReqPayload)) {
+                    stats.errors++;
+                    if (stats.errorMsg.empty())
+                        stats.errorMsg = "MathRequest 序列化失败";
+                    break;
+                }
+
+                rpcReq.set_id(static_cast<uint64_t>(threadId) << 48 |
+                              static_cast<uint64_t>(i));
+                rpcReq.set_payload(innerReqPayload);
+                rpcReq.set_client_send_ts(now_us());
+
+                if (!rpcReq.SerializeToString(&wireReqPayload)) {
+                    stats.errors++;
+                    if (stats.errorMsg.empty())
+                        stats.errorMsg = "RpcMessage 序列化失败";
+                    break;
+                }
+
+                wirePacket = build_packet(wireReqPayload);
+
+                // 6. IPC 发送：推入请求 RingBuffer + 通知服务端
+                auto t1 = chrono::steady_clock::now();
+                while (!ipcEp.sendRequest(wirePacket)) {
+                    this_thread::yield();  // RingBuffer 满，自旋等待
+                }
+                ipcEp.notifyServer();
+
+                // 7. IPC 接收：自旋等待响应
+                string respPacket;
+                if (!ipcEp.recvResponse(respPacket, 5000)) {
+                    stats.errors++;
+                    if (stats.errorMsg.empty())
+                        stats.errorMsg = "IPC recvResponse 超时";
+                    break;
+                }
+
+                auto t2 = chrono::steady_clock::now();
+
+                // 8-13. 解析响应（与 TCP 路径完全一致）
+                if (respPacket.size() < 8) {
+                    stats.errors++;
+                    if (stats.errorMsg.empty())
+                        stats.errorMsg = "响应包过短 (< 8 字节)";
+                    break;
+                }
+
+                uint32_t recvMagic;
+                memcpy(&recvMagic, respPacket.data(), 4);
+                recvMagic = ntohl(recvMagic);
+                if (recvMagic != 0x42414E41) {
+                    stats.errors++;
+                    if (stats.errorMsg.empty()) {
+                        ostringstream oss;
+                        oss << "魔数校验失败: 期望 0x42414E41, 收到 0x"
+                            << hex << setfill('0') << setw(8) << recvMagic << dec;
+                        stats.errorMsg = oss.str();
+                    }
+                    break;
+                }
+
+                uint32_t respLen;
+                memcpy(&respLen, respPacket.data() + 4, 4);
+                respLen = ntohl(respLen);
+                if (respLen == 0 || respLen > 64 * 1024 * 1024) {
+                    stats.errors++;
+                    if (stats.errorMsg.empty()) {
+                        ostringstream oss;
+                        oss << "非法响应长度: " << respLen;
+                        stats.errorMsg = oss.str();
+                    }
+                    break;
+                }
+
+                string respPayload = respPacket.substr(8, respLen);
+
+                if (!rpcResp.ParseFromString(respPayload)) {
+                    stats.errors++;
+                    if (stats.errorMsg.empty())
+                        stats.errorMsg = "RpcMessage 反序列化失败";
+                    break;
+                }
+
+                if (rpcResp.type() != CoreX::rpc::RESPONSE) {
+                    stats.errors++;
+                    if (stats.errorMsg.empty()) {
+                        ostringstream oss;
+                        oss << "非预期响应类型: " << rpcResp.type();
+                        stats.errorMsg = oss.str();
+                    }
+                    break;
+                }
+
+                if (!mathResp.ParseFromString(rpcResp.payload())) {
+                    stats.errors++;
+                    if (stats.errorMsg.empty())
+                        stats.errorMsg = "MathResponse 反序列化失败";
+                    break;
+                }
+
+                if (!mathResp.success()) {
+                    stats.errors++;
+                    if (stats.errorMsg.empty())
+                        stats.errorMsg = "MathService 返回 success=false";
+                    break;
+                }
+                if (mathResp.result() != expectedResult) {
+                    stats.errors++;
+                    if (stats.errorMsg.empty()) {
+                        ostringstream oss;
+                        oss << "结果错误: 期望 " << expectedResult
+                            << ", 实际 " << mathResp.result();
+                        stats.errorMsg = oss.str();
+                    }
+                    break;
+                }
+
+                // 记录 RTT 和时间戳分解
+                double rtt = chrono::duration<double, micro>(t2 - t1).count();
+                stats.rttUs.push_back(rtt);
+                stats.calls++;
+
+                {
+                    uint64_t client_send = rpcResp.client_send_ts();
+                    uint64_t server_recv = rpcResp.server_recv_ts();
+                    uint64_t server_send = rpcResp.server_send_ts();
+
+                    double upNet   = static_cast<double>(server_recv - client_send);
+                    double srvProc = static_cast<double>(server_send - server_recv);
+                    double downNet = rtt - upNet - srvProc;
+
+                    stats.upNetUs.push_back(upNet);
+                    stats.srvProcUs.push_back(srvProc);
+                    stats.downNetUs.push_back(downNet);
+
+                    if (stats.calls % 100 == 1) {
+                        double elapsed = chrono::duration<double>(
+                            chrono::steady_clock::now() - benchStart).count();
+                        stats.timeSeries.push_back({elapsed, rtt});
+                    }
+                }
+
+                if (rtt >= g_args.maxRttUs) {
+                    uint64_t client_send = rpcResp.client_send_ts();
+                    uint64_t server_recv = rpcResp.server_recv_ts();
+                    uint64_t server_send = rpcResp.server_send_ts();
+
+                    double upNet   = static_cast<double>(server_recv - client_send);
+                    double srvProc = static_cast<double>(server_send - server_recv);
+                    double downNet = rtt - upNet - srvProc;
+
+                    stats.timeoutCount++;
+                    stats.timeoutUpNetSum   += upNet;
+                    stats.timeoutSrvProcSum += srvProc;
+                    stats.timeoutDownNetSum += downNet;
+                    stats.timeoutRttSum     += rtt;
+                }
+
+            } catch (const exception& e) {
+                stats.errors++;
+                if (stats.errorMsg.empty())
+                    stats.errorMsg = e.what();
+                break;
+            }
+        }
+
+        ::close(sock);  // IPC 路径不需要 TCP socket，但先 close 避免 fd 泄漏
+        return stats;
+    }
 
     // ---- 执行同步 RPC 调用 ----
     for (int i = 0; i < numCalls; ++i) {
@@ -822,11 +1008,15 @@ static int run_benchmark(RpcLatencyStats* outServerStats = nullptr) {
         return 1;
     }
 
+    // 检测是否走 IPC fast-path
+    bool useIpc = (g_args.serverIp == "127.0.0.1" || g_args.serverIp == "localhost");
+
     cout << "[benchmark] 配置:\n";
     cout << "  服务器:    " << g_args.serverIp << ":" << g_args.port << "\n";
     cout << "  线程数:    " << g_args.threads << "\n";
     cout << "  总调用:    " << g_args.calls << "\n";
     cout << "  RTT 红线:  " << g_args.maxRttUs << " μs\n";
+    cout << "  IPC 加速:  " << (useIpc ? "YES (共享内存 RingBuffer)" : "NO (TCP)") << "\n";
     cout << flush;
 
     // ---- 1. 启动内嵌服务器 ----
@@ -848,6 +1038,11 @@ static int run_benchmark(RpcLatencyStats* outServerStats = nullptr) {
         server.registerService(&mathService);
         server.setLatencyStats(&serverStats);  // ★ 启用服务端统计收集
         server.start();
+
+        // ★ 启用 IPC fast-path (仅本地回环时生效)
+        if (useIpc) {
+            server.enableIpc();
+        }
 
         cout << "[server] RPC 服务器已启动: " << g_args.serverIp
              << ":" << g_args.port << "\n";
@@ -894,8 +1089,8 @@ static int run_benchmark(RpcLatencyStats* outServerStats = nullptr) {
     for (int i = 0; i < g_args.threads; ++i) {
         if (threadCalls[static_cast<size_t>(i)] <= 0) continue;
         futures.push_back(async(launch::async,
-            [i, calls = threadCalls[static_cast<size_t>(i)], startSignal, benchStartTime]() {
-                return run_client_thread(i, calls, startSignal, benchStartTime);
+            [i, calls = threadCalls[static_cast<size_t>(i)], startSignal, benchStartTime, useIpc]() {
+                return run_client_thread(i, calls, startSignal, benchStartTime, useIpc);
             }));
     }
 
@@ -962,6 +1157,7 @@ static int run_server() {
     MathServiceImpl mathService;
     server.registerService(&mathService);
     server.start();
+    server.enableIpc();  // ★ 启用 IPC fast-path 监听
 
     cout << "[server] RPC Benchmark Server started on 0.0.0.0:"
          << g_args.port << "\n";

@@ -124,6 +124,19 @@ test_rpc_benchmark/fast:
 .PHONY : test_rpc_benchmark/fast
 
 #=============================================================================
+# Target rules for targets named test_ipc
+
+# Build rule for target.
+test_ipc: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 test_ipc
+.PHONY : test_ipc
+
+# fast build rule for target.
+test_ipc/fast:
+	$(MAKE) -f CMakeFiles/test_ipc.dir/build.make CMakeFiles/test_ipc.dir/build
+.PHONY : test_ipc/fast
+
+#=============================================================================
 # Target rules for targets named rpc
 
 # Build rule for target.
@@ -228,6 +241,96 @@ proto/rpc_message.pb.s: proto/rpc_message.pb.cc.s
 proto/rpc_message.pb.cc.s:
 	$(MAKE) -f CMakeFiles/rpc.dir/build.make CMakeFiles/rpc.dir/proto/rpc_message.pb.cc.s
 .PHONY : proto/rpc_message.pb.cc.s
+
+src/ipc/IpcEndpoint.o: src/ipc/IpcEndpoint.cpp.o
+
+.PHONY : src/ipc/IpcEndpoint.o
+
+# target to build an object file
+src/ipc/IpcEndpoint.cpp.o:
+	$(MAKE) -f CMakeFiles/test_ipc.dir/build.make CMakeFiles/test_ipc.dir/src/ipc/IpcEndpoint.cpp.o
+	$(MAKE) -f CMakeFiles/rpc.dir/build.make CMakeFiles/rpc.dir/src/ipc/IpcEndpoint.cpp.o
+.PHONY : src/ipc/IpcEndpoint.cpp.o
+
+src/ipc/IpcEndpoint.i: src/ipc/IpcEndpoint.cpp.i
+
+.PHONY : src/ipc/IpcEndpoint.i
+
+# target to preprocess a source file
+src/ipc/IpcEndpoint.cpp.i:
+	$(MAKE) -f CMakeFiles/test_ipc.dir/build.make CMakeFiles/test_ipc.dir/src/ipc/IpcEndpoint.cpp.i
+	$(MAKE) -f CMakeFiles/rpc.dir/build.make CMakeFiles/rpc.dir/src/ipc/IpcEndpoint.cpp.i
+.PHONY : src/ipc/IpcEndpoint.cpp.i
+
+src/ipc/IpcEndpoint.s: src/ipc/IpcEndpoint.cpp.s
+
+.PHONY : src/ipc/IpcEndpoint.s
+
+# target to generate assembly for a file
+src/ipc/IpcEndpoint.cpp.s:
+	$(MAKE) -f CMakeFiles/test_ipc.dir/build.make CMakeFiles/test_ipc.dir/src/ipc/IpcEndpoint.cpp.s
+	$(MAKE) -f CMakeFiles/rpc.dir/build.make CMakeFiles/rpc.dir/src/ipc/IpcEndpoint.cpp.s
+.PHONY : src/ipc/IpcEndpoint.cpp.s
+
+src/ipc/RingBuffer.o: src/ipc/RingBuffer.cpp.o
+
+.PHONY : src/ipc/RingBuffer.o
+
+# target to build an object file
+src/ipc/RingBuffer.cpp.o:
+	$(MAKE) -f CMakeFiles/test_ipc.dir/build.make CMakeFiles/test_ipc.dir/src/ipc/RingBuffer.cpp.o
+	$(MAKE) -f CMakeFiles/rpc.dir/build.make CMakeFiles/rpc.dir/src/ipc/RingBuffer.cpp.o
+.PHONY : src/ipc/RingBuffer.cpp.o
+
+src/ipc/RingBuffer.i: src/ipc/RingBuffer.cpp.i
+
+.PHONY : src/ipc/RingBuffer.i
+
+# target to preprocess a source file
+src/ipc/RingBuffer.cpp.i:
+	$(MAKE) -f CMakeFiles/test_ipc.dir/build.make CMakeFiles/test_ipc.dir/src/ipc/RingBuffer.cpp.i
+	$(MAKE) -f CMakeFiles/rpc.dir/build.make CMakeFiles/rpc.dir/src/ipc/RingBuffer.cpp.i
+.PHONY : src/ipc/RingBuffer.cpp.i
+
+src/ipc/RingBuffer.s: src/ipc/RingBuffer.cpp.s
+
+.PHONY : src/ipc/RingBuffer.s
+
+# target to generate assembly for a file
+src/ipc/RingBuffer.cpp.s:
+	$(MAKE) -f CMakeFiles/test_ipc.dir/build.make CMakeFiles/test_ipc.dir/src/ipc/RingBuffer.cpp.s
+	$(MAKE) -f CMakeFiles/rpc.dir/build.make CMakeFiles/rpc.dir/src/ipc/RingBuffer.cpp.s
+.PHONY : src/ipc/RingBuffer.cpp.s
+
+src/ipc/ShmSegment.o: src/ipc/ShmSegment.cpp.o
+
+.PHONY : src/ipc/ShmSegment.o
+
+# target to build an object file
+src/ipc/ShmSegment.cpp.o:
+	$(MAKE) -f CMakeFiles/test_ipc.dir/build.make CMakeFiles/test_ipc.dir/src/ipc/ShmSegment.cpp.o
+	$(MAKE) -f CMakeFiles/rpc.dir/build.make CMakeFiles/rpc.dir/src/ipc/ShmSegment.cpp.o
+.PHONY : src/ipc/ShmSegment.cpp.o
+
+src/ipc/ShmSegment.i: src/ipc/ShmSegment.cpp.i
+
+.PHONY : src/ipc/ShmSegment.i
+
+# target to preprocess a source file
+src/ipc/ShmSegment.cpp.i:
+	$(MAKE) -f CMakeFiles/test_ipc.dir/build.make CMakeFiles/test_ipc.dir/src/ipc/ShmSegment.cpp.i
+	$(MAKE) -f CMakeFiles/rpc.dir/build.make CMakeFiles/rpc.dir/src/ipc/ShmSegment.cpp.i
+.PHONY : src/ipc/ShmSegment.cpp.i
+
+src/ipc/ShmSegment.s: src/ipc/ShmSegment.cpp.s
+
+.PHONY : src/ipc/ShmSegment.s
+
+# target to generate assembly for a file
+src/ipc/ShmSegment.cpp.s:
+	$(MAKE) -f CMakeFiles/test_ipc.dir/build.make CMakeFiles/test_ipc.dir/src/ipc/ShmSegment.cpp.s
+	$(MAKE) -f CMakeFiles/rpc.dir/build.make CMakeFiles/rpc.dir/src/ipc/ShmSegment.cpp.s
+.PHONY : src/ipc/ShmSegment.cpp.s
 
 src/log/my_buffer.o: src/log/my_buffer.cpp.o
 
@@ -697,6 +800,33 @@ src/net/TcpServer.cpp.s:
 	$(MAKE) -f CMakeFiles/timeout_server_test.dir/build.make CMakeFiles/timeout_server_test.dir/src/net/TcpServer.cpp.s
 .PHONY : src/net/TcpServer.cpp.s
 
+src/rpc/IpcRpcBridge.o: src/rpc/IpcRpcBridge.cpp.o
+
+.PHONY : src/rpc/IpcRpcBridge.o
+
+# target to build an object file
+src/rpc/IpcRpcBridge.cpp.o:
+	$(MAKE) -f CMakeFiles/rpc.dir/build.make CMakeFiles/rpc.dir/src/rpc/IpcRpcBridge.cpp.o
+.PHONY : src/rpc/IpcRpcBridge.cpp.o
+
+src/rpc/IpcRpcBridge.i: src/rpc/IpcRpcBridge.cpp.i
+
+.PHONY : src/rpc/IpcRpcBridge.i
+
+# target to preprocess a source file
+src/rpc/IpcRpcBridge.cpp.i:
+	$(MAKE) -f CMakeFiles/rpc.dir/build.make CMakeFiles/rpc.dir/src/rpc/IpcRpcBridge.cpp.i
+.PHONY : src/rpc/IpcRpcBridge.cpp.i
+
+src/rpc/IpcRpcBridge.s: src/rpc/IpcRpcBridge.cpp.s
+
+.PHONY : src/rpc/IpcRpcBridge.s
+
+# target to generate assembly for a file
+src/rpc/IpcRpcBridge.cpp.s:
+	$(MAKE) -f CMakeFiles/rpc.dir/build.make CMakeFiles/rpc.dir/src/rpc/IpcRpcBridge.cpp.s
+.PHONY : src/rpc/IpcRpcBridge.cpp.s
+
 src/rpc/RpcCodec.o: src/rpc/RpcCodec.cpp.o
 
 .PHONY : src/rpc/RpcCodec.o
@@ -777,6 +907,33 @@ tests/Test_EchoSever.s: tests/Test_EchoSever.cpp.s
 tests/Test_EchoSever.cpp.s:
 	$(MAKE) -f CMakeFiles/test_echo_server.dir/build.make CMakeFiles/test_echo_server.dir/tests/Test_EchoSever.cpp.s
 .PHONY : tests/Test_EchoSever.cpp.s
+
+tests/test_ipc.o: tests/test_ipc.cpp.o
+
+.PHONY : tests/test_ipc.o
+
+# target to build an object file
+tests/test_ipc.cpp.o:
+	$(MAKE) -f CMakeFiles/test_ipc.dir/build.make CMakeFiles/test_ipc.dir/tests/test_ipc.cpp.o
+.PHONY : tests/test_ipc.cpp.o
+
+tests/test_ipc.i: tests/test_ipc.cpp.i
+
+.PHONY : tests/test_ipc.i
+
+# target to preprocess a source file
+tests/test_ipc.cpp.i:
+	$(MAKE) -f CMakeFiles/test_ipc.dir/build.make CMakeFiles/test_ipc.dir/tests/test_ipc.cpp.i
+.PHONY : tests/test_ipc.cpp.i
+
+tests/test_ipc.s: tests/test_ipc.cpp.s
+
+.PHONY : tests/test_ipc.s
+
+# target to generate assembly for a file
+tests/test_ipc.cpp.s:
+	$(MAKE) -f CMakeFiles/test_ipc.dir/build.make CMakeFiles/test_ipc.dir/tests/test_ipc.cpp.s
+.PHONY : tests/test_ipc.cpp.s
 
 tests/test_net_integration.o: tests/test_net_integration.cpp.o
 
@@ -867,6 +1024,7 @@ help:
 	@echo "... depend"
 	@echo "... rebuild_cache"
 	@echo "... test_rpc_benchmark"
+	@echo "... test_ipc"
 	@echo "... rpc"
 	@echo "... edit_cache"
 	@echo "... test_echo_server"
@@ -878,6 +1036,15 @@ help:
 	@echo "... proto/rpc_message.pb.o"
 	@echo "... proto/rpc_message.pb.i"
 	@echo "... proto/rpc_message.pb.s"
+	@echo "... src/ipc/IpcEndpoint.o"
+	@echo "... src/ipc/IpcEndpoint.i"
+	@echo "... src/ipc/IpcEndpoint.s"
+	@echo "... src/ipc/RingBuffer.o"
+	@echo "... src/ipc/RingBuffer.i"
+	@echo "... src/ipc/RingBuffer.s"
+	@echo "... src/ipc/ShmSegment.o"
+	@echo "... src/ipc/ShmSegment.i"
+	@echo "... src/ipc/ShmSegment.s"
 	@echo "... src/log/my_buffer.o"
 	@echo "... src/log/my_buffer.i"
 	@echo "... src/log/my_buffer.s"
@@ -917,6 +1084,9 @@ help:
 	@echo "... src/net/TcpServer.o"
 	@echo "... src/net/TcpServer.i"
 	@echo "... src/net/TcpServer.s"
+	@echo "... src/rpc/IpcRpcBridge.o"
+	@echo "... src/rpc/IpcRpcBridge.i"
+	@echo "... src/rpc/IpcRpcBridge.s"
 	@echo "... src/rpc/RpcCodec.o"
 	@echo "... src/rpc/RpcCodec.i"
 	@echo "... src/rpc/RpcCodec.s"
@@ -926,6 +1096,9 @@ help:
 	@echo "... tests/Test_EchoSever.o"
 	@echo "... tests/Test_EchoSever.i"
 	@echo "... tests/Test_EchoSever.s"
+	@echo "... tests/test_ipc.o"
+	@echo "... tests/test_ipc.i"
+	@echo "... tests/test_ipc.s"
 	@echo "... tests/test_net_integration.o"
 	@echo "... tests/test_net_integration.i"
 	@echo "... tests/test_net_integration.s"

@@ -1,4 +1,5 @@
 #include "RpcServer.hpp"
+#include "IpcRpcBridge.hpp"
 #include <arpa/inet.h>
 #include <vector>
 #if ENABLE_TIMESTAMP
@@ -31,6 +32,29 @@ RpcServer::RpcServer(EventLoop* loop,const std::string& ip,uint16_t port,const s
     );
 }
 
+RpcServer::~RpcServer() = default;
+
+/*
+* @brief:
+*     启用 IPC fast-path：在共享内存 RingBuffer 上监听 RPC 请求
+*/
+void RpcServer::enableIpc(const std::string& shmName)
+{
+    if (ipcBridge_) return;  // 已启用
+
+    ipcBridge_ = std::make_unique<IpcRpcBridge>(server_.getLoop(), shmName);
+
+    // IPC 请求与 TCP 请求共用同一条编解码+分发管线
+    ipcBridge_->setMessageCallback(
+        [this](const TcpConnectionPtr& conn, Buffer& buf) {
+            codec_.Onmessage(conn, buf);
+        }
+    );
+
+    ipcBridge_->start();
+    LOG_INFO("[RpcServer] IPC fast-path enabled on shm '%s'", shmName.c_str());
+}
+
 /*
 * @brief:
 *     此处为RpcCodec中注册的businessCallback_实际执行的逻辑,处理
@@ -44,9 +68,9 @@ void RpcServer::handleRpcCodecMessage(const TcpConnectionPtr& conn,const std::st
 #if ENABLE_TIMESTAMP
     auto t0 = now_us();
 #endif
-
+    //rpcMsg用来作为接收request的元数据包
     CoreX::rpc::RpcMessage rpcMsg;
-    if(!rpcMsg.ParseFromString(payload))
+    if(!rpcMsg.ParseFromString(payload))//反序列化得到元数据
     {
 #if ENABLE_TIMESTAMP
         sendErrorReasponse(conn, 0,
@@ -75,7 +99,7 @@ void RpcServer::handleRpcCodecMessage(const TcpConnectionPtr& conn,const std::st
     uint64_t client_send_ts = rpcMsg.client_send_ts();
 #endif
 
-    auto it = dispatchTable_.find(rpcMsg.service());
+    auto it = dispatchTable_.find(rpcMsg.service());//依据元数据的service找到对应的RpcServiceAdapter
 
 #if ENABLE_TIMESTAMP
     auto t2 = now_us();
@@ -176,7 +200,7 @@ void RpcServer::sendResponse(const TcpConnectionPtr& conn, uint64_t id,
     uint32_t be32_magic = htonl(magic);
     uint32_t be32_length = htonl(length);
 
-    std::string packet;
+    std::string packet;//封装成包
     packet.append(reinterpret_cast<char*>(&be32_magic), 4);
     packet.append(reinterpret_cast<char*>(&be32_length), 4);
     packet.append(serialized);

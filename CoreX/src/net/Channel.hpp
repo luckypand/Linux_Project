@@ -21,6 +21,7 @@ public:
     // 状态修改：通知 EventLoop 去更新 epoll 里的监听事件
     void enableReading() { events_ |= kReadEvent; update(); }
     void enableWriting() { events_ |= kWriteEvent; update(); }
+    void disableReading() { events_ &= ~kReadEvent; update(); }
     void disableall() { events_ |= kNoneEvent; }
     void setindex(int idx_) { index_ = idx_; }
     void setretevent(uint32_t  revt) { retevent_ = revt; }

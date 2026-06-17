@@ -120,6 +120,13 @@ void TcpConnection::send(const std::string& message)
 */
 void TcpConnection::sendInLoop(const std::string& message)
 {
+    // IPC fast-path: 如果有自定义输出函数，直接调用并返回，不经过 socket
+    if (outputFunc_)
+    {
+        outputFunc_(message);
+        return;
+    }
+
     ssize_t nwrote = 0;
 
     //之前没关注过写事件且要发送的内容为空
@@ -191,6 +198,12 @@ void TcpConnection::handleClose()
 */
 void TcpConnection::shutdown()
 {
+    // IPC fast-path: 虚拟连接没有真正的 socket，跳过 shutdown
+    if (outputFunc_)
+    {
+        return;
+    }
+
     if(state_ == kDisconnected)
     {
         state_ = kDisconnecting;
@@ -203,6 +216,16 @@ void TcpConnection::shutdown()
             }
         );
     }
+}
+
+/*
+* @brief:
+*     IPC fast-path: 禁用读事件（虚拟连接不需要从 socket 读取）
+*/
+void TcpConnection::disableReadEvent()
+{
+    loop_->assertInLoopThread();
+    channel_->disableReading();
 }
 
 /*

@@ -6,32 +6,42 @@
 #include <unistd.h>
 #include <sys/types.h>
 
-ShmMemoryPool::ShmMemoryPool(const std::string& name,size_t size)
+ShmMemoryPool::ShmMemoryPool(const std::string& name,size_t size,Mode mode)
     :name_(name)
     ,size_(size)
     ,mapped_ptr_(nullptr)
+    ,mode_(mode)
 {
-    //·ÀÖ¹Òì³£ÍË³ö¹²ÏíÇø£¬ÏÈ³¢ÊÔÇåÀíÍ¬ÃûÄÚ´æ
-    shm_unlink(name_.c_str());   
+    if (mode_ == CREATE) {
+        // é˜²æ­¢å¼‚å¸¸é€€å‡ºåæ®‹ç•™åŒåå…±äº«å†…å­˜
+        shm_unlink(name_.c_str());
 
-    //´ò¿ª¹²ÏíÄÚ´æ¶ÔÏó(¿É¶Á¿ÉĞ´)£¬´ËÊ±½ö´´½¨ÁË¸Ã¶ÔÏóÃ»ÓĞÊµÖÊ·ÖÅä¿Õ¼ä
-    int fd = shm_open(name_.c_str(),O_CREAT | O_RDWR,0666);
-    if(fd < 0)
-    {
-        throw std::runtime_error("shm_open failed");
+        // æ‰“å¼€å…±äº«å†…å­˜å¯¹è±¡ (å¯è¯»å†™)ï¼Œæ­¤æ—¶è¯¥å¯¹è±¡è¿˜æ²¡æœ‰å®é™…åˆ†é…ç©ºé—´
+        int fd = shm_open(name_.c_str(), O_CREAT | O_RDWR, 0666);
+        if (fd < 0) {
+            throw std::runtime_error("shm_open (CREATE) failed");
+        }
+        // è®¾å®šå¯¹è±¡å¤§å°
+        if (ftruncate(fd, static_cast<long>(size_)) < 0) {
+            close(fd);
+            throw std::runtime_error("ftruncate failed");
+        }
+        // æ˜ å°„å½“å‰è¿›ç¨‹çš„è™šæ‹Ÿåœ°å€ç©ºé—´åˆ°å…±äº«å†…å­˜
+        mapped_ptr_ = mmap(nullptr, size_, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
+        close(fd);  // æ˜ å°„å®Œæ¯•ï¼Œæ–‡ä»¶æè¿°ç¬¦å¯å…³é—­
+    } else {
+        // ATTACH æ¨¡å¼ï¼šç›´æ¥æ‰“å¼€å·²æœ‰å…±äº«å†…å­˜æ®µï¼Œä¸ unlinkï¼Œä¸ ftruncate
+        int fd = shm_open(name_.c_str(), O_RDWR, 0666);
+        if (fd < 0) {
+            throw std::runtime_error("shm_open (ATTACH) failed â€” is the server running?");
+        }
+        mapped_ptr_ = mmap(nullptr, size_, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
+        close(fd);
     }
-    //·ÖÅäÎïÀí´óĞ¡
-    if(ftruncate(fd,size_) < 0)
-    {
-        throw std::runtime_error("ftruncate failed");
-    }
-    //Ó³Éäµ±Ç°½ø³ÌµÄĞéÄâµØÖ·¿Õ¼äµ½ÉÏÊö·ÖÅä¹²ÏíÄÚ´æ
-    mapped_ptr_ = mmap(nullptr,size_,PROT_READ | PROT_WRITE,MAP_SHARED,fd,0);
-    if(MAP_FAILED == mapped_ptr_)
-    {
+
+    if (MAP_FAILED == mapped_ptr_) {
         throw std::runtime_error("mmap failed");
     }
-    close(fd);// Ó³ÉäÍê±Ï£¬ÎÄ¼şÃèÊö·û¿É¹Ø±Õ
 }
 
 ShmMemoryPool::~ShmMemoryPool()

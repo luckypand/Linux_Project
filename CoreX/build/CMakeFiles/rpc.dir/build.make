@@ -83,9 +83,22 @@ CMakeFiles/rpc.dir/src/rpc/RpcServer.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/rpc.dir/src/rpc/RpcServer.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /root/Cplus/CoreX/src/rpc/RpcServer.cpp -o CMakeFiles/rpc.dir/src/rpc/RpcServer.cpp.s
 
+CMakeFiles/rpc.dir/src/rpc/IpcRpcBridge.cpp.o: CMakeFiles/rpc.dir/flags.make
+CMakeFiles/rpc.dir/src/rpc/IpcRpcBridge.cpp.o: ../src/rpc/IpcRpcBridge.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/root/Cplus/CoreX/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/rpc.dir/src/rpc/IpcRpcBridge.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/rpc.dir/src/rpc/IpcRpcBridge.cpp.o -c /root/Cplus/CoreX/src/rpc/IpcRpcBridge.cpp
+
+CMakeFiles/rpc.dir/src/rpc/IpcRpcBridge.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/rpc.dir/src/rpc/IpcRpcBridge.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /root/Cplus/CoreX/src/rpc/IpcRpcBridge.cpp > CMakeFiles/rpc.dir/src/rpc/IpcRpcBridge.cpp.i
+
+CMakeFiles/rpc.dir/src/rpc/IpcRpcBridge.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/rpc.dir/src/rpc/IpcRpcBridge.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /root/Cplus/CoreX/src/rpc/IpcRpcBridge.cpp -o CMakeFiles/rpc.dir/src/rpc/IpcRpcBridge.cpp.s
+
 CMakeFiles/rpc.dir/src/net/EventLoop.cpp.o: CMakeFiles/rpc.dir/flags.make
 CMakeFiles/rpc.dir/src/net/EventLoop.cpp.o: ../src/net/EventLoop.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/root/Cplus/CoreX/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/rpc.dir/src/net/EventLoop.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/root/Cplus/CoreX/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/rpc.dir/src/net/EventLoop.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/rpc.dir/src/net/EventLoop.cpp.o -c /root/Cplus/CoreX/src/net/EventLoop.cpp
 
 CMakeFiles/rpc.dir/src/net/EventLoop.cpp.i: cmake_force
@@ -98,7 +111,7 @@ CMakeFiles/rpc.dir/src/net/EventLoop.cpp.s: cmake_force
 
 CMakeFiles/rpc.dir/src/net/Poller.cpp.o: CMakeFiles/rpc.dir/flags.make
 CMakeFiles/rpc.dir/src/net/Poller.cpp.o: ../src/net/Poller.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/root/Cplus/CoreX/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/rpc.dir/src/net/Poller.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/root/Cplus/CoreX/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/rpc.dir/src/net/Poller.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/rpc.dir/src/net/Poller.cpp.o -c /root/Cplus/CoreX/src/net/Poller.cpp
 
 CMakeFiles/rpc.dir/src/net/Poller.cpp.i: cmake_force
@@ -111,7 +124,7 @@ CMakeFiles/rpc.dir/src/net/Poller.cpp.s: cmake_force
 
 CMakeFiles/rpc.dir/src/net/Channel.cpp.o: CMakeFiles/rpc.dir/flags.make
 CMakeFiles/rpc.dir/src/net/Channel.cpp.o: ../src/net/Channel.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/root/Cplus/CoreX/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/rpc.dir/src/net/Channel.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/root/Cplus/CoreX/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/rpc.dir/src/net/Channel.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/rpc.dir/src/net/Channel.cpp.o -c /root/Cplus/CoreX/src/net/Channel.cpp
 
 CMakeFiles/rpc.dir/src/net/Channel.cpp.i: cmake_force
@@ -124,7 +137,7 @@ CMakeFiles/rpc.dir/src/net/Channel.cpp.s: cmake_force
 
 CMakeFiles/rpc.dir/src/net/HeapTimer.cpp.o: CMakeFiles/rpc.dir/flags.make
 CMakeFiles/rpc.dir/src/net/HeapTimer.cpp.o: ../src/net/HeapTimer.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/root/Cplus/CoreX/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/rpc.dir/src/net/HeapTimer.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/root/Cplus/CoreX/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/rpc.dir/src/net/HeapTimer.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/rpc.dir/src/net/HeapTimer.cpp.o -c /root/Cplus/CoreX/src/net/HeapTimer.cpp
 
 CMakeFiles/rpc.dir/src/net/HeapTimer.cpp.i: cmake_force
@@ -137,7 +150,7 @@ CMakeFiles/rpc.dir/src/net/HeapTimer.cpp.s: cmake_force
 
 CMakeFiles/rpc.dir/src/net/Buffer.cpp.o: CMakeFiles/rpc.dir/flags.make
 CMakeFiles/rpc.dir/src/net/Buffer.cpp.o: ../src/net/Buffer.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/root/Cplus/CoreX/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/rpc.dir/src/net/Buffer.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/root/Cplus/CoreX/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/rpc.dir/src/net/Buffer.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/rpc.dir/src/net/Buffer.cpp.o -c /root/Cplus/CoreX/src/net/Buffer.cpp
 
 CMakeFiles/rpc.dir/src/net/Buffer.cpp.i: cmake_force
@@ -150,7 +163,7 @@ CMakeFiles/rpc.dir/src/net/Buffer.cpp.s: cmake_force
 
 CMakeFiles/rpc.dir/src/net/Socket.cpp.o: CMakeFiles/rpc.dir/flags.make
 CMakeFiles/rpc.dir/src/net/Socket.cpp.o: ../src/net/Socket.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/root/Cplus/CoreX/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/rpc.dir/src/net/Socket.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/root/Cplus/CoreX/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/rpc.dir/src/net/Socket.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/rpc.dir/src/net/Socket.cpp.o -c /root/Cplus/CoreX/src/net/Socket.cpp
 
 CMakeFiles/rpc.dir/src/net/Socket.cpp.i: cmake_force
@@ -163,7 +176,7 @@ CMakeFiles/rpc.dir/src/net/Socket.cpp.s: cmake_force
 
 CMakeFiles/rpc.dir/src/net/Acceptor.cpp.o: CMakeFiles/rpc.dir/flags.make
 CMakeFiles/rpc.dir/src/net/Acceptor.cpp.o: ../src/net/Acceptor.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/root/Cplus/CoreX/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/rpc.dir/src/net/Acceptor.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/root/Cplus/CoreX/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/rpc.dir/src/net/Acceptor.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/rpc.dir/src/net/Acceptor.cpp.o -c /root/Cplus/CoreX/src/net/Acceptor.cpp
 
 CMakeFiles/rpc.dir/src/net/Acceptor.cpp.i: cmake_force
@@ -176,7 +189,7 @@ CMakeFiles/rpc.dir/src/net/Acceptor.cpp.s: cmake_force
 
 CMakeFiles/rpc.dir/src/net/TcpServer.cpp.o: CMakeFiles/rpc.dir/flags.make
 CMakeFiles/rpc.dir/src/net/TcpServer.cpp.o: ../src/net/TcpServer.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/root/Cplus/CoreX/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/rpc.dir/src/net/TcpServer.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/root/Cplus/CoreX/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object CMakeFiles/rpc.dir/src/net/TcpServer.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/rpc.dir/src/net/TcpServer.cpp.o -c /root/Cplus/CoreX/src/net/TcpServer.cpp
 
 CMakeFiles/rpc.dir/src/net/TcpServer.cpp.i: cmake_force
@@ -189,7 +202,7 @@ CMakeFiles/rpc.dir/src/net/TcpServer.cpp.s: cmake_force
 
 CMakeFiles/rpc.dir/src/net/TcpConnection.cpp.o: CMakeFiles/rpc.dir/flags.make
 CMakeFiles/rpc.dir/src/net/TcpConnection.cpp.o: ../src/net/TcpConnection.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/root/Cplus/CoreX/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object CMakeFiles/rpc.dir/src/net/TcpConnection.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/root/Cplus/CoreX/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building CXX object CMakeFiles/rpc.dir/src/net/TcpConnection.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/rpc.dir/src/net/TcpConnection.cpp.o -c /root/Cplus/CoreX/src/net/TcpConnection.cpp
 
 CMakeFiles/rpc.dir/src/net/TcpConnection.cpp.i: cmake_force
@@ -202,7 +215,7 @@ CMakeFiles/rpc.dir/src/net/TcpConnection.cpp.s: cmake_force
 
 CMakeFiles/rpc.dir/src/net/EventLoopThreadPool.cpp.o: CMakeFiles/rpc.dir/flags.make
 CMakeFiles/rpc.dir/src/net/EventLoopThreadPool.cpp.o: ../src/net/EventLoopThreadPool.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/root/Cplus/CoreX/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building CXX object CMakeFiles/rpc.dir/src/net/EventLoopThreadPool.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/root/Cplus/CoreX/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Building CXX object CMakeFiles/rpc.dir/src/net/EventLoopThreadPool.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/rpc.dir/src/net/EventLoopThreadPool.cpp.o -c /root/Cplus/CoreX/src/net/EventLoopThreadPool.cpp
 
 CMakeFiles/rpc.dir/src/net/EventLoopThreadPool.cpp.i: cmake_force
@@ -215,7 +228,7 @@ CMakeFiles/rpc.dir/src/net/EventLoopThreadPool.cpp.s: cmake_force
 
 CMakeFiles/rpc.dir/src/net/EventLoopThread.cpp.o: CMakeFiles/rpc.dir/flags.make
 CMakeFiles/rpc.dir/src/net/EventLoopThread.cpp.o: ../src/net/EventLoopThread.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/root/Cplus/CoreX/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Building CXX object CMakeFiles/rpc.dir/src/net/EventLoopThread.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/root/Cplus/CoreX/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Building CXX object CMakeFiles/rpc.dir/src/net/EventLoopThread.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/rpc.dir/src/net/EventLoopThread.cpp.o -c /root/Cplus/CoreX/src/net/EventLoopThread.cpp
 
 CMakeFiles/rpc.dir/src/net/EventLoopThread.cpp.i: cmake_force
@@ -228,7 +241,7 @@ CMakeFiles/rpc.dir/src/net/EventLoopThread.cpp.s: cmake_force
 
 CMakeFiles/rpc.dir/src/log/my_log.cpp.o: CMakeFiles/rpc.dir/flags.make
 CMakeFiles/rpc.dir/src/log/my_log.cpp.o: ../src/log/my_log.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/root/Cplus/CoreX/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Building CXX object CMakeFiles/rpc.dir/src/log/my_log.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/root/Cplus/CoreX/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Building CXX object CMakeFiles/rpc.dir/src/log/my_log.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/rpc.dir/src/log/my_log.cpp.o -c /root/Cplus/CoreX/src/log/my_log.cpp
 
 CMakeFiles/rpc.dir/src/log/my_log.cpp.i: cmake_force
@@ -241,7 +254,7 @@ CMakeFiles/rpc.dir/src/log/my_log.cpp.s: cmake_force
 
 CMakeFiles/rpc.dir/src/log/my_buffer.cpp.o: CMakeFiles/rpc.dir/flags.make
 CMakeFiles/rpc.dir/src/log/my_buffer.cpp.o: ../src/log/my_buffer.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/root/Cplus/CoreX/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Building CXX object CMakeFiles/rpc.dir/src/log/my_buffer.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/root/Cplus/CoreX/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_16) "Building CXX object CMakeFiles/rpc.dir/src/log/my_buffer.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/rpc.dir/src/log/my_buffer.cpp.o -c /root/Cplus/CoreX/src/log/my_buffer.cpp
 
 CMakeFiles/rpc.dir/src/log/my_buffer.cpp.i: cmake_force
@@ -252,9 +265,48 @@ CMakeFiles/rpc.dir/src/log/my_buffer.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/rpc.dir/src/log/my_buffer.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /root/Cplus/CoreX/src/log/my_buffer.cpp -o CMakeFiles/rpc.dir/src/log/my_buffer.cpp.s
 
+CMakeFiles/rpc.dir/src/ipc/ShmSegment.cpp.o: CMakeFiles/rpc.dir/flags.make
+CMakeFiles/rpc.dir/src/ipc/ShmSegment.cpp.o: ../src/ipc/ShmSegment.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/root/Cplus/CoreX/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_17) "Building CXX object CMakeFiles/rpc.dir/src/ipc/ShmSegment.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/rpc.dir/src/ipc/ShmSegment.cpp.o -c /root/Cplus/CoreX/src/ipc/ShmSegment.cpp
+
+CMakeFiles/rpc.dir/src/ipc/ShmSegment.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/rpc.dir/src/ipc/ShmSegment.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /root/Cplus/CoreX/src/ipc/ShmSegment.cpp > CMakeFiles/rpc.dir/src/ipc/ShmSegment.cpp.i
+
+CMakeFiles/rpc.dir/src/ipc/ShmSegment.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/rpc.dir/src/ipc/ShmSegment.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /root/Cplus/CoreX/src/ipc/ShmSegment.cpp -o CMakeFiles/rpc.dir/src/ipc/ShmSegment.cpp.s
+
+CMakeFiles/rpc.dir/src/ipc/RingBuffer.cpp.o: CMakeFiles/rpc.dir/flags.make
+CMakeFiles/rpc.dir/src/ipc/RingBuffer.cpp.o: ../src/ipc/RingBuffer.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/root/Cplus/CoreX/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_18) "Building CXX object CMakeFiles/rpc.dir/src/ipc/RingBuffer.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/rpc.dir/src/ipc/RingBuffer.cpp.o -c /root/Cplus/CoreX/src/ipc/RingBuffer.cpp
+
+CMakeFiles/rpc.dir/src/ipc/RingBuffer.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/rpc.dir/src/ipc/RingBuffer.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /root/Cplus/CoreX/src/ipc/RingBuffer.cpp > CMakeFiles/rpc.dir/src/ipc/RingBuffer.cpp.i
+
+CMakeFiles/rpc.dir/src/ipc/RingBuffer.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/rpc.dir/src/ipc/RingBuffer.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /root/Cplus/CoreX/src/ipc/RingBuffer.cpp -o CMakeFiles/rpc.dir/src/ipc/RingBuffer.cpp.s
+
+CMakeFiles/rpc.dir/src/ipc/IpcEndpoint.cpp.o: CMakeFiles/rpc.dir/flags.make
+CMakeFiles/rpc.dir/src/ipc/IpcEndpoint.cpp.o: ../src/ipc/IpcEndpoint.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/root/Cplus/CoreX/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_19) "Building CXX object CMakeFiles/rpc.dir/src/ipc/IpcEndpoint.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/rpc.dir/src/ipc/IpcEndpoint.cpp.o -c /root/Cplus/CoreX/src/ipc/IpcEndpoint.cpp
+
+CMakeFiles/rpc.dir/src/ipc/IpcEndpoint.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/rpc.dir/src/ipc/IpcEndpoint.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /root/Cplus/CoreX/src/ipc/IpcEndpoint.cpp > CMakeFiles/rpc.dir/src/ipc/IpcEndpoint.cpp.i
+
+CMakeFiles/rpc.dir/src/ipc/IpcEndpoint.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/rpc.dir/src/ipc/IpcEndpoint.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /root/Cplus/CoreX/src/ipc/IpcEndpoint.cpp -o CMakeFiles/rpc.dir/src/ipc/IpcEndpoint.cpp.s
+
 CMakeFiles/rpc.dir/proto/rpc_message.pb.cc.o: CMakeFiles/rpc.dir/flags.make
 CMakeFiles/rpc.dir/proto/rpc_message.pb.cc.o: ../proto/rpc_message.pb.cc
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/root/Cplus/CoreX/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_16) "Building CXX object CMakeFiles/rpc.dir/proto/rpc_message.pb.cc.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/root/Cplus/CoreX/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_20) "Building CXX object CMakeFiles/rpc.dir/proto/rpc_message.pb.cc.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/rpc.dir/proto/rpc_message.pb.cc.o -c /root/Cplus/CoreX/proto/rpc_message.pb.cc
 
 CMakeFiles/rpc.dir/proto/rpc_message.pb.cc.i: cmake_force
@@ -267,7 +319,7 @@ CMakeFiles/rpc.dir/proto/rpc_message.pb.cc.s: cmake_force
 
 CMakeFiles/rpc.dir/proto/math_service.pb.cc.o: CMakeFiles/rpc.dir/flags.make
 CMakeFiles/rpc.dir/proto/math_service.pb.cc.o: ../proto/math_service.pb.cc
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/root/Cplus/CoreX/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_17) "Building CXX object CMakeFiles/rpc.dir/proto/math_service.pb.cc.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/root/Cplus/CoreX/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_21) "Building CXX object CMakeFiles/rpc.dir/proto/math_service.pb.cc.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/rpc.dir/proto/math_service.pb.cc.o -c /root/Cplus/CoreX/proto/math_service.pb.cc
 
 CMakeFiles/rpc.dir/proto/math_service.pb.cc.i: cmake_force
@@ -282,6 +334,7 @@ CMakeFiles/rpc.dir/proto/math_service.pb.cc.s: cmake_force
 rpc_OBJECTS = \
 "CMakeFiles/rpc.dir/src/rpc/RpcCodec.cpp.o" \
 "CMakeFiles/rpc.dir/src/rpc/RpcServer.cpp.o" \
+"CMakeFiles/rpc.dir/src/rpc/IpcRpcBridge.cpp.o" \
 "CMakeFiles/rpc.dir/src/net/EventLoop.cpp.o" \
 "CMakeFiles/rpc.dir/src/net/Poller.cpp.o" \
 "CMakeFiles/rpc.dir/src/net/Channel.cpp.o" \
@@ -295,6 +348,9 @@ rpc_OBJECTS = \
 "CMakeFiles/rpc.dir/src/net/EventLoopThread.cpp.o" \
 "CMakeFiles/rpc.dir/src/log/my_log.cpp.o" \
 "CMakeFiles/rpc.dir/src/log/my_buffer.cpp.o" \
+"CMakeFiles/rpc.dir/src/ipc/ShmSegment.cpp.o" \
+"CMakeFiles/rpc.dir/src/ipc/RingBuffer.cpp.o" \
+"CMakeFiles/rpc.dir/src/ipc/IpcEndpoint.cpp.o" \
 "CMakeFiles/rpc.dir/proto/rpc_message.pb.cc.o" \
 "CMakeFiles/rpc.dir/proto/math_service.pb.cc.o"
 
@@ -303,6 +359,7 @@ rpc_EXTERNAL_OBJECTS =
 
 librpc.a: CMakeFiles/rpc.dir/src/rpc/RpcCodec.cpp.o
 librpc.a: CMakeFiles/rpc.dir/src/rpc/RpcServer.cpp.o
+librpc.a: CMakeFiles/rpc.dir/src/rpc/IpcRpcBridge.cpp.o
 librpc.a: CMakeFiles/rpc.dir/src/net/EventLoop.cpp.o
 librpc.a: CMakeFiles/rpc.dir/src/net/Poller.cpp.o
 librpc.a: CMakeFiles/rpc.dir/src/net/Channel.cpp.o
@@ -316,11 +373,14 @@ librpc.a: CMakeFiles/rpc.dir/src/net/EventLoopThreadPool.cpp.o
 librpc.a: CMakeFiles/rpc.dir/src/net/EventLoopThread.cpp.o
 librpc.a: CMakeFiles/rpc.dir/src/log/my_log.cpp.o
 librpc.a: CMakeFiles/rpc.dir/src/log/my_buffer.cpp.o
+librpc.a: CMakeFiles/rpc.dir/src/ipc/ShmSegment.cpp.o
+librpc.a: CMakeFiles/rpc.dir/src/ipc/RingBuffer.cpp.o
+librpc.a: CMakeFiles/rpc.dir/src/ipc/IpcEndpoint.cpp.o
 librpc.a: CMakeFiles/rpc.dir/proto/rpc_message.pb.cc.o
 librpc.a: CMakeFiles/rpc.dir/proto/math_service.pb.cc.o
 librpc.a: CMakeFiles/rpc.dir/build.make
 librpc.a: CMakeFiles/rpc.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/root/Cplus/CoreX/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_18) "Linking CXX static library librpc.a"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/root/Cplus/CoreX/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_22) "Linking CXX static library librpc.a"
 	$(CMAKE_COMMAND) -P CMakeFiles/rpc.dir/cmake_clean_target.cmake
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/rpc.dir/link.txt --verbose=$(VERBOSE)
 

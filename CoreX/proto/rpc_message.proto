@@ -17,7 +17,7 @@ enum ErrorCode {
     INVALID_REQUEST  = 4;
 }
 
-message RpcMessage {
+message RpcMessage {  //RpcMessage为CoreX::rpc::RpcMessage，基类为::google::protobuf::Message
     MessageType type            = 1;
     fixed64     id              = 2;   // 请求/响应对应 ID
     string      service         = 3;   // "MathService"

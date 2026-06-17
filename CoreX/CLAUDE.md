@@ -5,17 +5,22 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Build
 
 ```bash
-./build.sh                  # Release build, all targets
-./build.sh debug            # Debug build, all targets
-./build.sh asan             # Debug + AddressSanitizer, all targets
-./build.sh <target>         # Release build, single target
-./build.sh asan <target>    # ASan build, single target
-./build.sh clean            # Remove build directory
+./build.sh                          # Release build, all targets
+./build.sh debug                    # Debug build, all targets
+./build.sh asan                     # Debug + AddressSanitizer, all targets
+./build.sh <target>                 # Release build, single target
+./build.sh asan <target>            # ASan build, single target
+./build.sh clean                    # Remove build directory
+./build.sh log=1                    # Enable log printing
+./build.sh timestamp=1              # Enable RPC latency instrumentation
+./build.sh timestamp=1 log=1        # Both features enabled
 ```
 
 Targets: `test_echo_server`, `timeout_server_test`, `test_net_integration`, `test_rpc_benchmark`.
 
-Build outputs go to `build/`. ASan builds append `_ASAN` to the binary name.
+Feature flags (`timestamp=1`/`log=1`) append suffixes to binary names (e.g., `test_rpc_benchmark-log-timestamp`).
+
+Build outputs go to `build/`. Binary naming: `FEATURE_SUFFIX` (e.g., `-log`, `-timestamp`, `-log-timestamp`) is inserted before `_ASAN` when ASan is enabled. Examples: `test_echo_server`, `test_rpc_benchmark-log-timestamp`, `timeout_server_test_ASAN`.
 
 C++17 required. Dependencies: pthreads, Protobuf 3.6+. The RPC module (`src/rpc/`) and generated `.pb.cc` files build into a static library `librpc.a` included by `test_rpc_benchmark`.
 
@@ -67,6 +72,20 @@ TCP bytes → Buffer → RpcCodec::Onmessage (framing/validation)
   → sendResponse (wrap in RpcMessage envelope + TLV header + conn->send)
 ```
 
+### IPC Module (`src/ipc/`)
+
+Shared-memory inter-process communication with lock-free ring buffer. Consists of two layers:
+
+**Key classes:**
+- `ShmMemoryPool` — RAII wrapper around POSIX shared memory APIs (`shm_open` + `ftruncate` + `mmap` + `shm_unlink`). Constructor creates a named shared memory segment of a given size mapped into the process address space; destructor unmaps and unlinks. Construction unlinks any pre-existing segment first to start fresh.
+- `ShmRingBuffer` — Lock-free ring buffer designed for MPSC (multi-producer, single-consumer) use. Total capacity: 16 blocks of ~256 bytes each.
+
+**Ring buffer protocol (per block):**
+1. Producer: CAS-claims the next `write_index` slot → CAS state `FREE → WRITING` → memcpy data → store state `READY` (release)
+2. Consumer: checks `read_index != write_index` → checks state == `READY` (acquire) → copies data → CAS state `READY → FREE` → advances `read_index`
+
+**Block states:** `FREE (0) → WRITING (1) → READY (2) → FREE` (cycle). Each `ShmBlock` is cacheline-aligned (`alignas(64)`) to prevent false sharing. Uses C++ `std::atomic` with explicit memory ordering (`acquire`/`release`/`relaxed`).
+
 ### Proto Definitions (`proto/`)
 
 - `rpc_message.proto` — RPC envelope: `RpcMessage` with type (REQUEST/RESPONSE/ERROR), correlation id, service/method names, payload bytes, error codes, and latency-tracking timestamps (`client_send_ts`, `server_recv_ts`, `server_send_ts` in microseconds from `steady_clock`).
@@ -83,7 +102,7 @@ Singleton async logger. Macros: `LOG_DEBUG/INFO/WARN/ERROR/FATAL`. Routes to per
 
 ### Placeholder Directories
 
-`src/ipc/` and `src/websocket/` exist but are empty — planned for shared-memory IPC and WebSocket support respectively.
+`src/websocket/` exists but is empty — planned for WebSocket support.
 
 ## Known Issues
 

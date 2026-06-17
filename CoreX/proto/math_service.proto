@@ -16,7 +16,7 @@ message MathResponse {
 }
 
 // ↓ 这是关键：定义 Service
-service MathService {
-    rpc Add(MathRequest) returns (MathResponse);
+service MathService {  //::google::protobuf::ServiceDescriptor
+    rpc Add(MathRequest) returns (MathResponse);  //::google::protobuf::MethodDescriptor
     rpc Sub(MathRequest) returns (MathResponse);
 }

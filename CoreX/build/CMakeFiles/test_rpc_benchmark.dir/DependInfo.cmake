@@ -20,6 +20,7 @@ set(CMAKE_CXX_TARGET_INCLUDE_PATH
   "../src/log"
   "../src/rpc"
   "../proto"
+  "../src/ipc"
   )
 
 # Targets to which this target links.

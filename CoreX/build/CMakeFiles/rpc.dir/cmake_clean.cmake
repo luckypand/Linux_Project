@@ -1,6 +1,9 @@
 file(REMOVE_RECURSE
   "CMakeFiles/rpc.dir/proto/math_service.pb.cc.o"
   "CMakeFiles/rpc.dir/proto/rpc_message.pb.cc.o"
+  "CMakeFiles/rpc.dir/src/ipc/IpcEndpoint.cpp.o"
+  "CMakeFiles/rpc.dir/src/ipc/RingBuffer.cpp.o"
+  "CMakeFiles/rpc.dir/src/ipc/ShmSegment.cpp.o"
   "CMakeFiles/rpc.dir/src/log/my_buffer.cpp.o"
   "CMakeFiles/rpc.dir/src/log/my_log.cpp.o"
   "CMakeFiles/rpc.dir/src/net/Acceptor.cpp.o"
@@ -14,6 +17,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/rpc.dir/src/net/Socket.cpp.o"
   "CMakeFiles/rpc.dir/src/net/TcpConnection.cpp.o"
   "CMakeFiles/rpc.dir/src/net/TcpServer.cpp.o"
+  "CMakeFiles/rpc.dir/src/rpc/IpcRpcBridge.cpp.o"
   "CMakeFiles/rpc.dir/src/rpc/RpcCodec.cpp.o"
   "CMakeFiles/rpc.dir/src/rpc/RpcServer.cpp.o"
   "librpc.a"

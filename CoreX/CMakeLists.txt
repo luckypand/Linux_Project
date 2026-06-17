@@ -54,6 +54,9 @@ find_package(Threads REQUIRED)
 # Find Protobuf
 find_package(Protobuf REQUIRED)
 
+# Find OpenSSL (for MD5 in IPC tests)
+find_package(OpenSSL REQUIRED)
+
 # Log library sources
 set(LOG_SOURCES
     src/log/my_log.cpp
@@ -116,6 +119,15 @@ target_include_directories(test_echo_server PRIVATE
 target_link_libraries(test_echo_server PRIVATE Threads::Threads)
 
 # ============================================================
+# IPC library sources (shared-memory ring buffer)
+# ============================================================
+set(IPC_SOURCES
+    src/ipc/ShmSegment.cpp
+    src/ipc/RingBuffer.cpp
+    src/ipc/IpcEndpoint.cpp
+)
+
+# ============================================================
 # Proto sources (pre-generated .pb.cc files)
 # ============================================================
 set(PROTO_SOURCES
@@ -129,7 +141,9 @@ set(PROTO_SOURCES
 add_library(rpc STATIC
     src/rpc/RpcCodec.cpp
     src/rpc/RpcServer.cpp
+    src/rpc/IpcRpcBridge.cpp
     ${NET_SOURCES}
+    ${IPC_SOURCES}
     ${PROTO_SOURCES}
 )
 
@@ -137,6 +151,7 @@ target_include_directories(rpc PUBLIC
     ${CMAKE_SOURCE_DIR}/src/net
     ${CMAKE_SOURCE_DIR}/src/log
     ${CMAKE_SOURCE_DIR}/src/rpc
+    ${CMAKE_SOURCE_DIR}/src/ipc
     ${CMAKE_SOURCE_DIR}/proto
     ${Protobuf_INCLUDE_DIRS}
 )
@@ -144,6 +159,7 @@ target_include_directories(rpc PUBLIC
 target_link_libraries(rpc PUBLIC
     Threads::Threads
     ${Protobuf_LIBRARIES}
+    rt
 )
 
 # ============================================================
@@ -163,4 +179,23 @@ target_include_directories(test_rpc_benchmark PRIVATE
 
 target_link_libraries(test_rpc_benchmark PRIVATE
     rpc
+)
+
+# ============================================================
+# IPC Lock-Free Queue Benchmark Test (test_ipc)
+# ============================================================
+add_executable(test_ipc
+    tests/test_ipc.cpp
+    ${IPC_SOURCES}
+)
+
+target_include_directories(test_ipc PRIVATE
+    ${CMAKE_SOURCE_DIR}/src/ipc
+    ${CMAKE_SOURCE_DIR}/src/log
+)
+
+target_link_libraries(test_ipc PRIVATE
+    Threads::Threads
+    OpenSSL::Crypto
+    rt
 )

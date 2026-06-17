@@ -6,5 +6,5 @@ CXX_FLAGS = -O3 -DNDEBUG   -std=c++17
 
 CXX_DEFINES = -DENABLE_LOG=0 -DENABLE_TIMESTAMP=0
 
-CXX_INCLUDES = -I/root/Cplus/CoreX/src/net -I/root/Cplus/CoreX/src/log -I/root/Cplus/CoreX/src/rpc -I/root/Cplus/CoreX/proto 
+CXX_INCLUDES = -I/root/Cplus/CoreX/src/net -I/root/Cplus/CoreX/src/log -I/root/Cplus/CoreX/src/rpc -I/root/Cplus/CoreX/proto -I/root/Cplus/CoreX/src/ipc 
 
