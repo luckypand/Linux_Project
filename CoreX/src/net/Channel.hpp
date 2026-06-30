@@ -34,6 +34,7 @@ public:
     int index() const { return index_; }
     bool IsNoneEvent() const { return events_ == kNoneEvent; } //判断用户是否不再关心该fd的数据
     bool IsWriting() const { return events_ & kWriteEvent; }   //判断用户是否已经关注写事件
+    bool IsReading() const { return events_ & kReadEvent; }   //判断用户是否已经关注读事件
     uint32_t events() { return events_; }
     EventLoop* myEventLoop() const { return my_loop_; }
     

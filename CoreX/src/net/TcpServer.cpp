@@ -63,6 +63,12 @@ void TcpServer::newConnection(int sockfd, const std::string& peerAddr)
     std::string connectName = name_ + buff;
     //实例化一个Tcpconnection，绑定到对应loop上，初始化其回调
     TcpConnectionPtr conn = std::make_shared<TcpConnection>(subloop,sockfd);
+    if(highwaterMark_ > 0)
+    {
+        conn->setHighWaterMark(highwaterMark_);
+        conn->setLowWaterMark(lowwaterMark_);
+    }
+    
     connections_[connectName] = conn;
     conn->setConnectionCallback(connectionCallback_);
     conn->setMessageCallback(messageCallback_);

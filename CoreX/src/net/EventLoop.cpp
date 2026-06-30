@@ -89,6 +89,9 @@ void EventLoop::loop()
         if (timer_)
         {
             timer_->tick();
+            //注意，该任务内部会检查是否到时间了
+            //如果还没到时间，哪怕有新的eventfd提前唤醒poller也
+            //不会导致任务提前执行
         }
     }
 

@@ -118,6 +118,19 @@ target_include_directories(test_echo_server PRIVATE
 
 target_link_libraries(test_echo_server PRIVATE Threads::Threads)
 
+# Test_net — 全模块综合测试
+add_executable(test_net
+    tests/Test_net.cpp
+    ${NET_SOURCES}
+)
+
+target_include_directories(test_net PRIVATE
+    ${CMAKE_SOURCE_DIR}/src/net
+    ${CMAKE_SOURCE_DIR}/src/log
+)
+
+target_link_libraries(test_net PRIVATE Threads::Threads)
+
 # ============================================================
 # IPC library sources (shared-memory ring buffer)
 # ============================================================
@@ -148,11 +161,13 @@ add_library(rpc STATIC
 )
 
 target_include_directories(rpc PUBLIC
-    ${CMAKE_SOURCE_DIR}/src/net
-    ${CMAKE_SOURCE_DIR}/src/log
-    ${CMAKE_SOURCE_DIR}/src/rpc
-    ${CMAKE_SOURCE_DIR}/src/ipc
-    ${CMAKE_SOURCE_DIR}/proto
+    $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/src/net>
+    $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/src/log>
+    $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/src/rpc>
+    $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/src/ipc>
+    $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/proto>
+    $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/CoreX>
+    $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/CoreX/proto>
     ${Protobuf_INCLUDE_DIRS}
 )
 
@@ -198,4 +213,106 @@ target_link_libraries(test_ipc PRIVATE
     Threads::Threads
     OpenSSL::Crypto
     rt
+)
+
+# ============================================================
+# CoreXDaemon — 独立 RPC 中间件守护进程
+# ============================================================
+
+# 查找 yaml-cpp（用于配置文件解析）
+find_package(yaml-cpp REQUIRED)
+
+set(DAEMON_SOURCES
+    apps/daemon/main.cpp
+    apps/daemon/CoreXDaemon.cpp
+    apps/daemon/ConfigManager.cpp
+    apps/daemon/PluginLoader.cpp
+    apps/daemon/SignalHandler.cpp
+)
+
+add_executable(CoreXDaemon ${DAEMON_SOURCES})
+
+target_include_directories(CoreXDaemon PRIVATE
+    ${CMAKE_SOURCE_DIR}/apps/daemon
+    ${CMAKE_SOURCE_DIR}/src/net
+    ${CMAKE_SOURCE_DIR}/src/log
+    ${CMAKE_SOURCE_DIR}/src/rpc
+    ${CMAKE_SOURCE_DIR}/src/ipc
+    ${CMAKE_SOURCE_DIR}/proto
+    ${Protobuf_INCLUDE_DIRS}
+    ${YAML_CPP_INCLUDE_DIRS}
+)
+
+target_link_libraries(CoreXDaemon PRIVATE
+    -Wl,--whole-archive rpc -Wl,--no-whole-archive
+    yaml-cpp
+    ${CMAKE_DL_LIBS}   # dlopen, dlsym, dlclose
+)
+
+# 导出所有符号，使 dlopen 加载的 .so 插件能访问主程序的 Protobuf 符号
+set_target_properties(CoreXDaemon PROPERTIES ENABLE_EXPORTS TRUE)
+
+# ============================================================
+# Math Service Plugin — 示例业务插件 .so
+# 注意：不编译 proto 文件，proto 符号由主程序 librpc.a 提供
+# ============================================================
+add_library(math_service SHARED
+    apps/examples/math_plugin/math_service_plugin.cpp
+)
+
+target_include_directories(math_service PRIVATE
+    ${CMAKE_SOURCE_DIR}/src/rpc
+    ${CMAKE_SOURCE_DIR}/src/net
+    ${CMAKE_SOURCE_DIR}/src/log
+    ${CMAKE_SOURCE_DIR}/src/ipc
+    ${CMAKE_SOURCE_DIR}/proto
+    ${Protobuf_INCLUDE_DIRS}
+)
+
+target_link_libraries(math_service PRIVATE
+    ${Protobuf_LIBRARIES}
+)
+
+# 输出到 build/plugins/ 目录
+set_target_properties(math_service PROPERTIES
+    LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/plugins"
+)
+
+# ============================================================
+# 安装目标
+# ============================================================
+include(GNUInstallDirs)
+
+# 安装静态库和守护进程
+install(TARGETS rpc CoreXDaemon
+    EXPORT CoreXTargets
+    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+    ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+)
+
+# 安装头文件
+install(DIRECTORY src/net src/rpc src/ipc src/log
+    DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/CoreX
+    FILES_MATCHING PATTERN "*.hpp"
+)
+
+# 安装 protobuf 生成文件
+install(DIRECTORY proto/
+    DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/CoreX/proto
+    FILES_MATCHING PATTERN "*.pb.h"
+    PATTERN "*.pb.cc" EXCLUDE
+)
+
+# 安装默认配置文件
+install(FILES apps/config/corex_daemon.yaml
+    DESTINATION ${CMAKE_INSTALL_SYSCONFDIR}/corex
+)
+
+# ============================================================
+# CMake 导出配置（供 find_package(CoreX) 使用）
+# ============================================================
+install(EXPORT CoreXTargets
+    FILE CoreXTargets.cmake
+    NAMESPACE CoreX::
+    DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/CoreX
 )

@@ -1,0 +1,40 @@
+[Unit]
+Description=CoreX RPC Daemon - High Performance RPC Middleware
+Documentation=https://github.com/luckypand/CoreX
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=nobody
+Group=nogroup
+
+# 工作目录（根据实际部署路径修改）
+WorkingDirectory=/opt/corex
+
+# 启动命令（根据实际部署路径修改）
+ExecStart=/opt/corex/bin/CoreXDaemon --config /etc/corex/corex_daemon.yaml
+
+# 环境变量
+Environment=LD_LIBRARY_PATH=/opt/corex/lib:$LD_LIBRARY_PATH
+
+# 重启策略
+Restart=on-failure
+RestartSec=5s
+
+# 优雅关闭：先 SIGTERM，超时后 SIGKILL
+KillMode=mixed
+KillSignal=SIGTERM
+TimeoutStopSec=30s
+
+# 资源限制
+LimitNOFILE=65536
+LimitNPROC=4096
+
+# 日志
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=corex-daemon
+
+[Install]
+WantedBy=multi-user.target

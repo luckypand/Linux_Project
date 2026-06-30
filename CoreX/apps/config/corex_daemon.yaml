@@ -1,0 +1,31 @@
+# ============================================================================
+# CoreX RPC Daemon 默认配置文件
+# ============================================================================
+
+# --- 服务器配置 ---
+server:
+  name: "CoreXDaemon"       # 服务器名称（用于日志和连接标识）
+  host: "0.0.0.0"           # 监听地址（0.0.0.0 表示监听所有网卡）
+  port: 8080                # TCP 监听端口
+  worker_threads: 4         # IO 工作线程数（子 Reactor 数量）
+
+# --- IPC 快速通道配置（本地共享内存通信，低延迟）---
+ipc:
+  enabled: true                       # 是否启用 IPC fast-path
+  shm_name: "/corex_rpc_ipc"          # 共享内存段名称（客户端需一致）
+
+# --- 插件配置 ---
+plugins:
+  directory: "./plugins"              # 插件 .so 文件搜索目录
+  autoload: true                      # 启动时自动加载目录下所有 .so
+
+# --- 日志配置 ---
+logging:
+  level: "INFO"                       # 日志级别: DEBUG, INFO, WARN, ERROR, FATAL
+  path: "./log"                       # 日志文件输出目录
+  # 注意: 日志功能需编译时启用 ENABLE_LOG=ON
+
+# --- 监控配置 ---
+monitoring:
+  health_check_port: 9090             # HTTP 健康检查端口（预留，尚未实现）
+  latency_stats: false                # 是否启用 RPC 延迟统计（预留）

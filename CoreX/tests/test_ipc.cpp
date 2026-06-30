@@ -396,15 +396,17 @@ static int run_pingpong(int total_rounds) {
         // 子进程需处理: 预热 100 次 + 正式测试 total_rounds 次
         const int child_total = 100 + total_rounds;
         for (int i = 0; i < child_total; ++i) {
-            // 自旋等待父进程的 ping 消息
-            while (!ping_ring->CAS_Pop(recv)) {
-                // busy-wait — 极低延迟，无系统调用开销
-            }
 
-            // 立即回传 pong（相同的 100 字节数据原样返回）
-            while (!pong_ring->CAS_Push(recv.data(), recv.size())) {
-                // 环形队列满时自旋（理论上不会发生，因为父进程在等 pong）
-            }
+        // 自旋等待父进程的 ping 消息
+        while (!ping_ring->CAS_Pop(recv)) {
+            // busy-wait — 极低延迟，无系统调用开销
+        }
+
+        // 立即回传 pong（相同的 100 字节数据原样返回）
+        while (!pong_ring->CAS_Push(recv.data(), recv.size())) {
+            // 环形队列满时自旋（理论上不会发生，因为父进程在等 pong）
+        }                
+
         }
 
         _exit(0);  // 子进程直接退出，不调用任何析构函数
@@ -436,7 +438,6 @@ static int run_pingpong(int total_rounds) {
         // 记录发送前时间戳
         auto t0 = high_resolution_clock::now();
 
-        // 发送 ping
         while (!ping_ring->CAS_Push(send_buf, sizeof(send_buf))) {
             // 队列满时自旋（理论上不会发生，因子进程同步消费）
         }
@@ -450,7 +451,10 @@ static int run_pingpong(int total_rounds) {
         // 计算往返延迟（微秒）
         double lat_us = static_cast<double>(
             duration_cast<std::chrono::nanoseconds>(t1 - t0).count()) / 1000.0;
-        latencies.push_back(lat_us);
+        latencies.push_back(lat_us);            
+
+        // 发送 ping
+
 
         // 进度输出（每 10 万次打印一次）
         if ((i + 1) % 100000 == 0) {

@@ -15,6 +15,8 @@ public:
     using writeCompleteCallback = std::function<void(std::shared_ptr<TcpConnection>)>;
     // IPC fast-path: 可插拔的输出函数，替代 TCP socket write
     using OutputFunc = std::function<void(const std::string&)>;
+    //增加高水位的回调函数
+    using HighWaterMarkCallback = std::function<void(const std::shared_ptr<TcpConnection>&,size_t)>;
 
     TcpConnection(EventLoop* loop,int Socket);
     ~TcpConnection();
@@ -29,6 +31,14 @@ public:
     void setMessageCallback(messageCallback cb) { messageCallback_ = std::move(cb); }
     void setCloseCallback(closeCallback cb) { closeCallback_ = std::move(cb); }
     void setwriteCompleteCallback(writeCompleteCallback cb) { writeCompleteCallback_ = std::move(cb); }
+     // ---- 新增：水位设置接口 ----
+    void setHighWaterMarkCallback(HighWaterMarkCallback cb) { HighWaterMarkCallback_ = std::move(cb); }
+    //新增水位相关设置函数
+    void setHighWaterMark(size_t highmark) {highWaterMark = highmark;}
+    void setLowWaterMark(size_t lowmark) {lowWaterMark = lowmark;}
+    //新增水位相关查询函数
+    size_t outputBufferSize() const { return outBuffer.ReadBytes(); }
+    size_t inputBufferSize()  const { return inBuffer.ReadBytes(); }
 
     // IPC fast-path: 设置自定义输出函数（替换 socket write），disableReadEvent 禁用读事件
     void setOutputFunc(OutputFunc f) { outputFunc_ = std::move(f); }
@@ -62,7 +72,12 @@ public:
     messageCallback messageCallback_;
     closeCallback closeCallback_;
     writeCompleteCallback writeCompleteCallback_;
+    //添加高水位回调
+    HighWaterMarkCallback HighWaterMarkCallback_;
 
     // IPC fast-path: 非空时替换 socket write（用于共享内存响应回传）
     OutputFunc outputFunc_;
+    //添加高低水位
+    size_t highWaterMark = 0;
+    size_t lowWaterMark = 0;
 };

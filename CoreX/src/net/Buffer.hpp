@@ -48,6 +48,7 @@ public:
     //Rpc协议读取魔数
     uint32_t peekInt32() const;
     uint32_t peekInt32(size_t offset) const;
+
 private:
     //返回地址值
     char* begin() { return &*buffer_.begin(); }

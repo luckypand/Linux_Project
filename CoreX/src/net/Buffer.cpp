@@ -229,7 +229,7 @@ ssize_t Buffer::writeFd(int fd, int* savedErrno)
 {
     ssize_t n = ::write(fd,this->beginRead(),ReadBytes());
 
-    if(n < 0)
+    if(n < 0 && savedErrno)
     {
         *savedErrno = errno;
         // std::cerr << *savedErrno << std::endl;

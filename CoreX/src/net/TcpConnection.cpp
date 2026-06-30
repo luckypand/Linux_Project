@@ -71,7 +71,23 @@ void TcpConnection::handleRead()
     ssize_t n = inBuffer.readFd(socket_->fd(),&savedErrno);
     if(n > 0)//读成功(业务处理)
     {
+        //此处消息调用send可能会触发outbuffer扩张
         messageCallback_(shared_from_this(),inBuffer);
+        //检查高水位是否超过
+        if(highWaterMark > 0 && this->outputBufferSize() >= highWaterMark)
+        {
+            //判断是否已经执行过了高水位处理
+            if(channel_->IsReading())//第一次触发
+            {
+                //如果有高水位回调操作就执行
+                if(HighWaterMarkCallback_)
+                {
+                    HighWaterMarkCallback_(shared_from_this(),outBuffer.ReadBytes());
+                }
+                //关闭对读事件的关注
+                channel_->disableReading();
+            }
+        }
     }
     else if(n == 0)//连接关闭(网络库处理)   
     {
@@ -160,9 +176,18 @@ void TcpConnection::handleWrite()
     //判断如果此时用户关注写事件，开始写剩余
     if(channel_->IsWriting())
     {
-        ssize_t n = ::write(socket_->fd(),outBuffer.peek(),outBuffer.ReadBytes());
+        ssize_t n =  outBuffer.writeFd(socket_->fd(), nullptr);
         if(n > 0)
         {
+            //判断水位是否下降到可以重新关注读事件
+            if(highWaterMark > 0)
+            {
+                if(!channel_->IsReading() && outputBufferSize() <= lowWaterMark)
+                {
+                    //恢复可读
+                    channel_->enableReading();
+                }
+            }
             //判断是否写完，如果写完了，不再关注写事件，同时根据连接状态判断要不要关闭
             if(outBuffer.ReadBytes() == 0)
             {

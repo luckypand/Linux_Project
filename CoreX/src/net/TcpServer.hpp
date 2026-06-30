@@ -26,6 +26,9 @@ public:
     void setConnectionCallback(TcpConnection::connectionCallback cb) { connectionCallback_ = std::move(cb); }
     void setMessageCallback(TcpConnection::messageCallback cb) { messageCallback_ = std::move(cb); }
     void setWriteCompleteCallback(TcpConnection::writeCompleteCallback cb) { writeCompleteCallback_ = std::move(cb); }
+    //水位传递，在TcpConnection开始时进行调用
+    void setHighWaterMark(size_t mark) { highwaterMark_ = mark; }
+    void setLowWaterMark(size_t mark)  { lowwaterMark_  = mark; }
 private:
     void removeConnection(const TcpConnectionPtr& conn,const std::string& connectName);
     void removeConnectionInLoop(const TcpConnectionPtr& conn,const std::string& connectName);
@@ -51,4 +54,8 @@ private:
 
     //记录表，记录对应的线程和连接
     std::unordered_map<std::string,TcpConnectionPtr> connections_;
+
+    //外部用户传递水位给TcpConnection
+    size_t highwaterMark_ = 0;
+    size_t lowwaterMark_ = 0;
 };
