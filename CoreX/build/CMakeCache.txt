@@ -22,7 +22,7 @@ CMAKE_AR:FILEPATH=/usr/bin/ar
 
 //Choose the type of build, options are: None Debug Release RelWithDebInfo
 // MinSizeRel ...
-CMAKE_BUILD_TYPE:STRING=Release
+CMAKE_BUILD_TYPE:STRING=
 
 //Enable/Disable color output during build.
 CMAKE_COLOR_MAKEFILE:BOOL=ON
@@ -285,6 +285,9 @@ Protobuf_PROTOC_LIBRARY_DEBUG:FILEPATH=Protobuf_PROTOC_LIBRARY_DEBUG-NOTFOUND
 
 //Path to a library.
 Protobuf_PROTOC_LIBRARY_RELEASE:FILEPATH=Protobuf_PROTOC_LIBRARY_RELEASE-NOTFOUND
+
+//The directory containing a CMake configuration file for catkin.
+catkin_DIR:PATH=catkin_DIR-NOTFOUND
 
 //Dependencies for the target
 math_service_LIB_DEPENDS:STATIC=general;/usr/lib/x86_64-linux-gnu/libprotobuf.so;general;-lpthread;

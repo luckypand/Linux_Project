@@ -68,6 +68,18 @@ install/local/fast: preinstall/fast
 	/usr/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
 .PHONY : install/local/fast
 
+# Special rule for the target install
+install: preinstall
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Install the project..."
+	/usr/bin/cmake -P cmake_install.cmake
+.PHONY : install
+
+# Special rule for the target install
+install/fast: preinstall/fast
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Install the project..."
+	/usr/bin/cmake -P cmake_install.cmake
+.PHONY : install/fast
+
 # Special rule for the target install/strip
 install/strip: preinstall
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing the project stripped..."
@@ -111,18 +123,6 @@ list_install_components:
 list_install_components/fast: list_install_components
 
 .PHONY : list_install_components/fast
-
-# Special rule for the target install
-install: preinstall
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Install the project..."
-	/usr/bin/cmake -P cmake_install.cmake
-.PHONY : install
-
-# Special rule for the target install
-install/fast: preinstall/fast
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Install the project..."
-	/usr/bin/cmake -P cmake_install.cmake
-.PHONY : install/fast
 
 # The main all target
 all: cmake_check_build_system
@@ -272,6 +272,19 @@ test_rpc_benchmark: cmake_check_build_system
 test_rpc_benchmark/fast:
 	$(MAKE) -f CMakeFiles/test_rpc_benchmark.dir/build.make CMakeFiles/test_rpc_benchmark.dir/build
 .PHONY : test_rpc_benchmark/fast
+
+#=============================================================================
+# Target rules for targets named host_controller
+
+# Build rule for target.
+host_controller: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 host_controller
+.PHONY : host_controller
+
+# fast build rule for target.
+host_controller/fast:
+	$(MAKE) -f CMakeFiles/host_controller.dir/build.make CMakeFiles/host_controller.dir/build
+.PHONY : host_controller/fast
 
 apps/daemon/ConfigManager.o: apps/daemon/ConfigManager.cpp.o
 
@@ -435,6 +448,33 @@ apps/examples/math_plugin/math_service_plugin.cpp.s:
 	$(MAKE) -f CMakeFiles/math_service.dir/build.make CMakeFiles/math_service.dir/apps/examples/math_plugin/math_service_plugin.cpp.s
 .PHONY : apps/examples/math_plugin/math_service_plugin.cpp.s
 
+apps/examples/robot_controller/main.o: apps/examples/robot_controller/main.cpp.o
+
+.PHONY : apps/examples/robot_controller/main.o
+
+# target to build an object file
+apps/examples/robot_controller/main.cpp.o:
+	$(MAKE) -f CMakeFiles/host_controller.dir/build.make CMakeFiles/host_controller.dir/apps/examples/robot_controller/main.cpp.o
+.PHONY : apps/examples/robot_controller/main.cpp.o
+
+apps/examples/robot_controller/main.i: apps/examples/robot_controller/main.cpp.i
+
+.PHONY : apps/examples/robot_controller/main.i
+
+# target to preprocess a source file
+apps/examples/robot_controller/main.cpp.i:
+	$(MAKE) -f CMakeFiles/host_controller.dir/build.make CMakeFiles/host_controller.dir/apps/examples/robot_controller/main.cpp.i
+.PHONY : apps/examples/robot_controller/main.cpp.i
+
+apps/examples/robot_controller/main.s: apps/examples/robot_controller/main.cpp.s
+
+.PHONY : apps/examples/robot_controller/main.s
+
+# target to generate assembly for a file
+apps/examples/robot_controller/main.cpp.s:
+	$(MAKE) -f CMakeFiles/host_controller.dir/build.make CMakeFiles/host_controller.dir/apps/examples/robot_controller/main.cpp.s
+.PHONY : apps/examples/robot_controller/main.cpp.s
+
 proto/math_service.pb.o: proto/math_service.pb.cc.o
 
 .PHONY : proto/math_service.pb.o
@@ -461,6 +501,33 @@ proto/math_service.pb.s: proto/math_service.pb.cc.s
 proto/math_service.pb.cc.s:
 	$(MAKE) -f CMakeFiles/rpc.dir/build.make CMakeFiles/rpc.dir/proto/math_service.pb.cc.s
 .PHONY : proto/math_service.pb.cc.s
+
+proto/robot_service.pb.o: proto/robot_service.pb.cc.o
+
+.PHONY : proto/robot_service.pb.o
+
+# target to build an object file
+proto/robot_service.pb.cc.o:
+	$(MAKE) -f CMakeFiles/rpc.dir/build.make CMakeFiles/rpc.dir/proto/robot_service.pb.cc.o
+.PHONY : proto/robot_service.pb.cc.o
+
+proto/robot_service.pb.i: proto/robot_service.pb.cc.i
+
+.PHONY : proto/robot_service.pb.i
+
+# target to preprocess a source file
+proto/robot_service.pb.cc.i:
+	$(MAKE) -f CMakeFiles/rpc.dir/build.make CMakeFiles/rpc.dir/proto/robot_service.pb.cc.i
+.PHONY : proto/robot_service.pb.cc.i
+
+proto/robot_service.pb.s: proto/robot_service.pb.cc.s
+
+.PHONY : proto/robot_service.pb.s
+
+# target to generate assembly for a file
+proto/robot_service.pb.cc.s:
+	$(MAKE) -f CMakeFiles/rpc.dir/build.make CMakeFiles/rpc.dir/proto/robot_service.pb.cc.s
+.PHONY : proto/robot_service.pb.cc.s
 
 proto/rpc_message.pb.o: proto/rpc_message.pb.cc.o
 
@@ -1336,6 +1403,7 @@ help:
 	@echo "... clean"
 	@echo "... depend"
 	@echo "... install/local"
+	@echo "... install"
 	@echo "... timeout_server_test"
 	@echo "... math_service"
 	@echo "... CoreXDaemon"
@@ -1346,10 +1414,10 @@ help:
 	@echo "... rpc"
 	@echo "... test_ipc"
 	@echo "... test_rpc_benchmark"
+	@echo "... host_controller"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... list_install_components"
-	@echo "... install"
 	@echo "... apps/daemon/ConfigManager.o"
 	@echo "... apps/daemon/ConfigManager.i"
 	@echo "... apps/daemon/ConfigManager.s"
@@ -1368,9 +1436,15 @@ help:
 	@echo "... apps/examples/math_plugin/math_service_plugin.o"
 	@echo "... apps/examples/math_plugin/math_service_plugin.i"
 	@echo "... apps/examples/math_plugin/math_service_plugin.s"
+	@echo "... apps/examples/robot_controller/main.o"
+	@echo "... apps/examples/robot_controller/main.i"
+	@echo "... apps/examples/robot_controller/main.s"
 	@echo "... proto/math_service.pb.o"
 	@echo "... proto/math_service.pb.i"
 	@echo "... proto/math_service.pb.s"
+	@echo "... proto/robot_service.pb.o"
+	@echo "... proto/robot_service.pb.i"
+	@echo "... proto/robot_service.pb.s"
 	@echo "... proto/rpc_message.pb.o"
 	@echo "... proto/rpc_message.pb.i"
 	@echo "... proto/rpc_message.pb.s"

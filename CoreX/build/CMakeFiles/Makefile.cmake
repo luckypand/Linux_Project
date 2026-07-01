@@ -123,4 +123,5 @@ set(CMAKE_DEPEND_INFO_FILES
   "CMakeFiles/rpc.dir/DependInfo.cmake"
   "CMakeFiles/test_ipc.dir/DependInfo.cmake"
   "CMakeFiles/test_rpc_benchmark.dir/DependInfo.cmake"
+  "CMakeFiles/host_controller.dir/DependInfo.cmake"
   )

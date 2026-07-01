@@ -1,1 +1,1 @@
-/usr/bin/c++  -O3 -DNDEBUG   CMakeFiles/test_rpc_benchmark.dir/tests/test_rpc_benchmark.cpp.o  -o test_rpc_benchmark  librpc.a /usr/lib/x86_64-linux-gnu/libprotobuf.so -lpthread -lrt 
+/usr/bin/c++     CMakeFiles/test_rpc_benchmark.dir/tests/test_rpc_benchmark.cpp.o  -o test_rpc_benchmark  librpc.a /usr/lib/x86_64-linux-gnu/libprotobuf.so -lpthread -lrt 

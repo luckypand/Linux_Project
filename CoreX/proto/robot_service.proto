@@ -1,0 +1,79 @@
+// proto/robot_service.proto
+// CoreX + ROS 跨设备通信 — 机器人数据协议
+//
+// 小车 → 主机（遥测）: GetOdometry, GetStatus
+// 主机 → 小车（控制）: SetVelocity, Stop
+
+syntax = "proto3";
+
+package CoreX.rpc;
+
+// ============================================================================
+// 里程计数据（对应 ROS nav_msgs/Odometry）
+// ============================================================================
+message OdometryRequest {}
+
+message OdometryResponse {
+    double pos_x     = 1;   // 位置 x (m)
+    double pos_y     = 2;   // 位置 y (m)
+    double pos_z     = 3;   // 位置 z (m)
+    double orient_x  = 4;   // 姿态四元数 x
+    double orient_y  = 5;   // 姿态四元数 y
+    double orient_z  = 6;   // 姿态四元数 z
+    double orient_w  = 7;   // 姿态四元数 w
+    double vel_x     = 8;   // 线速度 x (m/s)
+    double vel_y     = 9;   // 线速度 y (m/s)
+    double vel_z     = 10;  // 线速度 z (m/s)
+    double ang_x     = 11;  // 角速度 x (rad/s)
+    double ang_y     = 12;  // 角速度 y (rad/s)
+    double ang_z     = 13;  // 角速度 z (rad/s)
+    uint64 timestamp = 14;  // 数据时间戳 (us)
+    bool   success   = 15;
+}
+
+// ============================================================================
+// 机器人整体状态
+// ============================================================================
+message StatusRequest {}
+
+message StatusResponse {
+    double battery_v      = 1;   // 电池电压 (V)
+    double battery_pct    = 2;   // 电池百分比 (0-100)
+    bool   is_charging    = 3;   // 是否充电中
+    bool   emergency_stop = 4;   // 是否急停
+    string status_msg     = 5;   // 状态描述
+    uint64 timestamp      = 6;   // 数据时间戳 (us)
+}
+
+// ============================================================================
+// 运动控制指令（对应 ROS geometry_msgs/Twist）
+// ============================================================================
+message VelocityCommand {
+    double linear_x   = 1;  // 前进速度 (m/s)，正值前进
+    double linear_y   = 2;  // 横向速度 (m/s)
+    double linear_z   = 3;  // 垂向速度 (m/s)
+    double angular_x  = 4;  // 绕 x 轴角速度 (rad/s)
+    double angular_y  = 5;  // 绕 y 轴角速度 (rad/s)
+    double angular_z  = 6;  // 绕 z 轴角速度 (rad/s)，正值左转
+}
+
+message ControlResponse {
+    bool   success    = 1;
+    string error_msg  = 2;
+}
+
+// ============================================================================
+// Service 定义 — 用于 RpcServiceAdapter 的动态方法分发
+//
+// RobotTelemetry: 一个 Service 包含遥测全部方法（一个 .so 搞定）
+// MotionControl:  一个 Service 包含控制全部方法（一个 .so 搞定）
+// ============================================================================
+service RobotTelemetry {
+    rpc GetOdometry(OdometryRequest) returns (OdometryResponse);
+    rpc GetStatus(StatusRequest)       returns (StatusResponse);
+}
+
+service MotionControl {
+    rpc SetVelocity(VelocityCommand) returns (ControlResponse);
+    rpc Stop(VelocityCommand)        returns (ControlResponse);
+}

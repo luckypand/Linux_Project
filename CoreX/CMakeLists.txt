@@ -146,6 +146,7 @@ set(IPC_SOURCES
 set(PROTO_SOURCES
     proto/rpc_message.pb.cc
     proto/math_service.pb.cc
+    proto/robot_service.pb.cc
 )
 
 # ============================================================
@@ -277,6 +278,88 @@ target_link_libraries(math_service PRIVATE
 set_target_properties(math_service PROPERTIES
     LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/plugins"
 )
+
+# ============================================================
+# Host Controller — 机器人遥控主机（纯客户端，无需 ROS）
+# ============================================================
+add_executable(host_controller
+    apps/examples/robot_controller/main.cpp
+)
+
+target_include_directories(host_controller PRIVATE
+    ${CMAKE_SOURCE_DIR}/src/net
+    ${CMAKE_SOURCE_DIR}/src/log
+    ${CMAKE_SOURCE_DIR}/src/rpc
+    ${CMAKE_SOURCE_DIR}/src/ipc
+    ${CMAKE_SOURCE_DIR}/proto
+    ${Protobuf_INCLUDE_DIRS}
+)
+
+target_link_libraries(host_controller PRIVATE
+    rpc
+)
+
+# ============================================================
+# ROS 插件 — 机器人在车端部署（需要 ROS 环境才能编译）
+# 如果本机未安装 ROS，这些 target 会被跳过
+# ============================================================
+find_package(catkin QUIET COMPONENTS roscpp nav_msgs geometry_msgs)
+
+if(catkin_FOUND)
+    message(STATUS "ROS found — building robot plugins")
+
+    # --- Telemetry Plugin (里程计 + 状态遥测) ---
+    add_library(telemetry_plugin SHARED
+        apps/plugins/ros/telemetry_plugin.cpp
+    )
+
+    target_include_directories(telemetry_plugin PRIVATE
+        ${CMAKE_SOURCE_DIR}/src/rpc
+        ${CMAKE_SOURCE_DIR}/src/net
+        ${CMAKE_SOURCE_DIR}/src/log
+        ${CMAKE_SOURCE_DIR}/src/ipc
+        ${CMAKE_SOURCE_DIR}/proto
+        ${Protobuf_INCLUDE_DIRS}
+        ${catkin_INCLUDE_DIRS}
+    )
+
+    target_link_libraries(telemetry_plugin PRIVATE
+        ${Protobuf_LIBRARIES}
+        ${catkin_LIBRARIES}
+    )
+
+    set_target_properties(telemetry_plugin PROPERTIES
+        LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/plugins"
+    )
+
+    # --- Control Plugin (运动控制) ---
+    add_library(control_plugin SHARED
+        apps/plugins/ros/control_plugin.cpp
+    )
+
+    target_include_directories(control_plugin PRIVATE
+        ${CMAKE_SOURCE_DIR}/src/rpc
+        ${CMAKE_SOURCE_DIR}/src/net
+        ${CMAKE_SOURCE_DIR}/src/log
+        ${CMAKE_SOURCE_DIR}/src/ipc
+        ${CMAKE_SOURCE_DIR}/proto
+        ${Protobuf_INCLUDE_DIRS}
+        ${catkin_INCLUDE_DIRS}
+    )
+
+    target_link_libraries(control_plugin PRIVATE
+        ${Protobuf_LIBRARIES}
+        ${catkin_LIBRARIES}
+    )
+
+    set_target_properties(control_plugin PROPERTIES
+        LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/plugins"
+    )
+
+else()
+    message(STATUS "ROS NOT found — skipping robot plugins (build on robot instead)")
+    message(STATUS "  插件源码位于 apps/plugins/ros/，部署到机器人后编译")
+endif()
 
 # ============================================================
 # 安装目标
