@@ -147,6 +147,7 @@ set(PROTO_SOURCES
     proto/rpc_message.pb.cc
     proto/math_service.pb.cc
     proto/robot_service.pb.cc
+    proto/ros_messages.pb.cc
 )
 
 # ============================================================
@@ -239,6 +240,7 @@ target_include_directories(CoreXDaemon PRIVATE
     ${CMAKE_SOURCE_DIR}/src/log
     ${CMAKE_SOURCE_DIR}/src/rpc
     ${CMAKE_SOURCE_DIR}/src/ipc
+    ${CMAKE_SOURCE_DIR}/src/ros_bridge
     ${CMAKE_SOURCE_DIR}/proto
     ${Protobuf_INCLUDE_DIRS}
     ${YAML_CPP_INCLUDE_DIRS}
@@ -248,6 +250,38 @@ target_link_libraries(CoreXDaemon PRIVATE
     -Wl,--whole-archive rpc -Wl,--no-whole-archive
     yaml-cpp
     ${CMAKE_DL_LIBS}   # dlopen, dlsym, dlclose
+)
+
+# 如果 ROS Bridge 可用，链接它
+if(ROS_BRIDGE_AVAILABLE)
+    target_include_directories(CoreXDaemon PRIVATE ${catkin_INCLUDE_DIRS})
+    target_link_libraries(CoreXDaemon PRIVATE rosbridge)
+    target_compile_definitions(CoreXDaemon PRIVATE HAS_ROS_BRIDGE=1)
+endif()
+
+# ============================================================
+# ROS Bridge 单元测试（不需要 ROS 环境也可编译部分测试）
+# ============================================================
+add_executable(test_ros_bridge
+    tests/test_ros_bridge.cpp
+    src/ros_bridge/BridgeConfig.cpp
+    src/ros_bridge/ShmTopicBus.cpp
+)
+
+target_include_directories(test_ros_bridge PRIVATE
+    ${CMAKE_SOURCE_DIR}/src/ros_bridge
+    ${CMAKE_SOURCE_DIR}/src/rpc
+    ${CMAKE_SOURCE_DIR}/src/net
+    ${CMAKE_SOURCE_DIR}/src/log
+    ${CMAKE_SOURCE_DIR}/src/ipc
+    ${CMAKE_SOURCE_DIR}/proto
+    ${Protobuf_INCLUDE_DIRS}
+    ${YAML_CPP_INCLUDE_DIRS}
+)
+
+target_link_libraries(test_ros_bridge PRIVATE
+    rpc
+    yaml-cpp
 )
 
 # 导出所有符号，使 dlopen 加载的 .so 插件能访问主程序的 Protobuf 符号
@@ -300,10 +334,57 @@ target_link_libraries(host_controller PRIVATE
 )
 
 # ============================================================
+# ROS Bridge 库 — CoreX ↔ ROS 协议网关（需要 ROS 环境）
+# ============================================================
+find_package(catkin QUIET COMPONENTS roscpp nav_msgs geometry_msgs)
+
+if(catkin_FOUND)
+    message(STATUS "ROS found — building CoreX-ROS Bridge library")
+
+    # ROS Bridge 核心源文件
+    set(ROS_BRIDGE_SOURCES
+        src/ros_bridge/RosNodeManager.cpp
+        src/ros_bridge/BridgeConfig.cpp
+        src/ros_bridge/RosBridgeEngine.cpp
+        src/ros_bridge/TopicBridge.cpp
+        src/ros_bridge/ServiceBridge.cpp
+        src/ros_bridge/ActionBridge.cpp
+        src/ros_bridge/ShmImageTransporter.cpp
+        src/ros_bridge/ShmTopicBus.cpp
+    )
+
+    add_library(rosbridge STATIC ${ROS_BRIDGE_SOURCES})
+
+    target_include_directories(rosbridge PUBLIC
+        $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/src/ros_bridge>
+        $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/src/rpc>
+        $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/src/net>
+        $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/src/log>
+        $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/src/ipc>
+        $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/proto>
+        ${Protobuf_INCLUDE_DIRS}
+        ${catkin_INCLUDE_DIRS}
+    )
+
+    target_link_libraries(rosbridge PUBLIC
+        rpc
+        ${catkin_LIBRARIES}
+    )
+
+    # 编译定义：启用 ROS 特定代码路径
+    target_compile_definitions(rosbridge PUBLIC HAS_ROS_ENV=1 HAS_ROS_CONVERSIONS=1)
+
+    set(ROS_BRIDGE_AVAILABLE TRUE)
+
+else()
+    message(STATUS "ROS NOT found — skipping CoreX-ROS Bridge (build on robot instead)")
+    set(ROS_BRIDGE_AVAILABLE FALSE)
+endif()
+
+# ============================================================
 # ROS 插件 — 机器人在车端部署（需要 ROS 环境才能编译）
 # 如果本机未安装 ROS，这些 target 会被跳过
 # ============================================================
-find_package(catkin QUIET COMPONENTS roscpp nav_msgs geometry_msgs)
 
 if(catkin_FOUND)
     message(STATUS "ROS found — building robot plugins")

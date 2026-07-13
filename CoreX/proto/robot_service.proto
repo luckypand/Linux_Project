@@ -63,17 +63,261 @@ message ControlResponse {
 }
 
 // ============================================================================
+// 关节状态请求/响应
+// ============================================================================
+message JointStatesRequest {}
+message JointStatesResponse {
+    repeated string name     = 1;
+    repeated double position = 2;
+    repeated double velocity = 3;
+    repeated double effort   = 4;
+    uint64 timestamp         = 5;
+    bool   success           = 6;
+}
+
+// ============================================================================
+// 图像请求/响应
+// ============================================================================
+message ImageRequest {
+    string encoding = 1;  // 可选：指定编码（空串表示使用原始编码）
+}
+message ImageResponse {
+    uint32 height    = 1;
+    uint32 width     = 2;
+    string encoding  = 3;
+    uint32 step      = 4;
+    bytes  data      = 5;
+    uint64 timestamp = 6;
+    string frame_id  = 7;
+    string shm_key   = 8;     // 如果走 SHM，data 为空
+    bool   success   = 9;
+}
+
+// ============================================================================
+// 激光扫描请求/响应
+// ============================================================================
+message LaserScanRequest {}
+message LaserScanResponse {
+    float  angle_min       = 1;
+    float  angle_max       = 2;
+    float  angle_increment = 3;
+    float  time_increment  = 4;
+    float  scan_time       = 5;
+    float  range_min       = 6;
+    float  range_max       = 7;
+    repeated float ranges      = 8;
+    repeated float intensities = 9;
+    uint64 timestamp = 10;
+    string frame_id  = 11;
+    bool   success   = 12;
+}
+
+// ============================================================================
+// 点云请求/响应
+// ============================================================================
+message PointCloudRequest {}
+message PointCloudResponse {
+    uint32 height    = 1;
+    uint32 width     = 2;
+    uint32 point_step = 3;
+    uint32 row_step  = 4;
+    bytes  data      = 5;
+    bool   is_dense  = 6;
+    uint64 timestamp = 7;
+    string frame_id  = 8;
+    string shm_key   = 9;
+    bool   success   = 10;
+}
+
+// ============================================================================
+// TF 请求/响应
+// ============================================================================
+message TFRequest {
+    string target_frame = 1;  // 可选：指定目标坐标系
+    string source_frame = 2;  // 可选：指定源坐标系
+}
+message TransformStampedMsg {
+    string child_frame_id = 1;
+    string frame_id       = 2;
+    uint64 timestamp      = 3;
+    double translation_x  = 4;
+    double translation_y  = 5;
+    double translation_z  = 6;
+    double rotation_x     = 7;
+    double rotation_y     = 8;
+    double rotation_z     = 9;
+    double rotation_w     = 10;
+}
+message TFResponse {
+    repeated TransformStampedMsg transforms = 1;
+    bool success = 2;
+}
+
+// ============================================================================
+// 电池请求/响应
+// ============================================================================
+message BatteryRequest {}
+message BatteryResponse {
+    float  voltage    = 1;
+    float  current    = 2;
+    float  percentage = 3;
+    uint32 power_supply_status = 4;
+    bool   present     = 5;
+    uint64 timestamp   = 6;
+    bool   success     = 7;
+}
+
+// ============================================================================
+// IMU 请求/响应
+// ============================================================================
+message ImuRequest {}
+message ImuResponse {
+    double orient_x = 1;
+    double orient_y = 2;
+    double orient_z = 3;
+    double orient_w = 4;
+    double ang_vel_x = 5;
+    double ang_vel_y = 6;
+    double ang_vel_z = 7;
+    double lin_acc_x = 8;
+    double lin_acc_y = 9;
+    double lin_acc_z = 10;
+    uint64 timestamp = 11;
+    bool   success   = 12;
+}
+
+// ============================================================================
+// 关节控制指令
+// ============================================================================
+message JointPositionCommand {
+    repeated string name     = 1;  // 关节名称
+    repeated double position = 2;  // 目标位置 (rad)
+    double duration_sec      = 3;  // 运动时长 (s)，0 表示最快
+}
+
+message JointVelocityCommand {
+    repeated string name     = 1;
+    repeated double velocity = 2;  // 目标速度 (rad/s)
+}
+
+// ============================================================================
+// 仿真控制
+// ============================================================================
+message SpawnModelRequest {
+    string model_name = 1;
+    string model_xml  = 2;  // URDF/SDF 内容或路径
+    double pos_x = 3;
+    double pos_y = 4;
+    double pos_z = 5;
+    double orient_x = 6;
+    double orient_y = 7;
+    double orient_z = 8;
+    double orient_w = 9;
+    string reference_frame = 10;
+}
+message SpawnModelResponse {
+    bool   success = 1;
+    string model_name = 2;
+    string error_msg  = 3;
+}
+
+message DeleteModelRequest {
+    string model_name = 1;
+}
+
+message ResetRequest {
+    bool reset_time   = 1;  // 是否重置仿真时间
+    bool reset_models = 2;  // 是否移除所有模型
+}
+
+// ============================================================================
+// 导航控制
+// ============================================================================
+message NavigationGoal {
+    double target_x     = 1;
+    double target_y     = 2;
+    double target_z     = 3;
+    double target_yaw   = 4;   // 目标朝向 (rad)
+    string frame_id     = 5;   // 坐标系
+    double tolerance_xy = 6;   // 位置容差 (m)
+    double tolerance_yaw = 7;  // 角度容差 (rad)
+    double max_velocity = 8;   // 最大速度 (m/s)
+}
+message NavigationResponse {
+    bool   success  = 1;
+    string goal_id  = 2;   // ★ 用于后续查询 Feedback/Result 的唯一 ID
+    string error_msg = 3;
+}
+
+message CancelGoalRequest {
+    string goal_id = 1;
+}
+
+message NavigationFeedback {
+    string goal_id       = 1;
+    double distance_remaining = 2;  // 剩余距离 (m)
+    double current_x     = 3;
+    double current_y     = 4;
+    double current_yaw   = 5;
+    double percent_complete = 6;   // 完成百分比 (0-100)
+    uint64 timestamp     = 7;
+}
+
+message NavigationResult {
+    string goal_id  = 1;
+    bool   success  = 2;
+    double final_x  = 3;
+    double final_y  = 4;
+    double final_yaw = 5;
+    string error_msg = 6;
+}
+
+message GoalIdRequest {
+    string goal_id = 1;
+}
+
+// ============================================================================
 // Service 定义 — 用于 RpcServiceAdapter 的动态方法分发
 //
 // RobotTelemetry: 一个 Service 包含遥测全部方法（一个 .so 搞定）
 // MotionControl:  一个 Service 包含控制全部方法（一个 .so 搞定）
 // ============================================================================
 service RobotTelemetry {
+    // 已有
     rpc GetOdometry(OdometryRequest) returns (OdometryResponse);
     rpc GetStatus(StatusRequest)       returns (StatusResponse);
+
+    // 新增 — 传感器与状态遥测
+    rpc GetJointStates(JointStatesRequest) returns (JointStatesResponse);
+    rpc GetImage(ImageRequest)             returns (ImageResponse);
+    rpc GetLaserScan(LaserScanRequest)     returns (LaserScanResponse);
+    rpc GetPointCloud(PointCloudRequest)   returns (PointCloudResponse);
+    rpc GetTF(TFRequest)                   returns (TFResponse);
+    rpc GetBattery(BatteryRequest)         returns (BatteryResponse);
+    rpc GetImu(ImuRequest)                 returns (ImuResponse);
 }
 
 service MotionControl {
+    // 已有
     rpc SetVelocity(VelocityCommand) returns (ControlResponse);
     rpc Stop(VelocityCommand)        returns (ControlResponse);
+
+    // 新增 — 关节级控制
+    rpc SetJointPosition(JointPositionCommand) returns (ControlResponse);
+    rpc SetJointVelocity(JointVelocityCommand) returns (ControlResponse);
+}
+
+// 新增 Service — 仿真控制
+service SimulationControl {
+    rpc SpawnModel(SpawnModelRequest)   returns (SpawnModelResponse);
+    rpc DeleteModel(DeleteModelRequest) returns (ControlResponse);
+    rpc ResetSimulation(ResetRequest)   returns (ControlResponse);
+}
+
+// 新增 Service — 导航控制
+service Navigation {
+    rpc StartNavigation(NavigationGoal)           returns (NavigationResponse);
+    rpc CancelNavigation(CancelGoalRequest)       returns (ControlResponse);
+    rpc GetNavigationFeedback(GoalIdRequest)      returns (NavigationFeedback);
+    rpc GetNavigationResult(GoalIdRequest)        returns (NavigationResult);
 }

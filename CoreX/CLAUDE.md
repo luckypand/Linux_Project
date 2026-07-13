@@ -16,7 +16,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ./build.sh timestamp=1 log=1        # Both features enabled
 ```
 
-Targets: `test_echo_server`, `timeout_server_test`, `test_net_integration`, `test_rpc_benchmark`.
+Targets: `test_echo_server`, `timeout_server_test`, `test_net_integration`, `test_rpc_benchmark`, `test_ros_bridge`.
 
 Feature flags (`timestamp=1`/`log=1`) append suffixes to binary names (e.g., `test_rpc_benchmark-log-timestamp`).
 
@@ -86,10 +86,50 @@ Shared-memory inter-process communication with lock-free ring buffer. Consists o
 
 **Block states:** `FREE (0) → WRITING (1) → READY (2) → FREE` (cycle). Each `ShmBlock` is cacheline-aligned (`alignas(64)`) to prevent false sharing. Uses C++ `std::atomic` with explicit memory ordering (`acquire`/`release`/`relaxed`).
 
+### ROS Bridge Module (`src/ros_bridge/`)
+
+Protocol gateway between ROS robot ecosystem and CoreX RPC framework. Converts ROS Topic/Service/Action communication models to CoreX RPC services, enabling bidirectional cloud-robot communication.
+
+> **Build requirement:** ROS environment (catkin + roscpp). Automatically skipped (`HAS_ROS_BRIDGE` undefined) on non-ROS machines.
+
+**Key classes:**
+- `RosNodeManager` — Singleton managing `ros::init()` / `NodeHandle` / `AsyncSpinner` lifecycle.
+- `BridgeConfig` — YAML-driven configuration parser: maps ROS topics/services/actions to RPC methods.
+- `RosBridgeEngine` — Core engine: creates `TopicBridge`/`ServiceBridge`/`ActionBridge` instances from config, manages lifecycle.
+- `DynamicServiceAdapter` — Extends `RpcServiceAdapter` with overridable `dispatch()`/`serviceName()` for config-driven adapters (no compile-time `.proto` needed).
+- `TopicBridge` — Bidirectional ROS Topic ↔ RPC mapping (subscribe=cache data, publish=forward to ROS).
+- `ServiceBridge` — ROS Service → RPC mapping using `ros::SerializedMessage` for type-erased bytes passthrough.
+- `ActionBridge` — ROS Action → RPC mapping (Goal/Feedback/Result/Cancel split into separate RPC methods, polling for feedback).
+- `ShmImageTransporter` — Triple-buffer shared memory channel for high-frequency image/pointcloud data (zero-copy on same host, falls back to protobuf bytes over network).
+
+**Configuration** (in `corex_daemon.yaml`):
+```yaml
+ros_bridge:
+  enabled: true
+  topics:
+    - ros_topic: "/cmd_vel"
+      direction: "publish"
+      rpc_service: "CoreX.rpc.MotionControl"
+      rpc_method: "SetVelocity"
+```
+
+**Data flow:**
+```
+Cloud → CoreX RPC → DynamicServiceAdapter::dispatch
+  → TopicBridge::handlePublish → [ShmTopicBus (同机 <10μs)] → ros::Publisher → /cmd_vel → Robot
+
+Robot → /odom → TopicBridge::onRosMessage → [cache + ShmTopicBus push] 
+  → Cloud RPC call → TopicBridge::handleGetCached → Response
+```
+
+- `ShmTopicBus` — Lock-free shared memory Topic bus. Sequence-number ring buffer with eventfd notification. Replaces TCPROS for same-machine nodes (latency: 50-200μs → < 10μs). Each topic has its own SHM segment with 16 slots, fan-out to up to 8 subscribers.
+
 ### Proto Definitions (`proto/`)
 
 - `rpc_message.proto` — RPC envelope: `RpcMessage` with type (REQUEST/RESPONSE/ERROR), correlation id, service/method names, payload bytes, error codes, and latency-tracking timestamps (`client_send_ts`, `server_recv_ts`, `server_send_ts` in microseconds from `steady_clock`).
 - `math_service.proto` — Example service definition: `MathService` with `Add`/`Sub` RPCs, plus `MathRequest`/`MathResponse` messages.
+- `robot_service.proto` — Robot RPC services: `RobotTelemetry` (7 RPCs), `MotionControl` (4 RPCs), `SimulationControl` (3 RPCs), `Navigation` (4 RPCs). 30+ message types for robot data (odometry, joint states, images, laser scans, navigation goals).
+- `ros_messages.proto` — ROS message Protobuf equivalents: `JointState`, `Image`, `LaserScan`, `PointCloud2`, `TFMessage`, `Imu`, `BatteryState`, generic passthrough wrappers.
 
 Generated `.pb.h`/`.pb.cc` files are checked in alongside the `.proto` sources. Regenerate with:
 ```bash
@@ -126,6 +166,7 @@ Tests are bare `assert()`-based, not GTest. They all double as integration tests
 | `test_echo_server` | TcpServer stress test: server mode (echo with stats) and client mode (epoll-based concurrent connector with heartbeat) |
 | `test_rpc_benchmark` | RPC end-to-end: multi-threaded client → server → MathService dispatch → response, with latency stats. Supports `--mode server` and `--mode benchmark` |
 | `timeout_server_test` | HeapTimer idle-timeout: single-thread server that kicks clients after 5s of silence |
+| `test_ros_bridge` | ★ ROS Bridge unit tests: BridgeConfig parsing, DynamicServiceAdapter, ShmTopicBus pub/sub (11 tests) |
 
 Run a test after building:
 ```bash
@@ -134,6 +175,7 @@ Run a test after building:
 ./build/test_echo_server --mode client --connections 1000 --duration 10
 ./build/timeout_server_test
 ./build/test_rpc_benchmark --calls 1000 --threads 2
+./build/test_ros_bridge
 ```
 
 ## Code Style

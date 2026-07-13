@@ -38,7 +38,7 @@ namespace protobuf_robot_5fservice_2eproto {
 struct TableStruct {
   static const ::google::protobuf::internal::ParseTableField entries[];
   static const ::google::protobuf::internal::AuxillaryParseTableField aux[];
-  static const ::google::protobuf::internal::ParseTable schema[6];
+  static const ::google::protobuf::internal::ParseTable schema[33];
   static const ::google::protobuf::internal::FieldMetadata field_metadata[];
   static const ::google::protobuf::internal::SerializationTable serialization_table[];
   static const ::google::protobuf::uint32 offsets[];
@@ -47,21 +47,102 @@ void AddDescriptors();
 }  // namespace protobuf_robot_5fservice_2eproto
 namespace CoreX {
 namespace rpc {
+class BatteryRequest;
+class BatteryRequestDefaultTypeInternal;
+extern BatteryRequestDefaultTypeInternal _BatteryRequest_default_instance_;
+class BatteryResponse;
+class BatteryResponseDefaultTypeInternal;
+extern BatteryResponseDefaultTypeInternal _BatteryResponse_default_instance_;
+class CancelGoalRequest;
+class CancelGoalRequestDefaultTypeInternal;
+extern CancelGoalRequestDefaultTypeInternal _CancelGoalRequest_default_instance_;
 class ControlResponse;
 class ControlResponseDefaultTypeInternal;
 extern ControlResponseDefaultTypeInternal _ControlResponse_default_instance_;
+class DeleteModelRequest;
+class DeleteModelRequestDefaultTypeInternal;
+extern DeleteModelRequestDefaultTypeInternal _DeleteModelRequest_default_instance_;
+class GoalIdRequest;
+class GoalIdRequestDefaultTypeInternal;
+extern GoalIdRequestDefaultTypeInternal _GoalIdRequest_default_instance_;
+class ImageRequest;
+class ImageRequestDefaultTypeInternal;
+extern ImageRequestDefaultTypeInternal _ImageRequest_default_instance_;
+class ImageResponse;
+class ImageResponseDefaultTypeInternal;
+extern ImageResponseDefaultTypeInternal _ImageResponse_default_instance_;
+class ImuRequest;
+class ImuRequestDefaultTypeInternal;
+extern ImuRequestDefaultTypeInternal _ImuRequest_default_instance_;
+class ImuResponse;
+class ImuResponseDefaultTypeInternal;
+extern ImuResponseDefaultTypeInternal _ImuResponse_default_instance_;
+class JointPositionCommand;
+class JointPositionCommandDefaultTypeInternal;
+extern JointPositionCommandDefaultTypeInternal _JointPositionCommand_default_instance_;
+class JointStatesRequest;
+class JointStatesRequestDefaultTypeInternal;
+extern JointStatesRequestDefaultTypeInternal _JointStatesRequest_default_instance_;
+class JointStatesResponse;
+class JointStatesResponseDefaultTypeInternal;
+extern JointStatesResponseDefaultTypeInternal _JointStatesResponse_default_instance_;
+class JointVelocityCommand;
+class JointVelocityCommandDefaultTypeInternal;
+extern JointVelocityCommandDefaultTypeInternal _JointVelocityCommand_default_instance_;
+class LaserScanRequest;
+class LaserScanRequestDefaultTypeInternal;
+extern LaserScanRequestDefaultTypeInternal _LaserScanRequest_default_instance_;
+class LaserScanResponse;
+class LaserScanResponseDefaultTypeInternal;
+extern LaserScanResponseDefaultTypeInternal _LaserScanResponse_default_instance_;
+class NavigationFeedback;
+class NavigationFeedbackDefaultTypeInternal;
+extern NavigationFeedbackDefaultTypeInternal _NavigationFeedback_default_instance_;
+class NavigationGoal;
+class NavigationGoalDefaultTypeInternal;
+extern NavigationGoalDefaultTypeInternal _NavigationGoal_default_instance_;
+class NavigationResponse;
+class NavigationResponseDefaultTypeInternal;
+extern NavigationResponseDefaultTypeInternal _NavigationResponse_default_instance_;
+class NavigationResult;
+class NavigationResultDefaultTypeInternal;
+extern NavigationResultDefaultTypeInternal _NavigationResult_default_instance_;
 class OdometryRequest;
 class OdometryRequestDefaultTypeInternal;
 extern OdometryRequestDefaultTypeInternal _OdometryRequest_default_instance_;
 class OdometryResponse;
 class OdometryResponseDefaultTypeInternal;
 extern OdometryResponseDefaultTypeInternal _OdometryResponse_default_instance_;
+class PointCloudRequest;
+class PointCloudRequestDefaultTypeInternal;
+extern PointCloudRequestDefaultTypeInternal _PointCloudRequest_default_instance_;
+class PointCloudResponse;
+class PointCloudResponseDefaultTypeInternal;
+extern PointCloudResponseDefaultTypeInternal _PointCloudResponse_default_instance_;
+class ResetRequest;
+class ResetRequestDefaultTypeInternal;
+extern ResetRequestDefaultTypeInternal _ResetRequest_default_instance_;
+class SpawnModelRequest;
+class SpawnModelRequestDefaultTypeInternal;
+extern SpawnModelRequestDefaultTypeInternal _SpawnModelRequest_default_instance_;
+class SpawnModelResponse;
+class SpawnModelResponseDefaultTypeInternal;
+extern SpawnModelResponseDefaultTypeInternal _SpawnModelResponse_default_instance_;
 class StatusRequest;
 class StatusRequestDefaultTypeInternal;
 extern StatusRequestDefaultTypeInternal _StatusRequest_default_instance_;
 class StatusResponse;
 class StatusResponseDefaultTypeInternal;
 extern StatusResponseDefaultTypeInternal _StatusResponse_default_instance_;
+class TFRequest;
+class TFRequestDefaultTypeInternal;
+extern TFRequestDefaultTypeInternal _TFRequest_default_instance_;
+class TFResponse;
+class TFResponseDefaultTypeInternal;
+extern TFResponseDefaultTypeInternal _TFResponse_default_instance_;
+class TransformStampedMsg;
+class TransformStampedMsgDefaultTypeInternal;
+extern TransformStampedMsgDefaultTypeInternal _TransformStampedMsg_default_instance_;
 class VelocityCommand;
 class VelocityCommandDefaultTypeInternal;
 extern VelocityCommandDefaultTypeInternal _VelocityCommand_default_instance_;
@@ -69,11 +150,38 @@ extern VelocityCommandDefaultTypeInternal _VelocityCommand_default_instance_;
 }  // namespace CoreX
 namespace google {
 namespace protobuf {
+template<> ::CoreX::rpc::BatteryRequest* Arena::CreateMaybeMessage<::CoreX::rpc::BatteryRequest>(Arena*);
+template<> ::CoreX::rpc::BatteryResponse* Arena::CreateMaybeMessage<::CoreX::rpc::BatteryResponse>(Arena*);
+template<> ::CoreX::rpc::CancelGoalRequest* Arena::CreateMaybeMessage<::CoreX::rpc::CancelGoalRequest>(Arena*);
 template<> ::CoreX::rpc::ControlResponse* Arena::CreateMaybeMessage<::CoreX::rpc::ControlResponse>(Arena*);
+template<> ::CoreX::rpc::DeleteModelRequest* Arena::CreateMaybeMessage<::CoreX::rpc::DeleteModelRequest>(Arena*);
+template<> ::CoreX::rpc::GoalIdRequest* Arena::CreateMaybeMessage<::CoreX::rpc::GoalIdRequest>(Arena*);
+template<> ::CoreX::rpc::ImageRequest* Arena::CreateMaybeMessage<::CoreX::rpc::ImageRequest>(Arena*);
+template<> ::CoreX::rpc::ImageResponse* Arena::CreateMaybeMessage<::CoreX::rpc::ImageResponse>(Arena*);
+template<> ::CoreX::rpc::ImuRequest* Arena::CreateMaybeMessage<::CoreX::rpc::ImuRequest>(Arena*);
+template<> ::CoreX::rpc::ImuResponse* Arena::CreateMaybeMessage<::CoreX::rpc::ImuResponse>(Arena*);
+template<> ::CoreX::rpc::JointPositionCommand* Arena::CreateMaybeMessage<::CoreX::rpc::JointPositionCommand>(Arena*);
+template<> ::CoreX::rpc::JointStatesRequest* Arena::CreateMaybeMessage<::CoreX::rpc::JointStatesRequest>(Arena*);
+template<> ::CoreX::rpc::JointStatesResponse* Arena::CreateMaybeMessage<::CoreX::rpc::JointStatesResponse>(Arena*);
+template<> ::CoreX::rpc::JointVelocityCommand* Arena::CreateMaybeMessage<::CoreX::rpc::JointVelocityCommand>(Arena*);
+template<> ::CoreX::rpc::LaserScanRequest* Arena::CreateMaybeMessage<::CoreX::rpc::LaserScanRequest>(Arena*);
+template<> ::CoreX::rpc::LaserScanResponse* Arena::CreateMaybeMessage<::CoreX::rpc::LaserScanResponse>(Arena*);
+template<> ::CoreX::rpc::NavigationFeedback* Arena::CreateMaybeMessage<::CoreX::rpc::NavigationFeedback>(Arena*);
+template<> ::CoreX::rpc::NavigationGoal* Arena::CreateMaybeMessage<::CoreX::rpc::NavigationGoal>(Arena*);
+template<> ::CoreX::rpc::NavigationResponse* Arena::CreateMaybeMessage<::CoreX::rpc::NavigationResponse>(Arena*);
+template<> ::CoreX::rpc::NavigationResult* Arena::CreateMaybeMessage<::CoreX::rpc::NavigationResult>(Arena*);
 template<> ::CoreX::rpc::OdometryRequest* Arena::CreateMaybeMessage<::CoreX::rpc::OdometryRequest>(Arena*);
 template<> ::CoreX::rpc::OdometryResponse* Arena::CreateMaybeMessage<::CoreX::rpc::OdometryResponse>(Arena*);
+template<> ::CoreX::rpc::PointCloudRequest* Arena::CreateMaybeMessage<::CoreX::rpc::PointCloudRequest>(Arena*);
+template<> ::CoreX::rpc::PointCloudResponse* Arena::CreateMaybeMessage<::CoreX::rpc::PointCloudResponse>(Arena*);
+template<> ::CoreX::rpc::ResetRequest* Arena::CreateMaybeMessage<::CoreX::rpc::ResetRequest>(Arena*);
+template<> ::CoreX::rpc::SpawnModelRequest* Arena::CreateMaybeMessage<::CoreX::rpc::SpawnModelRequest>(Arena*);
+template<> ::CoreX::rpc::SpawnModelResponse* Arena::CreateMaybeMessage<::CoreX::rpc::SpawnModelResponse>(Arena*);
 template<> ::CoreX::rpc::StatusRequest* Arena::CreateMaybeMessage<::CoreX::rpc::StatusRequest>(Arena*);
 template<> ::CoreX::rpc::StatusResponse* Arena::CreateMaybeMessage<::CoreX::rpc::StatusResponse>(Arena*);
+template<> ::CoreX::rpc::TFRequest* Arena::CreateMaybeMessage<::CoreX::rpc::TFRequest>(Arena*);
+template<> ::CoreX::rpc::TFResponse* Arena::CreateMaybeMessage<::CoreX::rpc::TFResponse>(Arena*);
+template<> ::CoreX::rpc::TransformStampedMsg* Arena::CreateMaybeMessage<::CoreX::rpc::TransformStampedMsg>(Arena*);
 template<> ::CoreX::rpc::VelocityCommand* Arena::CreateMaybeMessage<::CoreX::rpc::VelocityCommand>(Arena*);
 }  // namespace protobuf
 }  // namespace google
@@ -875,6 +983,3743 @@ class ControlResponse : public ::google::protobuf::Message /* @@protoc_insertion
   mutable ::google::protobuf::internal::CachedSize _cached_size_;
   friend struct ::protobuf_robot_5fservice_2eproto::TableStruct;
 };
+// -------------------------------------------------------------------
+
+class JointStatesRequest : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:CoreX.rpc.JointStatesRequest) */ {
+ public:
+  JointStatesRequest();
+  virtual ~JointStatesRequest();
+
+  JointStatesRequest(const JointStatesRequest& from);
+
+  inline JointStatesRequest& operator=(const JointStatesRequest& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  JointStatesRequest(JointStatesRequest&& from) noexcept
+    : JointStatesRequest() {
+    *this = ::std::move(from);
+  }
+
+  inline JointStatesRequest& operator=(JointStatesRequest&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const JointStatesRequest& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const JointStatesRequest* internal_default_instance() {
+    return reinterpret_cast<const JointStatesRequest*>(
+               &_JointStatesRequest_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    6;
+
+  void Swap(JointStatesRequest* other);
+  friend void swap(JointStatesRequest& a, JointStatesRequest& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline JointStatesRequest* New() const final {
+    return CreateMaybeMessage<JointStatesRequest>(NULL);
+  }
+
+  JointStatesRequest* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<JointStatesRequest>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) final;
+  void MergeFrom(const ::google::protobuf::Message& from) final;
+  void CopyFrom(const JointStatesRequest& from);
+  void MergeFrom(const JointStatesRequest& from);
+  void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) final;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const final;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(JointStatesRequest* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // @@protoc_insertion_point(class_scope:CoreX.rpc.JointStatesRequest)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  mutable ::google::protobuf::internal::CachedSize _cached_size_;
+  friend struct ::protobuf_robot_5fservice_2eproto::TableStruct;
+};
+// -------------------------------------------------------------------
+
+class JointStatesResponse : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:CoreX.rpc.JointStatesResponse) */ {
+ public:
+  JointStatesResponse();
+  virtual ~JointStatesResponse();
+
+  JointStatesResponse(const JointStatesResponse& from);
+
+  inline JointStatesResponse& operator=(const JointStatesResponse& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  JointStatesResponse(JointStatesResponse&& from) noexcept
+    : JointStatesResponse() {
+    *this = ::std::move(from);
+  }
+
+  inline JointStatesResponse& operator=(JointStatesResponse&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const JointStatesResponse& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const JointStatesResponse* internal_default_instance() {
+    return reinterpret_cast<const JointStatesResponse*>(
+               &_JointStatesResponse_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    7;
+
+  void Swap(JointStatesResponse* other);
+  friend void swap(JointStatesResponse& a, JointStatesResponse& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline JointStatesResponse* New() const final {
+    return CreateMaybeMessage<JointStatesResponse>(NULL);
+  }
+
+  JointStatesResponse* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<JointStatesResponse>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) final;
+  void MergeFrom(const ::google::protobuf::Message& from) final;
+  void CopyFrom(const JointStatesResponse& from);
+  void MergeFrom(const JointStatesResponse& from);
+  void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) final;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const final;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(JointStatesResponse* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // repeated string name = 1;
+  int name_size() const;
+  void clear_name();
+  static const int kNameFieldNumber = 1;
+  const ::std::string& name(int index) const;
+  ::std::string* mutable_name(int index);
+  void set_name(int index, const ::std::string& value);
+  #if LANG_CXX11
+  void set_name(int index, ::std::string&& value);
+  #endif
+  void set_name(int index, const char* value);
+  void set_name(int index, const char* value, size_t size);
+  ::std::string* add_name();
+  void add_name(const ::std::string& value);
+  #if LANG_CXX11
+  void add_name(::std::string&& value);
+  #endif
+  void add_name(const char* value);
+  void add_name(const char* value, size_t size);
+  const ::google::protobuf::RepeatedPtrField< ::std::string>& name() const;
+  ::google::protobuf::RepeatedPtrField< ::std::string>* mutable_name();
+
+  // repeated double position = 2;
+  int position_size() const;
+  void clear_position();
+  static const int kPositionFieldNumber = 2;
+  double position(int index) const;
+  void set_position(int index, double value);
+  void add_position(double value);
+  const ::google::protobuf::RepeatedField< double >&
+      position() const;
+  ::google::protobuf::RepeatedField< double >*
+      mutable_position();
+
+  // repeated double velocity = 3;
+  int velocity_size() const;
+  void clear_velocity();
+  static const int kVelocityFieldNumber = 3;
+  double velocity(int index) const;
+  void set_velocity(int index, double value);
+  void add_velocity(double value);
+  const ::google::protobuf::RepeatedField< double >&
+      velocity() const;
+  ::google::protobuf::RepeatedField< double >*
+      mutable_velocity();
+
+  // repeated double effort = 4;
+  int effort_size() const;
+  void clear_effort();
+  static const int kEffortFieldNumber = 4;
+  double effort(int index) const;
+  void set_effort(int index, double value);
+  void add_effort(double value);
+  const ::google::protobuf::RepeatedField< double >&
+      effort() const;
+  ::google::protobuf::RepeatedField< double >*
+      mutable_effort();
+
+  // uint64 timestamp = 5;
+  void clear_timestamp();
+  static const int kTimestampFieldNumber = 5;
+  ::google::protobuf::uint64 timestamp() const;
+  void set_timestamp(::google::protobuf::uint64 value);
+
+  // bool success = 6;
+  void clear_success();
+  static const int kSuccessFieldNumber = 6;
+  bool success() const;
+  void set_success(bool value);
+
+  // @@protoc_insertion_point(class_scope:CoreX.rpc.JointStatesResponse)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::RepeatedPtrField< ::std::string> name_;
+  ::google::protobuf::RepeatedField< double > position_;
+  mutable int _position_cached_byte_size_;
+  ::google::protobuf::RepeatedField< double > velocity_;
+  mutable int _velocity_cached_byte_size_;
+  ::google::protobuf::RepeatedField< double > effort_;
+  mutable int _effort_cached_byte_size_;
+  ::google::protobuf::uint64 timestamp_;
+  bool success_;
+  mutable ::google::protobuf::internal::CachedSize _cached_size_;
+  friend struct ::protobuf_robot_5fservice_2eproto::TableStruct;
+};
+// -------------------------------------------------------------------
+
+class ImageRequest : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:CoreX.rpc.ImageRequest) */ {
+ public:
+  ImageRequest();
+  virtual ~ImageRequest();
+
+  ImageRequest(const ImageRequest& from);
+
+  inline ImageRequest& operator=(const ImageRequest& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  ImageRequest(ImageRequest&& from) noexcept
+    : ImageRequest() {
+    *this = ::std::move(from);
+  }
+
+  inline ImageRequest& operator=(ImageRequest&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const ImageRequest& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const ImageRequest* internal_default_instance() {
+    return reinterpret_cast<const ImageRequest*>(
+               &_ImageRequest_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    8;
+
+  void Swap(ImageRequest* other);
+  friend void swap(ImageRequest& a, ImageRequest& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline ImageRequest* New() const final {
+    return CreateMaybeMessage<ImageRequest>(NULL);
+  }
+
+  ImageRequest* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<ImageRequest>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) final;
+  void MergeFrom(const ::google::protobuf::Message& from) final;
+  void CopyFrom(const ImageRequest& from);
+  void MergeFrom(const ImageRequest& from);
+  void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) final;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const final;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(ImageRequest* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // string encoding = 1;
+  void clear_encoding();
+  static const int kEncodingFieldNumber = 1;
+  const ::std::string& encoding() const;
+  void set_encoding(const ::std::string& value);
+  #if LANG_CXX11
+  void set_encoding(::std::string&& value);
+  #endif
+  void set_encoding(const char* value);
+  void set_encoding(const char* value, size_t size);
+  ::std::string* mutable_encoding();
+  ::std::string* release_encoding();
+  void set_allocated_encoding(::std::string* encoding);
+
+  // @@protoc_insertion_point(class_scope:CoreX.rpc.ImageRequest)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::internal::ArenaStringPtr encoding_;
+  mutable ::google::protobuf::internal::CachedSize _cached_size_;
+  friend struct ::protobuf_robot_5fservice_2eproto::TableStruct;
+};
+// -------------------------------------------------------------------
+
+class ImageResponse : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:CoreX.rpc.ImageResponse) */ {
+ public:
+  ImageResponse();
+  virtual ~ImageResponse();
+
+  ImageResponse(const ImageResponse& from);
+
+  inline ImageResponse& operator=(const ImageResponse& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  ImageResponse(ImageResponse&& from) noexcept
+    : ImageResponse() {
+    *this = ::std::move(from);
+  }
+
+  inline ImageResponse& operator=(ImageResponse&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const ImageResponse& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const ImageResponse* internal_default_instance() {
+    return reinterpret_cast<const ImageResponse*>(
+               &_ImageResponse_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    9;
+
+  void Swap(ImageResponse* other);
+  friend void swap(ImageResponse& a, ImageResponse& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline ImageResponse* New() const final {
+    return CreateMaybeMessage<ImageResponse>(NULL);
+  }
+
+  ImageResponse* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<ImageResponse>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) final;
+  void MergeFrom(const ::google::protobuf::Message& from) final;
+  void CopyFrom(const ImageResponse& from);
+  void MergeFrom(const ImageResponse& from);
+  void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) final;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const final;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(ImageResponse* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // string encoding = 3;
+  void clear_encoding();
+  static const int kEncodingFieldNumber = 3;
+  const ::std::string& encoding() const;
+  void set_encoding(const ::std::string& value);
+  #if LANG_CXX11
+  void set_encoding(::std::string&& value);
+  #endif
+  void set_encoding(const char* value);
+  void set_encoding(const char* value, size_t size);
+  ::std::string* mutable_encoding();
+  ::std::string* release_encoding();
+  void set_allocated_encoding(::std::string* encoding);
+
+  // bytes data = 5;
+  void clear_data();
+  static const int kDataFieldNumber = 5;
+  const ::std::string& data() const;
+  void set_data(const ::std::string& value);
+  #if LANG_CXX11
+  void set_data(::std::string&& value);
+  #endif
+  void set_data(const char* value);
+  void set_data(const void* value, size_t size);
+  ::std::string* mutable_data();
+  ::std::string* release_data();
+  void set_allocated_data(::std::string* data);
+
+  // string frame_id = 7;
+  void clear_frame_id();
+  static const int kFrameIdFieldNumber = 7;
+  const ::std::string& frame_id() const;
+  void set_frame_id(const ::std::string& value);
+  #if LANG_CXX11
+  void set_frame_id(::std::string&& value);
+  #endif
+  void set_frame_id(const char* value);
+  void set_frame_id(const char* value, size_t size);
+  ::std::string* mutable_frame_id();
+  ::std::string* release_frame_id();
+  void set_allocated_frame_id(::std::string* frame_id);
+
+  // string shm_key = 8;
+  void clear_shm_key();
+  static const int kShmKeyFieldNumber = 8;
+  const ::std::string& shm_key() const;
+  void set_shm_key(const ::std::string& value);
+  #if LANG_CXX11
+  void set_shm_key(::std::string&& value);
+  #endif
+  void set_shm_key(const char* value);
+  void set_shm_key(const char* value, size_t size);
+  ::std::string* mutable_shm_key();
+  ::std::string* release_shm_key();
+  void set_allocated_shm_key(::std::string* shm_key);
+
+  // uint32 height = 1;
+  void clear_height();
+  static const int kHeightFieldNumber = 1;
+  ::google::protobuf::uint32 height() const;
+  void set_height(::google::protobuf::uint32 value);
+
+  // uint32 width = 2;
+  void clear_width();
+  static const int kWidthFieldNumber = 2;
+  ::google::protobuf::uint32 width() const;
+  void set_width(::google::protobuf::uint32 value);
+
+  // uint64 timestamp = 6;
+  void clear_timestamp();
+  static const int kTimestampFieldNumber = 6;
+  ::google::protobuf::uint64 timestamp() const;
+  void set_timestamp(::google::protobuf::uint64 value);
+
+  // uint32 step = 4;
+  void clear_step();
+  static const int kStepFieldNumber = 4;
+  ::google::protobuf::uint32 step() const;
+  void set_step(::google::protobuf::uint32 value);
+
+  // bool success = 9;
+  void clear_success();
+  static const int kSuccessFieldNumber = 9;
+  bool success() const;
+  void set_success(bool value);
+
+  // @@protoc_insertion_point(class_scope:CoreX.rpc.ImageResponse)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::internal::ArenaStringPtr encoding_;
+  ::google::protobuf::internal::ArenaStringPtr data_;
+  ::google::protobuf::internal::ArenaStringPtr frame_id_;
+  ::google::protobuf::internal::ArenaStringPtr shm_key_;
+  ::google::protobuf::uint32 height_;
+  ::google::protobuf::uint32 width_;
+  ::google::protobuf::uint64 timestamp_;
+  ::google::protobuf::uint32 step_;
+  bool success_;
+  mutable ::google::protobuf::internal::CachedSize _cached_size_;
+  friend struct ::protobuf_robot_5fservice_2eproto::TableStruct;
+};
+// -------------------------------------------------------------------
+
+class LaserScanRequest : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:CoreX.rpc.LaserScanRequest) */ {
+ public:
+  LaserScanRequest();
+  virtual ~LaserScanRequest();
+
+  LaserScanRequest(const LaserScanRequest& from);
+
+  inline LaserScanRequest& operator=(const LaserScanRequest& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  LaserScanRequest(LaserScanRequest&& from) noexcept
+    : LaserScanRequest() {
+    *this = ::std::move(from);
+  }
+
+  inline LaserScanRequest& operator=(LaserScanRequest&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const LaserScanRequest& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const LaserScanRequest* internal_default_instance() {
+    return reinterpret_cast<const LaserScanRequest*>(
+               &_LaserScanRequest_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    10;
+
+  void Swap(LaserScanRequest* other);
+  friend void swap(LaserScanRequest& a, LaserScanRequest& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline LaserScanRequest* New() const final {
+    return CreateMaybeMessage<LaserScanRequest>(NULL);
+  }
+
+  LaserScanRequest* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<LaserScanRequest>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) final;
+  void MergeFrom(const ::google::protobuf::Message& from) final;
+  void CopyFrom(const LaserScanRequest& from);
+  void MergeFrom(const LaserScanRequest& from);
+  void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) final;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const final;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(LaserScanRequest* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // @@protoc_insertion_point(class_scope:CoreX.rpc.LaserScanRequest)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  mutable ::google::protobuf::internal::CachedSize _cached_size_;
+  friend struct ::protobuf_robot_5fservice_2eproto::TableStruct;
+};
+// -------------------------------------------------------------------
+
+class LaserScanResponse : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:CoreX.rpc.LaserScanResponse) */ {
+ public:
+  LaserScanResponse();
+  virtual ~LaserScanResponse();
+
+  LaserScanResponse(const LaserScanResponse& from);
+
+  inline LaserScanResponse& operator=(const LaserScanResponse& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  LaserScanResponse(LaserScanResponse&& from) noexcept
+    : LaserScanResponse() {
+    *this = ::std::move(from);
+  }
+
+  inline LaserScanResponse& operator=(LaserScanResponse&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const LaserScanResponse& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const LaserScanResponse* internal_default_instance() {
+    return reinterpret_cast<const LaserScanResponse*>(
+               &_LaserScanResponse_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    11;
+
+  void Swap(LaserScanResponse* other);
+  friend void swap(LaserScanResponse& a, LaserScanResponse& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline LaserScanResponse* New() const final {
+    return CreateMaybeMessage<LaserScanResponse>(NULL);
+  }
+
+  LaserScanResponse* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<LaserScanResponse>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) final;
+  void MergeFrom(const ::google::protobuf::Message& from) final;
+  void CopyFrom(const LaserScanResponse& from);
+  void MergeFrom(const LaserScanResponse& from);
+  void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) final;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const final;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(LaserScanResponse* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // repeated float ranges = 8;
+  int ranges_size() const;
+  void clear_ranges();
+  static const int kRangesFieldNumber = 8;
+  float ranges(int index) const;
+  void set_ranges(int index, float value);
+  void add_ranges(float value);
+  const ::google::protobuf::RepeatedField< float >&
+      ranges() const;
+  ::google::protobuf::RepeatedField< float >*
+      mutable_ranges();
+
+  // repeated float intensities = 9;
+  int intensities_size() const;
+  void clear_intensities();
+  static const int kIntensitiesFieldNumber = 9;
+  float intensities(int index) const;
+  void set_intensities(int index, float value);
+  void add_intensities(float value);
+  const ::google::protobuf::RepeatedField< float >&
+      intensities() const;
+  ::google::protobuf::RepeatedField< float >*
+      mutable_intensities();
+
+  // string frame_id = 11;
+  void clear_frame_id();
+  static const int kFrameIdFieldNumber = 11;
+  const ::std::string& frame_id() const;
+  void set_frame_id(const ::std::string& value);
+  #if LANG_CXX11
+  void set_frame_id(::std::string&& value);
+  #endif
+  void set_frame_id(const char* value);
+  void set_frame_id(const char* value, size_t size);
+  ::std::string* mutable_frame_id();
+  ::std::string* release_frame_id();
+  void set_allocated_frame_id(::std::string* frame_id);
+
+  // float angle_min = 1;
+  void clear_angle_min();
+  static const int kAngleMinFieldNumber = 1;
+  float angle_min() const;
+  void set_angle_min(float value);
+
+  // float angle_max = 2;
+  void clear_angle_max();
+  static const int kAngleMaxFieldNumber = 2;
+  float angle_max() const;
+  void set_angle_max(float value);
+
+  // float angle_increment = 3;
+  void clear_angle_increment();
+  static const int kAngleIncrementFieldNumber = 3;
+  float angle_increment() const;
+  void set_angle_increment(float value);
+
+  // float time_increment = 4;
+  void clear_time_increment();
+  static const int kTimeIncrementFieldNumber = 4;
+  float time_increment() const;
+  void set_time_increment(float value);
+
+  // float scan_time = 5;
+  void clear_scan_time();
+  static const int kScanTimeFieldNumber = 5;
+  float scan_time() const;
+  void set_scan_time(float value);
+
+  // float range_min = 6;
+  void clear_range_min();
+  static const int kRangeMinFieldNumber = 6;
+  float range_min() const;
+  void set_range_min(float value);
+
+  // float range_max = 7;
+  void clear_range_max();
+  static const int kRangeMaxFieldNumber = 7;
+  float range_max() const;
+  void set_range_max(float value);
+
+  // bool success = 12;
+  void clear_success();
+  static const int kSuccessFieldNumber = 12;
+  bool success() const;
+  void set_success(bool value);
+
+  // uint64 timestamp = 10;
+  void clear_timestamp();
+  static const int kTimestampFieldNumber = 10;
+  ::google::protobuf::uint64 timestamp() const;
+  void set_timestamp(::google::protobuf::uint64 value);
+
+  // @@protoc_insertion_point(class_scope:CoreX.rpc.LaserScanResponse)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::RepeatedField< float > ranges_;
+  mutable int _ranges_cached_byte_size_;
+  ::google::protobuf::RepeatedField< float > intensities_;
+  mutable int _intensities_cached_byte_size_;
+  ::google::protobuf::internal::ArenaStringPtr frame_id_;
+  float angle_min_;
+  float angle_max_;
+  float angle_increment_;
+  float time_increment_;
+  float scan_time_;
+  float range_min_;
+  float range_max_;
+  bool success_;
+  ::google::protobuf::uint64 timestamp_;
+  mutable ::google::protobuf::internal::CachedSize _cached_size_;
+  friend struct ::protobuf_robot_5fservice_2eproto::TableStruct;
+};
+// -------------------------------------------------------------------
+
+class PointCloudRequest : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:CoreX.rpc.PointCloudRequest) */ {
+ public:
+  PointCloudRequest();
+  virtual ~PointCloudRequest();
+
+  PointCloudRequest(const PointCloudRequest& from);
+
+  inline PointCloudRequest& operator=(const PointCloudRequest& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  PointCloudRequest(PointCloudRequest&& from) noexcept
+    : PointCloudRequest() {
+    *this = ::std::move(from);
+  }
+
+  inline PointCloudRequest& operator=(PointCloudRequest&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const PointCloudRequest& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const PointCloudRequest* internal_default_instance() {
+    return reinterpret_cast<const PointCloudRequest*>(
+               &_PointCloudRequest_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    12;
+
+  void Swap(PointCloudRequest* other);
+  friend void swap(PointCloudRequest& a, PointCloudRequest& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline PointCloudRequest* New() const final {
+    return CreateMaybeMessage<PointCloudRequest>(NULL);
+  }
+
+  PointCloudRequest* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<PointCloudRequest>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) final;
+  void MergeFrom(const ::google::protobuf::Message& from) final;
+  void CopyFrom(const PointCloudRequest& from);
+  void MergeFrom(const PointCloudRequest& from);
+  void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) final;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const final;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(PointCloudRequest* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // @@protoc_insertion_point(class_scope:CoreX.rpc.PointCloudRequest)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  mutable ::google::protobuf::internal::CachedSize _cached_size_;
+  friend struct ::protobuf_robot_5fservice_2eproto::TableStruct;
+};
+// -------------------------------------------------------------------
+
+class PointCloudResponse : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:CoreX.rpc.PointCloudResponse) */ {
+ public:
+  PointCloudResponse();
+  virtual ~PointCloudResponse();
+
+  PointCloudResponse(const PointCloudResponse& from);
+
+  inline PointCloudResponse& operator=(const PointCloudResponse& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  PointCloudResponse(PointCloudResponse&& from) noexcept
+    : PointCloudResponse() {
+    *this = ::std::move(from);
+  }
+
+  inline PointCloudResponse& operator=(PointCloudResponse&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const PointCloudResponse& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const PointCloudResponse* internal_default_instance() {
+    return reinterpret_cast<const PointCloudResponse*>(
+               &_PointCloudResponse_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    13;
+
+  void Swap(PointCloudResponse* other);
+  friend void swap(PointCloudResponse& a, PointCloudResponse& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline PointCloudResponse* New() const final {
+    return CreateMaybeMessage<PointCloudResponse>(NULL);
+  }
+
+  PointCloudResponse* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<PointCloudResponse>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) final;
+  void MergeFrom(const ::google::protobuf::Message& from) final;
+  void CopyFrom(const PointCloudResponse& from);
+  void MergeFrom(const PointCloudResponse& from);
+  void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) final;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const final;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(PointCloudResponse* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // bytes data = 5;
+  void clear_data();
+  static const int kDataFieldNumber = 5;
+  const ::std::string& data() const;
+  void set_data(const ::std::string& value);
+  #if LANG_CXX11
+  void set_data(::std::string&& value);
+  #endif
+  void set_data(const char* value);
+  void set_data(const void* value, size_t size);
+  ::std::string* mutable_data();
+  ::std::string* release_data();
+  void set_allocated_data(::std::string* data);
+
+  // string frame_id = 8;
+  void clear_frame_id();
+  static const int kFrameIdFieldNumber = 8;
+  const ::std::string& frame_id() const;
+  void set_frame_id(const ::std::string& value);
+  #if LANG_CXX11
+  void set_frame_id(::std::string&& value);
+  #endif
+  void set_frame_id(const char* value);
+  void set_frame_id(const char* value, size_t size);
+  ::std::string* mutable_frame_id();
+  ::std::string* release_frame_id();
+  void set_allocated_frame_id(::std::string* frame_id);
+
+  // string shm_key = 9;
+  void clear_shm_key();
+  static const int kShmKeyFieldNumber = 9;
+  const ::std::string& shm_key() const;
+  void set_shm_key(const ::std::string& value);
+  #if LANG_CXX11
+  void set_shm_key(::std::string&& value);
+  #endif
+  void set_shm_key(const char* value);
+  void set_shm_key(const char* value, size_t size);
+  ::std::string* mutable_shm_key();
+  ::std::string* release_shm_key();
+  void set_allocated_shm_key(::std::string* shm_key);
+
+  // uint32 height = 1;
+  void clear_height();
+  static const int kHeightFieldNumber = 1;
+  ::google::protobuf::uint32 height() const;
+  void set_height(::google::protobuf::uint32 value);
+
+  // uint32 width = 2;
+  void clear_width();
+  static const int kWidthFieldNumber = 2;
+  ::google::protobuf::uint32 width() const;
+  void set_width(::google::protobuf::uint32 value);
+
+  // uint32 point_step = 3;
+  void clear_point_step();
+  static const int kPointStepFieldNumber = 3;
+  ::google::protobuf::uint32 point_step() const;
+  void set_point_step(::google::protobuf::uint32 value);
+
+  // uint32 row_step = 4;
+  void clear_row_step();
+  static const int kRowStepFieldNumber = 4;
+  ::google::protobuf::uint32 row_step() const;
+  void set_row_step(::google::protobuf::uint32 value);
+
+  // uint64 timestamp = 7;
+  void clear_timestamp();
+  static const int kTimestampFieldNumber = 7;
+  ::google::protobuf::uint64 timestamp() const;
+  void set_timestamp(::google::protobuf::uint64 value);
+
+  // bool is_dense = 6;
+  void clear_is_dense();
+  static const int kIsDenseFieldNumber = 6;
+  bool is_dense() const;
+  void set_is_dense(bool value);
+
+  // bool success = 10;
+  void clear_success();
+  static const int kSuccessFieldNumber = 10;
+  bool success() const;
+  void set_success(bool value);
+
+  // @@protoc_insertion_point(class_scope:CoreX.rpc.PointCloudResponse)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::internal::ArenaStringPtr data_;
+  ::google::protobuf::internal::ArenaStringPtr frame_id_;
+  ::google::protobuf::internal::ArenaStringPtr shm_key_;
+  ::google::protobuf::uint32 height_;
+  ::google::protobuf::uint32 width_;
+  ::google::protobuf::uint32 point_step_;
+  ::google::protobuf::uint32 row_step_;
+  ::google::protobuf::uint64 timestamp_;
+  bool is_dense_;
+  bool success_;
+  mutable ::google::protobuf::internal::CachedSize _cached_size_;
+  friend struct ::protobuf_robot_5fservice_2eproto::TableStruct;
+};
+// -------------------------------------------------------------------
+
+class TFRequest : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:CoreX.rpc.TFRequest) */ {
+ public:
+  TFRequest();
+  virtual ~TFRequest();
+
+  TFRequest(const TFRequest& from);
+
+  inline TFRequest& operator=(const TFRequest& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  TFRequest(TFRequest&& from) noexcept
+    : TFRequest() {
+    *this = ::std::move(from);
+  }
+
+  inline TFRequest& operator=(TFRequest&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const TFRequest& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const TFRequest* internal_default_instance() {
+    return reinterpret_cast<const TFRequest*>(
+               &_TFRequest_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    14;
+
+  void Swap(TFRequest* other);
+  friend void swap(TFRequest& a, TFRequest& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline TFRequest* New() const final {
+    return CreateMaybeMessage<TFRequest>(NULL);
+  }
+
+  TFRequest* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<TFRequest>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) final;
+  void MergeFrom(const ::google::protobuf::Message& from) final;
+  void CopyFrom(const TFRequest& from);
+  void MergeFrom(const TFRequest& from);
+  void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) final;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const final;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(TFRequest* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // string target_frame = 1;
+  void clear_target_frame();
+  static const int kTargetFrameFieldNumber = 1;
+  const ::std::string& target_frame() const;
+  void set_target_frame(const ::std::string& value);
+  #if LANG_CXX11
+  void set_target_frame(::std::string&& value);
+  #endif
+  void set_target_frame(const char* value);
+  void set_target_frame(const char* value, size_t size);
+  ::std::string* mutable_target_frame();
+  ::std::string* release_target_frame();
+  void set_allocated_target_frame(::std::string* target_frame);
+
+  // string source_frame = 2;
+  void clear_source_frame();
+  static const int kSourceFrameFieldNumber = 2;
+  const ::std::string& source_frame() const;
+  void set_source_frame(const ::std::string& value);
+  #if LANG_CXX11
+  void set_source_frame(::std::string&& value);
+  #endif
+  void set_source_frame(const char* value);
+  void set_source_frame(const char* value, size_t size);
+  ::std::string* mutable_source_frame();
+  ::std::string* release_source_frame();
+  void set_allocated_source_frame(::std::string* source_frame);
+
+  // @@protoc_insertion_point(class_scope:CoreX.rpc.TFRequest)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::internal::ArenaStringPtr target_frame_;
+  ::google::protobuf::internal::ArenaStringPtr source_frame_;
+  mutable ::google::protobuf::internal::CachedSize _cached_size_;
+  friend struct ::protobuf_robot_5fservice_2eproto::TableStruct;
+};
+// -------------------------------------------------------------------
+
+class TransformStampedMsg : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:CoreX.rpc.TransformStampedMsg) */ {
+ public:
+  TransformStampedMsg();
+  virtual ~TransformStampedMsg();
+
+  TransformStampedMsg(const TransformStampedMsg& from);
+
+  inline TransformStampedMsg& operator=(const TransformStampedMsg& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  TransformStampedMsg(TransformStampedMsg&& from) noexcept
+    : TransformStampedMsg() {
+    *this = ::std::move(from);
+  }
+
+  inline TransformStampedMsg& operator=(TransformStampedMsg&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const TransformStampedMsg& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const TransformStampedMsg* internal_default_instance() {
+    return reinterpret_cast<const TransformStampedMsg*>(
+               &_TransformStampedMsg_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    15;
+
+  void Swap(TransformStampedMsg* other);
+  friend void swap(TransformStampedMsg& a, TransformStampedMsg& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline TransformStampedMsg* New() const final {
+    return CreateMaybeMessage<TransformStampedMsg>(NULL);
+  }
+
+  TransformStampedMsg* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<TransformStampedMsg>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) final;
+  void MergeFrom(const ::google::protobuf::Message& from) final;
+  void CopyFrom(const TransformStampedMsg& from);
+  void MergeFrom(const TransformStampedMsg& from);
+  void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) final;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const final;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(TransformStampedMsg* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // string child_frame_id = 1;
+  void clear_child_frame_id();
+  static const int kChildFrameIdFieldNumber = 1;
+  const ::std::string& child_frame_id() const;
+  void set_child_frame_id(const ::std::string& value);
+  #if LANG_CXX11
+  void set_child_frame_id(::std::string&& value);
+  #endif
+  void set_child_frame_id(const char* value);
+  void set_child_frame_id(const char* value, size_t size);
+  ::std::string* mutable_child_frame_id();
+  ::std::string* release_child_frame_id();
+  void set_allocated_child_frame_id(::std::string* child_frame_id);
+
+  // string frame_id = 2;
+  void clear_frame_id();
+  static const int kFrameIdFieldNumber = 2;
+  const ::std::string& frame_id() const;
+  void set_frame_id(const ::std::string& value);
+  #if LANG_CXX11
+  void set_frame_id(::std::string&& value);
+  #endif
+  void set_frame_id(const char* value);
+  void set_frame_id(const char* value, size_t size);
+  ::std::string* mutable_frame_id();
+  ::std::string* release_frame_id();
+  void set_allocated_frame_id(::std::string* frame_id);
+
+  // uint64 timestamp = 3;
+  void clear_timestamp();
+  static const int kTimestampFieldNumber = 3;
+  ::google::protobuf::uint64 timestamp() const;
+  void set_timestamp(::google::protobuf::uint64 value);
+
+  // double translation_x = 4;
+  void clear_translation_x();
+  static const int kTranslationXFieldNumber = 4;
+  double translation_x() const;
+  void set_translation_x(double value);
+
+  // double translation_y = 5;
+  void clear_translation_y();
+  static const int kTranslationYFieldNumber = 5;
+  double translation_y() const;
+  void set_translation_y(double value);
+
+  // double translation_z = 6;
+  void clear_translation_z();
+  static const int kTranslationZFieldNumber = 6;
+  double translation_z() const;
+  void set_translation_z(double value);
+
+  // double rotation_x = 7;
+  void clear_rotation_x();
+  static const int kRotationXFieldNumber = 7;
+  double rotation_x() const;
+  void set_rotation_x(double value);
+
+  // double rotation_y = 8;
+  void clear_rotation_y();
+  static const int kRotationYFieldNumber = 8;
+  double rotation_y() const;
+  void set_rotation_y(double value);
+
+  // double rotation_z = 9;
+  void clear_rotation_z();
+  static const int kRotationZFieldNumber = 9;
+  double rotation_z() const;
+  void set_rotation_z(double value);
+
+  // double rotation_w = 10;
+  void clear_rotation_w();
+  static const int kRotationWFieldNumber = 10;
+  double rotation_w() const;
+  void set_rotation_w(double value);
+
+  // @@protoc_insertion_point(class_scope:CoreX.rpc.TransformStampedMsg)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::internal::ArenaStringPtr child_frame_id_;
+  ::google::protobuf::internal::ArenaStringPtr frame_id_;
+  ::google::protobuf::uint64 timestamp_;
+  double translation_x_;
+  double translation_y_;
+  double translation_z_;
+  double rotation_x_;
+  double rotation_y_;
+  double rotation_z_;
+  double rotation_w_;
+  mutable ::google::protobuf::internal::CachedSize _cached_size_;
+  friend struct ::protobuf_robot_5fservice_2eproto::TableStruct;
+};
+// -------------------------------------------------------------------
+
+class TFResponse : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:CoreX.rpc.TFResponse) */ {
+ public:
+  TFResponse();
+  virtual ~TFResponse();
+
+  TFResponse(const TFResponse& from);
+
+  inline TFResponse& operator=(const TFResponse& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  TFResponse(TFResponse&& from) noexcept
+    : TFResponse() {
+    *this = ::std::move(from);
+  }
+
+  inline TFResponse& operator=(TFResponse&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const TFResponse& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const TFResponse* internal_default_instance() {
+    return reinterpret_cast<const TFResponse*>(
+               &_TFResponse_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    16;
+
+  void Swap(TFResponse* other);
+  friend void swap(TFResponse& a, TFResponse& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline TFResponse* New() const final {
+    return CreateMaybeMessage<TFResponse>(NULL);
+  }
+
+  TFResponse* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<TFResponse>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) final;
+  void MergeFrom(const ::google::protobuf::Message& from) final;
+  void CopyFrom(const TFResponse& from);
+  void MergeFrom(const TFResponse& from);
+  void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) final;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const final;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(TFResponse* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // repeated .CoreX.rpc.TransformStampedMsg transforms = 1;
+  int transforms_size() const;
+  void clear_transforms();
+  static const int kTransformsFieldNumber = 1;
+  ::CoreX::rpc::TransformStampedMsg* mutable_transforms(int index);
+  ::google::protobuf::RepeatedPtrField< ::CoreX::rpc::TransformStampedMsg >*
+      mutable_transforms();
+  const ::CoreX::rpc::TransformStampedMsg& transforms(int index) const;
+  ::CoreX::rpc::TransformStampedMsg* add_transforms();
+  const ::google::protobuf::RepeatedPtrField< ::CoreX::rpc::TransformStampedMsg >&
+      transforms() const;
+
+  // bool success = 2;
+  void clear_success();
+  static const int kSuccessFieldNumber = 2;
+  bool success() const;
+  void set_success(bool value);
+
+  // @@protoc_insertion_point(class_scope:CoreX.rpc.TFResponse)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::RepeatedPtrField< ::CoreX::rpc::TransformStampedMsg > transforms_;
+  bool success_;
+  mutable ::google::protobuf::internal::CachedSize _cached_size_;
+  friend struct ::protobuf_robot_5fservice_2eproto::TableStruct;
+};
+// -------------------------------------------------------------------
+
+class BatteryRequest : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:CoreX.rpc.BatteryRequest) */ {
+ public:
+  BatteryRequest();
+  virtual ~BatteryRequest();
+
+  BatteryRequest(const BatteryRequest& from);
+
+  inline BatteryRequest& operator=(const BatteryRequest& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  BatteryRequest(BatteryRequest&& from) noexcept
+    : BatteryRequest() {
+    *this = ::std::move(from);
+  }
+
+  inline BatteryRequest& operator=(BatteryRequest&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const BatteryRequest& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const BatteryRequest* internal_default_instance() {
+    return reinterpret_cast<const BatteryRequest*>(
+               &_BatteryRequest_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    17;
+
+  void Swap(BatteryRequest* other);
+  friend void swap(BatteryRequest& a, BatteryRequest& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline BatteryRequest* New() const final {
+    return CreateMaybeMessage<BatteryRequest>(NULL);
+  }
+
+  BatteryRequest* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<BatteryRequest>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) final;
+  void MergeFrom(const ::google::protobuf::Message& from) final;
+  void CopyFrom(const BatteryRequest& from);
+  void MergeFrom(const BatteryRequest& from);
+  void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) final;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const final;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(BatteryRequest* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // @@protoc_insertion_point(class_scope:CoreX.rpc.BatteryRequest)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  mutable ::google::protobuf::internal::CachedSize _cached_size_;
+  friend struct ::protobuf_robot_5fservice_2eproto::TableStruct;
+};
+// -------------------------------------------------------------------
+
+class BatteryResponse : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:CoreX.rpc.BatteryResponse) */ {
+ public:
+  BatteryResponse();
+  virtual ~BatteryResponse();
+
+  BatteryResponse(const BatteryResponse& from);
+
+  inline BatteryResponse& operator=(const BatteryResponse& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  BatteryResponse(BatteryResponse&& from) noexcept
+    : BatteryResponse() {
+    *this = ::std::move(from);
+  }
+
+  inline BatteryResponse& operator=(BatteryResponse&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const BatteryResponse& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const BatteryResponse* internal_default_instance() {
+    return reinterpret_cast<const BatteryResponse*>(
+               &_BatteryResponse_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    18;
+
+  void Swap(BatteryResponse* other);
+  friend void swap(BatteryResponse& a, BatteryResponse& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline BatteryResponse* New() const final {
+    return CreateMaybeMessage<BatteryResponse>(NULL);
+  }
+
+  BatteryResponse* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<BatteryResponse>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) final;
+  void MergeFrom(const ::google::protobuf::Message& from) final;
+  void CopyFrom(const BatteryResponse& from);
+  void MergeFrom(const BatteryResponse& from);
+  void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) final;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const final;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(BatteryResponse* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // float voltage = 1;
+  void clear_voltage();
+  static const int kVoltageFieldNumber = 1;
+  float voltage() const;
+  void set_voltage(float value);
+
+  // float current = 2;
+  void clear_current();
+  static const int kCurrentFieldNumber = 2;
+  float current() const;
+  void set_current(float value);
+
+  // float percentage = 3;
+  void clear_percentage();
+  static const int kPercentageFieldNumber = 3;
+  float percentage() const;
+  void set_percentage(float value);
+
+  // uint32 power_supply_status = 4;
+  void clear_power_supply_status();
+  static const int kPowerSupplyStatusFieldNumber = 4;
+  ::google::protobuf::uint32 power_supply_status() const;
+  void set_power_supply_status(::google::protobuf::uint32 value);
+
+  // uint64 timestamp = 6;
+  void clear_timestamp();
+  static const int kTimestampFieldNumber = 6;
+  ::google::protobuf::uint64 timestamp() const;
+  void set_timestamp(::google::protobuf::uint64 value);
+
+  // bool present = 5;
+  void clear_present();
+  static const int kPresentFieldNumber = 5;
+  bool present() const;
+  void set_present(bool value);
+
+  // bool success = 7;
+  void clear_success();
+  static const int kSuccessFieldNumber = 7;
+  bool success() const;
+  void set_success(bool value);
+
+  // @@protoc_insertion_point(class_scope:CoreX.rpc.BatteryResponse)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  float voltage_;
+  float current_;
+  float percentage_;
+  ::google::protobuf::uint32 power_supply_status_;
+  ::google::protobuf::uint64 timestamp_;
+  bool present_;
+  bool success_;
+  mutable ::google::protobuf::internal::CachedSize _cached_size_;
+  friend struct ::protobuf_robot_5fservice_2eproto::TableStruct;
+};
+// -------------------------------------------------------------------
+
+class ImuRequest : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:CoreX.rpc.ImuRequest) */ {
+ public:
+  ImuRequest();
+  virtual ~ImuRequest();
+
+  ImuRequest(const ImuRequest& from);
+
+  inline ImuRequest& operator=(const ImuRequest& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  ImuRequest(ImuRequest&& from) noexcept
+    : ImuRequest() {
+    *this = ::std::move(from);
+  }
+
+  inline ImuRequest& operator=(ImuRequest&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const ImuRequest& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const ImuRequest* internal_default_instance() {
+    return reinterpret_cast<const ImuRequest*>(
+               &_ImuRequest_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    19;
+
+  void Swap(ImuRequest* other);
+  friend void swap(ImuRequest& a, ImuRequest& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline ImuRequest* New() const final {
+    return CreateMaybeMessage<ImuRequest>(NULL);
+  }
+
+  ImuRequest* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<ImuRequest>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) final;
+  void MergeFrom(const ::google::protobuf::Message& from) final;
+  void CopyFrom(const ImuRequest& from);
+  void MergeFrom(const ImuRequest& from);
+  void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) final;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const final;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(ImuRequest* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // @@protoc_insertion_point(class_scope:CoreX.rpc.ImuRequest)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  mutable ::google::protobuf::internal::CachedSize _cached_size_;
+  friend struct ::protobuf_robot_5fservice_2eproto::TableStruct;
+};
+// -------------------------------------------------------------------
+
+class ImuResponse : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:CoreX.rpc.ImuResponse) */ {
+ public:
+  ImuResponse();
+  virtual ~ImuResponse();
+
+  ImuResponse(const ImuResponse& from);
+
+  inline ImuResponse& operator=(const ImuResponse& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  ImuResponse(ImuResponse&& from) noexcept
+    : ImuResponse() {
+    *this = ::std::move(from);
+  }
+
+  inline ImuResponse& operator=(ImuResponse&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const ImuResponse& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const ImuResponse* internal_default_instance() {
+    return reinterpret_cast<const ImuResponse*>(
+               &_ImuResponse_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    20;
+
+  void Swap(ImuResponse* other);
+  friend void swap(ImuResponse& a, ImuResponse& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline ImuResponse* New() const final {
+    return CreateMaybeMessage<ImuResponse>(NULL);
+  }
+
+  ImuResponse* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<ImuResponse>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) final;
+  void MergeFrom(const ::google::protobuf::Message& from) final;
+  void CopyFrom(const ImuResponse& from);
+  void MergeFrom(const ImuResponse& from);
+  void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) final;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const final;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(ImuResponse* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // double orient_x = 1;
+  void clear_orient_x();
+  static const int kOrientXFieldNumber = 1;
+  double orient_x() const;
+  void set_orient_x(double value);
+
+  // double orient_y = 2;
+  void clear_orient_y();
+  static const int kOrientYFieldNumber = 2;
+  double orient_y() const;
+  void set_orient_y(double value);
+
+  // double orient_z = 3;
+  void clear_orient_z();
+  static const int kOrientZFieldNumber = 3;
+  double orient_z() const;
+  void set_orient_z(double value);
+
+  // double orient_w = 4;
+  void clear_orient_w();
+  static const int kOrientWFieldNumber = 4;
+  double orient_w() const;
+  void set_orient_w(double value);
+
+  // double ang_vel_x = 5;
+  void clear_ang_vel_x();
+  static const int kAngVelXFieldNumber = 5;
+  double ang_vel_x() const;
+  void set_ang_vel_x(double value);
+
+  // double ang_vel_y = 6;
+  void clear_ang_vel_y();
+  static const int kAngVelYFieldNumber = 6;
+  double ang_vel_y() const;
+  void set_ang_vel_y(double value);
+
+  // double ang_vel_z = 7;
+  void clear_ang_vel_z();
+  static const int kAngVelZFieldNumber = 7;
+  double ang_vel_z() const;
+  void set_ang_vel_z(double value);
+
+  // double lin_acc_x = 8;
+  void clear_lin_acc_x();
+  static const int kLinAccXFieldNumber = 8;
+  double lin_acc_x() const;
+  void set_lin_acc_x(double value);
+
+  // double lin_acc_y = 9;
+  void clear_lin_acc_y();
+  static const int kLinAccYFieldNumber = 9;
+  double lin_acc_y() const;
+  void set_lin_acc_y(double value);
+
+  // double lin_acc_z = 10;
+  void clear_lin_acc_z();
+  static const int kLinAccZFieldNumber = 10;
+  double lin_acc_z() const;
+  void set_lin_acc_z(double value);
+
+  // uint64 timestamp = 11;
+  void clear_timestamp();
+  static const int kTimestampFieldNumber = 11;
+  ::google::protobuf::uint64 timestamp() const;
+  void set_timestamp(::google::protobuf::uint64 value);
+
+  // bool success = 12;
+  void clear_success();
+  static const int kSuccessFieldNumber = 12;
+  bool success() const;
+  void set_success(bool value);
+
+  // @@protoc_insertion_point(class_scope:CoreX.rpc.ImuResponse)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  double orient_x_;
+  double orient_y_;
+  double orient_z_;
+  double orient_w_;
+  double ang_vel_x_;
+  double ang_vel_y_;
+  double ang_vel_z_;
+  double lin_acc_x_;
+  double lin_acc_y_;
+  double lin_acc_z_;
+  ::google::protobuf::uint64 timestamp_;
+  bool success_;
+  mutable ::google::protobuf::internal::CachedSize _cached_size_;
+  friend struct ::protobuf_robot_5fservice_2eproto::TableStruct;
+};
+// -------------------------------------------------------------------
+
+class JointPositionCommand : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:CoreX.rpc.JointPositionCommand) */ {
+ public:
+  JointPositionCommand();
+  virtual ~JointPositionCommand();
+
+  JointPositionCommand(const JointPositionCommand& from);
+
+  inline JointPositionCommand& operator=(const JointPositionCommand& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  JointPositionCommand(JointPositionCommand&& from) noexcept
+    : JointPositionCommand() {
+    *this = ::std::move(from);
+  }
+
+  inline JointPositionCommand& operator=(JointPositionCommand&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const JointPositionCommand& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const JointPositionCommand* internal_default_instance() {
+    return reinterpret_cast<const JointPositionCommand*>(
+               &_JointPositionCommand_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    21;
+
+  void Swap(JointPositionCommand* other);
+  friend void swap(JointPositionCommand& a, JointPositionCommand& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline JointPositionCommand* New() const final {
+    return CreateMaybeMessage<JointPositionCommand>(NULL);
+  }
+
+  JointPositionCommand* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<JointPositionCommand>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) final;
+  void MergeFrom(const ::google::protobuf::Message& from) final;
+  void CopyFrom(const JointPositionCommand& from);
+  void MergeFrom(const JointPositionCommand& from);
+  void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) final;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const final;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(JointPositionCommand* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // repeated string name = 1;
+  int name_size() const;
+  void clear_name();
+  static const int kNameFieldNumber = 1;
+  const ::std::string& name(int index) const;
+  ::std::string* mutable_name(int index);
+  void set_name(int index, const ::std::string& value);
+  #if LANG_CXX11
+  void set_name(int index, ::std::string&& value);
+  #endif
+  void set_name(int index, const char* value);
+  void set_name(int index, const char* value, size_t size);
+  ::std::string* add_name();
+  void add_name(const ::std::string& value);
+  #if LANG_CXX11
+  void add_name(::std::string&& value);
+  #endif
+  void add_name(const char* value);
+  void add_name(const char* value, size_t size);
+  const ::google::protobuf::RepeatedPtrField< ::std::string>& name() const;
+  ::google::protobuf::RepeatedPtrField< ::std::string>* mutable_name();
+
+  // repeated double position = 2;
+  int position_size() const;
+  void clear_position();
+  static const int kPositionFieldNumber = 2;
+  double position(int index) const;
+  void set_position(int index, double value);
+  void add_position(double value);
+  const ::google::protobuf::RepeatedField< double >&
+      position() const;
+  ::google::protobuf::RepeatedField< double >*
+      mutable_position();
+
+  // double duration_sec = 3;
+  void clear_duration_sec();
+  static const int kDurationSecFieldNumber = 3;
+  double duration_sec() const;
+  void set_duration_sec(double value);
+
+  // @@protoc_insertion_point(class_scope:CoreX.rpc.JointPositionCommand)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::RepeatedPtrField< ::std::string> name_;
+  ::google::protobuf::RepeatedField< double > position_;
+  mutable int _position_cached_byte_size_;
+  double duration_sec_;
+  mutable ::google::protobuf::internal::CachedSize _cached_size_;
+  friend struct ::protobuf_robot_5fservice_2eproto::TableStruct;
+};
+// -------------------------------------------------------------------
+
+class JointVelocityCommand : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:CoreX.rpc.JointVelocityCommand) */ {
+ public:
+  JointVelocityCommand();
+  virtual ~JointVelocityCommand();
+
+  JointVelocityCommand(const JointVelocityCommand& from);
+
+  inline JointVelocityCommand& operator=(const JointVelocityCommand& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  JointVelocityCommand(JointVelocityCommand&& from) noexcept
+    : JointVelocityCommand() {
+    *this = ::std::move(from);
+  }
+
+  inline JointVelocityCommand& operator=(JointVelocityCommand&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const JointVelocityCommand& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const JointVelocityCommand* internal_default_instance() {
+    return reinterpret_cast<const JointVelocityCommand*>(
+               &_JointVelocityCommand_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    22;
+
+  void Swap(JointVelocityCommand* other);
+  friend void swap(JointVelocityCommand& a, JointVelocityCommand& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline JointVelocityCommand* New() const final {
+    return CreateMaybeMessage<JointVelocityCommand>(NULL);
+  }
+
+  JointVelocityCommand* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<JointVelocityCommand>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) final;
+  void MergeFrom(const ::google::protobuf::Message& from) final;
+  void CopyFrom(const JointVelocityCommand& from);
+  void MergeFrom(const JointVelocityCommand& from);
+  void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) final;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const final;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(JointVelocityCommand* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // repeated string name = 1;
+  int name_size() const;
+  void clear_name();
+  static const int kNameFieldNumber = 1;
+  const ::std::string& name(int index) const;
+  ::std::string* mutable_name(int index);
+  void set_name(int index, const ::std::string& value);
+  #if LANG_CXX11
+  void set_name(int index, ::std::string&& value);
+  #endif
+  void set_name(int index, const char* value);
+  void set_name(int index, const char* value, size_t size);
+  ::std::string* add_name();
+  void add_name(const ::std::string& value);
+  #if LANG_CXX11
+  void add_name(::std::string&& value);
+  #endif
+  void add_name(const char* value);
+  void add_name(const char* value, size_t size);
+  const ::google::protobuf::RepeatedPtrField< ::std::string>& name() const;
+  ::google::protobuf::RepeatedPtrField< ::std::string>* mutable_name();
+
+  // repeated double velocity = 2;
+  int velocity_size() const;
+  void clear_velocity();
+  static const int kVelocityFieldNumber = 2;
+  double velocity(int index) const;
+  void set_velocity(int index, double value);
+  void add_velocity(double value);
+  const ::google::protobuf::RepeatedField< double >&
+      velocity() const;
+  ::google::protobuf::RepeatedField< double >*
+      mutable_velocity();
+
+  // @@protoc_insertion_point(class_scope:CoreX.rpc.JointVelocityCommand)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::RepeatedPtrField< ::std::string> name_;
+  ::google::protobuf::RepeatedField< double > velocity_;
+  mutable int _velocity_cached_byte_size_;
+  mutable ::google::protobuf::internal::CachedSize _cached_size_;
+  friend struct ::protobuf_robot_5fservice_2eproto::TableStruct;
+};
+// -------------------------------------------------------------------
+
+class SpawnModelRequest : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:CoreX.rpc.SpawnModelRequest) */ {
+ public:
+  SpawnModelRequest();
+  virtual ~SpawnModelRequest();
+
+  SpawnModelRequest(const SpawnModelRequest& from);
+
+  inline SpawnModelRequest& operator=(const SpawnModelRequest& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  SpawnModelRequest(SpawnModelRequest&& from) noexcept
+    : SpawnModelRequest() {
+    *this = ::std::move(from);
+  }
+
+  inline SpawnModelRequest& operator=(SpawnModelRequest&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const SpawnModelRequest& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const SpawnModelRequest* internal_default_instance() {
+    return reinterpret_cast<const SpawnModelRequest*>(
+               &_SpawnModelRequest_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    23;
+
+  void Swap(SpawnModelRequest* other);
+  friend void swap(SpawnModelRequest& a, SpawnModelRequest& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline SpawnModelRequest* New() const final {
+    return CreateMaybeMessage<SpawnModelRequest>(NULL);
+  }
+
+  SpawnModelRequest* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<SpawnModelRequest>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) final;
+  void MergeFrom(const ::google::protobuf::Message& from) final;
+  void CopyFrom(const SpawnModelRequest& from);
+  void MergeFrom(const SpawnModelRequest& from);
+  void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) final;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const final;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(SpawnModelRequest* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // string model_name = 1;
+  void clear_model_name();
+  static const int kModelNameFieldNumber = 1;
+  const ::std::string& model_name() const;
+  void set_model_name(const ::std::string& value);
+  #if LANG_CXX11
+  void set_model_name(::std::string&& value);
+  #endif
+  void set_model_name(const char* value);
+  void set_model_name(const char* value, size_t size);
+  ::std::string* mutable_model_name();
+  ::std::string* release_model_name();
+  void set_allocated_model_name(::std::string* model_name);
+
+  // string model_xml = 2;
+  void clear_model_xml();
+  static const int kModelXmlFieldNumber = 2;
+  const ::std::string& model_xml() const;
+  void set_model_xml(const ::std::string& value);
+  #if LANG_CXX11
+  void set_model_xml(::std::string&& value);
+  #endif
+  void set_model_xml(const char* value);
+  void set_model_xml(const char* value, size_t size);
+  ::std::string* mutable_model_xml();
+  ::std::string* release_model_xml();
+  void set_allocated_model_xml(::std::string* model_xml);
+
+  // string reference_frame = 10;
+  void clear_reference_frame();
+  static const int kReferenceFrameFieldNumber = 10;
+  const ::std::string& reference_frame() const;
+  void set_reference_frame(const ::std::string& value);
+  #if LANG_CXX11
+  void set_reference_frame(::std::string&& value);
+  #endif
+  void set_reference_frame(const char* value);
+  void set_reference_frame(const char* value, size_t size);
+  ::std::string* mutable_reference_frame();
+  ::std::string* release_reference_frame();
+  void set_allocated_reference_frame(::std::string* reference_frame);
+
+  // double pos_x = 3;
+  void clear_pos_x();
+  static const int kPosXFieldNumber = 3;
+  double pos_x() const;
+  void set_pos_x(double value);
+
+  // double pos_y = 4;
+  void clear_pos_y();
+  static const int kPosYFieldNumber = 4;
+  double pos_y() const;
+  void set_pos_y(double value);
+
+  // double pos_z = 5;
+  void clear_pos_z();
+  static const int kPosZFieldNumber = 5;
+  double pos_z() const;
+  void set_pos_z(double value);
+
+  // double orient_x = 6;
+  void clear_orient_x();
+  static const int kOrientXFieldNumber = 6;
+  double orient_x() const;
+  void set_orient_x(double value);
+
+  // double orient_y = 7;
+  void clear_orient_y();
+  static const int kOrientYFieldNumber = 7;
+  double orient_y() const;
+  void set_orient_y(double value);
+
+  // double orient_z = 8;
+  void clear_orient_z();
+  static const int kOrientZFieldNumber = 8;
+  double orient_z() const;
+  void set_orient_z(double value);
+
+  // double orient_w = 9;
+  void clear_orient_w();
+  static const int kOrientWFieldNumber = 9;
+  double orient_w() const;
+  void set_orient_w(double value);
+
+  // @@protoc_insertion_point(class_scope:CoreX.rpc.SpawnModelRequest)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::internal::ArenaStringPtr model_name_;
+  ::google::protobuf::internal::ArenaStringPtr model_xml_;
+  ::google::protobuf::internal::ArenaStringPtr reference_frame_;
+  double pos_x_;
+  double pos_y_;
+  double pos_z_;
+  double orient_x_;
+  double orient_y_;
+  double orient_z_;
+  double orient_w_;
+  mutable ::google::protobuf::internal::CachedSize _cached_size_;
+  friend struct ::protobuf_robot_5fservice_2eproto::TableStruct;
+};
+// -------------------------------------------------------------------
+
+class SpawnModelResponse : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:CoreX.rpc.SpawnModelResponse) */ {
+ public:
+  SpawnModelResponse();
+  virtual ~SpawnModelResponse();
+
+  SpawnModelResponse(const SpawnModelResponse& from);
+
+  inline SpawnModelResponse& operator=(const SpawnModelResponse& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  SpawnModelResponse(SpawnModelResponse&& from) noexcept
+    : SpawnModelResponse() {
+    *this = ::std::move(from);
+  }
+
+  inline SpawnModelResponse& operator=(SpawnModelResponse&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const SpawnModelResponse& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const SpawnModelResponse* internal_default_instance() {
+    return reinterpret_cast<const SpawnModelResponse*>(
+               &_SpawnModelResponse_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    24;
+
+  void Swap(SpawnModelResponse* other);
+  friend void swap(SpawnModelResponse& a, SpawnModelResponse& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline SpawnModelResponse* New() const final {
+    return CreateMaybeMessage<SpawnModelResponse>(NULL);
+  }
+
+  SpawnModelResponse* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<SpawnModelResponse>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) final;
+  void MergeFrom(const ::google::protobuf::Message& from) final;
+  void CopyFrom(const SpawnModelResponse& from);
+  void MergeFrom(const SpawnModelResponse& from);
+  void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) final;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const final;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(SpawnModelResponse* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // string model_name = 2;
+  void clear_model_name();
+  static const int kModelNameFieldNumber = 2;
+  const ::std::string& model_name() const;
+  void set_model_name(const ::std::string& value);
+  #if LANG_CXX11
+  void set_model_name(::std::string&& value);
+  #endif
+  void set_model_name(const char* value);
+  void set_model_name(const char* value, size_t size);
+  ::std::string* mutable_model_name();
+  ::std::string* release_model_name();
+  void set_allocated_model_name(::std::string* model_name);
+
+  // string error_msg = 3;
+  void clear_error_msg();
+  static const int kErrorMsgFieldNumber = 3;
+  const ::std::string& error_msg() const;
+  void set_error_msg(const ::std::string& value);
+  #if LANG_CXX11
+  void set_error_msg(::std::string&& value);
+  #endif
+  void set_error_msg(const char* value);
+  void set_error_msg(const char* value, size_t size);
+  ::std::string* mutable_error_msg();
+  ::std::string* release_error_msg();
+  void set_allocated_error_msg(::std::string* error_msg);
+
+  // bool success = 1;
+  void clear_success();
+  static const int kSuccessFieldNumber = 1;
+  bool success() const;
+  void set_success(bool value);
+
+  // @@protoc_insertion_point(class_scope:CoreX.rpc.SpawnModelResponse)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::internal::ArenaStringPtr model_name_;
+  ::google::protobuf::internal::ArenaStringPtr error_msg_;
+  bool success_;
+  mutable ::google::protobuf::internal::CachedSize _cached_size_;
+  friend struct ::protobuf_robot_5fservice_2eproto::TableStruct;
+};
+// -------------------------------------------------------------------
+
+class DeleteModelRequest : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:CoreX.rpc.DeleteModelRequest) */ {
+ public:
+  DeleteModelRequest();
+  virtual ~DeleteModelRequest();
+
+  DeleteModelRequest(const DeleteModelRequest& from);
+
+  inline DeleteModelRequest& operator=(const DeleteModelRequest& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  DeleteModelRequest(DeleteModelRequest&& from) noexcept
+    : DeleteModelRequest() {
+    *this = ::std::move(from);
+  }
+
+  inline DeleteModelRequest& operator=(DeleteModelRequest&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const DeleteModelRequest& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const DeleteModelRequest* internal_default_instance() {
+    return reinterpret_cast<const DeleteModelRequest*>(
+               &_DeleteModelRequest_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    25;
+
+  void Swap(DeleteModelRequest* other);
+  friend void swap(DeleteModelRequest& a, DeleteModelRequest& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline DeleteModelRequest* New() const final {
+    return CreateMaybeMessage<DeleteModelRequest>(NULL);
+  }
+
+  DeleteModelRequest* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<DeleteModelRequest>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) final;
+  void MergeFrom(const ::google::protobuf::Message& from) final;
+  void CopyFrom(const DeleteModelRequest& from);
+  void MergeFrom(const DeleteModelRequest& from);
+  void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) final;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const final;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(DeleteModelRequest* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // string model_name = 1;
+  void clear_model_name();
+  static const int kModelNameFieldNumber = 1;
+  const ::std::string& model_name() const;
+  void set_model_name(const ::std::string& value);
+  #if LANG_CXX11
+  void set_model_name(::std::string&& value);
+  #endif
+  void set_model_name(const char* value);
+  void set_model_name(const char* value, size_t size);
+  ::std::string* mutable_model_name();
+  ::std::string* release_model_name();
+  void set_allocated_model_name(::std::string* model_name);
+
+  // @@protoc_insertion_point(class_scope:CoreX.rpc.DeleteModelRequest)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::internal::ArenaStringPtr model_name_;
+  mutable ::google::protobuf::internal::CachedSize _cached_size_;
+  friend struct ::protobuf_robot_5fservice_2eproto::TableStruct;
+};
+// -------------------------------------------------------------------
+
+class ResetRequest : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:CoreX.rpc.ResetRequest) */ {
+ public:
+  ResetRequest();
+  virtual ~ResetRequest();
+
+  ResetRequest(const ResetRequest& from);
+
+  inline ResetRequest& operator=(const ResetRequest& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  ResetRequest(ResetRequest&& from) noexcept
+    : ResetRequest() {
+    *this = ::std::move(from);
+  }
+
+  inline ResetRequest& operator=(ResetRequest&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const ResetRequest& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const ResetRequest* internal_default_instance() {
+    return reinterpret_cast<const ResetRequest*>(
+               &_ResetRequest_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    26;
+
+  void Swap(ResetRequest* other);
+  friend void swap(ResetRequest& a, ResetRequest& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline ResetRequest* New() const final {
+    return CreateMaybeMessage<ResetRequest>(NULL);
+  }
+
+  ResetRequest* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<ResetRequest>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) final;
+  void MergeFrom(const ::google::protobuf::Message& from) final;
+  void CopyFrom(const ResetRequest& from);
+  void MergeFrom(const ResetRequest& from);
+  void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) final;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const final;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(ResetRequest* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // bool reset_time = 1;
+  void clear_reset_time();
+  static const int kResetTimeFieldNumber = 1;
+  bool reset_time() const;
+  void set_reset_time(bool value);
+
+  // bool reset_models = 2;
+  void clear_reset_models();
+  static const int kResetModelsFieldNumber = 2;
+  bool reset_models() const;
+  void set_reset_models(bool value);
+
+  // @@protoc_insertion_point(class_scope:CoreX.rpc.ResetRequest)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  bool reset_time_;
+  bool reset_models_;
+  mutable ::google::protobuf::internal::CachedSize _cached_size_;
+  friend struct ::protobuf_robot_5fservice_2eproto::TableStruct;
+};
+// -------------------------------------------------------------------
+
+class NavigationGoal : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:CoreX.rpc.NavigationGoal) */ {
+ public:
+  NavigationGoal();
+  virtual ~NavigationGoal();
+
+  NavigationGoal(const NavigationGoal& from);
+
+  inline NavigationGoal& operator=(const NavigationGoal& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  NavigationGoal(NavigationGoal&& from) noexcept
+    : NavigationGoal() {
+    *this = ::std::move(from);
+  }
+
+  inline NavigationGoal& operator=(NavigationGoal&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const NavigationGoal& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const NavigationGoal* internal_default_instance() {
+    return reinterpret_cast<const NavigationGoal*>(
+               &_NavigationGoal_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    27;
+
+  void Swap(NavigationGoal* other);
+  friend void swap(NavigationGoal& a, NavigationGoal& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline NavigationGoal* New() const final {
+    return CreateMaybeMessage<NavigationGoal>(NULL);
+  }
+
+  NavigationGoal* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<NavigationGoal>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) final;
+  void MergeFrom(const ::google::protobuf::Message& from) final;
+  void CopyFrom(const NavigationGoal& from);
+  void MergeFrom(const NavigationGoal& from);
+  void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) final;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const final;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(NavigationGoal* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // string frame_id = 5;
+  void clear_frame_id();
+  static const int kFrameIdFieldNumber = 5;
+  const ::std::string& frame_id() const;
+  void set_frame_id(const ::std::string& value);
+  #if LANG_CXX11
+  void set_frame_id(::std::string&& value);
+  #endif
+  void set_frame_id(const char* value);
+  void set_frame_id(const char* value, size_t size);
+  ::std::string* mutable_frame_id();
+  ::std::string* release_frame_id();
+  void set_allocated_frame_id(::std::string* frame_id);
+
+  // double target_x = 1;
+  void clear_target_x();
+  static const int kTargetXFieldNumber = 1;
+  double target_x() const;
+  void set_target_x(double value);
+
+  // double target_y = 2;
+  void clear_target_y();
+  static const int kTargetYFieldNumber = 2;
+  double target_y() const;
+  void set_target_y(double value);
+
+  // double target_z = 3;
+  void clear_target_z();
+  static const int kTargetZFieldNumber = 3;
+  double target_z() const;
+  void set_target_z(double value);
+
+  // double target_yaw = 4;
+  void clear_target_yaw();
+  static const int kTargetYawFieldNumber = 4;
+  double target_yaw() const;
+  void set_target_yaw(double value);
+
+  // double tolerance_xy = 6;
+  void clear_tolerance_xy();
+  static const int kToleranceXyFieldNumber = 6;
+  double tolerance_xy() const;
+  void set_tolerance_xy(double value);
+
+  // double tolerance_yaw = 7;
+  void clear_tolerance_yaw();
+  static const int kToleranceYawFieldNumber = 7;
+  double tolerance_yaw() const;
+  void set_tolerance_yaw(double value);
+
+  // double max_velocity = 8;
+  void clear_max_velocity();
+  static const int kMaxVelocityFieldNumber = 8;
+  double max_velocity() const;
+  void set_max_velocity(double value);
+
+  // @@protoc_insertion_point(class_scope:CoreX.rpc.NavigationGoal)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::internal::ArenaStringPtr frame_id_;
+  double target_x_;
+  double target_y_;
+  double target_z_;
+  double target_yaw_;
+  double tolerance_xy_;
+  double tolerance_yaw_;
+  double max_velocity_;
+  mutable ::google::protobuf::internal::CachedSize _cached_size_;
+  friend struct ::protobuf_robot_5fservice_2eproto::TableStruct;
+};
+// -------------------------------------------------------------------
+
+class NavigationResponse : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:CoreX.rpc.NavigationResponse) */ {
+ public:
+  NavigationResponse();
+  virtual ~NavigationResponse();
+
+  NavigationResponse(const NavigationResponse& from);
+
+  inline NavigationResponse& operator=(const NavigationResponse& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  NavigationResponse(NavigationResponse&& from) noexcept
+    : NavigationResponse() {
+    *this = ::std::move(from);
+  }
+
+  inline NavigationResponse& operator=(NavigationResponse&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const NavigationResponse& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const NavigationResponse* internal_default_instance() {
+    return reinterpret_cast<const NavigationResponse*>(
+               &_NavigationResponse_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    28;
+
+  void Swap(NavigationResponse* other);
+  friend void swap(NavigationResponse& a, NavigationResponse& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline NavigationResponse* New() const final {
+    return CreateMaybeMessage<NavigationResponse>(NULL);
+  }
+
+  NavigationResponse* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<NavigationResponse>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) final;
+  void MergeFrom(const ::google::protobuf::Message& from) final;
+  void CopyFrom(const NavigationResponse& from);
+  void MergeFrom(const NavigationResponse& from);
+  void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) final;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const final;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(NavigationResponse* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // string goal_id = 2;
+  void clear_goal_id();
+  static const int kGoalIdFieldNumber = 2;
+  const ::std::string& goal_id() const;
+  void set_goal_id(const ::std::string& value);
+  #if LANG_CXX11
+  void set_goal_id(::std::string&& value);
+  #endif
+  void set_goal_id(const char* value);
+  void set_goal_id(const char* value, size_t size);
+  ::std::string* mutable_goal_id();
+  ::std::string* release_goal_id();
+  void set_allocated_goal_id(::std::string* goal_id);
+
+  // string error_msg = 3;
+  void clear_error_msg();
+  static const int kErrorMsgFieldNumber = 3;
+  const ::std::string& error_msg() const;
+  void set_error_msg(const ::std::string& value);
+  #if LANG_CXX11
+  void set_error_msg(::std::string&& value);
+  #endif
+  void set_error_msg(const char* value);
+  void set_error_msg(const char* value, size_t size);
+  ::std::string* mutable_error_msg();
+  ::std::string* release_error_msg();
+  void set_allocated_error_msg(::std::string* error_msg);
+
+  // bool success = 1;
+  void clear_success();
+  static const int kSuccessFieldNumber = 1;
+  bool success() const;
+  void set_success(bool value);
+
+  // @@protoc_insertion_point(class_scope:CoreX.rpc.NavigationResponse)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::internal::ArenaStringPtr goal_id_;
+  ::google::protobuf::internal::ArenaStringPtr error_msg_;
+  bool success_;
+  mutable ::google::protobuf::internal::CachedSize _cached_size_;
+  friend struct ::protobuf_robot_5fservice_2eproto::TableStruct;
+};
+// -------------------------------------------------------------------
+
+class CancelGoalRequest : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:CoreX.rpc.CancelGoalRequest) */ {
+ public:
+  CancelGoalRequest();
+  virtual ~CancelGoalRequest();
+
+  CancelGoalRequest(const CancelGoalRequest& from);
+
+  inline CancelGoalRequest& operator=(const CancelGoalRequest& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  CancelGoalRequest(CancelGoalRequest&& from) noexcept
+    : CancelGoalRequest() {
+    *this = ::std::move(from);
+  }
+
+  inline CancelGoalRequest& operator=(CancelGoalRequest&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const CancelGoalRequest& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const CancelGoalRequest* internal_default_instance() {
+    return reinterpret_cast<const CancelGoalRequest*>(
+               &_CancelGoalRequest_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    29;
+
+  void Swap(CancelGoalRequest* other);
+  friend void swap(CancelGoalRequest& a, CancelGoalRequest& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline CancelGoalRequest* New() const final {
+    return CreateMaybeMessage<CancelGoalRequest>(NULL);
+  }
+
+  CancelGoalRequest* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<CancelGoalRequest>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) final;
+  void MergeFrom(const ::google::protobuf::Message& from) final;
+  void CopyFrom(const CancelGoalRequest& from);
+  void MergeFrom(const CancelGoalRequest& from);
+  void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) final;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const final;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(CancelGoalRequest* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // string goal_id = 1;
+  void clear_goal_id();
+  static const int kGoalIdFieldNumber = 1;
+  const ::std::string& goal_id() const;
+  void set_goal_id(const ::std::string& value);
+  #if LANG_CXX11
+  void set_goal_id(::std::string&& value);
+  #endif
+  void set_goal_id(const char* value);
+  void set_goal_id(const char* value, size_t size);
+  ::std::string* mutable_goal_id();
+  ::std::string* release_goal_id();
+  void set_allocated_goal_id(::std::string* goal_id);
+
+  // @@protoc_insertion_point(class_scope:CoreX.rpc.CancelGoalRequest)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::internal::ArenaStringPtr goal_id_;
+  mutable ::google::protobuf::internal::CachedSize _cached_size_;
+  friend struct ::protobuf_robot_5fservice_2eproto::TableStruct;
+};
+// -------------------------------------------------------------------
+
+class NavigationFeedback : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:CoreX.rpc.NavigationFeedback) */ {
+ public:
+  NavigationFeedback();
+  virtual ~NavigationFeedback();
+
+  NavigationFeedback(const NavigationFeedback& from);
+
+  inline NavigationFeedback& operator=(const NavigationFeedback& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  NavigationFeedback(NavigationFeedback&& from) noexcept
+    : NavigationFeedback() {
+    *this = ::std::move(from);
+  }
+
+  inline NavigationFeedback& operator=(NavigationFeedback&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const NavigationFeedback& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const NavigationFeedback* internal_default_instance() {
+    return reinterpret_cast<const NavigationFeedback*>(
+               &_NavigationFeedback_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    30;
+
+  void Swap(NavigationFeedback* other);
+  friend void swap(NavigationFeedback& a, NavigationFeedback& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline NavigationFeedback* New() const final {
+    return CreateMaybeMessage<NavigationFeedback>(NULL);
+  }
+
+  NavigationFeedback* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<NavigationFeedback>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) final;
+  void MergeFrom(const ::google::protobuf::Message& from) final;
+  void CopyFrom(const NavigationFeedback& from);
+  void MergeFrom(const NavigationFeedback& from);
+  void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) final;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const final;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(NavigationFeedback* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // string goal_id = 1;
+  void clear_goal_id();
+  static const int kGoalIdFieldNumber = 1;
+  const ::std::string& goal_id() const;
+  void set_goal_id(const ::std::string& value);
+  #if LANG_CXX11
+  void set_goal_id(::std::string&& value);
+  #endif
+  void set_goal_id(const char* value);
+  void set_goal_id(const char* value, size_t size);
+  ::std::string* mutable_goal_id();
+  ::std::string* release_goal_id();
+  void set_allocated_goal_id(::std::string* goal_id);
+
+  // double distance_remaining = 2;
+  void clear_distance_remaining();
+  static const int kDistanceRemainingFieldNumber = 2;
+  double distance_remaining() const;
+  void set_distance_remaining(double value);
+
+  // double current_x = 3;
+  void clear_current_x();
+  static const int kCurrentXFieldNumber = 3;
+  double current_x() const;
+  void set_current_x(double value);
+
+  // double current_y = 4;
+  void clear_current_y();
+  static const int kCurrentYFieldNumber = 4;
+  double current_y() const;
+  void set_current_y(double value);
+
+  // double current_yaw = 5;
+  void clear_current_yaw();
+  static const int kCurrentYawFieldNumber = 5;
+  double current_yaw() const;
+  void set_current_yaw(double value);
+
+  // double percent_complete = 6;
+  void clear_percent_complete();
+  static const int kPercentCompleteFieldNumber = 6;
+  double percent_complete() const;
+  void set_percent_complete(double value);
+
+  // uint64 timestamp = 7;
+  void clear_timestamp();
+  static const int kTimestampFieldNumber = 7;
+  ::google::protobuf::uint64 timestamp() const;
+  void set_timestamp(::google::protobuf::uint64 value);
+
+  // @@protoc_insertion_point(class_scope:CoreX.rpc.NavigationFeedback)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::internal::ArenaStringPtr goal_id_;
+  double distance_remaining_;
+  double current_x_;
+  double current_y_;
+  double current_yaw_;
+  double percent_complete_;
+  ::google::protobuf::uint64 timestamp_;
+  mutable ::google::protobuf::internal::CachedSize _cached_size_;
+  friend struct ::protobuf_robot_5fservice_2eproto::TableStruct;
+};
+// -------------------------------------------------------------------
+
+class NavigationResult : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:CoreX.rpc.NavigationResult) */ {
+ public:
+  NavigationResult();
+  virtual ~NavigationResult();
+
+  NavigationResult(const NavigationResult& from);
+
+  inline NavigationResult& operator=(const NavigationResult& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  NavigationResult(NavigationResult&& from) noexcept
+    : NavigationResult() {
+    *this = ::std::move(from);
+  }
+
+  inline NavigationResult& operator=(NavigationResult&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const NavigationResult& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const NavigationResult* internal_default_instance() {
+    return reinterpret_cast<const NavigationResult*>(
+               &_NavigationResult_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    31;
+
+  void Swap(NavigationResult* other);
+  friend void swap(NavigationResult& a, NavigationResult& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline NavigationResult* New() const final {
+    return CreateMaybeMessage<NavigationResult>(NULL);
+  }
+
+  NavigationResult* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<NavigationResult>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) final;
+  void MergeFrom(const ::google::protobuf::Message& from) final;
+  void CopyFrom(const NavigationResult& from);
+  void MergeFrom(const NavigationResult& from);
+  void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) final;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const final;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(NavigationResult* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // string goal_id = 1;
+  void clear_goal_id();
+  static const int kGoalIdFieldNumber = 1;
+  const ::std::string& goal_id() const;
+  void set_goal_id(const ::std::string& value);
+  #if LANG_CXX11
+  void set_goal_id(::std::string&& value);
+  #endif
+  void set_goal_id(const char* value);
+  void set_goal_id(const char* value, size_t size);
+  ::std::string* mutable_goal_id();
+  ::std::string* release_goal_id();
+  void set_allocated_goal_id(::std::string* goal_id);
+
+  // string error_msg = 6;
+  void clear_error_msg();
+  static const int kErrorMsgFieldNumber = 6;
+  const ::std::string& error_msg() const;
+  void set_error_msg(const ::std::string& value);
+  #if LANG_CXX11
+  void set_error_msg(::std::string&& value);
+  #endif
+  void set_error_msg(const char* value);
+  void set_error_msg(const char* value, size_t size);
+  ::std::string* mutable_error_msg();
+  ::std::string* release_error_msg();
+  void set_allocated_error_msg(::std::string* error_msg);
+
+  // double final_x = 3;
+  void clear_final_x();
+  static const int kFinalXFieldNumber = 3;
+  double final_x() const;
+  void set_final_x(double value);
+
+  // double final_y = 4;
+  void clear_final_y();
+  static const int kFinalYFieldNumber = 4;
+  double final_y() const;
+  void set_final_y(double value);
+
+  // double final_yaw = 5;
+  void clear_final_yaw();
+  static const int kFinalYawFieldNumber = 5;
+  double final_yaw() const;
+  void set_final_yaw(double value);
+
+  // bool success = 2;
+  void clear_success();
+  static const int kSuccessFieldNumber = 2;
+  bool success() const;
+  void set_success(bool value);
+
+  // @@protoc_insertion_point(class_scope:CoreX.rpc.NavigationResult)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::internal::ArenaStringPtr goal_id_;
+  ::google::protobuf::internal::ArenaStringPtr error_msg_;
+  double final_x_;
+  double final_y_;
+  double final_yaw_;
+  bool success_;
+  mutable ::google::protobuf::internal::CachedSize _cached_size_;
+  friend struct ::protobuf_robot_5fservice_2eproto::TableStruct;
+};
+// -------------------------------------------------------------------
+
+class GoalIdRequest : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:CoreX.rpc.GoalIdRequest) */ {
+ public:
+  GoalIdRequest();
+  virtual ~GoalIdRequest();
+
+  GoalIdRequest(const GoalIdRequest& from);
+
+  inline GoalIdRequest& operator=(const GoalIdRequest& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  GoalIdRequest(GoalIdRequest&& from) noexcept
+    : GoalIdRequest() {
+    *this = ::std::move(from);
+  }
+
+  inline GoalIdRequest& operator=(GoalIdRequest&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const GoalIdRequest& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const GoalIdRequest* internal_default_instance() {
+    return reinterpret_cast<const GoalIdRequest*>(
+               &_GoalIdRequest_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    32;
+
+  void Swap(GoalIdRequest* other);
+  friend void swap(GoalIdRequest& a, GoalIdRequest& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline GoalIdRequest* New() const final {
+    return CreateMaybeMessage<GoalIdRequest>(NULL);
+  }
+
+  GoalIdRequest* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<GoalIdRequest>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) final;
+  void MergeFrom(const ::google::protobuf::Message& from) final;
+  void CopyFrom(const GoalIdRequest& from);
+  void MergeFrom(const GoalIdRequest& from);
+  void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) final;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const final;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(GoalIdRequest* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // string goal_id = 1;
+  void clear_goal_id();
+  static const int kGoalIdFieldNumber = 1;
+  const ::std::string& goal_id() const;
+  void set_goal_id(const ::std::string& value);
+  #if LANG_CXX11
+  void set_goal_id(::std::string&& value);
+  #endif
+  void set_goal_id(const char* value);
+  void set_goal_id(const char* value, size_t size);
+  ::std::string* mutable_goal_id();
+  ::std::string* release_goal_id();
+  void set_allocated_goal_id(::std::string* goal_id);
+
+  // @@protoc_insertion_point(class_scope:CoreX.rpc.GoalIdRequest)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::internal::ArenaStringPtr goal_id_;
+  mutable ::google::protobuf::internal::CachedSize _cached_size_;
+  friend struct ::protobuf_robot_5fservice_2eproto::TableStruct;
+};
 // ===================================================================
 
 
@@ -1390,9 +5235,3169 @@ inline void ControlResponse::set_allocated_error_msg(::std::string* error_msg) {
   // @@protoc_insertion_point(field_set_allocated:CoreX.rpc.ControlResponse.error_msg)
 }
 
+// -------------------------------------------------------------------
+
+// JointStatesRequest
+
+// -------------------------------------------------------------------
+
+// JointStatesResponse
+
+// repeated string name = 1;
+inline int JointStatesResponse::name_size() const {
+  return name_.size();
+}
+inline void JointStatesResponse::clear_name() {
+  name_.Clear();
+}
+inline const ::std::string& JointStatesResponse::name(int index) const {
+  // @@protoc_insertion_point(field_get:CoreX.rpc.JointStatesResponse.name)
+  return name_.Get(index);
+}
+inline ::std::string* JointStatesResponse::mutable_name(int index) {
+  // @@protoc_insertion_point(field_mutable:CoreX.rpc.JointStatesResponse.name)
+  return name_.Mutable(index);
+}
+inline void JointStatesResponse::set_name(int index, const ::std::string& value) {
+  // @@protoc_insertion_point(field_set:CoreX.rpc.JointStatesResponse.name)
+  name_.Mutable(index)->assign(value);
+}
+#if LANG_CXX11
+inline void JointStatesResponse::set_name(int index, ::std::string&& value) {
+  // @@protoc_insertion_point(field_set:CoreX.rpc.JointStatesResponse.name)
+  name_.Mutable(index)->assign(std::move(value));
+}
+#endif
+inline void JointStatesResponse::set_name(int index, const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  name_.Mutable(index)->assign(value);
+  // @@protoc_insertion_point(field_set_char:CoreX.rpc.JointStatesResponse.name)
+}
+inline void JointStatesResponse::set_name(int index, const char* value, size_t size) {
+  name_.Mutable(index)->assign(
+    reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_set_pointer:CoreX.rpc.JointStatesResponse.name)
+}
+inline ::std::string* JointStatesResponse::add_name() {
+  // @@protoc_insertion_point(field_add_mutable:CoreX.rpc.JointStatesResponse.name)
+  return name_.Add();
+}
+inline void JointStatesResponse::add_name(const ::std::string& value) {
+  name_.Add()->assign(value);
+  // @@protoc_insertion_point(field_add:CoreX.rpc.JointStatesResponse.name)
+}
+#if LANG_CXX11
+inline void JointStatesResponse::add_name(::std::string&& value) {
+  name_.Add(std::move(value));
+  // @@protoc_insertion_point(field_add:CoreX.rpc.JointStatesResponse.name)
+}
+#endif
+inline void JointStatesResponse::add_name(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  name_.Add()->assign(value);
+  // @@protoc_insertion_point(field_add_char:CoreX.rpc.JointStatesResponse.name)
+}
+inline void JointStatesResponse::add_name(const char* value, size_t size) {
+  name_.Add()->assign(reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_add_pointer:CoreX.rpc.JointStatesResponse.name)
+}
+inline const ::google::protobuf::RepeatedPtrField< ::std::string>&
+JointStatesResponse::name() const {
+  // @@protoc_insertion_point(field_list:CoreX.rpc.JointStatesResponse.name)
+  return name_;
+}
+inline ::google::protobuf::RepeatedPtrField< ::std::string>*
+JointStatesResponse::mutable_name() {
+  // @@protoc_insertion_point(field_mutable_list:CoreX.rpc.JointStatesResponse.name)
+  return &name_;
+}
+
+// repeated double position = 2;
+inline int JointStatesResponse::position_size() const {
+  return position_.size();
+}
+inline void JointStatesResponse::clear_position() {
+  position_.Clear();
+}
+inline double JointStatesResponse::position(int index) const {
+  // @@protoc_insertion_point(field_get:CoreX.rpc.JointStatesResponse.position)
+  return position_.Get(index);
+}
+inline void JointStatesResponse::set_position(int index, double value) {
+  position_.Set(index, value);
+  // @@protoc_insertion_point(field_set:CoreX.rpc.JointStatesResponse.position)
+}
+inline void JointStatesResponse::add_position(double value) {
+  position_.Add(value);
+  // @@protoc_insertion_point(field_add:CoreX.rpc.JointStatesResponse.position)
+}
+inline const ::google::protobuf::RepeatedField< double >&
+JointStatesResponse::position() const {
+  // @@protoc_insertion_point(field_list:CoreX.rpc.JointStatesResponse.position)
+  return position_;
+}
+inline ::google::protobuf::RepeatedField< double >*
+JointStatesResponse::mutable_position() {
+  // @@protoc_insertion_point(field_mutable_list:CoreX.rpc.JointStatesResponse.position)
+  return &position_;
+}
+
+// repeated double velocity = 3;
+inline int JointStatesResponse::velocity_size() const {
+  return velocity_.size();
+}
+inline void JointStatesResponse::clear_velocity() {
+  velocity_.Clear();
+}
+inline double JointStatesResponse::velocity(int index) const {
+  // @@protoc_insertion_point(field_get:CoreX.rpc.JointStatesResponse.velocity)
+  return velocity_.Get(index);
+}
+inline void JointStatesResponse::set_velocity(int index, double value) {
+  velocity_.Set(index, value);
+  // @@protoc_insertion_point(field_set:CoreX.rpc.JointStatesResponse.velocity)
+}
+inline void JointStatesResponse::add_velocity(double value) {
+  velocity_.Add(value);
+  // @@protoc_insertion_point(field_add:CoreX.rpc.JointStatesResponse.velocity)
+}
+inline const ::google::protobuf::RepeatedField< double >&
+JointStatesResponse::velocity() const {
+  // @@protoc_insertion_point(field_list:CoreX.rpc.JointStatesResponse.velocity)
+  return velocity_;
+}
+inline ::google::protobuf::RepeatedField< double >*
+JointStatesResponse::mutable_velocity() {
+  // @@protoc_insertion_point(field_mutable_list:CoreX.rpc.JointStatesResponse.velocity)
+  return &velocity_;
+}
+
+// repeated double effort = 4;
+inline int JointStatesResponse::effort_size() const {
+  return effort_.size();
+}
+inline void JointStatesResponse::clear_effort() {
+  effort_.Clear();
+}
+inline double JointStatesResponse::effort(int index) const {
+  // @@protoc_insertion_point(field_get:CoreX.rpc.JointStatesResponse.effort)
+  return effort_.Get(index);
+}
+inline void JointStatesResponse::set_effort(int index, double value) {
+  effort_.Set(index, value);
+  // @@protoc_insertion_point(field_set:CoreX.rpc.JointStatesResponse.effort)
+}
+inline void JointStatesResponse::add_effort(double value) {
+  effort_.Add(value);
+  // @@protoc_insertion_point(field_add:CoreX.rpc.JointStatesResponse.effort)
+}
+inline const ::google::protobuf::RepeatedField< double >&
+JointStatesResponse::effort() const {
+  // @@protoc_insertion_point(field_list:CoreX.rpc.JointStatesResponse.effort)
+  return effort_;
+}
+inline ::google::protobuf::RepeatedField< double >*
+JointStatesResponse::mutable_effort() {
+  // @@protoc_insertion_point(field_mutable_list:CoreX.rpc.JointStatesResponse.effort)
+  return &effort_;
+}
+
+// uint64 timestamp = 5;
+inline void JointStatesResponse::clear_timestamp() {
+  timestamp_ = GOOGLE_ULONGLONG(0);
+}
+inline ::google::protobuf::uint64 JointStatesResponse::timestamp() const {
+  // @@protoc_insertion_point(field_get:CoreX.rpc.JointStatesResponse.timestamp)
+  return timestamp_;
+}
+inline void JointStatesResponse::set_timestamp(::google::protobuf::uint64 value) {
+  
+  timestamp_ = value;
+  // @@protoc_insertion_point(field_set:CoreX.rpc.JointStatesResponse.timestamp)
+}
+
+// bool success = 6;
+inline void JointStatesResponse::clear_success() {
+  success_ = false;
+}
+inline bool JointStatesResponse::success() const {
+  // @@protoc_insertion_point(field_get:CoreX.rpc.JointStatesResponse.success)
+  return success_;
+}
+inline void JointStatesResponse::set_success(bool value) {
+  
+  success_ = value;
+  // @@protoc_insertion_point(field_set:CoreX.rpc.JointStatesResponse.success)
+}
+
+// -------------------------------------------------------------------
+
+// ImageRequest
+
+// string encoding = 1;
+inline void ImageRequest::clear_encoding() {
+  encoding_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& ImageRequest::encoding() const {
+  // @@protoc_insertion_point(field_get:CoreX.rpc.ImageRequest.encoding)
+  return encoding_.GetNoArena();
+}
+inline void ImageRequest::set_encoding(const ::std::string& value) {
+  
+  encoding_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:CoreX.rpc.ImageRequest.encoding)
+}
+#if LANG_CXX11
+inline void ImageRequest::set_encoding(::std::string&& value) {
+  
+  encoding_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:CoreX.rpc.ImageRequest.encoding)
+}
+#endif
+inline void ImageRequest::set_encoding(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  
+  encoding_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:CoreX.rpc.ImageRequest.encoding)
+}
+inline void ImageRequest::set_encoding(const char* value, size_t size) {
+  
+  encoding_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:CoreX.rpc.ImageRequest.encoding)
+}
+inline ::std::string* ImageRequest::mutable_encoding() {
+  
+  // @@protoc_insertion_point(field_mutable:CoreX.rpc.ImageRequest.encoding)
+  return encoding_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* ImageRequest::release_encoding() {
+  // @@protoc_insertion_point(field_release:CoreX.rpc.ImageRequest.encoding)
+  
+  return encoding_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void ImageRequest::set_allocated_encoding(::std::string* encoding) {
+  if (encoding != NULL) {
+    
+  } else {
+    
+  }
+  encoding_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), encoding);
+  // @@protoc_insertion_point(field_set_allocated:CoreX.rpc.ImageRequest.encoding)
+}
+
+// -------------------------------------------------------------------
+
+// ImageResponse
+
+// uint32 height = 1;
+inline void ImageResponse::clear_height() {
+  height_ = 0u;
+}
+inline ::google::protobuf::uint32 ImageResponse::height() const {
+  // @@protoc_insertion_point(field_get:CoreX.rpc.ImageResponse.height)
+  return height_;
+}
+inline void ImageResponse::set_height(::google::protobuf::uint32 value) {
+  
+  height_ = value;
+  // @@protoc_insertion_point(field_set:CoreX.rpc.ImageResponse.height)
+}
+
+// uint32 width = 2;
+inline void ImageResponse::clear_width() {
+  width_ = 0u;
+}
+inline ::google::protobuf::uint32 ImageResponse::width() const {
+  // @@protoc_insertion_point(field_get:CoreX.rpc.ImageResponse.width)
+  return width_;
+}
+inline void ImageResponse::set_width(::google::protobuf::uint32 value) {
+  
+  width_ = value;
+  // @@protoc_insertion_point(field_set:CoreX.rpc.ImageResponse.width)
+}
+
+// string encoding = 3;
+inline void ImageResponse::clear_encoding() {
+  encoding_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& ImageResponse::encoding() const {
+  // @@protoc_insertion_point(field_get:CoreX.rpc.ImageResponse.encoding)
+  return encoding_.GetNoArena();
+}
+inline void ImageResponse::set_encoding(const ::std::string& value) {
+  
+  encoding_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:CoreX.rpc.ImageResponse.encoding)
+}
+#if LANG_CXX11
+inline void ImageResponse::set_encoding(::std::string&& value) {
+  
+  encoding_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:CoreX.rpc.ImageResponse.encoding)
+}
+#endif
+inline void ImageResponse::set_encoding(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  
+  encoding_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:CoreX.rpc.ImageResponse.encoding)
+}
+inline void ImageResponse::set_encoding(const char* value, size_t size) {
+  
+  encoding_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:CoreX.rpc.ImageResponse.encoding)
+}
+inline ::std::string* ImageResponse::mutable_encoding() {
+  
+  // @@protoc_insertion_point(field_mutable:CoreX.rpc.ImageResponse.encoding)
+  return encoding_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* ImageResponse::release_encoding() {
+  // @@protoc_insertion_point(field_release:CoreX.rpc.ImageResponse.encoding)
+  
+  return encoding_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void ImageResponse::set_allocated_encoding(::std::string* encoding) {
+  if (encoding != NULL) {
+    
+  } else {
+    
+  }
+  encoding_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), encoding);
+  // @@protoc_insertion_point(field_set_allocated:CoreX.rpc.ImageResponse.encoding)
+}
+
+// uint32 step = 4;
+inline void ImageResponse::clear_step() {
+  step_ = 0u;
+}
+inline ::google::protobuf::uint32 ImageResponse::step() const {
+  // @@protoc_insertion_point(field_get:CoreX.rpc.ImageResponse.step)
+  return step_;
+}
+inline void ImageResponse::set_step(::google::protobuf::uint32 value) {
+  
+  step_ = value;
+  // @@protoc_insertion_point(field_set:CoreX.rpc.ImageResponse.step)
+}
+
+// bytes data = 5;
+inline void ImageResponse::clear_data() {
+  data_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& ImageResponse::data() const {
+  // @@protoc_insertion_point(field_get:CoreX.rpc.ImageResponse.data)
+  return data_.GetNoArena();
+}
+inline void ImageResponse::set_data(const ::std::string& value) {
+  
+  data_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:CoreX.rpc.ImageResponse.data)
+}
+#if LANG_CXX11
+inline void ImageResponse::set_data(::std::string&& value) {
+  
+  data_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:CoreX.rpc.ImageResponse.data)
+}
+#endif
+inline void ImageResponse::set_data(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  
+  data_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:CoreX.rpc.ImageResponse.data)
+}
+inline void ImageResponse::set_data(const void* value, size_t size) {
+  
+  data_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:CoreX.rpc.ImageResponse.data)
+}
+inline ::std::string* ImageResponse::mutable_data() {
+  
+  // @@protoc_insertion_point(field_mutable:CoreX.rpc.ImageResponse.data)
+  return data_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* ImageResponse::release_data() {
+  // @@protoc_insertion_point(field_release:CoreX.rpc.ImageResponse.data)
+  
+  return data_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void ImageResponse::set_allocated_data(::std::string* data) {
+  if (data != NULL) {
+    
+  } else {
+    
+  }
+  data_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), data);
+  // @@protoc_insertion_point(field_set_allocated:CoreX.rpc.ImageResponse.data)
+}
+
+// uint64 timestamp = 6;
+inline void ImageResponse::clear_timestamp() {
+  timestamp_ = GOOGLE_ULONGLONG(0);
+}
+inline ::google::protobuf::uint64 ImageResponse::timestamp() const {
+  // @@protoc_insertion_point(field_get:CoreX.rpc.ImageResponse.timestamp)
+  return timestamp_;
+}
+inline void ImageResponse::set_timestamp(::google::protobuf::uint64 value) {
+  
+  timestamp_ = value;
+  // @@protoc_insertion_point(field_set:CoreX.rpc.ImageResponse.timestamp)
+}
+
+// string frame_id = 7;
+inline void ImageResponse::clear_frame_id() {
+  frame_id_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& ImageResponse::frame_id() const {
+  // @@protoc_insertion_point(field_get:CoreX.rpc.ImageResponse.frame_id)
+  return frame_id_.GetNoArena();
+}
+inline void ImageResponse::set_frame_id(const ::std::string& value) {
+  
+  frame_id_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:CoreX.rpc.ImageResponse.frame_id)
+}
+#if LANG_CXX11
+inline void ImageResponse::set_frame_id(::std::string&& value) {
+  
+  frame_id_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:CoreX.rpc.ImageResponse.frame_id)
+}
+#endif
+inline void ImageResponse::set_frame_id(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  
+  frame_id_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:CoreX.rpc.ImageResponse.frame_id)
+}
+inline void ImageResponse::set_frame_id(const char* value, size_t size) {
+  
+  frame_id_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:CoreX.rpc.ImageResponse.frame_id)
+}
+inline ::std::string* ImageResponse::mutable_frame_id() {
+  
+  // @@protoc_insertion_point(field_mutable:CoreX.rpc.ImageResponse.frame_id)
+  return frame_id_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* ImageResponse::release_frame_id() {
+  // @@protoc_insertion_point(field_release:CoreX.rpc.ImageResponse.frame_id)
+  
+  return frame_id_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void ImageResponse::set_allocated_frame_id(::std::string* frame_id) {
+  if (frame_id != NULL) {
+    
+  } else {
+    
+  }
+  frame_id_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), frame_id);
+  // @@protoc_insertion_point(field_set_allocated:CoreX.rpc.ImageResponse.frame_id)
+}
+
+// string shm_key = 8;
+inline void ImageResponse::clear_shm_key() {
+  shm_key_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& ImageResponse::shm_key() const {
+  // @@protoc_insertion_point(field_get:CoreX.rpc.ImageResponse.shm_key)
+  return shm_key_.GetNoArena();
+}
+inline void ImageResponse::set_shm_key(const ::std::string& value) {
+  
+  shm_key_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:CoreX.rpc.ImageResponse.shm_key)
+}
+#if LANG_CXX11
+inline void ImageResponse::set_shm_key(::std::string&& value) {
+  
+  shm_key_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:CoreX.rpc.ImageResponse.shm_key)
+}
+#endif
+inline void ImageResponse::set_shm_key(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  
+  shm_key_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:CoreX.rpc.ImageResponse.shm_key)
+}
+inline void ImageResponse::set_shm_key(const char* value, size_t size) {
+  
+  shm_key_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:CoreX.rpc.ImageResponse.shm_key)
+}
+inline ::std::string* ImageResponse::mutable_shm_key() {
+  
+  // @@protoc_insertion_point(field_mutable:CoreX.rpc.ImageResponse.shm_key)
+  return shm_key_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* ImageResponse::release_shm_key() {
+  // @@protoc_insertion_point(field_release:CoreX.rpc.ImageResponse.shm_key)
+  
+  return shm_key_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void ImageResponse::set_allocated_shm_key(::std::string* shm_key) {
+  if (shm_key != NULL) {
+    
+  } else {
+    
+  }
+  shm_key_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), shm_key);
+  // @@protoc_insertion_point(field_set_allocated:CoreX.rpc.ImageResponse.shm_key)
+}
+
+// bool success = 9;
+inline void ImageResponse::clear_success() {
+  success_ = false;
+}
+inline bool ImageResponse::success() const {
+  // @@protoc_insertion_point(field_get:CoreX.rpc.ImageResponse.success)
+  return success_;
+}
+inline void ImageResponse::set_success(bool value) {
+  
+  success_ = value;
+  // @@protoc_insertion_point(field_set:CoreX.rpc.ImageResponse.success)
+}
+
+// -------------------------------------------------------------------
+
+// LaserScanRequest
+
+// -------------------------------------------------------------------
+
+// LaserScanResponse
+
+// float angle_min = 1;
+inline void LaserScanResponse::clear_angle_min() {
+  angle_min_ = 0;
+}
+inline float LaserScanResponse::angle_min() const {
+  // @@protoc_insertion_point(field_get:CoreX.rpc.LaserScanResponse.angle_min)
+  return angle_min_;
+}
+inline void LaserScanResponse::set_angle_min(float value) {
+  
+  angle_min_ = value;
+  // @@protoc_insertion_point(field_set:CoreX.rpc.LaserScanResponse.angle_min)
+}
+
+// float angle_max = 2;
+inline void LaserScanResponse::clear_angle_max() {
+  angle_max_ = 0;
+}
+inline float LaserScanResponse::angle_max() const {
+  // @@protoc_insertion_point(field_get:CoreX.rpc.LaserScanResponse.angle_max)
+  return angle_max_;
+}
+inline void LaserScanResponse::set_angle_max(float value) {
+  
+  angle_max_ = value;
+  // @@protoc_insertion_point(field_set:CoreX.rpc.LaserScanResponse.angle_max)
+}
+
+// float angle_increment = 3;
+inline void LaserScanResponse::clear_angle_increment() {
+  angle_increment_ = 0;
+}
+inline float LaserScanResponse::angle_increment() const {
+  // @@protoc_insertion_point(field_get:CoreX.rpc.LaserScanResponse.angle_increment)
+  return angle_increment_;
+}
+inline void LaserScanResponse::set_angle_increment(float value) {
+  
+  angle_increment_ = value;
+  // @@protoc_insertion_point(field_set:CoreX.rpc.LaserScanResponse.angle_increment)
+}
+
+// float time_increment = 4;
+inline void LaserScanResponse::clear_time_increment() {
+  time_increment_ = 0;
+}
+inline float LaserScanResponse::time_increment() const {
+  // @@protoc_insertion_point(field_get:CoreX.rpc.LaserScanResponse.time_increment)
+  return time_increment_;
+}
+inline void LaserScanResponse::set_time_increment(float value) {
+  
+  time_increment_ = value;
+  // @@protoc_insertion_point(field_set:CoreX.rpc.LaserScanResponse.time_increment)
+}
+
+// float scan_time = 5;
+inline void LaserScanResponse::clear_scan_time() {
+  scan_time_ = 0;
+}
+inline float LaserScanResponse::scan_time() const {
+  // @@protoc_insertion_point(field_get:CoreX.rpc.LaserScanResponse.scan_time)
+  return scan_time_;
+}
+inline void LaserScanResponse::set_scan_time(float value) {
+  
+  scan_time_ = value;
+  // @@protoc_insertion_point(field_set:CoreX.rpc.LaserScanResponse.scan_time)
+}
+
+// float range_min = 6;
+inline void LaserScanResponse::clear_range_min() {
+  range_min_ = 0;
+}
+inline float LaserScanResponse::range_min() const {
+  // @@protoc_insertion_point(field_get:CoreX.rpc.LaserScanResponse.range_min)
+  return range_min_;
+}
+inline void LaserScanResponse::set_range_min(float value) {
+  
+  range_min_ = value;
+  // @@protoc_insertion_point(field_set:CoreX.rpc.LaserScanResponse.range_min)
+}
+
+// float range_max = 7;
+inline void LaserScanResponse::clear_range_max() {
+  range_max_ = 0;
+}
+inline float LaserScanResponse::range_max() const {
+  // @@protoc_insertion_point(field_get:CoreX.rpc.LaserScanResponse.range_max)
+  return range_max_;
+}
+inline void LaserScanResponse::set_range_max(float value) {
+  
+  range_max_ = value;
+  // @@protoc_insertion_point(field_set:CoreX.rpc.LaserScanResponse.range_max)
+}
+
+// repeated float ranges = 8;
+inline int LaserScanResponse::ranges_size() const {
+  return ranges_.size();
+}
+inline void LaserScanResponse::clear_ranges() {
+  ranges_.Clear();
+}
+inline float LaserScanResponse::ranges(int index) const {
+  // @@protoc_insertion_point(field_get:CoreX.rpc.LaserScanResponse.ranges)
+  return ranges_.Get(index);
+}
+inline void LaserScanResponse::set_ranges(int index, float value) {
+  ranges_.Set(index, value);
+  // @@protoc_insertion_point(field_set:CoreX.rpc.LaserScanResponse.ranges)
+}
+inline void LaserScanResponse::add_ranges(float value) {
+  ranges_.Add(value);
+  // @@protoc_insertion_point(field_add:CoreX.rpc.LaserScanResponse.ranges)
+}
+inline const ::google::protobuf::RepeatedField< float >&
+LaserScanResponse::ranges() const {
+  // @@protoc_insertion_point(field_list:CoreX.rpc.LaserScanResponse.ranges)
+  return ranges_;
+}
+inline ::google::protobuf::RepeatedField< float >*
+LaserScanResponse::mutable_ranges() {
+  // @@protoc_insertion_point(field_mutable_list:CoreX.rpc.LaserScanResponse.ranges)
+  return &ranges_;
+}
+
+// repeated float intensities = 9;
+inline int LaserScanResponse::intensities_size() const {
+  return intensities_.size();
+}
+inline void LaserScanResponse::clear_intensities() {
+  intensities_.Clear();
+}
+inline float LaserScanResponse::intensities(int index) const {
+  // @@protoc_insertion_point(field_get:CoreX.rpc.LaserScanResponse.intensities)
+  return intensities_.Get(index);
+}
+inline void LaserScanResponse::set_intensities(int index, float value) {
+  intensities_.Set(index, value);
+  // @@protoc_insertion_point(field_set:CoreX.rpc.LaserScanResponse.intensities)
+}
+inline void LaserScanResponse::add_intensities(float value) {
+  intensities_.Add(value);
+  // @@protoc_insertion_point(field_add:CoreX.rpc.LaserScanResponse.intensities)
+}
+inline const ::google::protobuf::RepeatedField< float >&
+LaserScanResponse::intensities() const {
+  // @@protoc_insertion_point(field_list:CoreX.rpc.LaserScanResponse.intensities)
+  return intensities_;
+}
+inline ::google::protobuf::RepeatedField< float >*
+LaserScanResponse::mutable_intensities() {
+  // @@protoc_insertion_point(field_mutable_list:CoreX.rpc.LaserScanResponse.intensities)
+  return &intensities_;
+}
+
+// uint64 timestamp = 10;
+inline void LaserScanResponse::clear_timestamp() {
+  timestamp_ = GOOGLE_ULONGLONG(0);
+}
+inline ::google::protobuf::uint64 LaserScanResponse::timestamp() const {
+  // @@protoc_insertion_point(field_get:CoreX.rpc.LaserScanResponse.timestamp)
+  return timestamp_;
+}
+inline void LaserScanResponse::set_timestamp(::google::protobuf::uint64 value) {
+  
+  timestamp_ = value;
+  // @@protoc_insertion_point(field_set:CoreX.rpc.LaserScanResponse.timestamp)
+}
+
+// string frame_id = 11;
+inline void LaserScanResponse::clear_frame_id() {
+  frame_id_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& LaserScanResponse::frame_id() const {
+  // @@protoc_insertion_point(field_get:CoreX.rpc.LaserScanResponse.frame_id)
+  return frame_id_.GetNoArena();
+}
+inline void LaserScanResponse::set_frame_id(const ::std::string& value) {
+  
+  frame_id_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:CoreX.rpc.LaserScanResponse.frame_id)
+}
+#if LANG_CXX11
+inline void LaserScanResponse::set_frame_id(::std::string&& value) {
+  
+  frame_id_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:CoreX.rpc.LaserScanResponse.frame_id)
+}
+#endif
+inline void LaserScanResponse::set_frame_id(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  
+  frame_id_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:CoreX.rpc.LaserScanResponse.frame_id)
+}
+inline void LaserScanResponse::set_frame_id(const char* value, size_t size) {
+  
+  frame_id_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:CoreX.rpc.LaserScanResponse.frame_id)
+}
+inline ::std::string* LaserScanResponse::mutable_frame_id() {
+  
+  // @@protoc_insertion_point(field_mutable:CoreX.rpc.LaserScanResponse.frame_id)
+  return frame_id_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* LaserScanResponse::release_frame_id() {
+  // @@protoc_insertion_point(field_release:CoreX.rpc.LaserScanResponse.frame_id)
+  
+  return frame_id_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void LaserScanResponse::set_allocated_frame_id(::std::string* frame_id) {
+  if (frame_id != NULL) {
+    
+  } else {
+    
+  }
+  frame_id_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), frame_id);
+  // @@protoc_insertion_point(field_set_allocated:CoreX.rpc.LaserScanResponse.frame_id)
+}
+
+// bool success = 12;
+inline void LaserScanResponse::clear_success() {
+  success_ = false;
+}
+inline bool LaserScanResponse::success() const {
+  // @@protoc_insertion_point(field_get:CoreX.rpc.LaserScanResponse.success)
+  return success_;
+}
+inline void LaserScanResponse::set_success(bool value) {
+  
+  success_ = value;
+  // @@protoc_insertion_point(field_set:CoreX.rpc.LaserScanResponse.success)
+}
+
+// -------------------------------------------------------------------
+
+// PointCloudRequest
+
+// -------------------------------------------------------------------
+
+// PointCloudResponse
+
+// uint32 height = 1;
+inline void PointCloudResponse::clear_height() {
+  height_ = 0u;
+}
+inline ::google::protobuf::uint32 PointCloudResponse::height() const {
+  // @@protoc_insertion_point(field_get:CoreX.rpc.PointCloudResponse.height)
+  return height_;
+}
+inline void PointCloudResponse::set_height(::google::protobuf::uint32 value) {
+  
+  height_ = value;
+  // @@protoc_insertion_point(field_set:CoreX.rpc.PointCloudResponse.height)
+}
+
+// uint32 width = 2;
+inline void PointCloudResponse::clear_width() {
+  width_ = 0u;
+}
+inline ::google::protobuf::uint32 PointCloudResponse::width() const {
+  // @@protoc_insertion_point(field_get:CoreX.rpc.PointCloudResponse.width)
+  return width_;
+}
+inline void PointCloudResponse::set_width(::google::protobuf::uint32 value) {
+  
+  width_ = value;
+  // @@protoc_insertion_point(field_set:CoreX.rpc.PointCloudResponse.width)
+}
+
+// uint32 point_step = 3;
+inline void PointCloudResponse::clear_point_step() {
+  point_step_ = 0u;
+}
+inline ::google::protobuf::uint32 PointCloudResponse::point_step() const {
+  // @@protoc_insertion_point(field_get:CoreX.rpc.PointCloudResponse.point_step)
+  return point_step_;
+}
+inline void PointCloudResponse::set_point_step(::google::protobuf::uint32 value) {
+  
+  point_step_ = value;
+  // @@protoc_insertion_point(field_set:CoreX.rpc.PointCloudResponse.point_step)
+}
+
+// uint32 row_step = 4;
+inline void PointCloudResponse::clear_row_step() {
+  row_step_ = 0u;
+}
+inline ::google::protobuf::uint32 PointCloudResponse::row_step() const {
+  // @@protoc_insertion_point(field_get:CoreX.rpc.PointCloudResponse.row_step)
+  return row_step_;
+}
+inline void PointCloudResponse::set_row_step(::google::protobuf::uint32 value) {
+  
+  row_step_ = value;
+  // @@protoc_insertion_point(field_set:CoreX.rpc.PointCloudResponse.row_step)
+}
+
+// bytes data = 5;
+inline void PointCloudResponse::clear_data() {
+  data_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& PointCloudResponse::data() const {
+  // @@protoc_insertion_point(field_get:CoreX.rpc.PointCloudResponse.data)
+  return data_.GetNoArena();
+}
+inline void PointCloudResponse::set_data(const ::std::string& value) {
+  
+  data_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:CoreX.rpc.PointCloudResponse.data)
+}
+#if LANG_CXX11
+inline void PointCloudResponse::set_data(::std::string&& value) {
+  
+  data_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:CoreX.rpc.PointCloudResponse.data)
+}
+#endif
+inline void PointCloudResponse::set_data(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  
+  data_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:CoreX.rpc.PointCloudResponse.data)
+}
+inline void PointCloudResponse::set_data(const void* value, size_t size) {
+  
+  data_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:CoreX.rpc.PointCloudResponse.data)
+}
+inline ::std::string* PointCloudResponse::mutable_data() {
+  
+  // @@protoc_insertion_point(field_mutable:CoreX.rpc.PointCloudResponse.data)
+  return data_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* PointCloudResponse::release_data() {
+  // @@protoc_insertion_point(field_release:CoreX.rpc.PointCloudResponse.data)
+  
+  return data_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void PointCloudResponse::set_allocated_data(::std::string* data) {
+  if (data != NULL) {
+    
+  } else {
+    
+  }
+  data_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), data);
+  // @@protoc_insertion_point(field_set_allocated:CoreX.rpc.PointCloudResponse.data)
+}
+
+// bool is_dense = 6;
+inline void PointCloudResponse::clear_is_dense() {
+  is_dense_ = false;
+}
+inline bool PointCloudResponse::is_dense() const {
+  // @@protoc_insertion_point(field_get:CoreX.rpc.PointCloudResponse.is_dense)
+  return is_dense_;
+}
+inline void PointCloudResponse::set_is_dense(bool value) {
+  
+  is_dense_ = value;
+  // @@protoc_insertion_point(field_set:CoreX.rpc.PointCloudResponse.is_dense)
+}
+
+// uint64 timestamp = 7;
+inline void PointCloudResponse::clear_timestamp() {
+  timestamp_ = GOOGLE_ULONGLONG(0);
+}
+inline ::google::protobuf::uint64 PointCloudResponse::timestamp() const {
+  // @@protoc_insertion_point(field_get:CoreX.rpc.PointCloudResponse.timestamp)
+  return timestamp_;
+}
+inline void PointCloudResponse::set_timestamp(::google::protobuf::uint64 value) {
+  
+  timestamp_ = value;
+  // @@protoc_insertion_point(field_set:CoreX.rpc.PointCloudResponse.timestamp)
+}
+
+// string frame_id = 8;
+inline void PointCloudResponse::clear_frame_id() {
+  frame_id_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& PointCloudResponse::frame_id() const {
+  // @@protoc_insertion_point(field_get:CoreX.rpc.PointCloudResponse.frame_id)
+  return frame_id_.GetNoArena();
+}
+inline void PointCloudResponse::set_frame_id(const ::std::string& value) {
+  
+  frame_id_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:CoreX.rpc.PointCloudResponse.frame_id)
+}
+#if LANG_CXX11
+inline void PointCloudResponse::set_frame_id(::std::string&& value) {
+  
+  frame_id_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:CoreX.rpc.PointCloudResponse.frame_id)
+}
+#endif
+inline void PointCloudResponse::set_frame_id(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  
+  frame_id_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:CoreX.rpc.PointCloudResponse.frame_id)
+}
+inline void PointCloudResponse::set_frame_id(const char* value, size_t size) {
+  
+  frame_id_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:CoreX.rpc.PointCloudResponse.frame_id)
+}
+inline ::std::string* PointCloudResponse::mutable_frame_id() {
+  
+  // @@protoc_insertion_point(field_mutable:CoreX.rpc.PointCloudResponse.frame_id)
+  return frame_id_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* PointCloudResponse::release_frame_id() {
+  // @@protoc_insertion_point(field_release:CoreX.rpc.PointCloudResponse.frame_id)
+  
+  return frame_id_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void PointCloudResponse::set_allocated_frame_id(::std::string* frame_id) {
+  if (frame_id != NULL) {
+    
+  } else {
+    
+  }
+  frame_id_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), frame_id);
+  // @@protoc_insertion_point(field_set_allocated:CoreX.rpc.PointCloudResponse.frame_id)
+}
+
+// string shm_key = 9;
+inline void PointCloudResponse::clear_shm_key() {
+  shm_key_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& PointCloudResponse::shm_key() const {
+  // @@protoc_insertion_point(field_get:CoreX.rpc.PointCloudResponse.shm_key)
+  return shm_key_.GetNoArena();
+}
+inline void PointCloudResponse::set_shm_key(const ::std::string& value) {
+  
+  shm_key_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:CoreX.rpc.PointCloudResponse.shm_key)
+}
+#if LANG_CXX11
+inline void PointCloudResponse::set_shm_key(::std::string&& value) {
+  
+  shm_key_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:CoreX.rpc.PointCloudResponse.shm_key)
+}
+#endif
+inline void PointCloudResponse::set_shm_key(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  
+  shm_key_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:CoreX.rpc.PointCloudResponse.shm_key)
+}
+inline void PointCloudResponse::set_shm_key(const char* value, size_t size) {
+  
+  shm_key_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:CoreX.rpc.PointCloudResponse.shm_key)
+}
+inline ::std::string* PointCloudResponse::mutable_shm_key() {
+  
+  // @@protoc_insertion_point(field_mutable:CoreX.rpc.PointCloudResponse.shm_key)
+  return shm_key_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* PointCloudResponse::release_shm_key() {
+  // @@protoc_insertion_point(field_release:CoreX.rpc.PointCloudResponse.shm_key)
+  
+  return shm_key_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void PointCloudResponse::set_allocated_shm_key(::std::string* shm_key) {
+  if (shm_key != NULL) {
+    
+  } else {
+    
+  }
+  shm_key_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), shm_key);
+  // @@protoc_insertion_point(field_set_allocated:CoreX.rpc.PointCloudResponse.shm_key)
+}
+
+// bool success = 10;
+inline void PointCloudResponse::clear_success() {
+  success_ = false;
+}
+inline bool PointCloudResponse::success() const {
+  // @@protoc_insertion_point(field_get:CoreX.rpc.PointCloudResponse.success)
+  return success_;
+}
+inline void PointCloudResponse::set_success(bool value) {
+  
+  success_ = value;
+  // @@protoc_insertion_point(field_set:CoreX.rpc.PointCloudResponse.success)
+}
+
+// -------------------------------------------------------------------
+
+// TFRequest
+
+// string target_frame = 1;
+inline void TFRequest::clear_target_frame() {
+  target_frame_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& TFRequest::target_frame() const {
+  // @@protoc_insertion_point(field_get:CoreX.rpc.TFRequest.target_frame)
+  return target_frame_.GetNoArena();
+}
+inline void TFRequest::set_target_frame(const ::std::string& value) {
+  
+  target_frame_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:CoreX.rpc.TFRequest.target_frame)
+}
+#if LANG_CXX11
+inline void TFRequest::set_target_frame(::std::string&& value) {
+  
+  target_frame_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:CoreX.rpc.TFRequest.target_frame)
+}
+#endif
+inline void TFRequest::set_target_frame(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  
+  target_frame_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:CoreX.rpc.TFRequest.target_frame)
+}
+inline void TFRequest::set_target_frame(const char* value, size_t size) {
+  
+  target_frame_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:CoreX.rpc.TFRequest.target_frame)
+}
+inline ::std::string* TFRequest::mutable_target_frame() {
+  
+  // @@protoc_insertion_point(field_mutable:CoreX.rpc.TFRequest.target_frame)
+  return target_frame_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* TFRequest::release_target_frame() {
+  // @@protoc_insertion_point(field_release:CoreX.rpc.TFRequest.target_frame)
+  
+  return target_frame_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void TFRequest::set_allocated_target_frame(::std::string* target_frame) {
+  if (target_frame != NULL) {
+    
+  } else {
+    
+  }
+  target_frame_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), target_frame);
+  // @@protoc_insertion_point(field_set_allocated:CoreX.rpc.TFRequest.target_frame)
+}
+
+// string source_frame = 2;
+inline void TFRequest::clear_source_frame() {
+  source_frame_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& TFRequest::source_frame() const {
+  // @@protoc_insertion_point(field_get:CoreX.rpc.TFRequest.source_frame)
+  return source_frame_.GetNoArena();
+}
+inline void TFRequest::set_source_frame(const ::std::string& value) {
+  
+  source_frame_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:CoreX.rpc.TFRequest.source_frame)
+}
+#if LANG_CXX11
+inline void TFRequest::set_source_frame(::std::string&& value) {
+  
+  source_frame_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:CoreX.rpc.TFRequest.source_frame)
+}
+#endif
+inline void TFRequest::set_source_frame(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  
+  source_frame_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:CoreX.rpc.TFRequest.source_frame)
+}
+inline void TFRequest::set_source_frame(const char* value, size_t size) {
+  
+  source_frame_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:CoreX.rpc.TFRequest.source_frame)
+}
+inline ::std::string* TFRequest::mutable_source_frame() {
+  
+  // @@protoc_insertion_point(field_mutable:CoreX.rpc.TFRequest.source_frame)
+  return source_frame_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* TFRequest::release_source_frame() {
+  // @@protoc_insertion_point(field_release:CoreX.rpc.TFRequest.source_frame)
+  
+  return source_frame_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void TFRequest::set_allocated_source_frame(::std::string* source_frame) {
+  if (source_frame != NULL) {
+    
+  } else {
+    
+  }
+  source_frame_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), source_frame);
+  // @@protoc_insertion_point(field_set_allocated:CoreX.rpc.TFRequest.source_frame)
+}
+
+// -------------------------------------------------------------------
+
+// TransformStampedMsg
+
+// string child_frame_id = 1;
+inline void TransformStampedMsg::clear_child_frame_id() {
+  child_frame_id_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& TransformStampedMsg::child_frame_id() const {
+  // @@protoc_insertion_point(field_get:CoreX.rpc.TransformStampedMsg.child_frame_id)
+  return child_frame_id_.GetNoArena();
+}
+inline void TransformStampedMsg::set_child_frame_id(const ::std::string& value) {
+  
+  child_frame_id_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:CoreX.rpc.TransformStampedMsg.child_frame_id)
+}
+#if LANG_CXX11
+inline void TransformStampedMsg::set_child_frame_id(::std::string&& value) {
+  
+  child_frame_id_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:CoreX.rpc.TransformStampedMsg.child_frame_id)
+}
+#endif
+inline void TransformStampedMsg::set_child_frame_id(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  
+  child_frame_id_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:CoreX.rpc.TransformStampedMsg.child_frame_id)
+}
+inline void TransformStampedMsg::set_child_frame_id(const char* value, size_t size) {
+  
+  child_frame_id_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:CoreX.rpc.TransformStampedMsg.child_frame_id)
+}
+inline ::std::string* TransformStampedMsg::mutable_child_frame_id() {
+  
+  // @@protoc_insertion_point(field_mutable:CoreX.rpc.TransformStampedMsg.child_frame_id)
+  return child_frame_id_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* TransformStampedMsg::release_child_frame_id() {
+  // @@protoc_insertion_point(field_release:CoreX.rpc.TransformStampedMsg.child_frame_id)
+  
+  return child_frame_id_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void TransformStampedMsg::set_allocated_child_frame_id(::std::string* child_frame_id) {
+  if (child_frame_id != NULL) {
+    
+  } else {
+    
+  }
+  child_frame_id_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), child_frame_id);
+  // @@protoc_insertion_point(field_set_allocated:CoreX.rpc.TransformStampedMsg.child_frame_id)
+}
+
+// string frame_id = 2;
+inline void TransformStampedMsg::clear_frame_id() {
+  frame_id_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& TransformStampedMsg::frame_id() const {
+  // @@protoc_insertion_point(field_get:CoreX.rpc.TransformStampedMsg.frame_id)
+  return frame_id_.GetNoArena();
+}
+inline void TransformStampedMsg::set_frame_id(const ::std::string& value) {
+  
+  frame_id_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:CoreX.rpc.TransformStampedMsg.frame_id)
+}
+#if LANG_CXX11
+inline void TransformStampedMsg::set_frame_id(::std::string&& value) {
+  
+  frame_id_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:CoreX.rpc.TransformStampedMsg.frame_id)
+}
+#endif
+inline void TransformStampedMsg::set_frame_id(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  
+  frame_id_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:CoreX.rpc.TransformStampedMsg.frame_id)
+}
+inline void TransformStampedMsg::set_frame_id(const char* value, size_t size) {
+  
+  frame_id_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:CoreX.rpc.TransformStampedMsg.frame_id)
+}
+inline ::std::string* TransformStampedMsg::mutable_frame_id() {
+  
+  // @@protoc_insertion_point(field_mutable:CoreX.rpc.TransformStampedMsg.frame_id)
+  return frame_id_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* TransformStampedMsg::release_frame_id() {
+  // @@protoc_insertion_point(field_release:CoreX.rpc.TransformStampedMsg.frame_id)
+  
+  return frame_id_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void TransformStampedMsg::set_allocated_frame_id(::std::string* frame_id) {
+  if (frame_id != NULL) {
+    
+  } else {
+    
+  }
+  frame_id_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), frame_id);
+  // @@protoc_insertion_point(field_set_allocated:CoreX.rpc.TransformStampedMsg.frame_id)
+}
+
+// uint64 timestamp = 3;
+inline void TransformStampedMsg::clear_timestamp() {
+  timestamp_ = GOOGLE_ULONGLONG(0);
+}
+inline ::google::protobuf::uint64 TransformStampedMsg::timestamp() const {
+  // @@protoc_insertion_point(field_get:CoreX.rpc.TransformStampedMsg.timestamp)
+  return timestamp_;
+}
+inline void TransformStampedMsg::set_timestamp(::google::protobuf::uint64 value) {
+  
+  timestamp_ = value;
+  // @@protoc_insertion_point(field_set:CoreX.rpc.TransformStampedMsg.timestamp)
+}
+
+// double translation_x = 4;
+inline void TransformStampedMsg::clear_translation_x() {
+  translation_x_ = 0;
+}
+inline double TransformStampedMsg::translation_x() const {
+  // @@protoc_insertion_point(field_get:CoreX.rpc.TransformStampedMsg.translation_x)
+  return translation_x_;
+}
+inline void TransformStampedMsg::set_translation_x(double value) {
+  
+  translation_x_ = value;
+  // @@protoc_insertion_point(field_set:CoreX.rpc.TransformStampedMsg.translation_x)
+}
+
+// double translation_y = 5;
+inline void TransformStampedMsg::clear_translation_y() {
+  translation_y_ = 0;
+}
+inline double TransformStampedMsg::translation_y() const {
+  // @@protoc_insertion_point(field_get:CoreX.rpc.TransformStampedMsg.translation_y)
+  return translation_y_;
+}
+inline void TransformStampedMsg::set_translation_y(double value) {
+  
+  translation_y_ = value;
+  // @@protoc_insertion_point(field_set:CoreX.rpc.TransformStampedMsg.translation_y)
+}
+
+// double translation_z = 6;
+inline void TransformStampedMsg::clear_translation_z() {
+  translation_z_ = 0;
+}
+inline double TransformStampedMsg::translation_z() const {
+  // @@protoc_insertion_point(field_get:CoreX.rpc.TransformStampedMsg.translation_z)
+  return translation_z_;
+}
+inline void TransformStampedMsg::set_translation_z(double value) {
+  
+  translation_z_ = value;
+  // @@protoc_insertion_point(field_set:CoreX.rpc.TransformStampedMsg.translation_z)
+}
+
+// double rotation_x = 7;
+inline void TransformStampedMsg::clear_rotation_x() {
+  rotation_x_ = 0;
+}
+inline double TransformStampedMsg::rotation_x() const {
+  // @@protoc_insertion_point(field_get:CoreX.rpc.TransformStampedMsg.rotation_x)
+  return rotation_x_;
+}
+inline void TransformStampedMsg::set_rotation_x(double value) {
+  
+  rotation_x_ = value;
+  // @@protoc_insertion_point(field_set:CoreX.rpc.TransformStampedMsg.rotation_x)
+}
+
+// double rotation_y = 8;
+inline void TransformStampedMsg::clear_rotation_y() {
+  rotation_y_ = 0;
+}
+inline double TransformStampedMsg::rotation_y() const {
+  // @@protoc_insertion_point(field_get:CoreX.rpc.TransformStampedMsg.rotation_y)
+  return rotation_y_;
+}
+inline void TransformStampedMsg::set_rotation_y(double value) {
+  
+  rotation_y_ = value;
+  // @@protoc_insertion_point(field_set:CoreX.rpc.TransformStampedMsg.rotation_y)
+}
+
+// double rotation_z = 9;
+inline void TransformStampedMsg::clear_rotation_z() {
+  rotation_z_ = 0;
+}
+inline double TransformStampedMsg::rotation_z() const {
+  // @@protoc_insertion_point(field_get:CoreX.rpc.TransformStampedMsg.rotation_z)
+  return rotation_z_;
+}
+inline void TransformStampedMsg::set_rotation_z(double value) {
+  
+  rotation_z_ = value;
+  // @@protoc_insertion_point(field_set:CoreX.rpc.TransformStampedMsg.rotation_z)
+}
+
+// double rotation_w = 10;
+inline void TransformStampedMsg::clear_rotation_w() {
+  rotation_w_ = 0;
+}
+inline double TransformStampedMsg::rotation_w() const {
+  // @@protoc_insertion_point(field_get:CoreX.rpc.TransformStampedMsg.rotation_w)
+  return rotation_w_;
+}
+inline void TransformStampedMsg::set_rotation_w(double value) {
+  
+  rotation_w_ = value;
+  // @@protoc_insertion_point(field_set:CoreX.rpc.TransformStampedMsg.rotation_w)
+}
+
+// -------------------------------------------------------------------
+
+// TFResponse
+
+// repeated .CoreX.rpc.TransformStampedMsg transforms = 1;
+inline int TFResponse::transforms_size() const {
+  return transforms_.size();
+}
+inline void TFResponse::clear_transforms() {
+  transforms_.Clear();
+}
+inline ::CoreX::rpc::TransformStampedMsg* TFResponse::mutable_transforms(int index) {
+  // @@protoc_insertion_point(field_mutable:CoreX.rpc.TFResponse.transforms)
+  return transforms_.Mutable(index);
+}
+inline ::google::protobuf::RepeatedPtrField< ::CoreX::rpc::TransformStampedMsg >*
+TFResponse::mutable_transforms() {
+  // @@protoc_insertion_point(field_mutable_list:CoreX.rpc.TFResponse.transforms)
+  return &transforms_;
+}
+inline const ::CoreX::rpc::TransformStampedMsg& TFResponse::transforms(int index) const {
+  // @@protoc_insertion_point(field_get:CoreX.rpc.TFResponse.transforms)
+  return transforms_.Get(index);
+}
+inline ::CoreX::rpc::TransformStampedMsg* TFResponse::add_transforms() {
+  // @@protoc_insertion_point(field_add:CoreX.rpc.TFResponse.transforms)
+  return transforms_.Add();
+}
+inline const ::google::protobuf::RepeatedPtrField< ::CoreX::rpc::TransformStampedMsg >&
+TFResponse::transforms() const {
+  // @@protoc_insertion_point(field_list:CoreX.rpc.TFResponse.transforms)
+  return transforms_;
+}
+
+// bool success = 2;
+inline void TFResponse::clear_success() {
+  success_ = false;
+}
+inline bool TFResponse::success() const {
+  // @@protoc_insertion_point(field_get:CoreX.rpc.TFResponse.success)
+  return success_;
+}
+inline void TFResponse::set_success(bool value) {
+  
+  success_ = value;
+  // @@protoc_insertion_point(field_set:CoreX.rpc.TFResponse.success)
+}
+
+// -------------------------------------------------------------------
+
+// BatteryRequest
+
+// -------------------------------------------------------------------
+
+// BatteryResponse
+
+// float voltage = 1;
+inline void BatteryResponse::clear_voltage() {
+  voltage_ = 0;
+}
+inline float BatteryResponse::voltage() const {
+  // @@protoc_insertion_point(field_get:CoreX.rpc.BatteryResponse.voltage)
+  return voltage_;
+}
+inline void BatteryResponse::set_voltage(float value) {
+  
+  voltage_ = value;
+  // @@protoc_insertion_point(field_set:CoreX.rpc.BatteryResponse.voltage)
+}
+
+// float current = 2;
+inline void BatteryResponse::clear_current() {
+  current_ = 0;
+}
+inline float BatteryResponse::current() const {
+  // @@protoc_insertion_point(field_get:CoreX.rpc.BatteryResponse.current)
+  return current_;
+}
+inline void BatteryResponse::set_current(float value) {
+  
+  current_ = value;
+  // @@protoc_insertion_point(field_set:CoreX.rpc.BatteryResponse.current)
+}
+
+// float percentage = 3;
+inline void BatteryResponse::clear_percentage() {
+  percentage_ = 0;
+}
+inline float BatteryResponse::percentage() const {
+  // @@protoc_insertion_point(field_get:CoreX.rpc.BatteryResponse.percentage)
+  return percentage_;
+}
+inline void BatteryResponse::set_percentage(float value) {
+  
+  percentage_ = value;
+  // @@protoc_insertion_point(field_set:CoreX.rpc.BatteryResponse.percentage)
+}
+
+// uint32 power_supply_status = 4;
+inline void BatteryResponse::clear_power_supply_status() {
+  power_supply_status_ = 0u;
+}
+inline ::google::protobuf::uint32 BatteryResponse::power_supply_status() const {
+  // @@protoc_insertion_point(field_get:CoreX.rpc.BatteryResponse.power_supply_status)
+  return power_supply_status_;
+}
+inline void BatteryResponse::set_power_supply_status(::google::protobuf::uint32 value) {
+  
+  power_supply_status_ = value;
+  // @@protoc_insertion_point(field_set:CoreX.rpc.BatteryResponse.power_supply_status)
+}
+
+// bool present = 5;
+inline void BatteryResponse::clear_present() {
+  present_ = false;
+}
+inline bool BatteryResponse::present() const {
+  // @@protoc_insertion_point(field_get:CoreX.rpc.BatteryResponse.present)
+  return present_;
+}
+inline void BatteryResponse::set_present(bool value) {
+  
+  present_ = value;
+  // @@protoc_insertion_point(field_set:CoreX.rpc.BatteryResponse.present)
+}
+
+// uint64 timestamp = 6;
+inline void BatteryResponse::clear_timestamp() {
+  timestamp_ = GOOGLE_ULONGLONG(0);
+}
+inline ::google::protobuf::uint64 BatteryResponse::timestamp() const {
+  // @@protoc_insertion_point(field_get:CoreX.rpc.BatteryResponse.timestamp)
+  return timestamp_;
+}
+inline void BatteryResponse::set_timestamp(::google::protobuf::uint64 value) {
+  
+  timestamp_ = value;
+  // @@protoc_insertion_point(field_set:CoreX.rpc.BatteryResponse.timestamp)
+}
+
+// bool success = 7;
+inline void BatteryResponse::clear_success() {
+  success_ = false;
+}
+inline bool BatteryResponse::success() const {
+  // @@protoc_insertion_point(field_get:CoreX.rpc.BatteryResponse.success)
+  return success_;
+}
+inline void BatteryResponse::set_success(bool value) {
+  
+  success_ = value;
+  // @@protoc_insertion_point(field_set:CoreX.rpc.BatteryResponse.success)
+}
+
+// -------------------------------------------------------------------
+
+// ImuRequest
+
+// -------------------------------------------------------------------
+
+// ImuResponse
+
+// double orient_x = 1;
+inline void ImuResponse::clear_orient_x() {
+  orient_x_ = 0;
+}
+inline double ImuResponse::orient_x() const {
+  // @@protoc_insertion_point(field_get:CoreX.rpc.ImuResponse.orient_x)
+  return orient_x_;
+}
+inline void ImuResponse::set_orient_x(double value) {
+  
+  orient_x_ = value;
+  // @@protoc_insertion_point(field_set:CoreX.rpc.ImuResponse.orient_x)
+}
+
+// double orient_y = 2;
+inline void ImuResponse::clear_orient_y() {
+  orient_y_ = 0;
+}
+inline double ImuResponse::orient_y() const {
+  // @@protoc_insertion_point(field_get:CoreX.rpc.ImuResponse.orient_y)
+  return orient_y_;
+}
+inline void ImuResponse::set_orient_y(double value) {
+  
+  orient_y_ = value;
+  // @@protoc_insertion_point(field_set:CoreX.rpc.ImuResponse.orient_y)
+}
+
+// double orient_z = 3;
+inline void ImuResponse::clear_orient_z() {
+  orient_z_ = 0;
+}
+inline double ImuResponse::orient_z() const {
+  // @@protoc_insertion_point(field_get:CoreX.rpc.ImuResponse.orient_z)
+  return orient_z_;
+}
+inline void ImuResponse::set_orient_z(double value) {
+  
+  orient_z_ = value;
+  // @@protoc_insertion_point(field_set:CoreX.rpc.ImuResponse.orient_z)
+}
+
+// double orient_w = 4;
+inline void ImuResponse::clear_orient_w() {
+  orient_w_ = 0;
+}
+inline double ImuResponse::orient_w() const {
+  // @@protoc_insertion_point(field_get:CoreX.rpc.ImuResponse.orient_w)
+  return orient_w_;
+}
+inline void ImuResponse::set_orient_w(double value) {
+  
+  orient_w_ = value;
+  // @@protoc_insertion_point(field_set:CoreX.rpc.ImuResponse.orient_w)
+}
+
+// double ang_vel_x = 5;
+inline void ImuResponse::clear_ang_vel_x() {
+  ang_vel_x_ = 0;
+}
+inline double ImuResponse::ang_vel_x() const {
+  // @@protoc_insertion_point(field_get:CoreX.rpc.ImuResponse.ang_vel_x)
+  return ang_vel_x_;
+}
+inline void ImuResponse::set_ang_vel_x(double value) {
+  
+  ang_vel_x_ = value;
+  // @@protoc_insertion_point(field_set:CoreX.rpc.ImuResponse.ang_vel_x)
+}
+
+// double ang_vel_y = 6;
+inline void ImuResponse::clear_ang_vel_y() {
+  ang_vel_y_ = 0;
+}
+inline double ImuResponse::ang_vel_y() const {
+  // @@protoc_insertion_point(field_get:CoreX.rpc.ImuResponse.ang_vel_y)
+  return ang_vel_y_;
+}
+inline void ImuResponse::set_ang_vel_y(double value) {
+  
+  ang_vel_y_ = value;
+  // @@protoc_insertion_point(field_set:CoreX.rpc.ImuResponse.ang_vel_y)
+}
+
+// double ang_vel_z = 7;
+inline void ImuResponse::clear_ang_vel_z() {
+  ang_vel_z_ = 0;
+}
+inline double ImuResponse::ang_vel_z() const {
+  // @@protoc_insertion_point(field_get:CoreX.rpc.ImuResponse.ang_vel_z)
+  return ang_vel_z_;
+}
+inline void ImuResponse::set_ang_vel_z(double value) {
+  
+  ang_vel_z_ = value;
+  // @@protoc_insertion_point(field_set:CoreX.rpc.ImuResponse.ang_vel_z)
+}
+
+// double lin_acc_x = 8;
+inline void ImuResponse::clear_lin_acc_x() {
+  lin_acc_x_ = 0;
+}
+inline double ImuResponse::lin_acc_x() const {
+  // @@protoc_insertion_point(field_get:CoreX.rpc.ImuResponse.lin_acc_x)
+  return lin_acc_x_;
+}
+inline void ImuResponse::set_lin_acc_x(double value) {
+  
+  lin_acc_x_ = value;
+  // @@protoc_insertion_point(field_set:CoreX.rpc.ImuResponse.lin_acc_x)
+}
+
+// double lin_acc_y = 9;
+inline void ImuResponse::clear_lin_acc_y() {
+  lin_acc_y_ = 0;
+}
+inline double ImuResponse::lin_acc_y() const {
+  // @@protoc_insertion_point(field_get:CoreX.rpc.ImuResponse.lin_acc_y)
+  return lin_acc_y_;
+}
+inline void ImuResponse::set_lin_acc_y(double value) {
+  
+  lin_acc_y_ = value;
+  // @@protoc_insertion_point(field_set:CoreX.rpc.ImuResponse.lin_acc_y)
+}
+
+// double lin_acc_z = 10;
+inline void ImuResponse::clear_lin_acc_z() {
+  lin_acc_z_ = 0;
+}
+inline double ImuResponse::lin_acc_z() const {
+  // @@protoc_insertion_point(field_get:CoreX.rpc.ImuResponse.lin_acc_z)
+  return lin_acc_z_;
+}
+inline void ImuResponse::set_lin_acc_z(double value) {
+  
+  lin_acc_z_ = value;
+  // @@protoc_insertion_point(field_set:CoreX.rpc.ImuResponse.lin_acc_z)
+}
+
+// uint64 timestamp = 11;
+inline void ImuResponse::clear_timestamp() {
+  timestamp_ = GOOGLE_ULONGLONG(0);
+}
+inline ::google::protobuf::uint64 ImuResponse::timestamp() const {
+  // @@protoc_insertion_point(field_get:CoreX.rpc.ImuResponse.timestamp)
+  return timestamp_;
+}
+inline void ImuResponse::set_timestamp(::google::protobuf::uint64 value) {
+  
+  timestamp_ = value;
+  // @@protoc_insertion_point(field_set:CoreX.rpc.ImuResponse.timestamp)
+}
+
+// bool success = 12;
+inline void ImuResponse::clear_success() {
+  success_ = false;
+}
+inline bool ImuResponse::success() const {
+  // @@protoc_insertion_point(field_get:CoreX.rpc.ImuResponse.success)
+  return success_;
+}
+inline void ImuResponse::set_success(bool value) {
+  
+  success_ = value;
+  // @@protoc_insertion_point(field_set:CoreX.rpc.ImuResponse.success)
+}
+
+// -------------------------------------------------------------------
+
+// JointPositionCommand
+
+// repeated string name = 1;
+inline int JointPositionCommand::name_size() const {
+  return name_.size();
+}
+inline void JointPositionCommand::clear_name() {
+  name_.Clear();
+}
+inline const ::std::string& JointPositionCommand::name(int index) const {
+  // @@protoc_insertion_point(field_get:CoreX.rpc.JointPositionCommand.name)
+  return name_.Get(index);
+}
+inline ::std::string* JointPositionCommand::mutable_name(int index) {
+  // @@protoc_insertion_point(field_mutable:CoreX.rpc.JointPositionCommand.name)
+  return name_.Mutable(index);
+}
+inline void JointPositionCommand::set_name(int index, const ::std::string& value) {
+  // @@protoc_insertion_point(field_set:CoreX.rpc.JointPositionCommand.name)
+  name_.Mutable(index)->assign(value);
+}
+#if LANG_CXX11
+inline void JointPositionCommand::set_name(int index, ::std::string&& value) {
+  // @@protoc_insertion_point(field_set:CoreX.rpc.JointPositionCommand.name)
+  name_.Mutable(index)->assign(std::move(value));
+}
+#endif
+inline void JointPositionCommand::set_name(int index, const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  name_.Mutable(index)->assign(value);
+  // @@protoc_insertion_point(field_set_char:CoreX.rpc.JointPositionCommand.name)
+}
+inline void JointPositionCommand::set_name(int index, const char* value, size_t size) {
+  name_.Mutable(index)->assign(
+    reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_set_pointer:CoreX.rpc.JointPositionCommand.name)
+}
+inline ::std::string* JointPositionCommand::add_name() {
+  // @@protoc_insertion_point(field_add_mutable:CoreX.rpc.JointPositionCommand.name)
+  return name_.Add();
+}
+inline void JointPositionCommand::add_name(const ::std::string& value) {
+  name_.Add()->assign(value);
+  // @@protoc_insertion_point(field_add:CoreX.rpc.JointPositionCommand.name)
+}
+#if LANG_CXX11
+inline void JointPositionCommand::add_name(::std::string&& value) {
+  name_.Add(std::move(value));
+  // @@protoc_insertion_point(field_add:CoreX.rpc.JointPositionCommand.name)
+}
+#endif
+inline void JointPositionCommand::add_name(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  name_.Add()->assign(value);
+  // @@protoc_insertion_point(field_add_char:CoreX.rpc.JointPositionCommand.name)
+}
+inline void JointPositionCommand::add_name(const char* value, size_t size) {
+  name_.Add()->assign(reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_add_pointer:CoreX.rpc.JointPositionCommand.name)
+}
+inline const ::google::protobuf::RepeatedPtrField< ::std::string>&
+JointPositionCommand::name() const {
+  // @@protoc_insertion_point(field_list:CoreX.rpc.JointPositionCommand.name)
+  return name_;
+}
+inline ::google::protobuf::RepeatedPtrField< ::std::string>*
+JointPositionCommand::mutable_name() {
+  // @@protoc_insertion_point(field_mutable_list:CoreX.rpc.JointPositionCommand.name)
+  return &name_;
+}
+
+// repeated double position = 2;
+inline int JointPositionCommand::position_size() const {
+  return position_.size();
+}
+inline void JointPositionCommand::clear_position() {
+  position_.Clear();
+}
+inline double JointPositionCommand::position(int index) const {
+  // @@protoc_insertion_point(field_get:CoreX.rpc.JointPositionCommand.position)
+  return position_.Get(index);
+}
+inline void JointPositionCommand::set_position(int index, double value) {
+  position_.Set(index, value);
+  // @@protoc_insertion_point(field_set:CoreX.rpc.JointPositionCommand.position)
+}
+inline void JointPositionCommand::add_position(double value) {
+  position_.Add(value);
+  // @@protoc_insertion_point(field_add:CoreX.rpc.JointPositionCommand.position)
+}
+inline const ::google::protobuf::RepeatedField< double >&
+JointPositionCommand::position() const {
+  // @@protoc_insertion_point(field_list:CoreX.rpc.JointPositionCommand.position)
+  return position_;
+}
+inline ::google::protobuf::RepeatedField< double >*
+JointPositionCommand::mutable_position() {
+  // @@protoc_insertion_point(field_mutable_list:CoreX.rpc.JointPositionCommand.position)
+  return &position_;
+}
+
+// double duration_sec = 3;
+inline void JointPositionCommand::clear_duration_sec() {
+  duration_sec_ = 0;
+}
+inline double JointPositionCommand::duration_sec() const {
+  // @@protoc_insertion_point(field_get:CoreX.rpc.JointPositionCommand.duration_sec)
+  return duration_sec_;
+}
+inline void JointPositionCommand::set_duration_sec(double value) {
+  
+  duration_sec_ = value;
+  // @@protoc_insertion_point(field_set:CoreX.rpc.JointPositionCommand.duration_sec)
+}
+
+// -------------------------------------------------------------------
+
+// JointVelocityCommand
+
+// repeated string name = 1;
+inline int JointVelocityCommand::name_size() const {
+  return name_.size();
+}
+inline void JointVelocityCommand::clear_name() {
+  name_.Clear();
+}
+inline const ::std::string& JointVelocityCommand::name(int index) const {
+  // @@protoc_insertion_point(field_get:CoreX.rpc.JointVelocityCommand.name)
+  return name_.Get(index);
+}
+inline ::std::string* JointVelocityCommand::mutable_name(int index) {
+  // @@protoc_insertion_point(field_mutable:CoreX.rpc.JointVelocityCommand.name)
+  return name_.Mutable(index);
+}
+inline void JointVelocityCommand::set_name(int index, const ::std::string& value) {
+  // @@protoc_insertion_point(field_set:CoreX.rpc.JointVelocityCommand.name)
+  name_.Mutable(index)->assign(value);
+}
+#if LANG_CXX11
+inline void JointVelocityCommand::set_name(int index, ::std::string&& value) {
+  // @@protoc_insertion_point(field_set:CoreX.rpc.JointVelocityCommand.name)
+  name_.Mutable(index)->assign(std::move(value));
+}
+#endif
+inline void JointVelocityCommand::set_name(int index, const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  name_.Mutable(index)->assign(value);
+  // @@protoc_insertion_point(field_set_char:CoreX.rpc.JointVelocityCommand.name)
+}
+inline void JointVelocityCommand::set_name(int index, const char* value, size_t size) {
+  name_.Mutable(index)->assign(
+    reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_set_pointer:CoreX.rpc.JointVelocityCommand.name)
+}
+inline ::std::string* JointVelocityCommand::add_name() {
+  // @@protoc_insertion_point(field_add_mutable:CoreX.rpc.JointVelocityCommand.name)
+  return name_.Add();
+}
+inline void JointVelocityCommand::add_name(const ::std::string& value) {
+  name_.Add()->assign(value);
+  // @@protoc_insertion_point(field_add:CoreX.rpc.JointVelocityCommand.name)
+}
+#if LANG_CXX11
+inline void JointVelocityCommand::add_name(::std::string&& value) {
+  name_.Add(std::move(value));
+  // @@protoc_insertion_point(field_add:CoreX.rpc.JointVelocityCommand.name)
+}
+#endif
+inline void JointVelocityCommand::add_name(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  name_.Add()->assign(value);
+  // @@protoc_insertion_point(field_add_char:CoreX.rpc.JointVelocityCommand.name)
+}
+inline void JointVelocityCommand::add_name(const char* value, size_t size) {
+  name_.Add()->assign(reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_add_pointer:CoreX.rpc.JointVelocityCommand.name)
+}
+inline const ::google::protobuf::RepeatedPtrField< ::std::string>&
+JointVelocityCommand::name() const {
+  // @@protoc_insertion_point(field_list:CoreX.rpc.JointVelocityCommand.name)
+  return name_;
+}
+inline ::google::protobuf::RepeatedPtrField< ::std::string>*
+JointVelocityCommand::mutable_name() {
+  // @@protoc_insertion_point(field_mutable_list:CoreX.rpc.JointVelocityCommand.name)
+  return &name_;
+}
+
+// repeated double velocity = 2;
+inline int JointVelocityCommand::velocity_size() const {
+  return velocity_.size();
+}
+inline void JointVelocityCommand::clear_velocity() {
+  velocity_.Clear();
+}
+inline double JointVelocityCommand::velocity(int index) const {
+  // @@protoc_insertion_point(field_get:CoreX.rpc.JointVelocityCommand.velocity)
+  return velocity_.Get(index);
+}
+inline void JointVelocityCommand::set_velocity(int index, double value) {
+  velocity_.Set(index, value);
+  // @@protoc_insertion_point(field_set:CoreX.rpc.JointVelocityCommand.velocity)
+}
+inline void JointVelocityCommand::add_velocity(double value) {
+  velocity_.Add(value);
+  // @@protoc_insertion_point(field_add:CoreX.rpc.JointVelocityCommand.velocity)
+}
+inline const ::google::protobuf::RepeatedField< double >&
+JointVelocityCommand::velocity() const {
+  // @@protoc_insertion_point(field_list:CoreX.rpc.JointVelocityCommand.velocity)
+  return velocity_;
+}
+inline ::google::protobuf::RepeatedField< double >*
+JointVelocityCommand::mutable_velocity() {
+  // @@protoc_insertion_point(field_mutable_list:CoreX.rpc.JointVelocityCommand.velocity)
+  return &velocity_;
+}
+
+// -------------------------------------------------------------------
+
+// SpawnModelRequest
+
+// string model_name = 1;
+inline void SpawnModelRequest::clear_model_name() {
+  model_name_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& SpawnModelRequest::model_name() const {
+  // @@protoc_insertion_point(field_get:CoreX.rpc.SpawnModelRequest.model_name)
+  return model_name_.GetNoArena();
+}
+inline void SpawnModelRequest::set_model_name(const ::std::string& value) {
+  
+  model_name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:CoreX.rpc.SpawnModelRequest.model_name)
+}
+#if LANG_CXX11
+inline void SpawnModelRequest::set_model_name(::std::string&& value) {
+  
+  model_name_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:CoreX.rpc.SpawnModelRequest.model_name)
+}
+#endif
+inline void SpawnModelRequest::set_model_name(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  
+  model_name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:CoreX.rpc.SpawnModelRequest.model_name)
+}
+inline void SpawnModelRequest::set_model_name(const char* value, size_t size) {
+  
+  model_name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:CoreX.rpc.SpawnModelRequest.model_name)
+}
+inline ::std::string* SpawnModelRequest::mutable_model_name() {
+  
+  // @@protoc_insertion_point(field_mutable:CoreX.rpc.SpawnModelRequest.model_name)
+  return model_name_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* SpawnModelRequest::release_model_name() {
+  // @@protoc_insertion_point(field_release:CoreX.rpc.SpawnModelRequest.model_name)
+  
+  return model_name_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void SpawnModelRequest::set_allocated_model_name(::std::string* model_name) {
+  if (model_name != NULL) {
+    
+  } else {
+    
+  }
+  model_name_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), model_name);
+  // @@protoc_insertion_point(field_set_allocated:CoreX.rpc.SpawnModelRequest.model_name)
+}
+
+// string model_xml = 2;
+inline void SpawnModelRequest::clear_model_xml() {
+  model_xml_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& SpawnModelRequest::model_xml() const {
+  // @@protoc_insertion_point(field_get:CoreX.rpc.SpawnModelRequest.model_xml)
+  return model_xml_.GetNoArena();
+}
+inline void SpawnModelRequest::set_model_xml(const ::std::string& value) {
+  
+  model_xml_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:CoreX.rpc.SpawnModelRequest.model_xml)
+}
+#if LANG_CXX11
+inline void SpawnModelRequest::set_model_xml(::std::string&& value) {
+  
+  model_xml_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:CoreX.rpc.SpawnModelRequest.model_xml)
+}
+#endif
+inline void SpawnModelRequest::set_model_xml(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  
+  model_xml_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:CoreX.rpc.SpawnModelRequest.model_xml)
+}
+inline void SpawnModelRequest::set_model_xml(const char* value, size_t size) {
+  
+  model_xml_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:CoreX.rpc.SpawnModelRequest.model_xml)
+}
+inline ::std::string* SpawnModelRequest::mutable_model_xml() {
+  
+  // @@protoc_insertion_point(field_mutable:CoreX.rpc.SpawnModelRequest.model_xml)
+  return model_xml_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* SpawnModelRequest::release_model_xml() {
+  // @@protoc_insertion_point(field_release:CoreX.rpc.SpawnModelRequest.model_xml)
+  
+  return model_xml_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void SpawnModelRequest::set_allocated_model_xml(::std::string* model_xml) {
+  if (model_xml != NULL) {
+    
+  } else {
+    
+  }
+  model_xml_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), model_xml);
+  // @@protoc_insertion_point(field_set_allocated:CoreX.rpc.SpawnModelRequest.model_xml)
+}
+
+// double pos_x = 3;
+inline void SpawnModelRequest::clear_pos_x() {
+  pos_x_ = 0;
+}
+inline double SpawnModelRequest::pos_x() const {
+  // @@protoc_insertion_point(field_get:CoreX.rpc.SpawnModelRequest.pos_x)
+  return pos_x_;
+}
+inline void SpawnModelRequest::set_pos_x(double value) {
+  
+  pos_x_ = value;
+  // @@protoc_insertion_point(field_set:CoreX.rpc.SpawnModelRequest.pos_x)
+}
+
+// double pos_y = 4;
+inline void SpawnModelRequest::clear_pos_y() {
+  pos_y_ = 0;
+}
+inline double SpawnModelRequest::pos_y() const {
+  // @@protoc_insertion_point(field_get:CoreX.rpc.SpawnModelRequest.pos_y)
+  return pos_y_;
+}
+inline void SpawnModelRequest::set_pos_y(double value) {
+  
+  pos_y_ = value;
+  // @@protoc_insertion_point(field_set:CoreX.rpc.SpawnModelRequest.pos_y)
+}
+
+// double pos_z = 5;
+inline void SpawnModelRequest::clear_pos_z() {
+  pos_z_ = 0;
+}
+inline double SpawnModelRequest::pos_z() const {
+  // @@protoc_insertion_point(field_get:CoreX.rpc.SpawnModelRequest.pos_z)
+  return pos_z_;
+}
+inline void SpawnModelRequest::set_pos_z(double value) {
+  
+  pos_z_ = value;
+  // @@protoc_insertion_point(field_set:CoreX.rpc.SpawnModelRequest.pos_z)
+}
+
+// double orient_x = 6;
+inline void SpawnModelRequest::clear_orient_x() {
+  orient_x_ = 0;
+}
+inline double SpawnModelRequest::orient_x() const {
+  // @@protoc_insertion_point(field_get:CoreX.rpc.SpawnModelRequest.orient_x)
+  return orient_x_;
+}
+inline void SpawnModelRequest::set_orient_x(double value) {
+  
+  orient_x_ = value;
+  // @@protoc_insertion_point(field_set:CoreX.rpc.SpawnModelRequest.orient_x)
+}
+
+// double orient_y = 7;
+inline void SpawnModelRequest::clear_orient_y() {
+  orient_y_ = 0;
+}
+inline double SpawnModelRequest::orient_y() const {
+  // @@protoc_insertion_point(field_get:CoreX.rpc.SpawnModelRequest.orient_y)
+  return orient_y_;
+}
+inline void SpawnModelRequest::set_orient_y(double value) {
+  
+  orient_y_ = value;
+  // @@protoc_insertion_point(field_set:CoreX.rpc.SpawnModelRequest.orient_y)
+}
+
+// double orient_z = 8;
+inline void SpawnModelRequest::clear_orient_z() {
+  orient_z_ = 0;
+}
+inline double SpawnModelRequest::orient_z() const {
+  // @@protoc_insertion_point(field_get:CoreX.rpc.SpawnModelRequest.orient_z)
+  return orient_z_;
+}
+inline void SpawnModelRequest::set_orient_z(double value) {
+  
+  orient_z_ = value;
+  // @@protoc_insertion_point(field_set:CoreX.rpc.SpawnModelRequest.orient_z)
+}
+
+// double orient_w = 9;
+inline void SpawnModelRequest::clear_orient_w() {
+  orient_w_ = 0;
+}
+inline double SpawnModelRequest::orient_w() const {
+  // @@protoc_insertion_point(field_get:CoreX.rpc.SpawnModelRequest.orient_w)
+  return orient_w_;
+}
+inline void SpawnModelRequest::set_orient_w(double value) {
+  
+  orient_w_ = value;
+  // @@protoc_insertion_point(field_set:CoreX.rpc.SpawnModelRequest.orient_w)
+}
+
+// string reference_frame = 10;
+inline void SpawnModelRequest::clear_reference_frame() {
+  reference_frame_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& SpawnModelRequest::reference_frame() const {
+  // @@protoc_insertion_point(field_get:CoreX.rpc.SpawnModelRequest.reference_frame)
+  return reference_frame_.GetNoArena();
+}
+inline void SpawnModelRequest::set_reference_frame(const ::std::string& value) {
+  
+  reference_frame_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:CoreX.rpc.SpawnModelRequest.reference_frame)
+}
+#if LANG_CXX11
+inline void SpawnModelRequest::set_reference_frame(::std::string&& value) {
+  
+  reference_frame_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:CoreX.rpc.SpawnModelRequest.reference_frame)
+}
+#endif
+inline void SpawnModelRequest::set_reference_frame(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  
+  reference_frame_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:CoreX.rpc.SpawnModelRequest.reference_frame)
+}
+inline void SpawnModelRequest::set_reference_frame(const char* value, size_t size) {
+  
+  reference_frame_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:CoreX.rpc.SpawnModelRequest.reference_frame)
+}
+inline ::std::string* SpawnModelRequest::mutable_reference_frame() {
+  
+  // @@protoc_insertion_point(field_mutable:CoreX.rpc.SpawnModelRequest.reference_frame)
+  return reference_frame_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* SpawnModelRequest::release_reference_frame() {
+  // @@protoc_insertion_point(field_release:CoreX.rpc.SpawnModelRequest.reference_frame)
+  
+  return reference_frame_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void SpawnModelRequest::set_allocated_reference_frame(::std::string* reference_frame) {
+  if (reference_frame != NULL) {
+    
+  } else {
+    
+  }
+  reference_frame_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), reference_frame);
+  // @@protoc_insertion_point(field_set_allocated:CoreX.rpc.SpawnModelRequest.reference_frame)
+}
+
+// -------------------------------------------------------------------
+
+// SpawnModelResponse
+
+// bool success = 1;
+inline void SpawnModelResponse::clear_success() {
+  success_ = false;
+}
+inline bool SpawnModelResponse::success() const {
+  // @@protoc_insertion_point(field_get:CoreX.rpc.SpawnModelResponse.success)
+  return success_;
+}
+inline void SpawnModelResponse::set_success(bool value) {
+  
+  success_ = value;
+  // @@protoc_insertion_point(field_set:CoreX.rpc.SpawnModelResponse.success)
+}
+
+// string model_name = 2;
+inline void SpawnModelResponse::clear_model_name() {
+  model_name_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& SpawnModelResponse::model_name() const {
+  // @@protoc_insertion_point(field_get:CoreX.rpc.SpawnModelResponse.model_name)
+  return model_name_.GetNoArena();
+}
+inline void SpawnModelResponse::set_model_name(const ::std::string& value) {
+  
+  model_name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:CoreX.rpc.SpawnModelResponse.model_name)
+}
+#if LANG_CXX11
+inline void SpawnModelResponse::set_model_name(::std::string&& value) {
+  
+  model_name_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:CoreX.rpc.SpawnModelResponse.model_name)
+}
+#endif
+inline void SpawnModelResponse::set_model_name(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  
+  model_name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:CoreX.rpc.SpawnModelResponse.model_name)
+}
+inline void SpawnModelResponse::set_model_name(const char* value, size_t size) {
+  
+  model_name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:CoreX.rpc.SpawnModelResponse.model_name)
+}
+inline ::std::string* SpawnModelResponse::mutable_model_name() {
+  
+  // @@protoc_insertion_point(field_mutable:CoreX.rpc.SpawnModelResponse.model_name)
+  return model_name_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* SpawnModelResponse::release_model_name() {
+  // @@protoc_insertion_point(field_release:CoreX.rpc.SpawnModelResponse.model_name)
+  
+  return model_name_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void SpawnModelResponse::set_allocated_model_name(::std::string* model_name) {
+  if (model_name != NULL) {
+    
+  } else {
+    
+  }
+  model_name_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), model_name);
+  // @@protoc_insertion_point(field_set_allocated:CoreX.rpc.SpawnModelResponse.model_name)
+}
+
+// string error_msg = 3;
+inline void SpawnModelResponse::clear_error_msg() {
+  error_msg_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& SpawnModelResponse::error_msg() const {
+  // @@protoc_insertion_point(field_get:CoreX.rpc.SpawnModelResponse.error_msg)
+  return error_msg_.GetNoArena();
+}
+inline void SpawnModelResponse::set_error_msg(const ::std::string& value) {
+  
+  error_msg_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:CoreX.rpc.SpawnModelResponse.error_msg)
+}
+#if LANG_CXX11
+inline void SpawnModelResponse::set_error_msg(::std::string&& value) {
+  
+  error_msg_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:CoreX.rpc.SpawnModelResponse.error_msg)
+}
+#endif
+inline void SpawnModelResponse::set_error_msg(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  
+  error_msg_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:CoreX.rpc.SpawnModelResponse.error_msg)
+}
+inline void SpawnModelResponse::set_error_msg(const char* value, size_t size) {
+  
+  error_msg_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:CoreX.rpc.SpawnModelResponse.error_msg)
+}
+inline ::std::string* SpawnModelResponse::mutable_error_msg() {
+  
+  // @@protoc_insertion_point(field_mutable:CoreX.rpc.SpawnModelResponse.error_msg)
+  return error_msg_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* SpawnModelResponse::release_error_msg() {
+  // @@protoc_insertion_point(field_release:CoreX.rpc.SpawnModelResponse.error_msg)
+  
+  return error_msg_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void SpawnModelResponse::set_allocated_error_msg(::std::string* error_msg) {
+  if (error_msg != NULL) {
+    
+  } else {
+    
+  }
+  error_msg_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), error_msg);
+  // @@protoc_insertion_point(field_set_allocated:CoreX.rpc.SpawnModelResponse.error_msg)
+}
+
+// -------------------------------------------------------------------
+
+// DeleteModelRequest
+
+// string model_name = 1;
+inline void DeleteModelRequest::clear_model_name() {
+  model_name_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& DeleteModelRequest::model_name() const {
+  // @@protoc_insertion_point(field_get:CoreX.rpc.DeleteModelRequest.model_name)
+  return model_name_.GetNoArena();
+}
+inline void DeleteModelRequest::set_model_name(const ::std::string& value) {
+  
+  model_name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:CoreX.rpc.DeleteModelRequest.model_name)
+}
+#if LANG_CXX11
+inline void DeleteModelRequest::set_model_name(::std::string&& value) {
+  
+  model_name_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:CoreX.rpc.DeleteModelRequest.model_name)
+}
+#endif
+inline void DeleteModelRequest::set_model_name(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  
+  model_name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:CoreX.rpc.DeleteModelRequest.model_name)
+}
+inline void DeleteModelRequest::set_model_name(const char* value, size_t size) {
+  
+  model_name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:CoreX.rpc.DeleteModelRequest.model_name)
+}
+inline ::std::string* DeleteModelRequest::mutable_model_name() {
+  
+  // @@protoc_insertion_point(field_mutable:CoreX.rpc.DeleteModelRequest.model_name)
+  return model_name_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* DeleteModelRequest::release_model_name() {
+  // @@protoc_insertion_point(field_release:CoreX.rpc.DeleteModelRequest.model_name)
+  
+  return model_name_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void DeleteModelRequest::set_allocated_model_name(::std::string* model_name) {
+  if (model_name != NULL) {
+    
+  } else {
+    
+  }
+  model_name_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), model_name);
+  // @@protoc_insertion_point(field_set_allocated:CoreX.rpc.DeleteModelRequest.model_name)
+}
+
+// -------------------------------------------------------------------
+
+// ResetRequest
+
+// bool reset_time = 1;
+inline void ResetRequest::clear_reset_time() {
+  reset_time_ = false;
+}
+inline bool ResetRequest::reset_time() const {
+  // @@protoc_insertion_point(field_get:CoreX.rpc.ResetRequest.reset_time)
+  return reset_time_;
+}
+inline void ResetRequest::set_reset_time(bool value) {
+  
+  reset_time_ = value;
+  // @@protoc_insertion_point(field_set:CoreX.rpc.ResetRequest.reset_time)
+}
+
+// bool reset_models = 2;
+inline void ResetRequest::clear_reset_models() {
+  reset_models_ = false;
+}
+inline bool ResetRequest::reset_models() const {
+  // @@protoc_insertion_point(field_get:CoreX.rpc.ResetRequest.reset_models)
+  return reset_models_;
+}
+inline void ResetRequest::set_reset_models(bool value) {
+  
+  reset_models_ = value;
+  // @@protoc_insertion_point(field_set:CoreX.rpc.ResetRequest.reset_models)
+}
+
+// -------------------------------------------------------------------
+
+// NavigationGoal
+
+// double target_x = 1;
+inline void NavigationGoal::clear_target_x() {
+  target_x_ = 0;
+}
+inline double NavigationGoal::target_x() const {
+  // @@protoc_insertion_point(field_get:CoreX.rpc.NavigationGoal.target_x)
+  return target_x_;
+}
+inline void NavigationGoal::set_target_x(double value) {
+  
+  target_x_ = value;
+  // @@protoc_insertion_point(field_set:CoreX.rpc.NavigationGoal.target_x)
+}
+
+// double target_y = 2;
+inline void NavigationGoal::clear_target_y() {
+  target_y_ = 0;
+}
+inline double NavigationGoal::target_y() const {
+  // @@protoc_insertion_point(field_get:CoreX.rpc.NavigationGoal.target_y)
+  return target_y_;
+}
+inline void NavigationGoal::set_target_y(double value) {
+  
+  target_y_ = value;
+  // @@protoc_insertion_point(field_set:CoreX.rpc.NavigationGoal.target_y)
+}
+
+// double target_z = 3;
+inline void NavigationGoal::clear_target_z() {
+  target_z_ = 0;
+}
+inline double NavigationGoal::target_z() const {
+  // @@protoc_insertion_point(field_get:CoreX.rpc.NavigationGoal.target_z)
+  return target_z_;
+}
+inline void NavigationGoal::set_target_z(double value) {
+  
+  target_z_ = value;
+  // @@protoc_insertion_point(field_set:CoreX.rpc.NavigationGoal.target_z)
+}
+
+// double target_yaw = 4;
+inline void NavigationGoal::clear_target_yaw() {
+  target_yaw_ = 0;
+}
+inline double NavigationGoal::target_yaw() const {
+  // @@protoc_insertion_point(field_get:CoreX.rpc.NavigationGoal.target_yaw)
+  return target_yaw_;
+}
+inline void NavigationGoal::set_target_yaw(double value) {
+  
+  target_yaw_ = value;
+  // @@protoc_insertion_point(field_set:CoreX.rpc.NavigationGoal.target_yaw)
+}
+
+// string frame_id = 5;
+inline void NavigationGoal::clear_frame_id() {
+  frame_id_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& NavigationGoal::frame_id() const {
+  // @@protoc_insertion_point(field_get:CoreX.rpc.NavigationGoal.frame_id)
+  return frame_id_.GetNoArena();
+}
+inline void NavigationGoal::set_frame_id(const ::std::string& value) {
+  
+  frame_id_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:CoreX.rpc.NavigationGoal.frame_id)
+}
+#if LANG_CXX11
+inline void NavigationGoal::set_frame_id(::std::string&& value) {
+  
+  frame_id_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:CoreX.rpc.NavigationGoal.frame_id)
+}
+#endif
+inline void NavigationGoal::set_frame_id(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  
+  frame_id_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:CoreX.rpc.NavigationGoal.frame_id)
+}
+inline void NavigationGoal::set_frame_id(const char* value, size_t size) {
+  
+  frame_id_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:CoreX.rpc.NavigationGoal.frame_id)
+}
+inline ::std::string* NavigationGoal::mutable_frame_id() {
+  
+  // @@protoc_insertion_point(field_mutable:CoreX.rpc.NavigationGoal.frame_id)
+  return frame_id_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* NavigationGoal::release_frame_id() {
+  // @@protoc_insertion_point(field_release:CoreX.rpc.NavigationGoal.frame_id)
+  
+  return frame_id_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void NavigationGoal::set_allocated_frame_id(::std::string* frame_id) {
+  if (frame_id != NULL) {
+    
+  } else {
+    
+  }
+  frame_id_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), frame_id);
+  // @@protoc_insertion_point(field_set_allocated:CoreX.rpc.NavigationGoal.frame_id)
+}
+
+// double tolerance_xy = 6;
+inline void NavigationGoal::clear_tolerance_xy() {
+  tolerance_xy_ = 0;
+}
+inline double NavigationGoal::tolerance_xy() const {
+  // @@protoc_insertion_point(field_get:CoreX.rpc.NavigationGoal.tolerance_xy)
+  return tolerance_xy_;
+}
+inline void NavigationGoal::set_tolerance_xy(double value) {
+  
+  tolerance_xy_ = value;
+  // @@protoc_insertion_point(field_set:CoreX.rpc.NavigationGoal.tolerance_xy)
+}
+
+// double tolerance_yaw = 7;
+inline void NavigationGoal::clear_tolerance_yaw() {
+  tolerance_yaw_ = 0;
+}
+inline double NavigationGoal::tolerance_yaw() const {
+  // @@protoc_insertion_point(field_get:CoreX.rpc.NavigationGoal.tolerance_yaw)
+  return tolerance_yaw_;
+}
+inline void NavigationGoal::set_tolerance_yaw(double value) {
+  
+  tolerance_yaw_ = value;
+  // @@protoc_insertion_point(field_set:CoreX.rpc.NavigationGoal.tolerance_yaw)
+}
+
+// double max_velocity = 8;
+inline void NavigationGoal::clear_max_velocity() {
+  max_velocity_ = 0;
+}
+inline double NavigationGoal::max_velocity() const {
+  // @@protoc_insertion_point(field_get:CoreX.rpc.NavigationGoal.max_velocity)
+  return max_velocity_;
+}
+inline void NavigationGoal::set_max_velocity(double value) {
+  
+  max_velocity_ = value;
+  // @@protoc_insertion_point(field_set:CoreX.rpc.NavigationGoal.max_velocity)
+}
+
+// -------------------------------------------------------------------
+
+// NavigationResponse
+
+// bool success = 1;
+inline void NavigationResponse::clear_success() {
+  success_ = false;
+}
+inline bool NavigationResponse::success() const {
+  // @@protoc_insertion_point(field_get:CoreX.rpc.NavigationResponse.success)
+  return success_;
+}
+inline void NavigationResponse::set_success(bool value) {
+  
+  success_ = value;
+  // @@protoc_insertion_point(field_set:CoreX.rpc.NavigationResponse.success)
+}
+
+// string goal_id = 2;
+inline void NavigationResponse::clear_goal_id() {
+  goal_id_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& NavigationResponse::goal_id() const {
+  // @@protoc_insertion_point(field_get:CoreX.rpc.NavigationResponse.goal_id)
+  return goal_id_.GetNoArena();
+}
+inline void NavigationResponse::set_goal_id(const ::std::string& value) {
+  
+  goal_id_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:CoreX.rpc.NavigationResponse.goal_id)
+}
+#if LANG_CXX11
+inline void NavigationResponse::set_goal_id(::std::string&& value) {
+  
+  goal_id_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:CoreX.rpc.NavigationResponse.goal_id)
+}
+#endif
+inline void NavigationResponse::set_goal_id(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  
+  goal_id_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:CoreX.rpc.NavigationResponse.goal_id)
+}
+inline void NavigationResponse::set_goal_id(const char* value, size_t size) {
+  
+  goal_id_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:CoreX.rpc.NavigationResponse.goal_id)
+}
+inline ::std::string* NavigationResponse::mutable_goal_id() {
+  
+  // @@protoc_insertion_point(field_mutable:CoreX.rpc.NavigationResponse.goal_id)
+  return goal_id_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* NavigationResponse::release_goal_id() {
+  // @@protoc_insertion_point(field_release:CoreX.rpc.NavigationResponse.goal_id)
+  
+  return goal_id_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void NavigationResponse::set_allocated_goal_id(::std::string* goal_id) {
+  if (goal_id != NULL) {
+    
+  } else {
+    
+  }
+  goal_id_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), goal_id);
+  // @@protoc_insertion_point(field_set_allocated:CoreX.rpc.NavigationResponse.goal_id)
+}
+
+// string error_msg = 3;
+inline void NavigationResponse::clear_error_msg() {
+  error_msg_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& NavigationResponse::error_msg() const {
+  // @@protoc_insertion_point(field_get:CoreX.rpc.NavigationResponse.error_msg)
+  return error_msg_.GetNoArena();
+}
+inline void NavigationResponse::set_error_msg(const ::std::string& value) {
+  
+  error_msg_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:CoreX.rpc.NavigationResponse.error_msg)
+}
+#if LANG_CXX11
+inline void NavigationResponse::set_error_msg(::std::string&& value) {
+  
+  error_msg_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:CoreX.rpc.NavigationResponse.error_msg)
+}
+#endif
+inline void NavigationResponse::set_error_msg(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  
+  error_msg_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:CoreX.rpc.NavigationResponse.error_msg)
+}
+inline void NavigationResponse::set_error_msg(const char* value, size_t size) {
+  
+  error_msg_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:CoreX.rpc.NavigationResponse.error_msg)
+}
+inline ::std::string* NavigationResponse::mutable_error_msg() {
+  
+  // @@protoc_insertion_point(field_mutable:CoreX.rpc.NavigationResponse.error_msg)
+  return error_msg_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* NavigationResponse::release_error_msg() {
+  // @@protoc_insertion_point(field_release:CoreX.rpc.NavigationResponse.error_msg)
+  
+  return error_msg_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void NavigationResponse::set_allocated_error_msg(::std::string* error_msg) {
+  if (error_msg != NULL) {
+    
+  } else {
+    
+  }
+  error_msg_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), error_msg);
+  // @@protoc_insertion_point(field_set_allocated:CoreX.rpc.NavigationResponse.error_msg)
+}
+
+// -------------------------------------------------------------------
+
+// CancelGoalRequest
+
+// string goal_id = 1;
+inline void CancelGoalRequest::clear_goal_id() {
+  goal_id_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& CancelGoalRequest::goal_id() const {
+  // @@protoc_insertion_point(field_get:CoreX.rpc.CancelGoalRequest.goal_id)
+  return goal_id_.GetNoArena();
+}
+inline void CancelGoalRequest::set_goal_id(const ::std::string& value) {
+  
+  goal_id_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:CoreX.rpc.CancelGoalRequest.goal_id)
+}
+#if LANG_CXX11
+inline void CancelGoalRequest::set_goal_id(::std::string&& value) {
+  
+  goal_id_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:CoreX.rpc.CancelGoalRequest.goal_id)
+}
+#endif
+inline void CancelGoalRequest::set_goal_id(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  
+  goal_id_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:CoreX.rpc.CancelGoalRequest.goal_id)
+}
+inline void CancelGoalRequest::set_goal_id(const char* value, size_t size) {
+  
+  goal_id_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:CoreX.rpc.CancelGoalRequest.goal_id)
+}
+inline ::std::string* CancelGoalRequest::mutable_goal_id() {
+  
+  // @@protoc_insertion_point(field_mutable:CoreX.rpc.CancelGoalRequest.goal_id)
+  return goal_id_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* CancelGoalRequest::release_goal_id() {
+  // @@protoc_insertion_point(field_release:CoreX.rpc.CancelGoalRequest.goal_id)
+  
+  return goal_id_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void CancelGoalRequest::set_allocated_goal_id(::std::string* goal_id) {
+  if (goal_id != NULL) {
+    
+  } else {
+    
+  }
+  goal_id_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), goal_id);
+  // @@protoc_insertion_point(field_set_allocated:CoreX.rpc.CancelGoalRequest.goal_id)
+}
+
+// -------------------------------------------------------------------
+
+// NavigationFeedback
+
+// string goal_id = 1;
+inline void NavigationFeedback::clear_goal_id() {
+  goal_id_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& NavigationFeedback::goal_id() const {
+  // @@protoc_insertion_point(field_get:CoreX.rpc.NavigationFeedback.goal_id)
+  return goal_id_.GetNoArena();
+}
+inline void NavigationFeedback::set_goal_id(const ::std::string& value) {
+  
+  goal_id_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:CoreX.rpc.NavigationFeedback.goal_id)
+}
+#if LANG_CXX11
+inline void NavigationFeedback::set_goal_id(::std::string&& value) {
+  
+  goal_id_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:CoreX.rpc.NavigationFeedback.goal_id)
+}
+#endif
+inline void NavigationFeedback::set_goal_id(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  
+  goal_id_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:CoreX.rpc.NavigationFeedback.goal_id)
+}
+inline void NavigationFeedback::set_goal_id(const char* value, size_t size) {
+  
+  goal_id_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:CoreX.rpc.NavigationFeedback.goal_id)
+}
+inline ::std::string* NavigationFeedback::mutable_goal_id() {
+  
+  // @@protoc_insertion_point(field_mutable:CoreX.rpc.NavigationFeedback.goal_id)
+  return goal_id_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* NavigationFeedback::release_goal_id() {
+  // @@protoc_insertion_point(field_release:CoreX.rpc.NavigationFeedback.goal_id)
+  
+  return goal_id_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void NavigationFeedback::set_allocated_goal_id(::std::string* goal_id) {
+  if (goal_id != NULL) {
+    
+  } else {
+    
+  }
+  goal_id_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), goal_id);
+  // @@protoc_insertion_point(field_set_allocated:CoreX.rpc.NavigationFeedback.goal_id)
+}
+
+// double distance_remaining = 2;
+inline void NavigationFeedback::clear_distance_remaining() {
+  distance_remaining_ = 0;
+}
+inline double NavigationFeedback::distance_remaining() const {
+  // @@protoc_insertion_point(field_get:CoreX.rpc.NavigationFeedback.distance_remaining)
+  return distance_remaining_;
+}
+inline void NavigationFeedback::set_distance_remaining(double value) {
+  
+  distance_remaining_ = value;
+  // @@protoc_insertion_point(field_set:CoreX.rpc.NavigationFeedback.distance_remaining)
+}
+
+// double current_x = 3;
+inline void NavigationFeedback::clear_current_x() {
+  current_x_ = 0;
+}
+inline double NavigationFeedback::current_x() const {
+  // @@protoc_insertion_point(field_get:CoreX.rpc.NavigationFeedback.current_x)
+  return current_x_;
+}
+inline void NavigationFeedback::set_current_x(double value) {
+  
+  current_x_ = value;
+  // @@protoc_insertion_point(field_set:CoreX.rpc.NavigationFeedback.current_x)
+}
+
+// double current_y = 4;
+inline void NavigationFeedback::clear_current_y() {
+  current_y_ = 0;
+}
+inline double NavigationFeedback::current_y() const {
+  // @@protoc_insertion_point(field_get:CoreX.rpc.NavigationFeedback.current_y)
+  return current_y_;
+}
+inline void NavigationFeedback::set_current_y(double value) {
+  
+  current_y_ = value;
+  // @@protoc_insertion_point(field_set:CoreX.rpc.NavigationFeedback.current_y)
+}
+
+// double current_yaw = 5;
+inline void NavigationFeedback::clear_current_yaw() {
+  current_yaw_ = 0;
+}
+inline double NavigationFeedback::current_yaw() const {
+  // @@protoc_insertion_point(field_get:CoreX.rpc.NavigationFeedback.current_yaw)
+  return current_yaw_;
+}
+inline void NavigationFeedback::set_current_yaw(double value) {
+  
+  current_yaw_ = value;
+  // @@protoc_insertion_point(field_set:CoreX.rpc.NavigationFeedback.current_yaw)
+}
+
+// double percent_complete = 6;
+inline void NavigationFeedback::clear_percent_complete() {
+  percent_complete_ = 0;
+}
+inline double NavigationFeedback::percent_complete() const {
+  // @@protoc_insertion_point(field_get:CoreX.rpc.NavigationFeedback.percent_complete)
+  return percent_complete_;
+}
+inline void NavigationFeedback::set_percent_complete(double value) {
+  
+  percent_complete_ = value;
+  // @@protoc_insertion_point(field_set:CoreX.rpc.NavigationFeedback.percent_complete)
+}
+
+// uint64 timestamp = 7;
+inline void NavigationFeedback::clear_timestamp() {
+  timestamp_ = GOOGLE_ULONGLONG(0);
+}
+inline ::google::protobuf::uint64 NavigationFeedback::timestamp() const {
+  // @@protoc_insertion_point(field_get:CoreX.rpc.NavigationFeedback.timestamp)
+  return timestamp_;
+}
+inline void NavigationFeedback::set_timestamp(::google::protobuf::uint64 value) {
+  
+  timestamp_ = value;
+  // @@protoc_insertion_point(field_set:CoreX.rpc.NavigationFeedback.timestamp)
+}
+
+// -------------------------------------------------------------------
+
+// NavigationResult
+
+// string goal_id = 1;
+inline void NavigationResult::clear_goal_id() {
+  goal_id_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& NavigationResult::goal_id() const {
+  // @@protoc_insertion_point(field_get:CoreX.rpc.NavigationResult.goal_id)
+  return goal_id_.GetNoArena();
+}
+inline void NavigationResult::set_goal_id(const ::std::string& value) {
+  
+  goal_id_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:CoreX.rpc.NavigationResult.goal_id)
+}
+#if LANG_CXX11
+inline void NavigationResult::set_goal_id(::std::string&& value) {
+  
+  goal_id_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:CoreX.rpc.NavigationResult.goal_id)
+}
+#endif
+inline void NavigationResult::set_goal_id(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  
+  goal_id_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:CoreX.rpc.NavigationResult.goal_id)
+}
+inline void NavigationResult::set_goal_id(const char* value, size_t size) {
+  
+  goal_id_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:CoreX.rpc.NavigationResult.goal_id)
+}
+inline ::std::string* NavigationResult::mutable_goal_id() {
+  
+  // @@protoc_insertion_point(field_mutable:CoreX.rpc.NavigationResult.goal_id)
+  return goal_id_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* NavigationResult::release_goal_id() {
+  // @@protoc_insertion_point(field_release:CoreX.rpc.NavigationResult.goal_id)
+  
+  return goal_id_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void NavigationResult::set_allocated_goal_id(::std::string* goal_id) {
+  if (goal_id != NULL) {
+    
+  } else {
+    
+  }
+  goal_id_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), goal_id);
+  // @@protoc_insertion_point(field_set_allocated:CoreX.rpc.NavigationResult.goal_id)
+}
+
+// bool success = 2;
+inline void NavigationResult::clear_success() {
+  success_ = false;
+}
+inline bool NavigationResult::success() const {
+  // @@protoc_insertion_point(field_get:CoreX.rpc.NavigationResult.success)
+  return success_;
+}
+inline void NavigationResult::set_success(bool value) {
+  
+  success_ = value;
+  // @@protoc_insertion_point(field_set:CoreX.rpc.NavigationResult.success)
+}
+
+// double final_x = 3;
+inline void NavigationResult::clear_final_x() {
+  final_x_ = 0;
+}
+inline double NavigationResult::final_x() const {
+  // @@protoc_insertion_point(field_get:CoreX.rpc.NavigationResult.final_x)
+  return final_x_;
+}
+inline void NavigationResult::set_final_x(double value) {
+  
+  final_x_ = value;
+  // @@protoc_insertion_point(field_set:CoreX.rpc.NavigationResult.final_x)
+}
+
+// double final_y = 4;
+inline void NavigationResult::clear_final_y() {
+  final_y_ = 0;
+}
+inline double NavigationResult::final_y() const {
+  // @@protoc_insertion_point(field_get:CoreX.rpc.NavigationResult.final_y)
+  return final_y_;
+}
+inline void NavigationResult::set_final_y(double value) {
+  
+  final_y_ = value;
+  // @@protoc_insertion_point(field_set:CoreX.rpc.NavigationResult.final_y)
+}
+
+// double final_yaw = 5;
+inline void NavigationResult::clear_final_yaw() {
+  final_yaw_ = 0;
+}
+inline double NavigationResult::final_yaw() const {
+  // @@protoc_insertion_point(field_get:CoreX.rpc.NavigationResult.final_yaw)
+  return final_yaw_;
+}
+inline void NavigationResult::set_final_yaw(double value) {
+  
+  final_yaw_ = value;
+  // @@protoc_insertion_point(field_set:CoreX.rpc.NavigationResult.final_yaw)
+}
+
+// string error_msg = 6;
+inline void NavigationResult::clear_error_msg() {
+  error_msg_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& NavigationResult::error_msg() const {
+  // @@protoc_insertion_point(field_get:CoreX.rpc.NavigationResult.error_msg)
+  return error_msg_.GetNoArena();
+}
+inline void NavigationResult::set_error_msg(const ::std::string& value) {
+  
+  error_msg_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:CoreX.rpc.NavigationResult.error_msg)
+}
+#if LANG_CXX11
+inline void NavigationResult::set_error_msg(::std::string&& value) {
+  
+  error_msg_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:CoreX.rpc.NavigationResult.error_msg)
+}
+#endif
+inline void NavigationResult::set_error_msg(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  
+  error_msg_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:CoreX.rpc.NavigationResult.error_msg)
+}
+inline void NavigationResult::set_error_msg(const char* value, size_t size) {
+  
+  error_msg_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:CoreX.rpc.NavigationResult.error_msg)
+}
+inline ::std::string* NavigationResult::mutable_error_msg() {
+  
+  // @@protoc_insertion_point(field_mutable:CoreX.rpc.NavigationResult.error_msg)
+  return error_msg_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* NavigationResult::release_error_msg() {
+  // @@protoc_insertion_point(field_release:CoreX.rpc.NavigationResult.error_msg)
+  
+  return error_msg_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void NavigationResult::set_allocated_error_msg(::std::string* error_msg) {
+  if (error_msg != NULL) {
+    
+  } else {
+    
+  }
+  error_msg_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), error_msg);
+  // @@protoc_insertion_point(field_set_allocated:CoreX.rpc.NavigationResult.error_msg)
+}
+
+// -------------------------------------------------------------------
+
+// GoalIdRequest
+
+// string goal_id = 1;
+inline void GoalIdRequest::clear_goal_id() {
+  goal_id_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& GoalIdRequest::goal_id() const {
+  // @@protoc_insertion_point(field_get:CoreX.rpc.GoalIdRequest.goal_id)
+  return goal_id_.GetNoArena();
+}
+inline void GoalIdRequest::set_goal_id(const ::std::string& value) {
+  
+  goal_id_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:CoreX.rpc.GoalIdRequest.goal_id)
+}
+#if LANG_CXX11
+inline void GoalIdRequest::set_goal_id(::std::string&& value) {
+  
+  goal_id_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:CoreX.rpc.GoalIdRequest.goal_id)
+}
+#endif
+inline void GoalIdRequest::set_goal_id(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  
+  goal_id_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:CoreX.rpc.GoalIdRequest.goal_id)
+}
+inline void GoalIdRequest::set_goal_id(const char* value, size_t size) {
+  
+  goal_id_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:CoreX.rpc.GoalIdRequest.goal_id)
+}
+inline ::std::string* GoalIdRequest::mutable_goal_id() {
+  
+  // @@protoc_insertion_point(field_mutable:CoreX.rpc.GoalIdRequest.goal_id)
+  return goal_id_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* GoalIdRequest::release_goal_id() {
+  // @@protoc_insertion_point(field_release:CoreX.rpc.GoalIdRequest.goal_id)
+  
+  return goal_id_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void GoalIdRequest::set_allocated_goal_id(::std::string* goal_id) {
+  if (goal_id != NULL) {
+    
+  } else {
+    
+  }
+  goal_id_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), goal_id);
+  // @@protoc_insertion_point(field_set_allocated:CoreX.rpc.GoalIdRequest.goal_id)
+}
+
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

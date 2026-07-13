@@ -19,15 +19,23 @@ apps/
 │   └── main.cpp                        # 入口：参数解析 → fork 后台 → 信号注册 → 事件循环
 │
 ├── config/                             # 配置文件
-│   └── corex_daemon.yaml               # 默认配置模板（端口、线程数、IPC、插件路径、日志）
+│   └── corex_daemon.yaml               # 默认配置模板（端口、线程数、IPC、插件路径、日志、★ ROS Bridge）
 │
 ├── examples/                           # 示例
 │   ├── math_plugin/                    # 业务插件示例（Add/Sub 计算服务）
 │   │   ├── math_service_plugin.cpp     #   继承 RpcServiceAdapter 实现业务逻辑
 │   │   ├── CMakeLists.txt              #   独立编译脚本
 │   │   └── README.md                   #   插件编译/部署说明
+│   ├── robot_controller/               # ★ 机器人遥控面板示例
+│   │   ├── main.cpp                    #   交互式键盘控制 + 遥测轮询 (20Hz)
+│   │   └── RpcClient.hpp               #   轻量级 C++ RPC 客户端（纯 TCP + Protobuf）
 │   └── python_client/                  # Python RPC 客户端示例
 │       └── rpc_client.py               #   零依赖，手写 Protobuf Wire Format 编解码
+│
+├── plugins/ros/                        # ★ ROS 桥接插件（已被 src/ros_bridge 取代）
+│   ├── control_plugin.cpp              #   CoreX→ROS /cmd_vel 运动控制（旧版）
+│   ├── telemetry_plugin.cpp            #   ROS→CoreX /odom 遥测（旧版）
+│   └── DEPRECATED.md                   #   弃用说明 + 迁移指南
 │
 └── systemd/                            # 生产部署
     └── corex-daemon.service            # systemd unit 模板
@@ -40,7 +48,9 @@ apps/
 | `daemon/` | CoreXDaemon 可执行文件的源码。封装了配置解析、插件加载、信号处理、生命周期管理等通用逻辑，**与具体业务解耦**。 | 运维 / 架构师 |
 | `config/` | 默认 YAML 配置模板。部署时复制到 `/etc/corex/` 并按需修改。 | 运维 |
 | `examples/math_plugin/` | 演示如何编写业务插件 `.so`。继承 `RpcServiceAdapter`，导出 `createService`/`destroyService`。 | 业务开发者 |
+| `examples/robot_controller/` | ★ 演示如何使用 C++ RPC 客户端遥控机器人。包含交互式键盘控制和遥测面板。 | 机器人开发者 |
 | `examples/python_client/` | 演示任意语言如何通过 TCP + Protobuf 调用 CoreX RPC。Python 版零外部依赖。 | 客户端开发者 |
+| `plugins/ros/` | ★ ROS 桥接插件（旧版，已被 `src/ros_bridge/` 取代）。保留作为教学参考。 | 机器人开发者 |
 | `systemd/` | systemd unit 文件模板，用于生产环境的自动启动、重启、日志收集。 | 运维 |
 
 ---
@@ -448,6 +458,426 @@ CoreXDaemon [选项]
 
 ---
 
+---
+
+## 十、ROS Bridge 集成（CoreX ↔ ROS 协议网关）
+
+> **适用场景：机器人/自动驾驶** — 将 ROS Topic/Service/Action 抽象为 CoreX RPC 服务，实现云端↔机器人双向通信。
+>
+> **前置条件**：需要 ROS 环境（roscore + roscpp），详见 [src/ros_bridge/README.md](../src/ros_bridge/README.md)。
+
+### 10.1 架构概览
+
+```
+┌──────────────────────────────────────────────────────────┐
+│                    CoreXDaemon 进程 (机器人侧)              │
+│                                                          │
+│  云服务器 ←─TCP─→ RpcServer ←─registerService─┐           │
+│                                                  │        │
+│  ┌─────────────────────────────────────────┐     │        │
+│  │          RosBridgeEngine                 │     │        │
+│  │                                          │     │        │
+│  │  BridgeConfig (YAML) ──→ ┌──────────────┤     │        │
+│  │                          │ TopicBridge   │     │        │
+│  │  topics:                 │  - /cmd_vel   │─────┼──→ RPC │
+│  │    - /cmd_vel (publish)  │  - /odom      │     │  注册   │
+│  │    - /odom (subscribe)   │  - /scan      │     │        │
+│  │                          └──────────────┘     │        │
+│  │                          ┌──────────────┐     │        │
+│  │  services:               │ ServiceBridge │     │        │
+│  │    - /gazebo/spawn_model │  - bytes 透传  │     │        │
+│  │                          └──────────────┘     │        │
+│  │                          ┌──────────────┐     │        │
+│  │  actions:                │ ActionBridge  │     │        │
+│  │    - /move_base          │  - Start/Cancel│    │        │
+│  │                          └──────────────┘     │        │
+│  └──────────────┬──────────────────────────┘     │        │
+│                 │ ROS API                         │        │
+│  ┌──────────────▼──────────────────────────┐     │        │
+│  │          RosNodeManager                  │     │        │
+│  │  ros::NodeHandle + AsyncSpinner          │     │        │
+│  └──────────────┬──────────────────────────┘     │        │
+└─────────────────┼─────────────────────────────────┘
+                  │
+     ┌────────────┼────────────┐
+     ▼            ▼            ▼
+  ROS Topic   ROS Service  ROS Action
+  /cmd_vel    /gazebo/...  /move_base
+  /odom
+```
+
+**数据流向**：
+
+| 方向 | 流程 | 典型场景 |
+|------|------|---------|
+| CoreX → ROS (publish) | 云端 RPC → TopicBridge → `ros::Publisher` → ROS Topic | 云端控制机器人运动 (`/cmd_vel`) |
+| ROS → CoreX (subscribe) | ROS Topic → `ros::Subscriber` 回调 → 缓存 → RPC 查询 | 机器人状态回传 (`/odom`, `/joint_states`) |
+| ROS Service | 云端 RPC → ServiceBridge → `ros::service::call()` → 响应 | Gazebo 仿真控制 |
+| ROS Action | 云端 RPC → ActionBridge → Goal/Cancel/Feedback/Result | 导航任务 (`/move_base`) |
+
+### 10.2 配置参考
+
+在 `corex_daemon.yaml` 中添加 `ros_bridge` 配置段：
+
+```yaml
+ros_bridge:
+  # ---- 基础设置 ----
+  enabled: true                        # 启用 ROS Bridge（默认 false）
+  node_name: "corex_ros_bridge"        # ROS 节点名
+  spinner_threads: 2                   # AsyncSpinner 线程数
+
+  # ---- Topic 双向映射 ----
+  topics:
+    # 方向 subscribe: ROS → CoreX（Bridge 订阅 ROS，供云端查询）
+    - ros_topic: "/odom"
+      ros_type: "nav_msgs/Odometry"
+      direction: "subscribe"
+      rpc_service: "CoreX.rpc.RobotTelemetry"
+      rpc_method: "GetOdometry"
+      rate_hz: 20                      # 缓存更新频率上限 (Hz)
+      queue_size: 10
+
+    - ros_topic: "/joint_states"
+      ros_type: "sensor_msgs/JointState"
+      direction: "subscribe"
+      rpc_service: "CoreX.rpc.RobotTelemetry"
+      rpc_method: "GetJointStates"
+      rate_hz: 50
+      queue_size: 10
+
+    - ros_topic: "/camera/image_raw"
+      ros_type: "sensor_msgs/Image"
+      direction: "subscribe"
+      rpc_service: "CoreX.rpc.RobotTelemetry"
+      rpc_method: "GetImage"
+      use_shm: true                    # ★ 高频大消息走共享内存
+      rate_hz: 30
+      queue_size: 5
+
+    - ros_topic: "/scan"
+      ros_type: "sensor_msgs/LaserScan"
+      direction: "subscribe"
+      rpc_service: "CoreX.rpc.RobotTelemetry"
+      rpc_method: "GetLaserScan"
+      rate_hz: 10
+      queue_size: 10
+
+    # 方向 publish: CoreX → ROS（云端 RPC 调用 → 发布到 ROS）
+    - ros_topic: "/cmd_vel"
+      ros_type: "geometry_msgs/Twist"
+      direction: "publish"
+      rpc_service: "CoreX.rpc.MotionControl"
+      rpc_method: "SetVelocity"
+      queue_size: 10
+
+  # ---- ROS Service 映射（使用通用 bytes 透传）----
+  services:
+    - ros_service: "/gazebo/spawn_model"
+      rpc_service: "CoreX.rpc.SimulationControl"
+      rpc_method: "SpawnModel"
+      timeout_ms: 5000
+
+    - ros_service: "/controller_manager/switch_controller"
+      rpc_service: "CoreX.rpc.ControllerManager"
+      rpc_method: "SwitchController"
+      timeout_ms: 3000
+
+  # ---- ROS Action 映射（拆分为 4 个 RPC 方法）----
+  actions:
+    - ros_action: "/move_base"
+      ros_action_type: "move_base_msgs/MoveBaseAction"
+      rpc_service: "CoreX.rpc.Navigation"
+      rpc_method_start: "StartNavigation"
+      rpc_method_cancel: "CancelNavigation"
+      rpc_method_feedback: "GetNavigationFeedback"
+      rpc_method_result: "GetNavigationResult"
+      timeout_ms: 30000
+```
+
+### 10.3 快速开始
+
+```bash
+# 1. 启动 ROS Master
+roscore &
+
+# 2. 编译（自动检测 ROS 环境，编译 librrosbridge.a）
+cd CoreX && ./build.sh
+
+# 3. 编辑配置文件：设置 enabled: true
+vi apps/config/corex_daemon.yaml
+
+# 4. 启动 CoreXDaemon（自动初始化 ROS Bridge）
+./build/CoreXDaemon --config apps/config/corex_daemon.yaml
+
+# 启动 banner 示例：
+# ╔══════════════════════════════════════════════╗
+# ║        CoreX RPC Daemon v1.0.0               ║
+# ╠══════════════════════════════════════════════╣
+# ║  TCP  : 0.0.0.0:8080                        ║
+# ║  IPC  : /corex_rpc_ipc                      ║
+# ║  Services: 4 loaded                         ║
+# ║    - CoreX.rpc.RobotTelemetry               ║
+# ║    - CoreX.rpc.MotionControl                ║
+# ║    - CoreX.rpc.SimulationControl            ║
+# ║    - CoreX.rpc.Navigation                   ║
+# ║  ROS Bridge: /cmd_vel→publish, /odom→subscribe ║
+# ╚══════════════════════════════════════════════╝
+
+# 5. 机器人遥控（交互式）
+./build/host_controller --host 127.0.0.1 --port 8080
+# 命令: f 0.5 (前进)  b 0.3 (后退)  l 0.5 (左转)  r 0.5 (右转)  s (急停)  q (退出)
+
+# 6. Python 客户端查询遥测
+python3 apps/examples/python_client/rpc_client.py telemetry GetOdometry
+python3 apps/examples/python_client/rpc_client.py telemetry GetStatus
+```
+
+### 10.4 典型使用场景
+
+#### 场景 A：云端远程控制机器人移动
+
+```bash
+# 云端服务器 —— 通过 TCP 连接机器人 CoreXDaemon
+python3 apps/examples/python_client/rpc_client.py \
+    --host <robot_ip> --port 8080 \
+    motion SetVelocity --linear_x 0.5 --angular_z 0.2
+
+# 急停
+python3 apps/examples/python_client/rpc_client.py \
+    --host <robot_ip> --port 8080 \
+    motion Stop
+```
+
+**内部流程**：
+```
+云端 RPC SetVelocity(linear_x=0.5, angular_z=0.2)
+  ↓ TCP TLV + Protobuf
+机器人 CoreXDaemon
+  ↓ RpcServer::dispatchTable["CoreX.rpc.MotionControl"]
+  ↓ DynamicServiceAdapter::dispatch("SetVelocity", payload)
+  ↓ TopicBridge::handlePublish(payload)
+  ↓ ros::Publisher::publish(geometry_msgs::Twist)
+  ↓ /cmd_vel
+机器人底盘控制器 → 电机转动
+```
+
+#### 场景 B：云端监控机器人状态
+
+```bash
+# 轮询里程计（20Hz 刷新）
+watch -n 0.05 'python3 apps/examples/python_client/rpc_client.py \
+    --host <robot_ip> --port 8080 telemetry GetOdometry'
+
+# 获取电池状态
+python3 apps/examples/python_client/rpc_client.py \
+    --host <robot_ip> --port 8080 telemetry GetStatus
+```
+
+**内部流程**：
+```
+机器人 ROS /odom 发布 (100Hz)
+  ↓ ros::Subscriber 回调
+  ↓ TopicBridge::onRosMessage() → 更新缓存
+云端 RPC GetOdometry()
+  ↓ RpcServer → DynamicServiceAdapter::dispatch
+  ↓ TopicBridge::handleGetCached() → 返回最新缓存
+  ↓ TCP TLV + Protobuf
+云端收到 OdometryResponse {pos_x, pos_y, vel_x, ...}
+```
+
+#### 场景 C：Gazebo 仿真控制
+
+```yaml
+# 配置
+services:
+  - ros_service: "/gazebo/spawn_model"
+    rpc_service: "CoreX.rpc.SimulationControl"
+    rpc_method: "SpawnModel"
+```
+
+```python
+# 通过 RPC 调用 Gazebo 的 ROS Service
+python3 apps/examples/python_client/rpc_client.py \
+    simulation SpawnModel \
+    --model_name "my_robot" --pos_x 1.0 --pos_y 2.0
+```
+
+#### 场景 D：自主导航
+
+```yaml
+# 配置
+actions:
+  - ros_action: "/move_base"
+    ros_action_type: "move_base_msgs/MoveBaseAction"
+    rpc_service: "CoreX.rpc.Navigation"
+    rpc_method_start: "StartNavigation"
+    rpc_method_cancel: "CancelNavigation"
+    rpc_method_feedback: "GetNavigationFeedback"
+    rpc_method_result: "GetNavigationResult"
+```
+
+```bash
+# 1. 发起导航任务
+goal_id=$(python3 apps/examples/python_client/rpc_client.py \
+    navigation StartNavigation \
+    --target_x 5.0 --target_y 3.0 --target_yaw 0.0)
+
+# 2. 轮询进度
+while true; do
+    python3 apps/examples/python_client/rpc_client.py \
+        navigation GetNavigationFeedback --goal_id "$goal_id"
+    sleep 0.5
+done
+
+# 3. 获取最终结果
+python3 apps/examples/python_client/rpc_client.py \
+    navigation GetNavigationResult --goal_id "$goal_id"
+```
+
+### 10.5 共享内存加速 (SHM)
+
+CoreX 提供两种 SHM 加速模式：
+
+#### 模式 A：SHM Topic 直通 (`use_shm_topic: true`) ★ 推荐
+
+**用共享内存替代同机 ROS TCPROS**。发布者写入共享内存环形缓冲，订阅者通过 eventfd 唤醒读取。同机延迟从 TCPROS 的 50-200μs 降至 **< 10μs**。
+
+```yaml
+topics:
+  - ros_topic: "/cmd_vel"
+    ros_type: "geometry_msgs/Twist"
+    direction: "publish"
+    rpc_service: "CoreX.rpc.MotionControl"
+    rpc_method: "SetVelocity"
+    use_shm_topic: true          # ★ 启用 SHM 直通
+
+  - ros_topic: "/odom"
+    ros_type: "nav_msgs/Odometry"
+    direction: "subscribe"
+    rpc_service: "CoreX.rpc.RobotTelemetry"
+    rpc_method: "GetOdometry"
+    use_shm_topic: true
+```
+
+**工作原理**：TopicBridge 在 publish/subscribe 时同时写入 SHM 和 ROS TCPROS。同机 CoreX 客户端直接从 SHM 读取（< 10μs），跨机/标准 ROS 节点仍通过 TCPROS 接收。
+
+**客户端代码示例**（C++ 同机高性能订阅者）：
+
+```cpp
+#include "src/ros_bridge/ShmTopicBus.hpp"
+
+// 附加到已有 topic 的 SHM 段
+ShmTopicBus sub("/cmd_vel", 64*1024, 16, false);  // isCreator=false
+int efd = sub.subscribe();  // 获取 eventfd
+
+// 注册到 EventLoop/epoll
+// ...
+
+// 读取最新消息
+std::string msg;
+if (sub.tryRecv(msg)) {
+    // msg 是 ROS 序列化后的原始数据，可直接反序列化
+}
+```
+
+#### 模式 B：大消息三缓冲 (`use_shm: true`)
+
+对于图像、点云等大数据（单帧 > 100KB），启用三缓冲共享内存：
+
+```yaml
+topics:
+  - ros_topic: "/camera/image_raw"
+    ros_type: "sensor_msgs/Image"
+    direction: "subscribe"
+    rpc_service: "CoreX.rpc.RobotTelemetry"
+    rpc_method: "GetImage"
+    use_shm: true              # 三缓冲共享内存
+```
+
+**性能对比**：
+
+| 方式 | 同机延迟 | 适用场景 |
+|------|:------:|------|
+| TCPROS（默认） | 50-200μs | 跨机 / 标准 ROS 节点 |
+| **SHM Topic 直通** (`use_shm_topic`) | **< 10μs** | 同机 CoreX 节点高频 Topic |
+| SHM 三缓冲 (`use_shm`) | < 1ms | 大消息（图像/点云）RPC 查询 |
+| 两者同时启用 | < 10μs (Topic) + < 1ms (RPC) | 最佳性能组合 |
+
+### 10.6 与旧版独立插件的对比
+
+| 特性 | 旧版独立 .so 插件 | 新版 ROS Bridge |
+|------|:-----------:|:-----------:|
+| 新增 Topic | 手写 C++ 插件 + 重编译 | 加一行 YAML 配置 |
+| ROS Service 支持 | ❌ 不支持 | ✅ bytes 通用透传 |
+| ROS Action 支持 | ❌ 不支持 | ✅ Goal/Feedback/Result |
+| 图像/点云 | ❌ TCP 逐帧拷贝 | ✅ SHM 三缓冲零拷贝 |
+| ROS Master 重连 | ❌ 手动处理 | ✅ 自动检测恢复 |
+| 配置修改 | 改代码 | 改 YAML，重启即生效 |
+
+> 旧版插件（`apps/plugins/ros/`）仍保留作为教学参考，但不建议在新项目中使用。详见 [DEPRECATED.md](plugins/ros/DEPRECATED.md)。
+
+### 10.7 编译部署
+
+**在机器人/仿真环境（有 ROS）上**：
+
+```bash
+cd CoreX && ./build.sh
+# CMake 自动检测 ROS → 编译 librrosbridge.a + CoreXDaemon (HAS_ROS_BRIDGE=1)
+```
+
+**在云服务器（无 ROS）上**：
+
+```bash
+cd CoreX && ./build.sh
+# CMake 跳过 ROS Bridge → CoreXDaemon 正常编译，仅无 Bridge 功能
+# 提示: "ROS NOT found — skipping CoreX-ROS Bridge"
+```
+
+**交叉编译场景**：在开发机上编译，部署到机器人：
+
+```bash
+# 开发机（有 ROS SDK 但未必有 roscore）
+cd CoreX
+source /opt/ros/melodic/setup.bash   # 加载 ROS 环境
+./build.sh                            # 编译 Bridge
+scp build/CoreXDaemon robot@ip:/opt/corex/
+```
+
+### 10.8 常见问题
+
+**Q: 启动时提示 "ROS Master not reachable"？**
+
+正常现象。Bridge 会在 CoreXDaemon 启动时尝试连接 ROS Master。确保先启动 `roscore`，或者在 `corex_daemon.yaml` 中设置 `master_uri`。
+
+**Q: 如何添加新的 Topic 映射？**
+
+编辑 `corex_daemon.yaml` 的 `ros_bridge.topics` 段，添加新条目，重启 CoreXDaemon 即可。无需重编译。
+
+**Q: Bridge 模块的性能开销？**
+
+ROS Bridge 本身常驻内存 < 50MB（不含图像缓冲）。Topic 缓存读取 + 序列化延迟 < 100μs。对非 Bridge 的 RPC 请求无任何性能影响。
+
+**Q: 支持 ROS 2 吗？**
+
+当前版本仅支持 ROS 1（Melodic/Noetic）。ROS 2 的支持计划在后续版本中添加（`rclcpp` + DDS）。
+
+**Q: Bridge 启动失败但 CoreXDaemon 正常运行？**
+
+Bridge 失败不会阻塞 CoreXDaemon 启动。原有的 RPC 服务（插件加载的 MathService 等）完全不受影响。检查 ROS 日志定位 Bridge 问题。
+
+### 10.9 更多信息
+
+| 文档 | 路径 |
+|------|------|
+| Bridge 模块文档 | [../src/ros_bridge/README.md](../src/ros_bridge/README.md) |
+| Proto 定义 | [../proto/robot_service.proto](../proto/robot_service.proto) |
+| Proto 定义 (ROS 类型) | [../proto/ros_messages.proto](../proto/ros_messages.proto) |
+| 遥控器源码 | [examples/robot_controller/main.cpp](examples/robot_controller/main.cpp) |
+| 旧插件迁移指南 | [plugins/ros/DEPRECATED.md](plugins/ros/DEPRECATED.md) |
+| AI 开发指南 | [../CLAUDE.md](../CLAUDE.md) |
+
+---
+
 ## 九、相关文档
 
 | 文档 | 路径 |
@@ -457,3 +887,4 @@ CoreXDaemon [选项]
 | Bug 分析 | [BUG_ANALYSIS.md](BUG_ANALYSIS.md) |
 | RPC 压测说明 | [../tests/test_rpc_benchmark.md](../tests/test_rpc_benchmark.md) |
 | Echo 测试说明 | [../tests/Test_EchoServer_README.md](../tests/Test_EchoServer_README.md) |
+| ROS Bridge 集成 | [← 见上方第十章](#十ros-bridge-集成corex--ros-协议网关) |

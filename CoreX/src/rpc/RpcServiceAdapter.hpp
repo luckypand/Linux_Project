@@ -24,7 +24,14 @@ public:
 
     virtual ~RpcServiceAdapter() = default;
 
-    const std::string& serviceName() const { return svcDesc_->full_name(); }
+    // 虚函数：允许子类覆盖 serviceName（如 Bridge 动态适配器）
+    virtual const std::string& serviceName() const
+    {
+        // 缓存 full_name，避免每次调用都构造临时对象
+        static thread_local std::string cachedName;
+        cachedName = svcDesc_ ? svcDesc_->full_name() : "";
+        return cachedName;
+    }
 
     // 注册一个方法的处理函数（由子类在构造函数中调用）
     void registerHandler(const std::string& methodName, MethodHandler handler)
@@ -34,9 +41,19 @@ public:
 
     // ★ 核心：根据方法名，创建 request、解析 payload、调用 handler、返回序列化 response
     // 返回空 string 表示出错
-    std::string dispatch(const std::string& methodName,
-                         const std::string& payload)
+    // 声明为 virtual：允许子类（如 Bridge 动态适配器）覆盖 dispatch 逻辑
+    virtual std::string dispatch(const std::string& methodName,
+                                 const std::string& payload)
     {
+        // 对于没有 ServiceDescriptor 的动态适配器，直接查 handlers_ 表
+        if (!svcDesc_) {
+            auto it = handlers_.find(methodName);
+            if (it == handlers_.end()) return "";
+            // 动态适配器：handlers 中直接处理 payload，不经过 protobuf 反序列化
+            // 子类应在 registerHandler 时存入特殊 handler
+            return "";  // 由子类覆盖 dispatch 实现
+        }
+
         // 1. 查找 MethodDescriptor
         const ::google::protobuf::MethodDescriptor* method =
             svcDesc_->FindMethodByName(methodName);

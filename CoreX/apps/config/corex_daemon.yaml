@@ -29,3 +29,79 @@ logging:
 monitoring:
   health_check_port: 9090             # HTTP 健康检查端口（预留，尚未实现）
   latency_stats: false                # 是否启用 RPC 延迟统计（预留）
+
+# ============================================================================
+# ROS Bridge 配置 — CoreX ↔ ROS 协议网关
+# 注意：需要 ROS 环境 (roscore) 才能正常使用
+# ============================================================================
+ros_bridge:
+  enabled: false                       # 是否启用 ROS Bridge（默认关闭，需在有 ROS 的机器上开启）
+  node_name: "corex_ros_bridge"        # ROS 节点名称
+  spinner_threads: 2                   # ROS AsyncSpinner 线程数
+
+  # Topic 双向映射
+  topics:
+    # --- ROS → CoreX (subscribe) ---
+    - ros_topic: "/odom"
+      ros_type: "nav_msgs/Odometry"
+      direction: "subscribe"
+      rpc_service: "CoreX.rpc.RobotTelemetry"
+      rpc_method: "GetOdometry"
+      rate_hz: 20
+      queue_size: 10
+
+    - ros_topic: "/joint_states"
+      ros_type: "sensor_msgs/JointState"
+      direction: "subscribe"
+      rpc_service: "CoreX.rpc.RobotTelemetry"
+      rpc_method: "GetJointStates"
+      rate_hz: 50
+      queue_size: 10
+
+    - ros_topic: "/camera/image_raw"
+      ros_type: "sensor_msgs/Image"
+      direction: "subscribe"
+      rpc_service: "CoreX.rpc.RobotTelemetry"
+      rpc_method: "GetImage"
+      use_shm: true                    # 高频大数据走共享内存
+      rate_hz: 30
+      queue_size: 5
+
+    - ros_topic: "/scan"
+      ros_type: "sensor_msgs/LaserScan"
+      direction: "subscribe"
+      rpc_service: "CoreX.rpc.RobotTelemetry"
+      rpc_method: "GetLaserScan"
+      rate_hz: 10
+      queue_size: 10
+
+    # --- CoreX → ROS (publish) ---
+    - ros_topic: "/cmd_vel"
+      ros_type: "geometry_msgs/Twist"
+      direction: "publish"
+      rpc_service: "CoreX.rpc.MotionControl"
+      rpc_method: "SetVelocity"
+      queue_size: 10
+
+  # ROS Service 映射
+  services:
+    # - ros_service: "/gazebo/spawn_model"
+    #   rpc_service: "CoreX.rpc.SimulationControl"
+    #   rpc_method: "SpawnModel"
+    #   timeout_ms: 5000
+
+    # - ros_service: "/controller_manager/switch_controller"
+    #   rpc_service: "CoreX.rpc.ControllerManager"
+    #   rpc_method: "SwitchController"
+    #   timeout_ms: 3000
+
+  # ROS Action 映射
+  actions:
+    # - ros_action: "/move_base"
+    #   ros_action_type: "move_base_msgs/MoveBaseAction"
+    #   rpc_service: "CoreX.rpc.Navigation"
+    #   rpc_method_start: "StartNavigation"
+    #   rpc_method_cancel: "CancelNavigation"
+    #   rpc_method_feedback: "GetNavigationFeedback"
+    #   rpc_method_result: "GetNavigationResult"
+    #   timeout_ms: 30000

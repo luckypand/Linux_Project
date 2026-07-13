@@ -6,7 +6,11 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 This is a **collection of independent C/C++ mini-projects** for Linux system programming — not a single application. Each directory (except `CoreX/`) is a self-contained exercise or experiment.
 
-The **active project** is [`CoreX/`](CoreX/) — a C++17 network library (Reactor pattern, Protobuf RPC). See [CoreX/CLAUDE.md](CoreX/CLAUDE.md) for its full architecture, build commands, tests, and known issues.
+The **active project** is [`CoreX/`](CoreX/) — a C++17 network library (Reactor pattern, Protobuf RPC, ROS Bridge, SHM Topic Bus). Key docs:
+- [CoreX/CLAUDE.md](CoreX/CLAUDE.md) — Architecture, build commands, tests, known issues
+- [CoreX/DEPLOYMENT.md](CoreX/DEPLOYMENT.md) — ★ 完整部署与使用手册
+- [CoreX/README.md](CoreX/README.md) — 项目概览与快速开始
+- [CoreX/apps/USAGE.md](CoreX/apps/USAGE.md) — 守护进程/嵌入式/ROS Bridge 使用文档
 
 ## Build Commands
 

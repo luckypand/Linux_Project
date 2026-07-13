@@ -7,6 +7,9 @@
 #include "../../src/rpc/RpcServiceAdapter.hpp"
 #include "../../src/log/my_log.hpp"
 #include <iostream>
+#ifdef HAS_ROS_BRIDGE
+#include "../../src/ros_bridge/RosBridgeEngine.hpp"
+#endif
 #include <cstdio>
 #include <algorithm>
 
@@ -77,6 +80,28 @@ bool CoreXDaemon::init(const std::string& configPath)
              host.c_str(), port, workerThreads);
 #endif
 
+#ifdef HAS_ROS_BRIDGE
+    // --- 初始化 ROS Bridge（如果配置了）---
+    BridgeConfig bridgeCfg;
+    YAML::Node rosBridgeNode = config_->getNode("ros_bridge");
+    if (rosBridgeNode && !rosBridgeNode.IsNull()) {
+        bridgeCfg.loadFromYaml(rosBridgeNode);
+        if (bridgeCfg.enabled) {
+            rosBridge_ = std::make_unique<RosBridgeEngine>();
+            if (!rosBridge_->initialize(bridgeCfg)) {
+                std::cerr << "[CoreXDaemon] WARNING: ROS Bridge initialization failed"
+                          << std::endl;
+                rosBridge_.reset();
+            }
+#if ENABLE_LOG
+            else {
+                LOG_INFO("[CoreXDaemon] ROS Bridge initialized");
+            }
+#endif
+        }
+    }
+#endif  // HAS_ROS_BRIDGE
+
     return true;
 }
 
@@ -87,29 +112,41 @@ bool CoreXDaemon::loadPlugins()
 
     if (!autoLoad) {
         std::cout << "[CoreXDaemon] Plugin autoload disabled, skipping." << std::endl;
-        return true;
-    }
+    } else {
+        std::vector<RpcServiceAdapter*> services = pluginLoader_->loadDirectory(pluginDir);
 
-    std::vector<RpcServiceAdapter*> services = pluginLoader_->loadDirectory(pluginDir);
-
-    if (services.empty()) {
-        std::cout << "[CoreXDaemon] WARNING: No plugins loaded from directory: "
-                  << pluginDir << std::endl;
-        if (!pluginLoader_->getLastError().empty()) {
-            std::cerr << "[CoreXDaemon] Plugin loader error: "
-                      << pluginLoader_->getLastError() << std::endl;
+        if (services.empty()) {
+            std::cout << "[CoreXDaemon] WARNING: No plugins loaded from directory: "
+                      << pluginDir << std::endl;
+            if (!pluginLoader_->getLastError().empty()) {
+                std::cerr << "[CoreXDaemon] Plugin loader error: "
+                          << pluginLoader_->getLastError() << std::endl;
+            }
         }
-        return false;
+
+        // --- 注册所有加载的插件服务 ---
+        for (auto* svc : services) {
+            rpcServer_->registerService(svc);
+            std::cout << "[CoreXDaemon] Registered plugin service: " << svc->serviceName() << std::endl;
+#if ENABLE_LOG
+            LOG_INFO("[CoreXDaemon] Registered plugin service: %s", svc->serviceName().c_str());
+#endif
+        }
     }
 
-    // --- 注册所有加载的服务 ---
-    for (auto* svc : services) {
-        rpcServer_->registerService(svc);
-        std::cout << "[CoreXDaemon] Registered service: " << svc->serviceName() << std::endl;
+#ifdef HAS_ROS_BRIDGE
+    // --- 注册 ROS Bridge 服务（如果已初始化）---
+    if (rosBridge_) {
+        auto bridgeAdapters = rosBridge_->getServiceAdapters();
+        for (auto* adapter : bridgeAdapters) {
+            rpcServer_->registerService(adapter);
+            std::cout << "[CoreXDaemon] Registered bridge service: " << adapter->serviceName() << std::endl;
 #if ENABLE_LOG
-        LOG_INFO("[CoreXDaemon] Registered service: %s", svc->serviceName().c_str());
+            LOG_INFO("[CoreXDaemon] Registered bridge service: %s", adapter->serviceName().c_str());
 #endif
+        }
     }
+#endif  // HAS_ROS_BRIDGE
 
     return true;
 }
@@ -130,6 +167,20 @@ bool CoreXDaemon::start()
         LOG_INFO("[CoreXDaemon] IPC fast-path enabled on shm: %s", shmName.c_str());
 #endif
     }
+
+#ifdef HAS_ROS_BRIDGE
+    // --- 启动 ROS Bridge（如果已初始化）---
+    if (rosBridge_) {
+        if (!rosBridge_->start()) {
+            std::cerr << "[CoreXDaemon] WARNING: ROS Bridge start failed" << std::endl;
+        }
+#if ENABLE_LOG
+        else {
+            LOG_INFO("[CoreXDaemon] ROS Bridge started");
+        }
+#endif
+    }
+#endif  // HAS_ROS_BRIDGE
 
     // --- 在独立线程中运行 EventLoop ---
     running_ = true;
@@ -178,7 +229,15 @@ void CoreXDaemon::shutdown()
         eventLoopThread_.join();
     }
 
-    // 3. 卸载所有插件
+#ifdef HAS_ROS_BRIDGE
+    // 3. 停止 ROS Bridge（在卸载插件之前）
+    if (rosBridge_) {
+        rosBridge_->stop();
+        std::cout << "[CoreXDaemon] ROS Bridge stopped." << std::endl;
+    }
+#endif  // HAS_ROS_BRIDGE
+
+    // 4. 卸载所有插件
     pluginLoader_->unloadAll();
 
 #if ENABLE_LOG
@@ -195,6 +254,13 @@ std::vector<std::string> CoreXDaemon::getServiceNames() const
             names.push_back(plugin.service->serviceName());
         }
     }
+#ifdef HAS_ROS_BRIDGE
+    // 添加 ROS Bridge 的服务名
+    if (rosBridge_) {
+        auto bridgeNames = rosBridge_->getServiceNames();
+        names.insert(names.end(), bridgeNames.begin(), bridgeNames.end());
+    }
+#endif
     return names;
 }
 

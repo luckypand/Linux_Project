@@ -9,6 +9,9 @@ class RpcServer;
 class RpcServiceAdapter;
 class ConfigManager;
 class PluginLoader;
+#ifdef HAS_ROS_BRIDGE
+class RosBridgeEngine;
+#endif
 
 // ============================================================================
 // CoreXDaemon —— RPC 中间件守护进程
@@ -69,6 +72,9 @@ private:
     std::unique_ptr<EventLoop>  mainLoop_;
     std::unique_ptr<RpcServer>  rpcServer_;
     std::unique_ptr<PluginLoader> pluginLoader_;
+#ifdef HAS_ROS_BRIDGE
+    std::unique_ptr<RosBridgeEngine> rosBridge_;   // ★ ROS Bridge 引擎
+#endif
 
     // 运行时状态
     std::thread  eventLoopThread_;

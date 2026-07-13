@@ -1,0 +1,221 @@
+// proto/ros_messages.proto
+// CoreX-ROS Bridge — 常用 ROS 消息类型的 Protobuf 等价定义
+//
+// 用于 ROS Topic/Service/Action 消息在 Protobuf 与 ROS 之间的序列化转换
+//
+// 对应关系：
+//   sensor_msgs/JointState     → JointState
+//   sensor_msgs/Image          → Image
+//   sensor_msgs/LaserScan      → LaserScan
+//   sensor_msgs/PointCloud2    → PointCloud2
+//   tf2_msgs/TFMessage         → TFMessage
+//   geometry_msgs/Twist        → Twist
+//   geometry_msgs/Pose         → Pose
+//   nav_msgs/Odometry          → (已在 robot_service.proto 中定义)
+
+syntax = "proto3";
+
+package CoreX.ros;
+
+// ============================================================================
+// 基础几何类型
+// ============================================================================
+
+message Vector3 {
+    double x = 1;
+    double y = 2;
+    double z = 3;
+}
+
+message Quaternion {
+    double x = 1;
+    double y = 2;
+    double z = 3;
+    double w = 4;
+}
+
+message Point {
+    double x = 1;
+    double y = 2;
+    double z = 3;
+}
+
+message Pose {
+    Point      position    = 1;
+    Quaternion orientation = 2;
+}
+
+message Twist {
+    Vector3 linear  = 1;  // 线速度 (m/s)
+    Vector3 angular = 2;  // 角速度 (rad/s)
+}
+
+// ============================================================================
+// 关节状态 (sensor_msgs/JointState)
+// ============================================================================
+
+message JointState {
+    repeated string name     = 1;  // 关节名称列表
+    repeated double position = 2;  // 关节位置 (rad 或 m)
+    repeated double velocity = 3;  // 关节速度 (rad/s 或 m/s)
+    repeated double effort   = 4;  // 关节力矩 (Nm 或 N)
+    uint64           timestamp = 5; // 数据时间戳 (us)
+}
+
+// ============================================================================
+// IMU 数据 (sensor_msgs/Imu)
+// ============================================================================
+
+message Imu {
+    Quaternion orientation          = 1;
+    repeated double orientation_covariance = 2;  // 3x3 协方差矩阵 (行主序, 9 个元素)
+    Vector3    angular_velocity     = 3;
+    repeated double angular_velocity_covariance = 4;
+    Vector3    linear_acceleration  = 5;
+    repeated double linear_acceleration_covariance = 6;
+    uint64     timestamp            = 7;
+}
+
+// ============================================================================
+// 电池状态 (sensor_msgs/BatteryState)
+// ============================================================================
+
+message BatteryState {
+    float  voltage          = 1;   // 电压 (V)
+    float  current          = 2;   // 电流 (A), 放电为正
+    float  charge           = 3;   // 当前电量 (Ah)
+    float  capacity         = 4;   // 设计容量 (Ah)
+    float  percentage       = 5;   // 电量百分比 (0-100)
+    uint32 power_supply_status = 6; // 0=未知, 1=充电中, 2=放电中, 3=未充电, 4=已充满
+    uint32 power_supply_health  = 7; // 0=未知, 1=良好, 2=过热, 3=过压, 4=寿命将尽
+    bool   present           = 8;   // 电池是否在位
+    string location          = 9;   // 电池安装位置
+    string serial_number     = 10;  // 序列号
+    uint64 timestamp         = 11;
+}
+
+// ============================================================================
+// 图像 (sensor_msgs/Image) — 高频大消息，可走 SHM 快速通道
+// ============================================================================
+
+message Image {
+    uint32 height    = 1;   // 图像高度 (像素)
+    uint32 width     = 2;   // 图像宽度 (像素)
+    string encoding  = 3;   // 编码格式: "rgb8", "bgr8", "mono8", "16UC1", "yuv422" 等
+    uint32 is_bigendian = 4; // 0=小端, 1=大端
+    uint32 step      = 5;   // 每行字节数 (full row length in bytes)
+    bytes  data      = 6;   // ★ 原始像素数据 (可能很大, 如 1080p RGB = ~6MB)
+    uint64 timestamp = 7;   // 数据时间戳 (us)
+    string frame_id  = 8;   // 坐标系 ID
+    // 如果启用 SHM 传输，data 字段为空，以下字段有效：
+    string shm_key   = 9;   // 共享内存段名称
+    uint32 shm_offset = 10; // 共享内存中数据偏移量
+}
+
+// ============================================================================
+// 激光扫描 (sensor_msgs/LaserScan)
+// ============================================================================
+
+message LaserScan {
+    float  angle_min       = 1;   // 起始角度 (rad)
+    float  angle_max       = 2;   // 终止角度 (rad)
+    float  angle_increment = 3;   // 角度分辨率 (rad)
+    float  time_increment  = 4;   // 测量时间间隔 (s)
+    float  scan_time       = 5;   // 两次扫描间隔 (s)
+    float  range_min       = 6;   // 最小有效距离 (m)
+    float  range_max       = 7;   // 最大有效距离 (m)
+    repeated float ranges      = 8;  // 距离数组
+    repeated float intensities = 9;  // 强度数组
+    uint64 timestamp = 10;
+    string frame_id  = 11;
+}
+
+// ============================================================================
+// 点云 (sensor_msgs/PointCloud2) — 高频大消息
+// ============================================================================
+
+message PointCloud2 {
+    uint32 height    = 1;   // 点云高度 (1=无序点云, >1=有序点云)
+    uint32 width     = 2;   // 点云宽度 (点数)
+    repeated PointField fields = 3;
+    bool   is_bigendian = 4;
+    uint32 point_step   = 5;   // 单个点字节数
+    uint32 row_step     = 6;   // 单行字节数
+    bytes  data         = 7;   // ★ 点云数据 (可能很大)
+    bool   is_dense     = 8;   // 是否稠密 (无无效点)
+    uint64 timestamp    = 9;
+    string frame_id     = 10;
+    string shm_key      = 11;  // SHM 传输时有效
+    uint32 shm_offset   = 12;
+}
+
+message PointField {
+    string name     = 1;  // 字段名称 ("x", "y", "z", "intensity", "rgb"...)
+    uint32 offset   = 2;  // 字段在点结构中的偏移
+    uint32 datatype = 3;  // 1=INT8, 2=UINT8, 3=INT16, 4=UINT16, 5=INT32, 6=UINT32, 7=FLOAT32, 8=FLOAT64
+    uint32 count    = 4;  // 字段元素数
+}
+
+// ============================================================================
+// TF 变换 (tf2_msgs/TFMessage)
+// ============================================================================
+
+message TFMessage {
+    repeated TransformStamped transforms = 1;
+}
+
+message TransformStamped {
+    string     child_frame_id  = 1;  // 子坐标系
+    string     frame_id        = 2;  // 父坐标系
+    uint64     timestamp       = 3;  // us
+    // 平移
+    double     translation_x = 4;
+    double     translation_y = 5;
+    double     translation_z = 6;
+    // 旋转 (四元数)
+    double     rotation_x = 7;
+    double     rotation_y = 8;
+    double     rotation_z = 9;
+    double     rotation_w = 10;
+}
+
+// ============================================================================
+// 通用数据包装器 — 用于未知类型的 Topic 数据透传
+// ============================================================================
+
+// 通用 Topic 数据 (用于 subscribe 方向的透传)
+message RosTopicData {
+    string ros_topic  = 1;   // ROS topic 名称
+    string ros_type   = 2;   // ROS 消息类型
+    bytes  raw_data   = 3;   // 原始 ROS 序列化数据
+    uint64 timestamp  = 4;   // 接收时间戳 (us)
+}
+
+// 通用 Service 请求/响应 (用于 Service 透传)
+message RosServiceRequest {
+    string ros_service = 1;  // ROS service 名称
+    bytes  raw_data    = 2;  // 序列化的 ROS Service Request
+}
+
+message RosServiceResponse {
+    bytes  raw_data    = 1;  // 序列化的 ROS Service Response
+    bool   success     = 2;  // 调用是否成功
+}
+
+// 通用 Action 数据
+message RosActionGoal {
+    string action_name = 1;
+    string goal_id     = 2;
+    bytes  goal_data   = 3;  // 序列化的 Goal
+}
+
+message RosActionResult {
+    string goal_id     = 1;
+    bytes  result_data = 2;
+    bool   success     = 3;
+}
+
+message RosActionFeedback {
+    string goal_id       = 1;
+    bytes  feedback_data = 2;
+}
