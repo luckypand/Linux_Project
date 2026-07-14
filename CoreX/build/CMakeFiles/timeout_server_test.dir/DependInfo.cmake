@@ -4,20 +4,20 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/root/Cplus/CoreX/src/log/my_buffer.cpp" "/root/Cplus/CoreX/build/CMakeFiles/timeout_server_test.dir/src/log/my_buffer.cpp.o"
-  "/root/Cplus/CoreX/src/log/my_log.cpp" "/root/Cplus/CoreX/build/CMakeFiles/timeout_server_test.dir/src/log/my_log.cpp.o"
-  "/root/Cplus/CoreX/src/net/Acceptor.cpp" "/root/Cplus/CoreX/build/CMakeFiles/timeout_server_test.dir/src/net/Acceptor.cpp.o"
-  "/root/Cplus/CoreX/src/net/Buffer.cpp" "/root/Cplus/CoreX/build/CMakeFiles/timeout_server_test.dir/src/net/Buffer.cpp.o"
-  "/root/Cplus/CoreX/src/net/Channel.cpp" "/root/Cplus/CoreX/build/CMakeFiles/timeout_server_test.dir/src/net/Channel.cpp.o"
-  "/root/Cplus/CoreX/src/net/EventLoop.cpp" "/root/Cplus/CoreX/build/CMakeFiles/timeout_server_test.dir/src/net/EventLoop.cpp.o"
-  "/root/Cplus/CoreX/src/net/EventLoopThread.cpp" "/root/Cplus/CoreX/build/CMakeFiles/timeout_server_test.dir/src/net/EventLoopThread.cpp.o"
-  "/root/Cplus/CoreX/src/net/EventLoopThreadPool.cpp" "/root/Cplus/CoreX/build/CMakeFiles/timeout_server_test.dir/src/net/EventLoopThreadPool.cpp.o"
-  "/root/Cplus/CoreX/src/net/HeapTimer.cpp" "/root/Cplus/CoreX/build/CMakeFiles/timeout_server_test.dir/src/net/HeapTimer.cpp.o"
-  "/root/Cplus/CoreX/src/net/Poller.cpp" "/root/Cplus/CoreX/build/CMakeFiles/timeout_server_test.dir/src/net/Poller.cpp.o"
-  "/root/Cplus/CoreX/src/net/Socket.cpp" "/root/Cplus/CoreX/build/CMakeFiles/timeout_server_test.dir/src/net/Socket.cpp.o"
-  "/root/Cplus/CoreX/src/net/TcpConnection.cpp" "/root/Cplus/CoreX/build/CMakeFiles/timeout_server_test.dir/src/net/TcpConnection.cpp.o"
-  "/root/Cplus/CoreX/src/net/TcpServer.cpp" "/root/Cplus/CoreX/build/CMakeFiles/timeout_server_test.dir/src/net/TcpServer.cpp.o"
-  "/root/Cplus/CoreX/tests/timeout_server_test.cpp" "/root/Cplus/CoreX/build/CMakeFiles/timeout_server_test.dir/tests/timeout_server_test.cpp.o"
+  "/home/shansu/CoreX/Linux_Project/CoreX/src/log/my_buffer.cpp" "/home/shansu/CoreX/Linux_Project/CoreX/build/CMakeFiles/timeout_server_test.dir/src/log/my_buffer.cpp.o"
+  "/home/shansu/CoreX/Linux_Project/CoreX/src/log/my_log.cpp" "/home/shansu/CoreX/Linux_Project/CoreX/build/CMakeFiles/timeout_server_test.dir/src/log/my_log.cpp.o"
+  "/home/shansu/CoreX/Linux_Project/CoreX/src/net/Acceptor.cpp" "/home/shansu/CoreX/Linux_Project/CoreX/build/CMakeFiles/timeout_server_test.dir/src/net/Acceptor.cpp.o"
+  "/home/shansu/CoreX/Linux_Project/CoreX/src/net/Buffer.cpp" "/home/shansu/CoreX/Linux_Project/CoreX/build/CMakeFiles/timeout_server_test.dir/src/net/Buffer.cpp.o"
+  "/home/shansu/CoreX/Linux_Project/CoreX/src/net/Channel.cpp" "/home/shansu/CoreX/Linux_Project/CoreX/build/CMakeFiles/timeout_server_test.dir/src/net/Channel.cpp.o"
+  "/home/shansu/CoreX/Linux_Project/CoreX/src/net/EventLoop.cpp" "/home/shansu/CoreX/Linux_Project/CoreX/build/CMakeFiles/timeout_server_test.dir/src/net/EventLoop.cpp.o"
+  "/home/shansu/CoreX/Linux_Project/CoreX/src/net/EventLoopThread.cpp" "/home/shansu/CoreX/Linux_Project/CoreX/build/CMakeFiles/timeout_server_test.dir/src/net/EventLoopThread.cpp.o"
+  "/home/shansu/CoreX/Linux_Project/CoreX/src/net/EventLoopThreadPool.cpp" "/home/shansu/CoreX/Linux_Project/CoreX/build/CMakeFiles/timeout_server_test.dir/src/net/EventLoopThreadPool.cpp.o"
+  "/home/shansu/CoreX/Linux_Project/CoreX/src/net/HeapTimer.cpp" "/home/shansu/CoreX/Linux_Project/CoreX/build/CMakeFiles/timeout_server_test.dir/src/net/HeapTimer.cpp.o"
+  "/home/shansu/CoreX/Linux_Project/CoreX/src/net/Poller.cpp" "/home/shansu/CoreX/Linux_Project/CoreX/build/CMakeFiles/timeout_server_test.dir/src/net/Poller.cpp.o"
+  "/home/shansu/CoreX/Linux_Project/CoreX/src/net/Socket.cpp" "/home/shansu/CoreX/Linux_Project/CoreX/build/CMakeFiles/timeout_server_test.dir/src/net/Socket.cpp.o"
+  "/home/shansu/CoreX/Linux_Project/CoreX/src/net/TcpConnection.cpp" "/home/shansu/CoreX/Linux_Project/CoreX/build/CMakeFiles/timeout_server_test.dir/src/net/TcpConnection.cpp.o"
+  "/home/shansu/CoreX/Linux_Project/CoreX/src/net/TcpServer.cpp" "/home/shansu/CoreX/Linux_Project/CoreX/build/CMakeFiles/timeout_server_test.dir/src/net/TcpServer.cpp.o"
+  "/home/shansu/CoreX/Linux_Project/CoreX/tests/timeout_server_test.cpp" "/home/shansu/CoreX/Linux_Project/CoreX/build/CMakeFiles/timeout_server_test.dir/tests/timeout_server_test.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 
@@ -25,6 +25,9 @@ set(CMAKE_CXX_COMPILER_ID "GNU")
 set(CMAKE_TARGET_DEFINITIONS_CXX
   "ENABLE_LOG=0"
   "ENABLE_TIMESTAMP=0"
+  "ROSCONSOLE_BACKEND_LOG4CXX"
+  "ROS_BUILD_SHARED_LIBS=1"
+  "ROS_PACKAGE_NAME=\"CoreX\""
   )
 
 # The include file search paths:

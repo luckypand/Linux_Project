@@ -34,7 +34,8 @@ ShmImageTransporter::ShmImageTransporter(const std::string& shmName,
     size_t totalSize = calcTotalSize(maxFrameSize);
 
     try {
-        pool_ = std::make_unique<ShmMemoryPool>(shmName, totalSize, isCreator);
+        pool_ = std::make_unique<ShmMemoryPool>(shmName, totalSize,
+            isCreator ? ShmMemoryPool::CREATE : ShmMemoryPool::ATTACH);
     } catch (...) {
         // SHM 创建失败 — 回退模式
         pool_ = nullptr;
@@ -43,7 +44,7 @@ ShmImageTransporter::ShmImageTransporter(const std::string& shmName,
         return;
     }
 
-    uint8_t* base = static_cast<uint8_t*>(pool_->data());
+    uint8_t* base = static_cast<uint8_t*>(pool_->GetMappedptr());
     meta_      = reinterpret_cast<ShmImageMeta*>(base);
     frameBase_ = base + sizeof(ShmImageMeta);
 

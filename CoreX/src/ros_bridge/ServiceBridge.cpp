@@ -5,6 +5,7 @@
 #include "ServiceBridge.hpp"
 #include "DynamicServiceAdapter.hpp"
 #include "RosNodeManager.hpp"
+#include "RosSerializedMessageTraits.hpp"
 #include <ros/ros.h>
 
 ServiceBridge::ServiceBridge(const ServiceMappingConfig& cfg)
@@ -67,11 +68,11 @@ std::string ServiceBridge::handleServiceCall(const std::string& payload)
     memcpy(srvReq.buf.get(), payload.data(), payload.size());
 
     ros::SerializedMessage srvResp;
-    ros::Duration timeout(config_.timeoutMs / 1000.0);
 
-    if (!client_.call(srvReq, srvResp, timeout)) {
-        ROS_ERROR("[ServiceBridge] Call to '%s' failed (timeout=%dms)",
-                  config_.rosService.c_str(), config_.timeoutMs);
+    // ROS ServiceClient::call 不支持超时参数，超时由上层 RPC 框架处理
+    if (!client_.call(srvReq, srvResp)) {
+        ROS_ERROR("[ServiceBridge] Call to '%s' failed",
+                  config_.rosService.c_str());
         return "";  // 空串表示失败
     }
 

@@ -6,6 +6,7 @@
 #include "DynamicServiceAdapter.hpp"
 #include "RosNodeManager.hpp"
 #include "ShmTopicBus.hpp"
+#include "RosSerializedMessageTraits.hpp"
 #include <ros/ros.h>
 
 // ============================================================================
@@ -113,7 +114,7 @@ void TopicBridge::setupSubscriber()
         ops.topic      = config_.rosTopic;
         ops.queue_size = config_.queueSize;
         ops.datatype   = config_.rosType;
-        ops.md5sum     = ros::message_traits::md5sum<ros::SerializedMessage>();
+        ops.md5sum     = "*";
 
         // 使用 boost 的通用订阅回调
         ops.helper = ros::SubscriptionCallbackHelperPtr(
@@ -167,7 +168,7 @@ void TopicBridge::setupPublisher()
         ops.topic      = config_.rosTopic;
         ops.queue_size = config_.queueSize;
         ops.datatype   = config_.rosType;
-        ops.md5sum     = ros::message_traits::md5sum<ros::SerializedMessage>();
+        ops.md5sum     = "*";
 
         publisher_ = nodeMgr.nh().advertise(ops);
 

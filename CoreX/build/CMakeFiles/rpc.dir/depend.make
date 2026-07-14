@@ -7,6 +7,9 @@ CMakeFiles/rpc.dir/proto/math_service.pb.cc.o: ../proto/math_service.pb.h
 CMakeFiles/rpc.dir/proto/robot_service.pb.cc.o: ../proto/robot_service.pb.cc
 CMakeFiles/rpc.dir/proto/robot_service.pb.cc.o: ../proto/robot_service.pb.h
 
+CMakeFiles/rpc.dir/proto/ros_messages.pb.cc.o: ../proto/ros_messages.pb.cc
+CMakeFiles/rpc.dir/proto/ros_messages.pb.cc.o: ../proto/ros_messages.pb.h
+
 CMakeFiles/rpc.dir/proto/rpc_message.pb.cc.o: ../proto/rpc_message.pb.cc
 CMakeFiles/rpc.dir/proto/rpc_message.pb.cc.o: ../proto/rpc_message.pb.h
 

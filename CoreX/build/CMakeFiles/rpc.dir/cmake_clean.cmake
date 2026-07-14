@@ -1,6 +1,7 @@
 file(REMOVE_RECURSE
   "CMakeFiles/rpc.dir/proto/math_service.pb.cc.o"
   "CMakeFiles/rpc.dir/proto/robot_service.pb.cc.o"
+  "CMakeFiles/rpc.dir/proto/ros_messages.pb.cc.o"
   "CMakeFiles/rpc.dir/proto/rpc_message.pb.cc.o"
   "CMakeFiles/rpc.dir/src/ipc/IpcEndpoint.cpp.o"
   "CMakeFiles/rpc.dir/src/ipc/RingBuffer.cpp.o"

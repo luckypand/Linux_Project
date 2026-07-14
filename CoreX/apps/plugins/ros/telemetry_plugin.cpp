@@ -98,19 +98,19 @@ private:
     {
         std::lock_guard<std::mutex> lock(mutex_);
 
-        lastOdom_.pos_x    = msg->pose.pose.position.x;
-        lastOdom_.pos_y    = msg->pose.pose.position.y;
-        lastOdom_.pos_z    = msg->pose.pose.position.z;
-        lastOdom_.orient_x = msg->pose.pose.orientation.x;
-        lastOdom_.orient_y = msg->pose.pose.orientation.y;
-        lastOdom_.orient_z = msg->pose.pose.orientation.z;
-        lastOdom_.orient_w = msg->pose.pose.orientation.w;
-        lastOdom_.vel_x    = msg->twist.twist.linear.x;
-        lastOdom_.vel_y    = msg->twist.twist.linear.y;
-        lastOdom_.vel_z    = msg->twist.twist.linear.z;
-        lastOdom_.ang_x    = msg->twist.twist.angular.x;
-        lastOdom_.ang_y    = msg->twist.twist.angular.y;
-        lastOdom_.ang_z    = msg->twist.twist.angular.z;
+        lastOdom_.set_pos_x(msg->pose.pose.position.x);
+        lastOdom_.set_pos_y(msg->pose.pose.position.y);
+        lastOdom_.set_pos_z(msg->pose.pose.position.z);
+        lastOdom_.set_orient_x(msg->pose.pose.orientation.x);
+        lastOdom_.set_orient_y(msg->pose.pose.orientation.y);
+        lastOdom_.set_orient_z(msg->pose.pose.orientation.z);
+        lastOdom_.set_orient_w(msg->pose.pose.orientation.w);
+        lastOdom_.set_vel_x(msg->twist.twist.linear.x);
+        lastOdom_.set_vel_y(msg->twist.twist.linear.y);
+        lastOdom_.set_vel_z(msg->twist.twist.linear.z);
+        lastOdom_.set_ang_x(msg->twist.twist.angular.x);
+        lastOdom_.set_ang_y(msg->twist.twist.angular.y);
+        lastOdom_.set_ang_z(msg->twist.twist.angular.z);
 
         hasOdom_ = true;
     }

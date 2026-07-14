@@ -7,6 +7,7 @@
 #include "TopicBridge.hpp"
 #include "ServiceBridge.hpp"
 #include "ActionBridge.hpp"
+#include "DynamicServiceAdapter.hpp"
 
 #include "../rpc/RpcServiceAdapter.hpp"
 #include <ros/ros.h>
