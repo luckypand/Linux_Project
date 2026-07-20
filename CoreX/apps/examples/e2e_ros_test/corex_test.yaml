@@ -1,0 +1,93 @@
+# ============================================================================
+# corex_test.yaml — ROS Bridge 端到端测试专用配置
+#
+# 与默认 corex_daemon.yaml 的三个关键区别：
+#   1. ros_bridge.enabled: true（默认是 false）
+#   2. rpc_service 使用短名（MotionControl / RobotTelemetry），
+#      与 host_controller / robot_rpc.py 客户端发送的服务名精确一致
+#      （RpcServer 的 dispatchTable 是字符串精确匹配，见 RpcServer.cpp:102）
+#   3. 每个 topic 使用【互不相同】的 rpc_service 名。
+#      原因：每个 TopicBridge 创建独立的 DynamicServiceAdapter（TopicBridge.cpp:21），
+#      注册时 dispatchTable_[serviceName] = adapter 直接覆盖（RpcServer.cpp:215）。
+#      默认配置里 4 个 subscribe topic 共用 CoreX.rpc.RobotTelemetry，
+#      实际只有最后注册的 /scan 能被调到 —— 这是端到端测试失败的最大陷阱。
+#
+# 用法（在 CoreX 根目录下运行，plugins/log 用相对路径）：
+#   ./build/CoreXDaemon --config apps/examples/e2e_ros_test/corex_test.yaml
+# ============================================================================
+
+server:
+  name: "CoreXDaemon"
+  host: "0.0.0.0"
+  port: 8080
+  worker_threads: 4
+
+ipc:
+  enabled: true
+  shm_name: "/corex_rpc_ipc"
+
+plugins:
+  directory: "./build/plugins"
+  autoload: true
+
+logging:
+  level: "INFO"
+  path: "./log"
+
+monitoring:
+  health_check_port: 9090
+  latency_stats: false
+
+# ============================================================================
+# ROS Bridge — 三个测试场景的最小映射集
+# ============================================================================
+ros_bridge:
+  enabled: true
+  node_name: "corex_ros_bridge"
+  spinner_threads: 2
+
+  topics:
+    # ---- 测试一：云端 → ROS（指令下发） ----
+    - ros_topic: "/cmd_vel"
+      ros_type: "geometry_msgs/Twist"
+      direction: "publish"
+      rpc_service: "MotionControl"
+      rpc_method: "SetVelocity"
+      queue_size: 10
+
+    # ---- 测试二：ROS → 云端（里程计回传） ----
+    - ros_topic: "/odom"
+      ros_type: "nav_msgs/Odometry"
+      direction: "subscribe"
+      rpc_service: "RobotTelemetry"
+      rpc_method: "GetOdometry"
+      rate_hz: 20
+      queue_size: 10
+
+    # ---- 测试三：本地读取深度相机图像 ----
+    # use_shm_topic: 开启 SHM Topic 直通（本地 shm_reader 直读，< 10μs）
+    # use_shm:       把 SHM 槽位从 64KB 提升到 10MB（图像必须开，否则放不下）
+    #                注意：16 槽 × 10MB ≈ 160MB /dev/shm 占用，用 df -h /dev/shm 确认余量
+    - ros_topic: "/camera/depth/image_raw"
+      ros_type: "sensor_msgs/Image"
+      direction: "subscribe"
+      rpc_service: "DepthCamera"
+      rpc_method: "GetImage"
+      use_shm: true
+      use_shm_topic: true
+      rate_hz: 30
+      queue_size: 5
+
+    # ---- 测试三：本地读取雷达点云 ----
+    - ros_topic: "/points"
+      ros_type: "sensor_msgs/PointCloud2"
+      direction: "subscribe"
+      rpc_service: "Lidar"
+      rpc_method: "GetPointCloud"
+      use_shm: true
+      use_shm_topic: true
+      rate_hz: 10
+      queue_size: 5
+
+  services: []
+  actions: []
