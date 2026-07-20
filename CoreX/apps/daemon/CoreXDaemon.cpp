@@ -145,6 +145,15 @@ bool CoreXDaemon::loadPlugins()
             LOG_INFO("[CoreXDaemon] Registered bridge service: %s", adapter->serviceName().c_str());
 #endif
         }
+        // ★ 从 YAML 读取 robot_id 设置到 RpcServer
+        std::string robotId = config_->getString("ros_bridge.robot_id", "");
+        if (!robotId.empty()) {
+            rpcServer_->setLocalRobotId(robotId);
+            std::cout << "[CoreXDaemon] Robot ID set: " << robotId << std::endl;
+#if ENABLE_LOG
+            LOG_INFO("[CoreXDaemon] Robot ID set: %s", robotId.c_str());
+#endif
+        }
     }
 #endif  // HAS_ROS_BRIDGE
 

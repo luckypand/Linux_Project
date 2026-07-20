@@ -31,6 +31,10 @@ public:
 
     //业务接口，用户在main函数中注册函数
     void registerService(RpcServiceAdapter* adapter);
+
+    // ★ 设置本机 robot_id（RPC 请求带不同 robot_id 会被拒绝）
+    void setLocalRobotId(const std::string& robotId) { localRobotId_ = robotId; }
+    const std::string& getLocalRobotId() const { return localRobotId_; }
 private:
 #if ENABLE_TIMESTAMP
     void sendResponse(const TcpConnectionPtr& conn, uint64_t id, const std::string& rstPayload,
@@ -47,6 +51,7 @@ private:
     TcpServer server_;
     RpcCodec codec_;
     std::unordered_map<std::string,RpcServiceAdapter*> dispatchTable_;
+    std::string localRobotId_;  // ★ 本机 robot_id（空=不校验）
     RpcLatencyStats* latencyStats_ = nullptr;  // ★ 非拥有指针，外部管理生命周期
 
     // ★ IPC fast-path 桥接器（可选，enableIpc() 后非空）

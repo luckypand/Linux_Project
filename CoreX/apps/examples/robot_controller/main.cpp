@@ -295,14 +295,14 @@ int main(int argc, char* argv[])
         bool showDisplay = (pollSeq % 5 == 1);
 
         // 轮询里程计
-        if (!client.call("RobotTelemetry", "GetOdometry", odomReq, odomResp)) {
+        if (!client.call("CoreX.rpc.RobotTelemetry", "GetOdometry", odomReq, odomResp)) {
             cerr << "[Main] GetOdometry 失败，尝试重连..." << endl;
             client.disconnect();
             break;
         }
 
         // 轮询状态
-        if (!client.call("RobotTelemetry", "GetStatus", statusReq, statusResp)) {
+        if (!client.call("CoreX.rpc.RobotTelemetry", "GetStatus", statusReq, statusResp)) {
             cerr << "[Main] GetStatus 失败" << endl;
             // 状态失败不 fatal，继续
         }

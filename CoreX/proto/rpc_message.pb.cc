@@ -65,6 +65,7 @@ const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUT
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::CoreX::rpc::RpcMessage, client_send_ts_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::CoreX::rpc::RpcMessage, server_recv_ts_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::CoreX::rpc::RpcMessage, server_send_ts_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::CoreX::rpc::RpcMessage, robot_id_),
 };
 static const ::google::protobuf::internal::MigrationSchema schemas[] GOOGLE_PROTOBUF_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
   { 0, -1, sizeof(::CoreX::rpc::RpcMessage)},
@@ -95,20 +96,20 @@ void protobuf_RegisterTypes(const ::std::string&) {
 void AddDescriptorsImpl() {
   InitDefaults();
   static const char descriptor[] GOOGLE_PROTOBUF_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
-      "\n\021rpc_message.proto\022\tCoreX.rpc\"\335\001\n\nRpcMe"
+      "\n\021rpc_message.proto\022\tCoreX.rpc\"\357\001\n\nRpcMe"
       "ssage\022$\n\004type\030\001 \001(\0162\026.CoreX.rpc.MessageT"
       "ype\022\n\n\002id\030\002 \001(\006\022\017\n\007service\030\003 \001(\t\022\016\n\006meth"
       "od\030\004 \001(\t\022\017\n\007payload\030\005 \001(\014\022#\n\005error\030\006 \001(\016"
       "2\024.CoreX.rpc.ErrorCode\022\026\n\016client_send_ts"
       "\030\007 \001(\004\022\026\n\016server_recv_ts\030\010 \001(\004\022\026\n\016server"
-      "_send_ts\030\t \001(\004*3\n\013MessageType\022\013\n\007REQUEST"
-      "\020\000\022\014\n\010RESPONSE\020\001\022\t\n\005ERROR\020\002*^\n\tErrorCode"
-      "\022\014\n\010NO_ERROR\020\000\022\017\n\013WRONG_PROTO\020\001\022\016\n\nNO_SE"
-      "RVICE\020\002\022\r\n\tNO_METHOD\020\003\022\023\n\017INVALID_REQUES"
-      "T\020\004b\006proto3"
+      "_send_ts\030\t \001(\004\022\020\n\010robot_id\030\n \001(\t*3\n\013Mess"
+      "ageType\022\013\n\007REQUEST\020\000\022\014\n\010RESPONSE\020\001\022\t\n\005ER"
+      "ROR\020\002*^\n\tErrorCode\022\014\n\010NO_ERROR\020\000\022\017\n\013WRON"
+      "G_PROTO\020\001\022\016\n\nNO_SERVICE\020\002\022\r\n\tNO_METHOD\020\003"
+      "\022\023\n\017INVALID_REQUEST\020\004b\006proto3"
   };
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-      descriptor, 411);
+      descriptor, 429);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "rpc_message.proto", &protobuf_RegisterTypes);
 }
@@ -173,6 +174,7 @@ const int RpcMessage::kErrorFieldNumber;
 const int RpcMessage::kClientSendTsFieldNumber;
 const int RpcMessage::kServerRecvTsFieldNumber;
 const int RpcMessage::kServerSendTsFieldNumber;
+const int RpcMessage::kRobotIdFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
 RpcMessage::RpcMessage()
@@ -198,6 +200,10 @@ RpcMessage::RpcMessage(const RpcMessage& from)
   if (from.payload().size() > 0) {
     payload_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.payload_);
   }
+  robot_id_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  if (from.robot_id().size() > 0) {
+    robot_id_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.robot_id_);
+  }
   ::memcpy(&id_, &from.id_,
     static_cast<size_t>(reinterpret_cast<char*>(&server_send_ts_) -
     reinterpret_cast<char*>(&id_)) + sizeof(server_send_ts_));
@@ -208,6 +214,7 @@ void RpcMessage::SharedCtor() {
   service_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   method_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   payload_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  robot_id_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   ::memset(&id_, 0, static_cast<size_t>(
       reinterpret_cast<char*>(&server_send_ts_) -
       reinterpret_cast<char*>(&id_)) + sizeof(server_send_ts_));
@@ -222,6 +229,7 @@ void RpcMessage::SharedDtor() {
   service_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   method_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   payload_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  robot_id_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 
 void RpcMessage::SetCachedSize(int size) const {
@@ -247,6 +255,7 @@ void RpcMessage::Clear() {
   service_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   method_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   payload_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  robot_id_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   ::memset(&id_, 0, static_cast<size_t>(
       reinterpret_cast<char*>(&server_send_ts_) -
       reinterpret_cast<char*>(&id_)) + sizeof(server_send_ts_));
@@ -393,6 +402,22 @@ bool RpcMessage::MergePartialFromCodedStream(
         break;
       }
 
+      // string robot_id = 10;
+      case 10: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(82u /* 82 & 0xFF */)) {
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->mutable_robot_id()));
+          DO_(::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+            this->robot_id().data(), static_cast<int>(this->robot_id().length()),
+            ::google::protobuf::internal::WireFormatLite::PARSE,
+            "CoreX.rpc.RpcMessage.robot_id"));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
       default: {
       handle_unusual:
         if (tag == 0) {
@@ -477,6 +502,16 @@ void RpcMessage::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteUInt64(9, this->server_send_ts(), output);
   }
 
+  // string robot_id = 10;
+  if (this->robot_id().size() > 0) {
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+      this->robot_id().data(), static_cast<int>(this->robot_id().length()),
+      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
+      "CoreX.rpc.RpcMessage.robot_id");
+    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
+      10, this->robot_id(), output);
+  }
+
   if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()), output);
@@ -552,6 +587,17 @@ void RpcMessage::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::WriteUInt64ToArray(9, this->server_send_ts(), target);
   }
 
+  // string robot_id = 10;
+  if (this->robot_id().size() > 0) {
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+      this->robot_id().data(), static_cast<int>(this->robot_id().length()),
+      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
+      "CoreX.rpc.RpcMessage.robot_id");
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+        10, this->robot_id(), target);
+  }
+
   if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
     target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
         (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()), target);
@@ -588,6 +634,13 @@ size_t RpcMessage::ByteSizeLong() const {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::BytesSize(
         this->payload());
+  }
+
+  // string robot_id = 10;
+  if (this->robot_id().size() > 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::StringSize(
+        this->robot_id());
   }
 
   // fixed64 id = 2;
@@ -667,6 +720,10 @@ void RpcMessage::MergeFrom(const RpcMessage& from) {
 
     payload_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.payload_);
   }
+  if (from.robot_id().size() > 0) {
+
+    robot_id_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.robot_id_);
+  }
   if (from.id() != 0) {
     set_id(from.id());
   }
@@ -716,6 +773,8 @@ void RpcMessage::InternalSwap(RpcMessage* other) {
   method_.Swap(&other->method_, &::google::protobuf::internal::GetEmptyStringAlreadyInited(),
     GetArenaNoVirtual());
   payload_.Swap(&other->payload_, &::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+    GetArenaNoVirtual());
+  robot_id_.Swap(&other->robot_id_, &::google::protobuf::internal::GetEmptyStringAlreadyInited(),
     GetArenaNoVirtual());
   swap(id_, other->id_);
   swap(type_, other->type_);

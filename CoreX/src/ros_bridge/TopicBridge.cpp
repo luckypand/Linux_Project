@@ -7,7 +7,18 @@
 #include "RosNodeManager.hpp"
 #include "ShmTopicBus.hpp"
 #include "RosSerializedMessageTraits.hpp"
+#include "MessageTypeRegistry.hpp"
 #include <ros/ros.h>
+
+// ============================================================================
+// 全局 MessageTypeRegistry（由 RosBridgeEngine 设置）
+// ============================================================================
+static const MessageTypeRegistry* g_typeRegistry = nullptr;
+
+void TopicBridge::setGlobalTypeRegistry(const MessageTypeRegistry* registry)
+{
+    g_typeRegistry = registry;
+}
 
 // ============================================================================
 // 构造函数：创建 DynamicServiceAdapter 并注册 RPC 方法
@@ -108,13 +119,21 @@ void TopicBridge::setupSubscriber()
     auto& nodeMgr = RosNodeManager::instance();
 
     try {
+        // 获取真实 MD5/Datatype（优先 YAML，回退编译期）
+        std::string md5 = "*", datatype = config_.rosType;
+        if (g_typeRegistry) {
+            auto traits = g_typeRegistry->lookup(config_.rosType);
+            md5 = traits.md5;
+            datatype = traits.datatype;
+        }
+
         // 使用通用 ros::SubscribeOptions 进行类型擦除的订阅
         // ros::SerializedMessage 可以接收任意 ROS 消息类型
         ros::SubscribeOptions ops;
         ops.topic      = config_.rosTopic;
         ops.queue_size = config_.queueSize;
-        ops.datatype   = config_.rosType;
-        ops.md5sum     = "*";
+        ops.datatype   = datatype;
+        ops.md5sum     = md5;
 
         // 使用 boost 的通用订阅回调
         ops.helper = ros::SubscriptionCallbackHelperPtr(
@@ -164,11 +183,19 @@ void TopicBridge::setupPublisher()
     auto& nodeMgr = RosNodeManager::instance();
 
     try {
+        // 获取真实 MD5/Datatype（优先 YAML，回退编译期）
+        std::string md5 = "*", datatype = config_.rosType;
+        if (g_typeRegistry) {
+            auto traits = g_typeRegistry->lookup(config_.rosType);
+            md5 = traits.md5;
+            datatype = traits.datatype;
+        }
+
         ros::AdvertiseOptions ops;
         ops.topic      = config_.rosTopic;
         ops.queue_size = config_.queueSize;
-        ops.datatype   = config_.rosType;
-        ops.md5sum     = "*";
+        ops.datatype   = datatype;
+        ops.md5sum     = md5;
 
         publisher_ = nodeMgr.nh().advertise(ops);
 
@@ -196,7 +223,8 @@ std::string TopicBridge::handleGetCached(const std::string& /*payload*/)
 }
 
 // ============================================================================
-// RPC Handler: Publish 方向 — 发布到 ROS topic
+// RPC Handler: Publish 方向 — 发布到 ROS topic (纯透传)
+// 注意：格式转换层已移至 GenericActionBridge，此处仅做原始字节透传
 // ============================================================================
 std::string TopicBridge::handlePublish(const std::string& payload)
 {
@@ -206,17 +234,17 @@ std::string TopicBridge::handlePublish(const std::string& payload)
     }
 
     try {
-        // ★ 先推 SHM（同机订阅者延迟 < 10μs）
-        if (useShmTopic_ && shmBus_ && shmBus_->isValid()) {
-            shmBus_->publish(payload.data(), payload.size());
-        }
-
-        // 再推 ROS TCPROS（跨机订阅者 / 标准 ROS 节点）
+        // 原始字节透传
         ros::SerializedMessage serMsg;
         serMsg.num_bytes = payload.size();
         serMsg.buf.reset(new uint8_t[payload.size()]);
         serMsg.message_start = serMsg.buf.get();
         memcpy(serMsg.buf.get(), payload.data(), payload.size());
+
+        // SHM 直通
+        if (useShmTopic_ && shmBus_ && shmBus_->isValid()) {
+            shmBus_->publish(payload.data(), payload.size());
+        }
 
         publisher_.publish(serMsg);
         return "OK";

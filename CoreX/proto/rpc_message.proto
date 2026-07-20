@@ -27,4 +27,5 @@ message RpcMessage {  //RpcMessage为CoreX::rpc::RpcMessage，基类为::google:
     uint64      client_send_ts  = 7;   // client send timestamp (us)
     uint64      server_recv_ts  = 8;   // server receive timestamp (us)
     uint64      server_send_ts  = 9;   // server send timestamp (us)
+    string      robot_id        = 10;  // 目标机器人 ID（空=任意）
 }

@@ -356,6 +356,19 @@ CMakeFiles/rpc.dir/proto/ros_messages.pb.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/rpc.dir/proto/ros_messages.pb.cc.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/shansu/CoreX/Linux_Project/CoreX/proto/ros_messages.pb.cc -o CMakeFiles/rpc.dir/proto/ros_messages.pb.cc.s
 
+CMakeFiles/rpc.dir/proto/generic_action.pb.cc.o: CMakeFiles/rpc.dir/flags.make
+CMakeFiles/rpc.dir/proto/generic_action.pb.cc.o: ../proto/generic_action.pb.cc
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/shansu/CoreX/Linux_Project/CoreX/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_24) "Building CXX object CMakeFiles/rpc.dir/proto/generic_action.pb.cc.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/rpc.dir/proto/generic_action.pb.cc.o -c /home/shansu/CoreX/Linux_Project/CoreX/proto/generic_action.pb.cc
+
+CMakeFiles/rpc.dir/proto/generic_action.pb.cc.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/rpc.dir/proto/generic_action.pb.cc.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/shansu/CoreX/Linux_Project/CoreX/proto/generic_action.pb.cc > CMakeFiles/rpc.dir/proto/generic_action.pb.cc.i
+
+CMakeFiles/rpc.dir/proto/generic_action.pb.cc.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/rpc.dir/proto/generic_action.pb.cc.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/shansu/CoreX/Linux_Project/CoreX/proto/generic_action.pb.cc -o CMakeFiles/rpc.dir/proto/generic_action.pb.cc.s
+
 # Object files for target rpc
 rpc_OBJECTS = \
 "CMakeFiles/rpc.dir/src/rpc/RpcCodec.cpp.o" \
@@ -380,7 +393,8 @@ rpc_OBJECTS = \
 "CMakeFiles/rpc.dir/proto/rpc_message.pb.cc.o" \
 "CMakeFiles/rpc.dir/proto/math_service.pb.cc.o" \
 "CMakeFiles/rpc.dir/proto/robot_service.pb.cc.o" \
-"CMakeFiles/rpc.dir/proto/ros_messages.pb.cc.o"
+"CMakeFiles/rpc.dir/proto/ros_messages.pb.cc.o" \
+"CMakeFiles/rpc.dir/proto/generic_action.pb.cc.o"
 
 # External object files for target rpc
 rpc_EXTERNAL_OBJECTS =
@@ -408,9 +422,10 @@ librpc.a: CMakeFiles/rpc.dir/proto/rpc_message.pb.cc.o
 librpc.a: CMakeFiles/rpc.dir/proto/math_service.pb.cc.o
 librpc.a: CMakeFiles/rpc.dir/proto/robot_service.pb.cc.o
 librpc.a: CMakeFiles/rpc.dir/proto/ros_messages.pb.cc.o
+librpc.a: CMakeFiles/rpc.dir/proto/generic_action.pb.cc.o
 librpc.a: CMakeFiles/rpc.dir/build.make
 librpc.a: CMakeFiles/rpc.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/shansu/CoreX/Linux_Project/CoreX/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_24) "Linking CXX static library librpc.a"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/shansu/CoreX/Linux_Project/CoreX/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_25) "Linking CXX static library librpc.a"
 	$(CMAKE_COMMAND) -P CMakeFiles/rpc.dir/cmake_clean_target.cmake
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/rpc.dir/link.txt --verbose=$(VERBOSE)
 

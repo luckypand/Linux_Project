@@ -16,7 +16,46 @@
 #include <string>
 #include <vector>
 #include <cstdint>
+#include <unordered_map>
 #include <yaml-cpp/yaml.h>
+
+// ============================================================================
+// ROS 消息类型元信息（YAML 提供 MD5/datatype，避免编译期硬编码）
+// ============================================================================
+struct RosMessageTypeInfo
+{
+    std::string md5;
+    std::string datatype;
+};
+
+// ============================================================================
+// 通用动作字段描述（YAML 驱动，描述 ROS 消息的一个字段）
+// ============================================================================
+struct GenericActionFieldConfig
+{
+    int         fieldNumber = 0;   // ROS 消息字段编号
+    std::string type;              // 字段类型: "float64","float32","int32","uint32",
+                                   //           "bool","string","message"
+    std::string param;             // JSON 参数中的键名（空=只用默认值）
+    std::string defaultValue;      // 默认值字符串表示
+    bool        required = false;  // 是否必须提供
+
+    // 嵌套字段（仅 type="message" 时使用）
+    std::vector<GenericActionFieldConfig> nestedFields;
+};
+
+// ============================================================================
+// 通用动作配置（YAML 驱动，将抽象动作映射为 ROS topic）
+// ============================================================================
+struct GenericActionConfig
+{
+    std::string action;        // 抽象动作名, 如 "move"
+    std::string rosTopic;      // ROS topic, 如 "/cmd_vel"
+    std::string rosType;       // ROS 消息类型, 如 "geometry_msgs/Twist"
+    bool        isPublisher = true;  // true=publish, false=subscribe
+
+    std::vector<GenericActionFieldConfig> fields;
+};
 
 // ============================================================================
 // Topic 映射配置
@@ -77,10 +116,19 @@ struct BridgeConfig
     std::string masterUri;       // 可选，空串表示从环境变量 ROS_MASTER_URI 读取
     bool        enabled = false; // 是否启用 ROS Bridge（false 时跳过初始化）
 
+    // ★ 机器人标识
+    std::string robotId;
+
     // 映射表
     std::vector<TopicMappingConfig>   topics;
     std::vector<ServiceMappingConfig> services;
     std::vector<ActionMappingConfig>  actions;
+
+    // ★ 通用动作映射（新增）
+    std::vector<GenericActionConfig> genericActions;
+
+    // ★ ROS 消息类型注册表（YAML 提供 MD5/datatype）
+    std::unordered_map<std::string, RosMessageTypeInfo> messageTypes;
 
     // ---- 解析方法 ----
     // 从 YAML::Node 加载（root node 应为 "ros_bridge" 段）
@@ -94,6 +142,10 @@ private:
     bool parseTopics(const YAML::Node& topicsNode);
     bool parseServices(const YAML::Node& servicesNode);
     bool parseActions(const YAML::Node& actionsNode);
+    bool parseMessageTypes(const YAML::Node& msgTypesNode);
+    bool parseGenericActions(const YAML::Node& actionsNode);
+    bool parseActionFields(const YAML::Node& fieldsNode,
+                           std::vector<GenericActionFieldConfig>& outFields);
 
     // 工具方法
     static TopicMappingConfig::Direction parseDirection(const std::string& dir);

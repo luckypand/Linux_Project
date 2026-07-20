@@ -15,6 +15,7 @@
 // ============================================================================
 
 #include "BridgeConfig.hpp"
+#include "MessageTypeRegistry.hpp"
 #include <memory>
 #include <vector>
 #include <string>
@@ -27,6 +28,7 @@ class RpcServiceAdapter;
 class TopicBridge;
 class ServiceBridge;
 class ActionBridge;
+class GenericActionBridge;
 
 // ============================================================================
 // 健康检查结果
@@ -100,6 +102,10 @@ private:
     std::vector<std::unique_ptr<TopicBridge>>   topicBridges_;
     std::vector<std::unique_ptr<ServiceBridge>> serviceBridges_;
     std::vector<std::unique_ptr<ActionBridge>>  actionBridges_;
+    std::unique_ptr<GenericActionBridge>        genericActionBridge_; // ★
+
+    // ★ 消息类型注册表（YAML 驱动 + 编译期回退）
+    MessageTypeRegistry typeRegistry_;
 
     // 聚合后的 RpcServiceAdapter 指针（供 getServiceAdapters 返回）
     std::vector<RpcServiceAdapter*> serviceAdapters_;

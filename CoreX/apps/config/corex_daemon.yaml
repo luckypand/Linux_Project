@@ -35,11 +35,94 @@ monitoring:
 # 注意：需要 ROS 环境 (roscore) 才能正常使用
 # ============================================================================
 ros_bridge:
-  enabled: false                       # 是否启用 ROS Bridge（默认关闭，需在有 ROS 的机器上开启）
+  enabled: true                       # 是否启用 ROS Bridge（默认关闭，需在有 ROS 的机器上开启）
   node_name: "corex_ros_bridge"        # ROS 节点名称
   spinner_threads: 2                   # ROS AsyncSpinner 线程数
 
-  # Topic 双向映射
+  # ★ 机器人标识（云端用此 ID 指定目标机器人）
+  robot_id: "robot_001"
+
+  # ★ ROS 消息类型注册表（YAML 驱动的 MD5/datatype 查询）
+  # 新增消息类型只需在此添加条目，无需修改 C++ 源码
+  # MD5 可通过命令获取: rosmsg md5 <消息类型>
+  ros_message_types:
+    geometry_msgs/Twist:
+      md5: "9f3b76f2e8cdcf8e7a2e6f8b9c7e6d5f"
+      datatype: "geometry_msgs/Twist"
+    geometry_msgs/Vector3:
+      md5: "4a842b65f413084dc2b10fb484ea7f17"
+      datatype: "geometry_msgs/Vector3"
+
+  # ★ 通用动作映射（云端发送抽象动作 → 自动映射为 ROS topic）
+  # 新增动作只需在此添加条目 + ros_message_types 中对应类型
+  generic_actions:
+    - action: "move"
+      ros_topic: "/cmd_vel"
+      ros_type: "geometry_msgs/Twist"
+      direction: "publish"
+      fields:
+        - field_number: 1       # Twist.linear (Vector3)
+          type: "message"
+          nested_fields:
+            - field_number: 1   # Vector3.x
+              type: "float64"
+              param: "linear_x"
+              default: "0.0"
+            - field_number: 2   # Vector3.y
+              type: "float64"
+              param: "linear_y"
+              default: "0.0"
+            - field_number: 3   # Vector3.z
+              type: "float64"
+              param: "linear_z"
+              default: "0.0"
+        - field_number: 2       # Twist.angular (Vector3)
+          type: "message"
+          nested_fields:
+            - field_number: 1
+              type: "float64"
+              param: "angular_x"
+              default: "0.0"
+            - field_number: 2
+              type: "float64"
+              param: "angular_y"
+              default: "0.0"
+            - field_number: 3
+              type: "float64"
+              param: "angular_z"
+              default: "0.0"
+
+    - action: "stop"
+      ros_topic: "/cmd_vel"
+      ros_type: "geometry_msgs/Twist"
+      direction: "publish"
+      fields:
+        - field_number: 1
+          type: "message"
+          nested_fields:
+            - field_number: 1
+              type: "float64"
+              default: "0.0"
+            - field_number: 2
+              type: "float64"
+              default: "0.0"
+            - field_number: 3
+              type: "float64"
+              default: "0.0"
+        - field_number: 2
+          type: "message"
+          nested_fields:
+            - field_number: 1
+              type: "float64"
+              default: "0.0"
+            - field_number: 2
+              type: "float64"
+              default: "0.0"
+            - field_number: 3
+              type: "float64"
+              default: "0.0"
+
+  # Topic 双向映射（保留向后兼容）
   topics:
     # --- ROS → CoreX (subscribe) ---
     - ros_topic: "/odom"
@@ -80,6 +163,13 @@ ros_bridge:
       ros_type: "geometry_msgs/Twist"
       direction: "publish"
       rpc_service: "CoreX.rpc.MotionControl"
+      rpc_method: "SetVelocity"
+      queue_size: 10
+
+    - ros_topic: "/cmd_vel_mux/external"
+      ros_type: "geometry_msgs/Twist"
+      direction: "publish"
+      rpc_service: "CoreX.rpc.MotionControlMux"
       rpc_method: "SetVelocity"
       queue_size: 10
 

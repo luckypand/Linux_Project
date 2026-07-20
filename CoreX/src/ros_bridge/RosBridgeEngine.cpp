@@ -7,6 +7,7 @@
 #include "TopicBridge.hpp"
 #include "ServiceBridge.hpp"
 #include "ActionBridge.hpp"
+#include "GenericActionBridge.hpp"
 #include "DynamicServiceAdapter.hpp"
 
 #include "../rpc/RpcServiceAdapter.hpp"
@@ -83,6 +84,12 @@ void RosBridgeEngine::createAdapters()
 {
     serviceAdapters_.clear();
 
+    // ---- ★ 初始化 MessageTypeRegistry（从 YAML 加载 + 编译期回退）----
+    typeRegistry_.loadFromConfig(config_);
+
+    // ★ 设置全局 TypeRegistry（供 TopicBridge 使用）
+    TopicBridge::setGlobalTypeRegistry(&typeRegistry_);
+
     // ---- 创建 TopicBridge 实例 ----
     for (const auto& cfg : config_.topics) {
         auto bridge = std::make_unique<TopicBridge>(cfg);
@@ -101,6 +108,12 @@ void RosBridgeEngine::createAdapters()
         actionBridges_.push_back(std::move(bridge));
     }
 
+    // ---- ★ 创建 GenericActionBridge 实例 ----
+    if (!config_.genericActions.empty()) {
+        genericActionBridge_ = std::make_unique<GenericActionBridge>(
+            config_, typeRegistry_);
+    }
+
     // ---- 收集所有 RpcServiceAdapter 指针 ----
     for (auto& b : topicBridges_) {
         auto* adapter = b->getServiceAdapter();
@@ -112,6 +125,11 @@ void RosBridgeEngine::createAdapters()
     }
     for (auto& b : actionBridges_) {
         auto* adapter = b->getServiceAdapter();
+        if (adapter) serviceAdapters_.push_back(adapter);
+    }
+    // ★ 注册 GenericActionBridge adapter
+    if (genericActionBridge_) {
+        auto* adapter = genericActionBridge_->getServiceAdapter();
         if (adapter) serviceAdapters_.push_back(adapter);
     }
 }
@@ -152,6 +170,13 @@ bool RosBridgeEngine::start()
         }
     }
 
+    // ★ 启动 GenericActionBridge
+    if (genericActionBridge_) {
+        if (!genericActionBridge_->start()) {
+            ROS_ERROR("[RosBridgeEngine] Failed to start generic action bridge");
+        }
+    }
+
     running_.store(true);
 
     ROS_INFO("[RosBridgeEngine] Started: %zu service adapter(s) registered",
@@ -169,6 +194,9 @@ void RosBridgeEngine::stop()
 
     ROS_INFO("[RosBridgeEngine] Stopping all bridges...");
 
+    // ★ 先停 GenericActionBridge
+    if (genericActionBridge_) { genericActionBridge_->stop(); }
+
     // 按顺序停止：先 Action（需要清理 Goal），再 Service，最后 Topic
     for (auto& b : actionBridges_)   { b->stop(); }
     for (auto& b : serviceBridges_)  { b->stop(); }
@@ -176,6 +204,7 @@ void RosBridgeEngine::stop()
 
     // 清理适配器引用
     serviceAdapters_.clear();
+    genericActionBridge_.reset();
     topicBridges_.clear();
     serviceBridges_.clear();
     actionBridges_.clear();

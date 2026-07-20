@@ -93,6 +93,24 @@ void RpcServer::handleRpcCodecMessage(const TcpConnectionPtr& conn,const std::st
         return;
     }
 
+    // ★ robot_id 过滤：若本机设置了 robot_id 且请求中指定了 robot_id，则须匹配
+    if (!localRobotId_.empty() && !rpcMsg.robot_id().empty()) {
+        if (rpcMsg.robot_id() != localRobotId_) {
+#if ENABLE_TIMESTAMP
+            sendErrorReasponse(conn, rpcMsg.id(),
+                               CoreX::rpc::INVALID_REQUEST,
+                               "robot_id mismatch: local=" + localRobotId_
+                               + " request=" + rpcMsg.robot_id(), t0);
+#else
+            sendErrorReasponse(conn, rpcMsg.id(),
+                               CoreX::rpc::INVALID_REQUEST,
+                               "robot_id mismatch: local=" + localRobotId_
+                               + " request=" + rpcMsg.robot_id());
+#endif
+            return;
+        }
+    }
+
 #if ENABLE_TIMESTAMP
     // 记录服务端接收时间戳（反序列化完成时刻，更精确反映网络到达时间）
     uint64_t server_recv_ts = t1;

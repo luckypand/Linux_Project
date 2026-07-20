@@ -19,10 +19,14 @@
 
 class DynamicServiceAdapter;
 class ShmTopicBus;
+class MessageTypeRegistry;
 
 class TopicBridge
 {
 public:
+    // ★ 设置全局 MessageTypeRegistry（由 RosBridgeEngine 初始化时调用）
+    static void setGlobalTypeRegistry(const MessageTypeRegistry* registry);
+
     explicit TopicBridge(const TopicMappingConfig& cfg);
     ~TopicBridge();
 

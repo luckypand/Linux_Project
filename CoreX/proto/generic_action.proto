@@ -1,0 +1,28 @@
+// proto/generic_action.proto
+// ============================================================================
+// GenericAction — 通用机器人动作接口
+//
+// 设计思路：
+//   - 云端发送抽象动作名 + JSON 参数，不感知 ROS topic/消息类型
+//   - CoreX Bridge 根据 YAML 配置将动作映射为具体 ROS topic 发布
+//   - params 使用 JSON bytes 而非 map，以支持嵌套值
+// ============================================================================
+syntax = "proto3";
+
+package CoreX.rpc;
+
+message GenericCommand {
+    string action = 1;   // 抽象动作名, 如 "move", "stop", "get_odometry"
+    bytes  params = 2;   // JSON 编码的动作参数, 如 {"linear_x":0.5,"angular_z":0.2}
+}
+
+message GenericResponse {
+    bool   success    = 1;
+    string message    = 2;   // 状态描述
+    bytes  data       = 3;   // 可选响应数据（subscribe 方向返回缓存数据）
+    string error_msg  = 4;
+}
+
+service GenericAction {
+    rpc Execute(GenericCommand) returns (GenericResponse);
+}

@@ -238,6 +238,20 @@ class RpcMessage : public ::google::protobuf::Message /* @@protoc_insertion_poin
   ::std::string* release_payload();
   void set_allocated_payload(::std::string* payload);
 
+  // string robot_id = 10;
+  void clear_robot_id();
+  static const int kRobotIdFieldNumber = 10;
+  const ::std::string& robot_id() const;
+  void set_robot_id(const ::std::string& value);
+  #if LANG_CXX11
+  void set_robot_id(::std::string&& value);
+  #endif
+  void set_robot_id(const char* value);
+  void set_robot_id(const char* value, size_t size);
+  ::std::string* mutable_robot_id();
+  ::std::string* release_robot_id();
+  void set_allocated_robot_id(::std::string* robot_id);
+
   // fixed64 id = 2;
   void clear_id();
   static const int kIdFieldNumber = 2;
@@ -281,6 +295,7 @@ class RpcMessage : public ::google::protobuf::Message /* @@protoc_insertion_poin
   ::google::protobuf::internal::ArenaStringPtr service_;
   ::google::protobuf::internal::ArenaStringPtr method_;
   ::google::protobuf::internal::ArenaStringPtr payload_;
+  ::google::protobuf::internal::ArenaStringPtr robot_id_;
   ::google::protobuf::uint64 id_;
   int type_;
   int error_;
@@ -542,6 +557,59 @@ inline void RpcMessage::set_server_send_ts(::google::protobuf::uint64 value) {
   
   server_send_ts_ = value;
   // @@protoc_insertion_point(field_set:CoreX.rpc.RpcMessage.server_send_ts)
+}
+
+// string robot_id = 10;
+inline void RpcMessage::clear_robot_id() {
+  robot_id_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& RpcMessage::robot_id() const {
+  // @@protoc_insertion_point(field_get:CoreX.rpc.RpcMessage.robot_id)
+  return robot_id_.GetNoArena();
+}
+inline void RpcMessage::set_robot_id(const ::std::string& value) {
+  
+  robot_id_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:CoreX.rpc.RpcMessage.robot_id)
+}
+#if LANG_CXX11
+inline void RpcMessage::set_robot_id(::std::string&& value) {
+  
+  robot_id_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:CoreX.rpc.RpcMessage.robot_id)
+}
+#endif
+inline void RpcMessage::set_robot_id(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  
+  robot_id_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:CoreX.rpc.RpcMessage.robot_id)
+}
+inline void RpcMessage::set_robot_id(const char* value, size_t size) {
+  
+  robot_id_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:CoreX.rpc.RpcMessage.robot_id)
+}
+inline ::std::string* RpcMessage::mutable_robot_id() {
+  
+  // @@protoc_insertion_point(field_mutable:CoreX.rpc.RpcMessage.robot_id)
+  return robot_id_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* RpcMessage::release_robot_id() {
+  // @@protoc_insertion_point(field_release:CoreX.rpc.RpcMessage.robot_id)
+  
+  return robot_id_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void RpcMessage::set_allocated_robot_id(::std::string* robot_id) {
+  if (robot_id != NULL) {
+    
+  } else {
+    
+  }
+  robot_id_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), robot_id);
+  // @@protoc_insertion_point(field_set_allocated:CoreX.rpc.RpcMessage.robot_id)
 }
 
 #ifdef __GNUC__

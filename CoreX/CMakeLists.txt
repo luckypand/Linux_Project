@@ -148,6 +148,7 @@ set(PROTO_SOURCES
     proto/math_service.pb.cc
     proto/robot_service.pb.cc
     proto/ros_messages.pb.cc
+    proto/generic_action.pb.cc
 )
 
 # ============================================================
@@ -216,6 +217,19 @@ target_link_libraries(test_ipc PRIVATE
     OpenSSL::Crypto
     rt
 )
+
+# ============================================================
+# ROS Bridge 依赖检测（必须在 CoreXDaemon 之前，否则 ROS_BRIDGE_AVAILABLE 为空）
+# ============================================================
+find_package(catkin QUIET COMPONENTS roscpp nav_msgs geometry_msgs sensor_msgs)
+
+if(catkin_FOUND)
+    message(STATUS "ROS found — CoreXDaemon will enable ROS Bridge")
+    set(ROS_BRIDGE_AVAILABLE TRUE)
+else()
+    message(STATUS "ROS NOT found — CoreXDaemon will NOT include ROS Bridge")
+    set(ROS_BRIDGE_AVAILABLE FALSE)
+endif()
 
 # ============================================================
 # CoreXDaemon — 独立 RPC 中间件守护进程
@@ -335,8 +349,8 @@ target_link_libraries(host_controller PRIVATE
 
 # ============================================================
 # ROS Bridge 库 — CoreX ↔ ROS 协议网关（需要 ROS 环境）
+# 注意：find_package(catkin) 和 ROS_BRIDGE_AVAILABLE 已在上方 CoreXDaemon 之前设置
 # ============================================================
-find_package(catkin QUIET COMPONENTS roscpp nav_msgs geometry_msgs)
 
 if(catkin_FOUND)
     message(STATUS "ROS found — building CoreX-ROS Bridge library")
@@ -351,6 +365,9 @@ if(catkin_FOUND)
         src/ros_bridge/ActionBridge.cpp
         src/ros_bridge/ShmImageTransporter.cpp
         src/ros_bridge/ShmTopicBus.cpp
+        src/ros_bridge/GenericActionBridge.cpp
+        src/ros_bridge/RosMessageSerializer.cpp
+        src/ros_bridge/MessageTypeRegistry.cpp
     )
 
     add_library(rosbridge STATIC ${ROS_BRIDGE_SOURCES})
@@ -374,11 +391,8 @@ if(catkin_FOUND)
     # 编译定义：启用 ROS 特定代码路径
     target_compile_definitions(rosbridge PUBLIC HAS_ROS_ENV=1 HAS_ROS_CONVERSIONS=1)
 
-    set(ROS_BRIDGE_AVAILABLE TRUE)
-
 else()
     message(STATUS "ROS NOT found — skipping CoreX-ROS Bridge (build on robot instead)")
-    set(ROS_BRIDGE_AVAILABLE FALSE)
 endif()
 
 # ============================================================

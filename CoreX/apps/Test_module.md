@@ -97,6 +97,28 @@
     · `serialization::Serializer`   → write 直接 memcpy / read 从流重建 / serializedLength 返回 num_bytes
     TopicBridge.cpp 与 ServiceBridge.cpp 均引入该头文件
 
+14.在./build/host_controller --host 127.0.0.1 --port 8080下显示已经连接机器人，但是RpcClient提示call failed: recv:Resource temporarily unavailable[Main] GetOdometry 失败，尝试重连...后直接发送急停指令并断开
+
+15.两个 publish topic 共用同一个 rpc_service: "CoreX.rpc.MotionControl"，后注册的会覆盖先注册的，导致 RPC 调用只发布到其中一个 Topic。
+## 原因 ：
+void RpcServer::registerService(RpcServiceAdapter* adapter)
+{
+    dispatchTable_[adapter->serviceName()] = adapter;  // 同名会覆盖!
+}
+而每个 TopicBridge 都创建一个独立的 DynamicServiceAdapter，其 serviceName() 取自 YAML 中的 rpc_service 字段。
+
+16.CoreXDaemon 二进制中完全没有任何 ROS Bridge 符号，Bridge 服务从未注册
+## 原因 ：ROS_BRIDGE_AVAILABLE 变量在第 256 行使用，但 find_package(catkin) 在第 339 行才执行，CMake 是过程式语言，使用时变量为空
+-解决：将 find_package(catkin ...) 和 set(ROS_BRIDGE_AVAILABLE ...) 移到 CoreXDaemon 定义之前（第 223 行）
+
+17.Failed to create publisher: Advertising with * as the md5sum is not allowed
+## 原因 ：TopicBridge::setupPublisher() 使用 ops.md5sum = "*"，ROS Noetic 要求发布者提供真实 MD5
+-解决：引入 geometry_msgs/Twist 等消息头文件，新增 getMessageTraits() 函数根据类型字符串返回真实 md5sum/datatype
+
+18.RPC 返回 Server Error:，Bridge 返回裸字符串 "OK" 而非 ControlResponse protobuf
+## 原因 ：handlePublish() 直接把 RPC 的 VelocityCommand protobuf 字节透传给 ROS，没有转换成 geometry_msgs/Twist，也没有返回合法的 ControlResponse
+-解决：在 handlePublish() 中加入 VelocityCommand → geometry_msgs::Twist 的解析+转换+序列化逻辑，并返回 ControlResponse.SerializeAsString()
+
 -------------
 # programme_improve
 1.Output Buffer 无限膨胀导致 OOM (内存溢出),没有进行内存水位管理，所以

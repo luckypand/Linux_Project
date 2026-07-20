@@ -201,8 +201,25 @@ bool BridgeConfig::loadFromYaml(const YAML::Node& rosBridgeNode)
         parseActions(rosBridgeNode["actions"]);
     }
 
-    BRIDGE_ROS_INFO("[BridgeConfig] Loaded: %zu topic(s), %zu service(s), %zu action(s)",
-             topics.size(), services.size(), actions.size());
+    // ---- ★ 新增: robot_id ----
+    if (rosBridgeNode["robot_id"]) {
+        robotId = rosBridgeNode["robot_id"].as<std::string>();
+    }
+
+    // ---- ★ 新增: ROS 消息类型注册表 ----
+    if (rosBridgeNode["ros_message_types"] && rosBridgeNode["ros_message_types"].IsDefined()) {
+        parseMessageTypes(rosBridgeNode["ros_message_types"]);
+    }
+
+    // ---- ★ 新增: 通用动作映射 ----
+    if (rosBridgeNode["generic_actions"] && rosBridgeNode["generic_actions"].IsDefined()) {
+        parseGenericActions(rosBridgeNode["generic_actions"]);
+    }
+
+    BRIDGE_ROS_INFO("[BridgeConfig] Loaded: %zu topic(s), %zu service(s), %zu action(s), "
+             "%zu generic_action(s), %zu message_type(s), robot_id='%s'",
+             topics.size(), services.size(), actions.size(),
+             genericActions.size(), messageTypes.size(), robotId.c_str());
 
     return true;
 }
@@ -243,6 +260,105 @@ bool BridgeConfig::validate(std::string& errorMsg) const
             errorMsg = "Action[" + std::to_string(i) + "]: required field is empty";
             return false;
         }
+    }
+
+    // 校验 GenericAction 映射
+    for (size_t i = 0; i < genericActions.size(); ++i) {
+        const auto& ga = genericActions[i];
+        if (ga.action.empty()) {
+            errorMsg = "GenericAction[" + std::to_string(i) + "]: action is empty";
+            return false;
+        }
+        if (ga.rosTopic.empty() || ga.rosType.empty()) {
+            errorMsg = "GenericAction[" + ga.action + "]: ros_topic or ros_type is empty";
+            return false;
+        }
+    }
+
+    return true;
+}
+
+// ============================================================================
+// ★ 新增: 解析 ros_message_types 段
+// ============================================================================
+bool BridgeConfig::parseMessageTypes(const YAML::Node& msgTypesNode)
+{
+    if (!msgTypesNode.IsMap()) {
+        return true;
+    }
+
+    for (const auto& entry : msgTypesNode) {
+        std::string typeName = entry.first.as<std::string>();
+        RosMessageTypeInfo info;
+        if (entry.second["md5"]) {
+            info.md5 = entry.second["md5"].as<std::string>();
+        }
+        if (entry.second["datatype"]) {
+            info.datatype = entry.second["datatype"].as<std::string>();
+        } else {
+            info.datatype = typeName;
+        }
+        messageTypes[typeName] = info;
+    }
+
+    return true;
+}
+
+// ============================================================================
+// ★ 新增: 解析 generic_actions 段
+// ============================================================================
+bool BridgeConfig::parseGenericActions(const YAML::Node& actionsNode)
+{
+    if (!actionsNode.IsSequence()) {
+        return true;
+    }
+
+    for (const auto& item : actionsNode) {
+        GenericActionConfig cfg;
+        cfg.action = item["action"].as<std::string>();
+
+        if (item["ros_topic"]) {
+            cfg.rosTopic = item["ros_topic"].as<std::string>();
+        }
+        if (item["ros_type"]) {
+            cfg.rosType = item["ros_type"].as<std::string>();
+        }
+        if (item["direction"]) {
+            std::string dir = item["direction"].as<std::string>();
+            cfg.isPublisher = (dir != "subscribe");
+        }
+
+        if (item["fields"] && item["fields"].IsSequence()) {
+            parseActionFields(item["fields"], cfg.fields);
+        }
+
+        genericActions.push_back(std::move(cfg));
+    }
+
+    return true;
+}
+
+// ============================================================================
+// ★ 新增: 递归解析字段列表（支持 nested_fields）
+// ============================================================================
+bool BridgeConfig::parseActionFields(const YAML::Node& fieldsNode,
+                                      std::vector<GenericActionFieldConfig>& outFields)
+{
+    for (const auto& f : fieldsNode) {
+        GenericActionFieldConfig fc;
+        fc.fieldNumber = f["field_number"].as<int>();
+
+        if (f["type"])     fc.type     = f["type"].as<std::string>();
+        if (f["param"])    fc.param    = f["param"].as<std::string>();
+        if (f["default"])  fc.defaultValue = f["default"].as<std::string>();
+        if (f["required"]) fc.required = f["required"].as<bool>();
+
+        // 递归解析嵌套
+        if (f["nested_fields"] && f["nested_fields"].IsSequence()) {
+            parseActionFields(f["nested_fields"], fc.nestedFields);
+        }
+
+        outFields.push_back(std::move(fc));
     }
 
     return true;
