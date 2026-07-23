@@ -260,11 +260,13 @@ CoreX-ROS Bridge 是 ROS 生态与 CoreX 之间的协议网关，实现三种 RO
 - **同机 Topic SHM 直通** — `ShmTopicBus` 序列号环形缓冲，替代 TCPROS，延迟 < 10μs
 - **条件编译** — 无 ROS 环境时自动跳过，零侵入
 - **机器人遥控面板** — 开箱即用的 `host_controller` 交互式客户端
+- **★ Robot ID 定向控制** — 通过 `RpcMessage.robot_id` 字段实现多机器人场景下的精准定向控制，云端可通过改变 `robot_id` 切换目标机器人，不匹配的请求会被拒绝
 
 ```yaml
 # 示例：将 /cmd_vel 和 /odom 映射为 RPC 服务
 ros_bridge:
   enabled: true
+  robot_id: "robot_001"                     # ★ 本机机器人唯一标识
   topics:
     - ros_topic: "/cmd_vel"
       direction: "publish"                  # CoreX → ROS

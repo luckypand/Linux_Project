@@ -68,9 +68,12 @@ Layered on top of the net module. Wires protobuf-based RPC over TCP using a dyna
 ```
 TCP bytes → Buffer → RpcCodec::Onmessage (framing/validation)
   → businessCallback_ → RpcServer::handleRpcCodecMessage (parse RpcMessage envelope)
+  → ★ robot_id 过滤: localRobotId_ 非空时校验 rpcMsg.robot_id() 是否匹配
   → dispatchTable_[service] → RpcServiceAdapter::dispatch (dynamic deserialize → handler → serialize)
   → sendResponse (wrap in RpcMessage envelope + TLV header + conn->send)
 ```
+
+**★ Robot ID 机制:** `RpcMessage.robot_id` (field 10) 用于多机器人场景下的定向控制。机器人侧通过 `CoreXDaemon` 从 YAML 配置 `ros_bridge.robot_id` 读取并调用 `RpcServer::setLocalRobotId()` 设置本机 ID。云端请求中携带 `robot_id` 时，RpcServer 会校验其与 `localRobotId_` 是否匹配：匹配或任一方为空则放行，不匹配则返回 `INVALID_REQUEST` 错误。空 `robot_id` 表示"任意机器人"，可用于广播场景。Python 客户端已支持 `--robot_id` 参数。
 
 ### IPC Module (`src/ipc/`)
 

@@ -53,6 +53,7 @@ ros_bridge:
   enabled: true
   node_name: "corex_ros_bridge"
   spinner_threads: 2
+  robot_id: "robot_001"               # ★ 本机机器人唯一标识（云端定向控制）
 
   topics:
     # ROS → CoreX (subscribe)
@@ -118,6 +119,19 @@ engine.start();
 for (auto* adapter : engine.getServiceAdapters()) {
     rpcServer.registerService(adapter);
 }
+```
+
+### ★ Robot ID 定向控制
+
+Bridge 支持通过 `RpcMessage.robot_id` (field 10) 实现多机器人定向控制：
+
+- **配置**：`ros_bridge.robot_id: "robot_001"` 在 YAML 中指定本机 ID
+- **过滤**：RpcServer 收到请求后比对 `robot_id`，不匹配则拒绝（[RpcServer.cpp:96-112](../rpc/RpcServer.cpp#L96-L112)）
+- **兼容**：`robot_id` 为空时不过滤，向后兼容旧客户端
+
+Python 客户端示例：
+```bash
+python3 rpc_client.py --host <ip> --robot_id robot_001 motion SetVelocity --linear_x 0.5
 ```
 
 ## 编译

@@ -316,6 +316,7 @@ ros_bridge:
   enabled: false                      # 默认关闭
   node_name: "corex_ros_bridge"
   spinner_threads: 2
+  robot_id: "robot_001"               # ★ 本机机器人唯一标识（云端通过此 ID 定向控制）
 
   topics:
     # ROS → CoreX (subscribe)
@@ -503,7 +504,42 @@ server.enableIpc("/my_app_ipc");  // 启用 SHM 快速通道
                     机器人硬件 (Navigation / Sensors)
 ```
 
-### 6.2 配置驱动 vs 手写插件
+### 6.2 ★ Robot ID 多机器人定向控制
+
+在多机器人场景下，云端可通过 `RpcMessage.robot_id` 字段指定目标机器人，实现精准定向控制。
+
+**工作原理：**
+
+```
+云端 → RPC 请求 {robot_id: "robot_002", service: "MotionControl", method: "SetVelocity"}
+  ↓
+机器人 A (robot_id="robot_001") → robot_id 不匹配 → 拒绝 (INVALID_REQUEST)
+机器人 B (robot_id="robot_002") → robot_id 匹配 → 执行指令
+机器人 C (robot_id 未设置/空)   → 空=不校验 → 执行指令 (兼容模式)
+```
+
+**配置方式：**
+
+```yaml
+# 每台机器人配置唯一的 robot_id
+ros_bridge:
+  enabled: true
+  robot_id: "robot_001"    # ★ 修改此处为每台机器人分配唯一 ID
+```
+
+**协议层：** `RpcMessage` Proto 字段 10: `string robot_id = 10`（空=任意机器人）。
+
+**过滤逻辑：** [RpcServer.cpp:96-112](src/rpc/RpcServer.cpp#L96-L112) — 仅在 `localRobotId_` 和 `rpcMsg.robot_id()` 均非空时才校验，任一为空则放行（向后兼容）。
+
+**Python 客户端示例：**
+```bash
+# 定向控制 robot_002
+python3 rpc_client.py --host <ip> --port 8080 --robot_id robot_002 motion SetVelocity --linear_x 0.5
+```
+
+**⚠️ 注意：** C++ `RpcClient` ([RpcClient.hpp](apps/examples/robot_controller/RpcClient.hpp)) 当前未支持 robot_id 设置，仅 Python 客户端支持。如需在 C++ 客户端使用，需在 `call()` 方法中添加 `rpcMsg.set_robot_id()` 调用。
+
+### 6.3 配置驱动 vs 手写插件
 
 **旧方式 (已弃用)**：每个 Topic 写一个 `.so` 插件
 
@@ -528,7 +564,7 @@ ros_bridge:
       rpc_method: "SetVelocity"
 ```
 
-### 6.3 Topic 映射详解
+### 6.4 Topic 映射详解
 
 #### 方向 A: ROS → CoreX (subscribe)
 
@@ -579,7 +615,7 @@ topics:
     use_shm_topic: true      # 同机消费者走 SHM 加速
 ```
 
-### 6.4 Service 映射（通用 bytes 透传）
+### 6.5 Service 映射（通用 bytes 透传）
 
 适用于调用 ROS Service（如 Gazebo 仿真控制）：
 
@@ -593,7 +629,7 @@ services:
 
 **原理**：Bridge 使用 `ros::SerializedMessage` 进行类型擦除，不依赖编译期 `.srv` 定义。RPC payload = 序列化的 ROS Service Request bytes，response = 序列化的 ROS Service Response bytes。
 
-### 6.5 Action 映射（导航/机械臂控制）
+### 6.6 Action 映射（导航/机械臂控制）
 
 ROS Action 是异步的 Goal→Feedback→Result 三段式模型，拆分为 4 个 RPC 方法：
 
@@ -626,7 +662,7 @@ done
 python3 rpc_client.py navigation GetNavigationResult --goal_id "$goal_id"
 ```
 
-### 6.6 完整部署步骤（机器人侧）
+### 6.7 完整部署步骤（机器人侧）
 
 ```bash
 # 步骤 1: 确保 ROS 环境

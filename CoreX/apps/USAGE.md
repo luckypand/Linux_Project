@@ -491,6 +491,9 @@ CoreXDaemon [选项]
 │  │  actions:                │ ActionBridge  │     │        │
 │  │    - /move_base          │  - Start/Cancel│    │        │
 │  │                          └──────────────┘     │        │
+│  │                          ┌──────────────┐     │        │
+│  │  ★ robot_id: "robot_001" │ robot_id过滤   │     │        │
+│  │                          └──────────────┘     │        │
 │  └──────────────┬──────────────────────────┘     │        │
 │                 │ ROS API                         │        │
 │  ┌──────────────▼──────────────────────────┐     │        │
@@ -594,7 +597,37 @@ ros_bridge:
       timeout_ms: 30000
 ```
 
-### 10.3 快速开始
+### 10.3 ★ Robot ID 多机器人定向控制
+
+在多机器人场景下，每台机器人通过 `ros_bridge.robot_id` 配置唯一标识。云端在 RPC 请求中携带 `robot_id` 即可定向控制指定机器人。
+
+**配置方式**（每台机器人配置不同的 `robot_id`）：
+
+```yaml
+ros_bridge:
+  enabled: true
+  robot_id: "robot_001"    # ★ 修改此处为每台机器人分配唯一 ID
+```
+
+**协议层**：`RpcMessage.robot_id` (field 10) — 空串表示"任意机器人"（广播/兼容模式）。
+
+**过滤规则**（[RpcServer.cpp:96-112](../src/rpc/RpcServer.cpp#L96-L112)）：
+- 本机 `robot_id` 为空 → 不校验，所有请求放行（向后兼容）
+- 请求 `robot_id` 为空 → 不校验，放行（兼容旧客户端）
+- 两者均非空且不匹配 → 返回 `INVALID_REQUEST` 错误
+
+**Python 客户端**：
+```bash
+# 定向控制 robot_002
+python3 rpc_client.py --host <ip> --robot_id robot_002 motion SetVelocity --linear_x 0.5
+
+# 不指定 robot_id = 任意机器人（兼容模式）
+python3 rpc_client.py --host <ip> motion SetVelocity --linear_x 0.5
+```
+
+**⚠️ C++ 客户端** ([RpcClient.hpp](examples/robot_controller/RpcClient.hpp)) 当前未实现 `robot_id` 设置，需要时在 `call()` 中添加 `rpcMsg.set_robot_id(targetRobotId)`。
+
+### 10.4 快速开始
 
 ```bash
 # 1. 启动 ROS Master
@@ -632,7 +665,7 @@ python3 apps/examples/python_client/rpc_client.py telemetry GetOdometry
 python3 apps/examples/python_client/rpc_client.py telemetry GetStatus
 ```
 
-### 10.4 典型使用场景
+### 10.5 典型使用场景
 
 #### 场景 A：云端远程控制机器人移动
 
@@ -734,7 +767,7 @@ python3 apps/examples/python_client/rpc_client.py \
     navigation GetNavigationResult --goal_id "$goal_id"
 ```
 
-### 10.5 共享内存加速 (SHM)
+### 10.6 共享内存加速 (SHM)
 
 CoreX 提供两种 SHM 加速模式：
 
@@ -803,7 +836,7 @@ topics:
 | SHM 三缓冲 (`use_shm`) | < 1ms | 大消息（图像/点云）RPC 查询 |
 | 两者同时启用 | < 10μs (Topic) + < 1ms (RPC) | 最佳性能组合 |
 
-### 10.6 与旧版独立插件的对比
+### 10.7 与旧版独立插件的对比
 
 | 特性 | 旧版独立 .so 插件 | 新版 ROS Bridge |
 |------|:-----------:|:-----------:|
@@ -816,7 +849,7 @@ topics:
 
 > 旧版插件（`apps/plugins/ros/`）仍保留作为教学参考，但不建议在新项目中使用。详见 [DEPRECATED.md](plugins/ros/DEPRECATED.md)。
 
-### 10.7 编译部署
+### 10.8 编译部署
 
 **在机器人/仿真环境（有 ROS）上**：
 
@@ -843,7 +876,7 @@ source /opt/ros/melodic/setup.bash   # 加载 ROS 环境
 scp build/CoreXDaemon robot@ip:/opt/corex/
 ```
 
-### 10.8 常见问题
+### 10.9 常见问题
 
 **Q: 启动时提示 "ROS Master not reachable"？**
 
@@ -865,7 +898,7 @@ ROS Bridge 本身常驻内存 < 50MB（不含图像缓冲）。Topic 缓存读�
 
 Bridge 失败不会阻塞 CoreXDaemon 启动。原有的 RPC 服务（插件加载的 MathService 等）完全不受影响。检查 ROS 日志定位 Bridge 问题。
 
-### 10.9 更多信息
+### 10.10 更多信息
 
 | 文档 | 路径 |
 |------|------|

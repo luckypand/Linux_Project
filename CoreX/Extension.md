@@ -28,17 +28,17 @@
 
 **状态**: ✅ 已完成
 
-将 ROS 内部通信模型（Topic/Service/Action）抽象为 CoreX RPC 服务，实现机器人系统与云端双向互通。
+将 ROS 内部通信模型（Topic/Service/Action）抽象为 CoreX RPC 服务，实现机器人系统与云端双向互通。支持通过 `RpcMessage.robot_id` 字段实现多机器人定向控制。
 
 | 组件 | 文件 | 功能 |
 |------|------|------|
-| RosBridgeEngine | `RosBridgeEngine.hpp/.cpp` | 核心引擎：配置→适配器组装→生命周期 |
+| RosBridgeEngine | `RosBridgeEngine.hpp/.cpp` | 核心引擎：配置→适配器组装→生命周期，含 robot_id 设置 |
 | TopicBridge | `TopicBridge.hpp/.cpp` | Topic ↔ RPC 双向映射（subscribe 缓存 / publish 转发） |
 | ServiceBridge | `ServiceBridge.hpp/.cpp` | ROS Service ↔ RPC（通用 bytes 透传） |
 | ActionBridge | `ActionBridge.hpp/.cpp` | ROS Action ↔ RPC（Goal/Feedback/Result/Cancel） |
 | ShmTopicBus | `ShmTopicBus.hpp/.cpp` | ★ 同机 SHM Topic 总线（替代 TCPROS, 延迟 < 10μs） |
 | ShmImageTransporter | `ShmImageTransporter.hpp/.cpp` | 高频图像三缓冲共享内存通道 |
-| BridgeConfig | `BridgeConfig.hpp/.cpp` | YAML 配置驱动的 Topic/Service/Action 映射 |
+| BridgeConfig | `BridgeConfig.hpp/.cpp` | YAML 配置驱动的 Topic/Service/Action 映射 + robot_id |
 | RosNodeManager | `RosNodeManager.hpp/.cpp` | ROS 节点生命周期管理 |
 
 ### Proto 扩展
