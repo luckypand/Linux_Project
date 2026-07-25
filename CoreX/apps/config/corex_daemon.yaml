@@ -47,7 +47,7 @@ ros_bridge:
   # MD5 可通过命令获取: rosmsg md5 <消息类型>
   ros_message_types:
     geometry_msgs/Twist:
-      md5: "9f3b76f2e8cdcf8e7a2e6f8b9c7e6d5f"
+      md5: "9f195f881246fdfa2798d1d3eebca84a"
       datatype: "geometry_msgs/Twist"
     geometry_msgs/Vector3:
       md5: "4a842b65f413084dc2b10fb484ea7f17"
