@@ -485,22 +485,37 @@ def main():
             print(f"  Error: {e}")
 
     elif args.command == 'motion':
-        # 根据 --mux 标志选择 RPC 服务
+        # ★ 修改：motion 命令现在通过 GenericAction 接口发送
+        # 不再直接构造 VelocityCommand protobuf（格式不兼容 ROS Twist）
+        # 而是使用 GenericActionBridge → RosMessageSerializer 正确转换
+        import json
+
         if args.mux:
-            service = "CoreX.rpc.MotionControlMux"
+            action = "move_mux"
             ros_topic = "/cmd_vel_mux/external"
         else:
-            service = "CoreX.rpc.MotionControl"
+            action = "move"
             ros_topic = "/cmd_vel"
 
-        request_payload = build_velocity_command(
-            args.linear_x, args.linear_y, args.linear_z,
-            args.angular_x, args.angular_y, args.angular_z
-        )
+        # 构建 JSON 参数（只传非零值，零值由 YAML defaults 填充）
+        params = {}
+        if args.linear_x != 0.0: params['linear_x'] = args.linear_x
+        if args.linear_y != 0.0: params['linear_y'] = args.linear_y
+        if args.linear_z != 0.0: params['linear_z'] = args.linear_z
+        if args.angular_x != 0.0: params['angular_x'] = args.angular_x
+        if args.angular_y != 0.0: params['angular_y'] = args.angular_y
+        if args.angular_z != 0.0: params['angular_z'] = args.angular_z
+        # 如果全部为零，至少传一个 linear_x=0 以触发完整序列化
+        if not params:
+            params['linear_x'] = 0.0
 
-        print(f"Calling {service}.SetVelocity → {ros_topic}")
+        request_payload = build_generic_command(action, params)
+
+        print(f"Calling CoreX.rpc.GenericAction.Execute → {ros_topic}")
+        print(f"  Action: '{action}'")
         print(f"  linear:  x={args.linear_x}, y={args.linear_y}, z={args.linear_z}")
         print(f"  angular: x={args.angular_x}, y={args.angular_y}, z={args.angular_z}")
+        print(f"  Params: {json.dumps(params)}")
         print(f"  Target: {args.host}:{args.port}...")
 
         start_time = time.time()
@@ -508,8 +523,8 @@ def main():
         try:
             response = rpc_call(
                 args.host, args.port,
-                service,
-                "SetVelocity",
+                "CoreX.rpc.GenericAction",
+                "Execute",
                 request_payload,
                 timeout=args.timeout
             )
@@ -520,12 +535,16 @@ def main():
                 print(f"  Error: {response.get('error')}")
                 return
 
-            ctrl_resp = parse_control_response(response.get('raw_payload', b''))
-            if ctrl_resp.get('success'):
+            generic_resp = parse_generic_response(
+                response.get('raw_payload', b''))
+            if generic_resp.get('success'):
+                msg = generic_resp.get('message', '')
                 print(f"  OK — published to {ros_topic}")
+                if msg:
+                    print(f"  Message: {msg}")
                 print(f"  Latency: {elapsed_ms:.2f} ms")
             else:
-                print(f"  Server Error: {ctrl_resp.get('error_msg', 'Unknown')}")
+                print(f"  Server Error: {generic_resp.get('error_msg', 'Unknown')}")
 
         except socket.timeout:
             print(f"  Error: Request timed out ({args.timeout}s)")

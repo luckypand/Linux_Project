@@ -144,11 +144,8 @@ std::string GenericActionBridge::buildMessageBytes(
     std::string buf;
     for (const auto& fc : fields) {
         if (fc.type == "message") {
-            // 嵌套消息: 先构造子消息字节，再作为 length-delimited 写入
+            // ★ ROS 1 嵌套消息：直接递归内联展开，无 tag，无 length prefix
             std::string nested = buildMessageBytes(fc.nestedFields, jsonParams);
-            RosMessageSerializer::writeTag(buf, fc.fieldNumber, 2);
-            RosMessageSerializer::writeVarint(buf,
-                static_cast<uint64_t>(nested.size()));
             buf.append(nested);
         } else {
             writeFieldByType(buf, fc, jsonParams);
@@ -168,31 +165,31 @@ void GenericActionBridge::writeFieldByType(std::string& buf,
     if (t == "float64") {
         double val = getJsonDouble(jsonParams, fc.param,
             fc.defaultValue.empty() ? 0.0 : std::stod(fc.defaultValue));
-        RosMessageSerializer::writeFloat64(buf, fc.fieldNumber, val);
+        RosMessageSerializer::writeFloat64(buf, val);
     }
     else if (t == "float32") {
         float val = static_cast<float>(getJsonDouble(jsonParams, fc.param,
             fc.defaultValue.empty() ? 0.0f : std::stof(fc.defaultValue)));
-        RosMessageSerializer::writeFloat32(buf, fc.fieldNumber, val);
+        RosMessageSerializer::writeFloat32(buf, val);
     }
     else if (t == "int32") {
         int32_t val = static_cast<int32_t>(getJsonInt(jsonParams, fc.param,
             fc.defaultValue.empty() ? 0 : std::stoll(fc.defaultValue)));
-        RosMessageSerializer::writeInt32(buf, fc.fieldNumber, val);
+        RosMessageSerializer::writeInt32(buf, val);
     }
     else if (t == "uint32") {
         uint32_t val = static_cast<uint32_t>(getJsonInt(jsonParams, fc.param,
             fc.defaultValue.empty() ? 0 : std::stoull(fc.defaultValue)));
-        RosMessageSerializer::writeUInt32(buf, fc.fieldNumber, val);
+        RosMessageSerializer::writeUInt32(buf, val);
     }
     else if (t == "bool") {
         bool val = getJsonBool(jsonParams, fc.param,
             fc.defaultValue == "true");
-        RosMessageSerializer::writeBool(buf, fc.fieldNumber, val);
+        RosMessageSerializer::writeBool(buf, val);
     }
     else if (t == "string") {
         std::string val = getJsonString(jsonParams, fc.param, fc.defaultValue);
-        RosMessageSerializer::writeString(buf, fc.fieldNumber, val);
+        RosMessageSerializer::writeString(buf, val);
     }
     else {
         ROS_WARN("[GenericActionBridge] Unknown field type '%s' for field %d",

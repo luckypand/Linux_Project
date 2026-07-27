@@ -92,6 +92,42 @@ ros_bridge:
               param: "angular_z"
               default: "0.0"
 
+    - action: "move_mux"
+      ros_topic: "/cmd_vel_mux/external"
+      ros_type: "geometry_msgs/Twist"
+      direction: "publish"
+      fields:
+        - field_number: 1       # Twist.linear (Vector3)
+          type: "message"
+          nested_fields:
+            - field_number: 1   # Vector3.x
+              type: "float64"
+              param: "linear_x"
+              default: "0.0"
+            - field_number: 2   # Vector3.y
+              type: "float64"
+              param: "linear_y"
+              default: "0.0"
+            - field_number: 3   # Vector3.z
+              type: "float64"
+              param: "linear_z"
+              default: "0.0"
+        - field_number: 2       # Twist.angular (Vector3)
+          type: "message"
+          nested_fields:
+            - field_number: 1
+              type: "float64"
+              param: "angular_x"
+              default: "0.0"
+            - field_number: 2
+              type: "float64"
+              param: "angular_y"
+              default: "0.0"
+            - field_number: 3
+              type: "float64"
+              param: "angular_z"
+              default: "0.0"
+
     - action: "stop"
       ros_topic: "/cmd_vel"
       ros_type: "geometry_msgs/Twist"
@@ -120,6 +156,42 @@ ros_bridge:
               default: "0.0"
             - field_number: 3
               type: "float64"
+              default: "0.0"
+
+    - action: "smooth_vel"
+      ros_topic: "/smooth_vel"
+      ros_type: "geometry_msgs/Twist"
+      direction: "publish"
+      fields:
+        - field_number: 1       # Twist.linear (Vector3)
+          type: "message"
+          nested_fields:
+            - field_number: 1   # Vector3.x
+              type: "float64"
+              param: "linear_x"
+              default: "0.0"
+            - field_number: 2
+              type: "float64"
+              param: "linear_y"
+              default: "0.0"
+            - field_number: 3
+              type: "float64"
+              param: "linear_z"
+              default: "0.0"
+        - field_number: 2       # Twist.angular (Vector3)
+          type: "message"
+          nested_fields:
+            - field_number: 1
+              type: "float64"
+              param: "angular_x"
+              default: "0.0"
+            - field_number: 2
+              type: "float64"
+              param: "angular_y"
+              default: "0.0"
+            - field_number: 3
+              type: "float64"
+              param: "angular_z"
               default: "0.0"
 
   # Topic 双向映射（保留向后兼容）
@@ -173,6 +245,12 @@ ros_bridge:
       rpc_method: "SetVelocity"
       queue_size: 10
 
+    - ros_topic: "/smooth_vel"
+      ros_type: "geometry_msgs/Twist"
+      direction: "publish"
+      rpc_service: "CoreX.rpc.MotionControlMux"
+      rpc_method: "SetVelocity"
+      queue_size: 10
   # ROS Service 映射
   services:
     # - ros_service: "/gazebo/spawn_model"

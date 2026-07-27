@@ -24,6 +24,8 @@
         "${workspaceFolder}/CoreX/third_party/protobuf/include",
         "${workspaceFolder}/Myfile/inc",
         "${workspaceFolder}/../inc",
+        "/opt/ros/noetic/include",
+        "/opt/ros/noetic/share/xmlrpcpp/cmake/../../../include/xmlrpcpp",
         "/usr/include",
         "/usr/include/mysql",
         "/usr/include/mariadb"

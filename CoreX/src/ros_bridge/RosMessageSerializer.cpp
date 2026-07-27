@@ -1,5 +1,11 @@
 // ============================================================================
 // RosMessageSerializer.cpp — 动态 ROS 消息二进制构造器 实现
+//
+// ★ 使用 ROS 1 原生二进制格式，非 Protobuf wire format
+//   - 所有类型：无 field tag
+//   - 固定大小字段：纯数据 LE
+//   - 字符串/数组：4-byte LE uint32 长度前缀
+//   - 嵌套消息：递归内联，无 length prefix
 // ============================================================================
 
 #include "RosMessageSerializer.hpp"
@@ -8,16 +14,18 @@
 namespace RosMessageSerializer {
 
 // ============================================================================
-// Tag 编码
+// 4-byte Little-Endian uint32（用于字符串/数组长度前缀）
 // ============================================================================
-void writeTag(std::string& buf, int fieldNumber, int wireType)
+void writeUint32LE(std::string& buf, uint32_t value)
 {
-    uint64_t tag = (static_cast<uint64_t>(fieldNumber) << 3) | static_cast<uint64_t>(wireType);
-    writeVarint(buf, tag);
+    buf.push_back(static_cast<char>(value & 0xFF));
+    buf.push_back(static_cast<char>((value >> 8) & 0xFF));
+    buf.push_back(static_cast<char>((value >> 16) & 0xFF));
+    buf.push_back(static_cast<char>((value >> 24) & 0xFF));
 }
 
 // ============================================================================
-// Varint 编码
+// Varint 编码（保留，用于整数类型编码）
 // ============================================================================
 void writeVarint(std::string& buf, uint64_t value)
 {
@@ -29,12 +37,10 @@ void writeVarint(std::string& buf, uint64_t value)
 }
 
 // ============================================================================
-// Fixed64 (double) — 8 bytes little-endian
+// Fixed64 (double) — 8 bytes little-endian，无 tag
 // ============================================================================
-void writeFloat64(std::string& buf, int fieldNumber, double value)
+void writeFloat64(std::string& buf, double value)
 {
-    writeTag(buf, fieldNumber, 1);  // wire_type = 1 (fixed64)
-
     uint64_t bits;
     memcpy(&bits, &value, sizeof(bits));
     for (int i = 0; i < 8; i++) {
@@ -43,12 +49,10 @@ void writeFloat64(std::string& buf, int fieldNumber, double value)
 }
 
 // ============================================================================
-// Fixed32 (float) — 4 bytes little-endian
+// Fixed32 (float) — 4 bytes little-endian，无 tag
 // ============================================================================
-void writeFloat32(std::string& buf, int fieldNumber, float value)
+void writeFloat32(std::string& buf, float value)
 {
-    writeTag(buf, fieldNumber, 5);  // wire_type = 5 (fixed32)
-
     uint32_t bits;
     memcpy(&bits, &value, sizeof(bits));
     for (int i = 0; i < 4; i++) {
@@ -57,34 +61,41 @@ void writeFloat32(std::string& buf, int fieldNumber, float value)
 }
 
 // ============================================================================
-// Varint 类型 (int32/uint32/bool)
+// int32 — 4 bytes little-endian，无 tag
 // ============================================================================
-void writeInt32(std::string& buf, int fieldNumber, int32_t value)
+void writeInt32(std::string& buf, int32_t value)
 {
-    writeTag(buf, fieldNumber, 0);  // wire_type = 0 (varint)
-    // Protobuf 中 int32 使用 varint 编码，负数需要转为 uint64 补码
-    writeVarint(buf, static_cast<uint64_t>(static_cast<uint32_t>(value)));
-}
-
-void writeUInt32(std::string& buf, int fieldNumber, uint32_t value)
-{
-    writeTag(buf, fieldNumber, 0);
-    writeVarint(buf, static_cast<uint64_t>(value));
-}
-
-void writeBool(std::string& buf, int fieldNumber, bool value)
-{
-    writeTag(buf, fieldNumber, 0);
-    writeVarint(buf, value ? 1 : 0);
+    uint32_t bits;
+    memcpy(&bits, &value, sizeof(bits));
+    for (int i = 0; i < 4; i++) {
+        buf.push_back(static_cast<char>((bits >> (i * 8)) & 0xFF));
+    }
 }
 
 // ============================================================================
-// Length-delimited (string)
+// uint32 — 4 bytes little-endian，无 tag
 // ============================================================================
-void writeString(std::string& buf, int fieldNumber, const std::string& value)
+void writeUInt32(std::string& buf, uint32_t value)
 {
-    writeTag(buf, fieldNumber, 2);  // wire_type = 2 (length-delimited)
-    writeVarint(buf, static_cast<uint64_t>(value.size()));
+    for (int i = 0; i < 4; i++) {
+        buf.push_back(static_cast<char>((value >> (i * 8)) & 0xFF));
+    }
+}
+
+// ============================================================================
+// bool — 1 byte (0/1)，无 tag
+// ============================================================================
+void writeBool(std::string& buf, bool value)
+{
+    buf.push_back(static_cast<char>(value ? 1 : 0));
+}
+
+// ============================================================================
+// string — 4-byte LE uint32 长度 + UTF-8 数据，无 tag
+// ============================================================================
+void writeString(std::string& buf, const std::string& value)
+{
+    writeUint32LE(buf, static_cast<uint32_t>(value.size()));
     buf.append(value);
 }
 

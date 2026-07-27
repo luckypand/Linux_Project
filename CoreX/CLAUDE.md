@@ -201,5 +201,10 @@ Run a test after building:
 - 注意，在我进行模块或者相应数据流的提问时，只回答我需要的内容，不要为我提供与我的提问太多无关的部分，并且尽量将与数据流相关的问题以图表的形式提供
 
 ## 代码重构或添加代码时维护日志
-- 当你最后添加了新的模块和代码时，你应该为我维护/home/shansu/CoreX/Linux_Project/CoreX下的DEPLOYMENT.md和README.md文件，当你解决了一个新的bug时，你应该模仿BUG_BOOK.md的风格为我新增bug目录和对应内容。此外，当你迭代了新版本的项目内容时，你应该在Version.md下记录每次的可溯源修改，保证别的模型接手时能够知道你修改的部分
+- 当你最后添加了新的模块和代码时，你应该为我维护/home/shansu/CoreX/Linux_Project/CoreX下的DEPLOYMENT.md和README.md文件，当你解决了一个新的bug时，你应该模仿/home/shansu/CoreX/Linux_Project/CoreX/apps/BUG_BOOK.md的风格为我新增bug目录和对应内容。此外，当你迭代了新版本的项目内容时，你应该在/home/shansu/CoreX/Linux_Project/CoreX/Version_Log/Version.md下记录每次的可溯源修改，保证别的模型接手时能够知道你修改的部分
 
+## 思考链路
+- 除非是专有技术名词，否则你应该在任何展示你思考链路或者结论的地方使用中文
+
+## 调试流程
+- 当你开始进行调试时，确保我明白你的调试思路后再进行具体的调试

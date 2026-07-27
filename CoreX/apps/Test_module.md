@@ -119,6 +119,9 @@ void RpcServer::registerService(RpcServiceAdapter* adapter)
 ## 原因 ：handlePublish() 直接把 RPC 的 VelocityCommand protobuf 字节透传给 ROS，没有转换成 geometry_msgs/Twist，也没有返回合法的 ControlResponse
 -解决：在 handlePublish() 中加入 VelocityCommand → geometry_msgs::Twist 的解析+转换+序列化逻辑，并返回 ControlResponse.SerializeAsString()
 
+19.出现测试发送服务到机器人端时，发送端与机器人接收端的数据不一致
+## 原因 ：RosMessageSerializer 按 Protobuf 格式编码（带 field tag），但 ROS 1 的二进制格式是纯顺序序列化（不带 tag）。ROS 反序列化器把 tag 字节当成了浮点数数据来解析。
+
 -------------
 # programme_improve
 1.Output Buffer 无限膨胀导致 OOM (内存溢出),没有进行内存水位管理，所以
