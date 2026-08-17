@@ -141,6 +141,17 @@ set(IPC_SOURCES
 )
 
 # ============================================================
+# IPC Pub/Sub 库源文件 (共享内存 Pub/Sub Transport, Extension.md)
+# ============================================================
+set(IPC_PUBSUB_SOURCES
+    src/ipc/BufferPool.cpp
+    src/ipc/SubscriberRegistry.cpp
+    src/ipc/HistoryCache.cpp
+    src/ipc/TopicChannel.cpp
+    src/ipc/TopicManager.cpp
+)
+
+# ============================================================
 # Proto sources (pre-generated .pb.cc files)
 # ============================================================
 set(PROTO_SOURCES
@@ -215,6 +226,25 @@ target_include_directories(test_ipc PRIVATE
 target_link_libraries(test_ipc PRIVATE
     Threads::Threads
     OpenSSL::Crypto
+    rt
+)
+
+# ============================================================
+# IPC Pub/Sub 测试 (Extension.md 共享内存 Pub/Sub Transport)
+# ============================================================
+add_executable(test_pubsub
+    tests/test_pubsub.cpp
+    ${IPC_SOURCES}
+    ${IPC_PUBSUB_SOURCES}
+)
+
+target_include_directories(test_pubsub PRIVATE
+    ${CMAKE_SOURCE_DIR}/src/ipc
+    ${CMAKE_SOURCE_DIR}/src/log
+)
+
+target_link_libraries(test_pubsub PRIVATE
+    Threads::Threads
     rt
 )
 
